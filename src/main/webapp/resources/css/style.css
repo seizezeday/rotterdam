@@ -1,0 +1,114 @@
+.margin_top_10{
+    margin-top: 10px;
+}
+.margin_top_15{
+    margin-top: 15px;
+}
+.margin_top_50{
+    margin-top: 50px;
+}
+/*
+.margin_top_350{
+    margin-top: 350px;
+}
+*/
+.margin_bottom_10{
+    margin-bottom: 10px;
+}
+.margin_bottom_5{
+    margin-bottom: 5px;
+}
+.margin_vertical_10{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.margin_bottom_fix{
+    margin-bottom: 0;
+}
+.margin_fix{
+    margin: 0;
+}
+.padding_fix{
+    padding: 0px;
+}
+.padding_left_30{
+    padding-left: 30px;
+}
+.padding_bottom_10{
+    padding-bottom: 10px;
+}
+.margin_top_10_proc{
+    margin-top: 10%;
+}
+.margin_top_5_proc{
+    margin-top: 5%;   
+}
+.border_fix {
+    border: none;
+}
+.autorization_tabs {
+    border: none;
+    width: 220px;
+    margin: 0 auto;
+    font-size: 18px;
+    background-color: none;
+}
+.autorization_tabs>li.active>a, 
+.autorization_tabs>li.active>a:hover, 
+.autorization_tabs>li.active>a:focus {
+    border: none;
+    color: #fff;
+    background: none;
+}
+.body_background {
+    background: url(../img/1.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+.autorization_tabs>li>a {
+    color: #fff; 
+}
+.autorization_tabs>li>a:hover {
+    background: none;
+}
+.font_size_18 {
+    font-size: 18px;
+}
+.form-control {
+    font-size: 17px; 
+/*    padding: 15px;*/
+}
+.has-error .form-control {
+    border: 2px solid #a94442;
+}
+.help-block{
+        font-size: 18px;
+}
+.fogot_password{
+    font-size: 18px;
+    color: #000;
+}
+.fogot_password:hover {
+    color: orange;
+    text-decoration: none;
+    cursor: pointer;
+}
+input:-moz-placeholder { 
+   color:#00f; 
+   opacity: 1;
+   font-size: 16px;
+}
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+/*
+.time_tab div{
+    margin-bottom:10px;
+}
+*/
+.modal-footer{
+    border-top:none;
+}
