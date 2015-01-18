@@ -27,13 +27,13 @@
        <div class="panel-heading">
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-  <li><a href="#Time" role="tab" data-toggle="tab">Time</a></li>
-  <li><a href="#compensation" role="tab" data-toggle="tab">Compensation</a></li>
-  <li><a href="#payment_time" role="tab" data-toggle="tab">Payment time</a></li>
-  <li><a href="#sheet_overview" role="tab" data-toggle="tab">Overview</a></li>
-  <li><a href="#declaretion" role="tab" data-toggle="tab">Declaration</a></li>
+  <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Time</a></li>
+  <li class="hide_tabs"><a href="#compensation" role="tab" data-toggle="tab">Compensation</a></li>
+  <li class="hide_tabs"><a href="#payment_time" role="tab" data-toggle="tab">Payment time</a></li>
+  <li class="hide_tabs"><a href="#sheet_overview" role="tab" data-toggle="tab">Overview</a></li>
+  <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaration</a></li>
   <li><a href="#settings" role="tab" data-toggle="tab">Settings </a></li>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10">Logout</a>
+      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >Logout</a>
 </ul>
      
  </div>
@@ -60,7 +60,7 @@
             </dl>
         </div>
   </div>
-  <div class="tab-pane" id="Time">
+  <div class="tab-pane" id="Time" >
    <div class="row col-xs-12" ng-controller="DatepickerDemoController">
          <div class="form-group col-md-4" ng-class="{'has-error': datepickerForm.date.$invalid}">
 <!--        <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>-->
@@ -139,9 +139,14 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
+<!--
+  <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_monday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+  </label>
+-->
          <select class="form-control time_monday_type_day margin_bottom_10">
-          <option>Work</option>
-          <option>Weekend</option>
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
         </div>  
         <div class="col-md-4 add_row_monday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
@@ -151,7 +156,7 @@ multitrip
    </div>
    <div class="row col-xs-12 time_tab">
        <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date">19.01.2015</div>
+       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Tuesday</div>
         <div class="col-md-4 form-group col-xs-12">
         <input type="text" class="form-control time_start time_tuesday_start" size="5" ng-model="selectedTimeAsNumberTuesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_tuesday" placeholder="Start" bs-timepicker>
@@ -174,9 +179,14 @@ multitrip
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
          <select class="form-control time_tuesday_type_day">
-          <option>Work</option>
-          <option>Weekend</option>
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_tuesday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
         </div>  
         <div class="col-md-4 add_row_tuesday col-xs-12"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
         <div class="col-md-4 font_size_18 text-center">Total time</div>
@@ -185,7 +195,7 @@ multitrip
    </div>
    <div class="row col-xs-12 time_tab">
        <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date">26.01.2015</div>
+       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Wednesday</div>
         <div class="col-md-4 form-group col-xs-12">
         <input type="text" class="form-control  time_wednesday_start" size="5" ng-model="selectedTimeAsNumberWednesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_wednesday" placeholder="Start" bs-timepicker>
@@ -207,9 +217,14 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_wednesday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
          <select class="form-control time_wednesday_type_day">
-          <option>Work</option>
-          <option>Weekend</option>
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
         </div>  
         <div class="col-md-4 add_row_wednesday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
@@ -241,10 +256,15 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
-         <select class="form-control time_thursday_ride_type">
-          <option>Work</option>
-          <option>Weekend</option>
+         <select class="form-control time_thursday_type_day">
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_thursday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
         </div>  
         <div class="col-md-4 add_row_thursday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
         <div class="col-md-4 font_size_18 text-center">Total time</div>
@@ -275,10 +295,15 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
-         <select class="form-control time_friday_ride_type">
-          <option>Work</option>
-          <option>Weekend</option>
+         <select class="form-control time_friday_type_day">
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_friday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
         </div>  
         <div class="col-md-4 add_row_friday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
         <div class="col-md-4 font_size_18 text-center">Total time</div>
@@ -309,10 +334,15 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4 ">
-         <select class="form-control time_saturday_ride_type">
-          <option>Work</option>
-          <option>Weekend</option>
+         <select class="form-control time_saturday_type_day">
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_saturday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
         </div>  
         <div class="col-md-4 add_row_saturday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
         <div class="col-md-4 font_size_18 text-center">Total time</div>
@@ -343,10 +373,15 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4 ">
-         <select class="form-control time_sunday_ride_type">
-          <option>Work</option>
-          <option>Weekend</option>
+         <select class="form-control time_sunday_type_day">
+          <option value="1">Work</option>
+          <option value="2">Time-for-time</option>
         </select>
+<!--
+    <label class="btn btn-primary btn-block margin_bottom_10">
+    <input name="checkbox-0" id="time_sunday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
+    </label>
+-->
         </div>  
         <div class="col-md-4 add_row_sunday"><button type="button" class="btn btn-warning btn-block ">Add</button></div>
         <div class="col-md-4 font_size_18 text-center">Total time</div>
@@ -400,7 +435,7 @@ multitrip
         <div class="well well-sm">
             <dl class="dl-horizontal margin_fix">
               <dt>Avaliable time-to-pay:</dt>
-              <dd>23</dd>
+              <dd id="payment_time_avaliable">23</dd>
             </dl>
         </div>
              <div class="col-md-12 padding_fix">
@@ -415,7 +450,7 @@ multitrip
                 </div>
             </div>
              
-      <button id="payment_time_btn" class="btn btn-success margin_top_15 col-md-1">Save</button>
+      <button id="payment_time_btn" class="btn btn-success margin_top_15 col-md-1" disabled="disabled">Save</button>
   </div>
     <div class="tab-pane" id="sheet_overview">
     <div class="col-md-12">
@@ -506,7 +541,7 @@ multitrip
 <!--        <div class="col-md-4">-->
        <div class="margin_bottom_10" data-toggle="buttons">
   <label class="btn btn-primary ">
-    <input type="checkbox"> Allow Suterday time-for-time compensation
+    <input id="allow_suterday_compensation" type="checkbox"> Allow Suterday time-for-time compensation
 
   </label>
 </div>
@@ -525,18 +560,22 @@ multitrip
           <option>parttime</option>
         </select>
         
+<!--
         <label for="Max hours">Max hours</label>
         <select name="Max hours" class="form-control margin_bottom_10">
           <option>220h</option>
           <option>230h</option>
           <option>240h</option>
         </select>
+-->
+<!--
         <label for="Max hours">Day a new week </label>
         <select class="form-control margin_bottom_10">
           <option>Monday</option>
           <option>2</option>
           <option>3</option>
         </select>
+-->
 <div class="margin_bottom_10" data-toggle="buttons">
   <label class="btn btn-primary ">
     <input type="checkbox">Option one is this and that&mdash;be sure to include why it's great
@@ -553,7 +592,7 @@ multitrip
 -->
 <div  data-toggle="buttons">
   <label class="btn btn-primary">
-    <input type="checkbox">Suterday time-for-time compensation
+    <input id="suterday_compensation" type="checkbox">Suterday time-for-time compensation
   </label>
 </div>
 <!--                 <button type="button" class="btn btn-primary btn-block" data-toggle="button"> Allow </button>-->
@@ -568,17 +607,35 @@ multitrip
         <input id="check2" type="checkbox" value="">
         Option one is this and that&mdash;be sure to include why it's great
 -->
-        <input id="settings_monday" type="text" class="form-control margin_bottom_10" placeholder="Monday">
-        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10" placeholder="Tuesday">
-        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10" placeholder="Wednesday">
-        <input id="settings_thursday" type="text" class="form-control margin_bottom_10" placeholder="Thursday">
-        <input id="settings_friday" type="text" class="form-control margin_bottom_10" placeholder="Friday">     
-        <input id="settings_saturday" type="text" class="form-control margin_bottom_10" placeholder="Saturday">
-        <input id="settings_sunday" type="text" class="form-control margin_bottom_10" placeholder="Sunday">
+<!--        <input id="settings_monday" type="text" class="form-control margin_bottom_10" placeholder="Monday">-->
+                <input id="settings_monday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberMondaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_monday" placeholder="Monday" bs-timepicker>
+
+<!--        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10" placeholder="Tuesday">-->
+        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberTuesdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_tuesday" placeholder="Tuesday" bs-timepicker>
+
+<!--        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10" placeholder="Wednesday">-->
+        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberWednesdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_wednesday" placeholder="Wednesday" bs-timepicker>        
+        
+        <input id="settings_thursday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberThursdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_thursday" placeholder="Thursday" bs-timepicker>
+
+<!--        <input id="settings_thursday" type="text" class="form-control margin_bottom_10" placeholder="Thursday">-->
+<!--        <input id="settings_friday" type="text" class="form-control margin_bottom_10" placeholder="Friday">   -->
+           
+            <input id="settings_friday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberFridaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_friday" placeholder="Friday" bs-timepicker>
+  
+<!--        <input id="settings_saturday" type="text" class="form-control margin_bottom_10" placeholder="Saturday">-->
+           
+            <input id="settings_saturday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberSaturdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_saturday" placeholder="Saturday" bs-timepicker>
+  
+        
+<!--        <input id="settings_sunday" type="text" class="form-control margin_bottom_10" placeholder="Sunday">-->
+           
+            <input id="settings_sunday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberSundaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_sunday" placeholder="Sunday" bs-timepicker>
 
       </div>
    <div class="col-md-12">
         <div class="col-md-4">
+<!--
         <label for="Week_ours">Week_ours</label>
         <select name="week_ours" class="form-control">
           <option>1</option>
@@ -594,6 +651,7 @@ multitrip
           <option>11</option>
           <option>12</option>
         </select>
+-->
         </div>
             <div class="col-md-4">
               <div class="col-xs-12 text-center"><label for="">Period range</label></div>
@@ -606,7 +664,8 @@ multitrip
       <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="period end" bs-datepicker>
     </div>
   </div>
-</form>
+
+<!--</form>-->
 <!--
                <div class="col-md-6">  <input id="text1" type="text" class="form-control" placeholder="period start"></div>        
                        <div class="col-md-6">  <input id="text1" type="text" class="form-control" placeholder="period end"></div>       
@@ -683,7 +742,7 @@ multitrip
               </div>
             </div>
 -->
-             <button id="setting_btn" class="btn btn-success margin_top_10 col-md-4 pull-right">Save</button>
+             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled">Save</button>
          
           </div>
         </div>
