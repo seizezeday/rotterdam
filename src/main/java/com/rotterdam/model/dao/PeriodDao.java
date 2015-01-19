@@ -13,9 +13,11 @@ import java.util.Date;
 @Named
 @Scope("singleton")
 public class PeriodDao extends AbstractGenericDao<Period> {
-    public Period selectByDateBetween(Date date){
-        Query query = entityManager.createQuery("select period from Period period where :per between period.startDate and period.endDate");
+    public Period selectByDateBetweenAndUser(Date date, Long userId){
+        Query query = entityManager.createQuery(
+                "select period from Period period where :per between period.startDate and period.endDate and period.user.id = :userId");
         query.setParameter("per", date);
+        query.setParameter("userId", userId);
         try{
             return (Period)query.getSingleResult();
         } catch (Exception e){

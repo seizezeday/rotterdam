@@ -1,13 +1,13 @@
 package com.rotterdam.tools;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 /**
  * @author Roman
@@ -72,8 +72,13 @@ public class DateTools {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.WEEK_OF_MONTH);
+    }
 
-
+    public static Date getDateAfterFourWeeks(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.WEEK_OF_YEAR, 4);
+        return calendar.getTime();
     }
 
 }

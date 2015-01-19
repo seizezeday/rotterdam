@@ -69,9 +69,7 @@ public class JsonCommands {
         CookieUtil cookieUtil = new CookieUtil();
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat();
-        User user = sessionDao
-                .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
-                .getUser();
+        User user = getUserFromRequest(hsr);
         if (user != null){
             JsonObject resultJsonDate = Json.createObjectBuilder()
                     .add(PARAM_FIRSTNAME, user.getFirstname())
@@ -108,9 +106,7 @@ public class JsonCommands {
 
     public JsonObject getTimeForTimeHours(HttpServletRequest hsr, Long useHours) throws JsonException {
         CookieUtil cookieUtil = new CookieUtil();
-        User user = sessionDao
-                .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
-                .getUser();
+        User user = getUserFromRequest(hsr);
         if (user != null) {
             //TODO: Implement real request to db and data retrieval
             JsonObject jsonAvaliableTimeForTime = Json.createObjectBuilder()
@@ -133,9 +129,7 @@ public class JsonCommands {
 	
 	public JsonObject getTimeForPayHours(HttpServletRequest hsr, Long newHours) throws JsonException {
        CookieUtil cookieUtil = new CookieUtil();
-       User user = sessionDao
-               .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
-               .getUser();
+       User user = getUserFromRequest(hsr);
        if (user != null) {
            JsonObject jsonAvaliableTimeForPay = Json.createObjectBuilder()
                    .add(PARAM_AVL_TIME_FOR_PAY, newHours.toString())
@@ -151,9 +145,7 @@ public class JsonCommands {
      */
     public JsonArray getUserTimeData(HttpServletRequest hsr, String data) throws ParseException {
         JsonArray workHoursArray = null;
-        User user = sessionDao
-                .selectBySessionId(new CookieUtil().getSessionIdFromRequest(hsr))
-                .getUser();
+        User user = getUserFromRequest(hsr);
         DateFormat sdf = new SimpleDateFormat(PARAM_DATE_PATTERN);
         Date date = sdf.parse(data);
         List<WorkHour> workHours = workHoursDao
@@ -186,9 +178,7 @@ public class JsonCommands {
         WorkHour workHours = null;
         DateFormat dateFormat = null;
         DateFormat timeFormat = null;
-        User user = sessionDao
-                .selectBySessionId(new CookieUtil().getSessionIdFromRequest(hsr))
-                .getUser();
+        User user = getUserFromRequest(hsr);
         if (user != null) {
             workHours = new WorkHour();
             dateFormat = new SimpleDateFormat(PARAM_DATE_PATTERN);
@@ -214,10 +204,7 @@ public class JsonCommands {
      * return null if user not exist in session
      */
     public UserInfoDto getInitAfterLoginData (HttpServletRequest hsr) throws JsonException, ParseException {
-        CookieUtil cookieUtil = new CookieUtil();
-        User user = sessionDao
-                .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
-                .getUser();
+        User user = getUserFromRequest(hsr);
         if (user != null){
             Date currentDate = new Date();
             DateFormat yearFormat = new SimpleDateFormat(PARAM_YEAR_PATTERN);
@@ -256,6 +243,14 @@ public class JsonCommands {
             return  null;
         }
     }
+
+    public  User getUserFromRequest(HttpServletRequest hsr) {
+        CookieUtil cookieUtil = new CookieUtil();
+        return sessionDao
+                .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
+                .getUser();
+    }
+
 
     public JsonObject getWeekData (String data) throws JsonException{
         JSONObject timeTabData = new JSONObject(data);

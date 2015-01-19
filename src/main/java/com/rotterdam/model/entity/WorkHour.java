@@ -89,6 +89,15 @@ public class WorkHour implements HibernateL2Cache, Serializable {
         this.rideType = rideType;
     }
 
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
     //    @JsonIgnore
     public User getUser() {
         return user;

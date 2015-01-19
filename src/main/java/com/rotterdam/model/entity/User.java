@@ -34,6 +34,11 @@ public class User implements Principal, HibernateL2Cache {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Session> sessions;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Period> periods;
+
 	public UserRole getRole() {
 		return role;
 	}

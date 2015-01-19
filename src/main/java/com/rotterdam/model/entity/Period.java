@@ -35,10 +35,18 @@ public class Period  implements HibernateL2Cache {
     @Temporal(TemporalType.TIME)
     private Date promiseSundayTime;
     private int timeForTime;
+    @Column(name = "periodType")
+    @Enumerated(EnumType.STRING)
+    private PeriodType periodType;
 
     @JsonIgnore
     @OneToMany(mappedBy = "period")
     private List<WorkHour> workHours;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUser", referencedColumnName = "id")
+    private User user;
 
     public long getIdPeriod() {
         return idPeriod;
@@ -134,6 +142,22 @@ public class Period  implements HibernateL2Cache {
 
     public void setWorkHours(List<WorkHour> workHours) {
         this.workHours = workHours;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public PeriodType getPeriodType() {
+        return periodType;
+    }
+
+    public void setPeriodType(PeriodType periodType) {
+        this.periodType = periodType;
     }
 
     @Override
