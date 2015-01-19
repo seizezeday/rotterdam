@@ -81,4 +81,38 @@ public class DateTools {
         return calendar.getTime();
     }
 
+    public static Date getDateNextDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
+    public static Date getDateOfFirstMonday(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        cal.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
+        return cal.getTime();
+    }
+
+    public static Date getDateOfLastDay(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+
+        return cal.getTime();
+    }
+
+    public static boolean isSunday(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+    }
+
+    public static Date getDateOfNextSunday(Date date){
+        while(!isSunday(date))
+            date = getDateNextDay(date);
+        return date;
+    }
+
 }

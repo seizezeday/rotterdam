@@ -17,4 +17,12 @@ public class DateTest {
 
         System.out.println(dateFormatter.format(dateAfterFourWeeks.getTime()));
     }
+
+    @Test
+    public void findFirstMondayOfCurrentMonth(){
+        Date dateOfFirstMonday = DateTools.getDateOfFirstMonday();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss z");
+
+        System.out.println(dateFormatter.format(dateOfFirstMonday.getTime()));
+    }
 }

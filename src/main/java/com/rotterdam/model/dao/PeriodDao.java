@@ -24,4 +24,16 @@ public class PeriodDao extends AbstractGenericDao<Period> {
             return null;
         }
     }
+
+    public Period selectLastPeriodByUser(Long userId){
+        Query query = entityManager.createQuery(
+                "select period from Period period where period.user.id = :userId and" +
+                        " PERIOD.endDate = (select max(period.endDate) from Period period)");
+        query.setParameter("userId", userId);
+        try{
+            return (Period)query.getSingleResult();
+        } catch (Exception e){
+            return null;
+        }
+    }
 }

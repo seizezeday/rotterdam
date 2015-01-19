@@ -35,8 +35,8 @@ public class WorkHour implements HibernateL2Cache, Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idPeriod")
-    private Period period;
+    @JoinColumn(name = "idWeek")
+    private Week week;
 
     public WorkHour() {
     }
@@ -90,12 +90,12 @@ public class WorkHour implements HibernateL2Cache, Serializable {
     }
 
 
-    public Period getPeriod() {
-        return period;
+    public Week getWeek() {
+        return week;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public void setWeek(Week week) {
+        this.week = week;
     }
 
     //    @JsonIgnore

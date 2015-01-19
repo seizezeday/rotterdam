@@ -45,7 +45,7 @@ public class UserInfo {
         UserInfoDto jsonData = jsonCommands.getInitAfterLoginData(hsr);
         System.out.println(jsonData);
 
-        //makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
+        makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
 
         if (jsonData != null){
             return Response.ok(jsonData).build();
@@ -64,8 +64,8 @@ public class UserInfo {
             period = new Period();
             period.setUser(user);
             period.setPeriodType(PeriodType.FOURWEEK); // setting this by default, can be changed in settings
-            period.setStartDate(now);
-            period.setEndDate(DateTools.getDateAfterFourWeeks(now));
+
+            setPeriodDateFourWeek(period, user.getId());
 
             period = periodDao.insert(period);
 
@@ -74,6 +74,32 @@ public class UserInfo {
         } else {
             //every thing is ok
         }
+    }
+
+    public void setPeriodDateFourWeek(Period period, Long userId){
+        //first we need to check for existing of last period
+        Period lastPeriodByUser = periodDao.selectLastPeriodByUser(userId);
+        Date startDate;
+        if(period == null){
+            //we just need to find first monday of current month
+            startDate = DateTools.getDateOfFirstMonday();
+        } else {
+            //we need to find next date after end of last period
+            startDate = DateTools.getDateNextDay(lastPeriodByUser.getEndDate());//this will be monday
+        }
+        period.setStartDate(startDate);
+        period.setEndDate(DateTools.getDateAfterFourWeeks(startDate));
+    }
+
+    public void setPeriodDateMonth(Period period){
+        Date startDate = DateTools.getDateOfFirstMonday();
+        Date endDate = DateTools.getDateOfLastDay();
+        if(!DateTools.isSunday(endDate)){
+            //we need to find end of this week
+            endDate = DateTools.getDateOfNextSunday(endDate);
+        }
+        period.setStartDate(startDate);
+        period.setEndDate(endDate);
     }
 
 }
