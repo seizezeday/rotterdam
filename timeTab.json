@@ -1,0 +1,24 @@
+{
+    "Monday":[
+        {"date":"2015-01-12"},
+        {"startWorkingTime":"01:00","endWorkingTime":"12:00","restTime":"25","dayType":"1"}],
+    "Tuesday":[
+        {"date":"2015-01-13"},
+        {"startWorkingTime":"13:50","endWorkingTime":"20:00","restTime":"10","dayType":"1"},
+        {"startWorkingTime":"20:50","endWorkingTime":"22:00","restTime":"25","dayType":"1"}],
+    "Wednesday":[
+        {"date":"2015-01-14"},
+        {"startWorkingTime":"00:00","endWorkingTime":"00:00","restTime":"00:00","dayType":"2"}],
+    "Thursday":[
+        {"date":"2015-01-15"},
+        {"startWorkingTime":"","endWorkingTime":"","restTime":"","dayType":"1"}],
+    "Friday":[
+        {"date":"2015-01-16"},
+        {"startWorkingTime":"","endWorkingTime":"","restTime":"","dayType":"1"}],
+    "Saturday":[
+        {"date":"2015-01-17"},
+        {"startWorkingTime":"","endWorkingTime":"","restTime":"","dayType":"1"}],
+    "Sunday":[
+        {"date":"2015-01-18"},
+        {"startWorkingTime":"","endWorkingTime":"","restTime":"","dayType":"1"}]
+}

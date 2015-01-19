@@ -45,7 +45,7 @@ public class UserInfo {
         UserInfoDto jsonData = jsonCommands.getInitAfterLoginData(hsr);
         System.out.println(jsonData);
 
-        makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
+        //makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
 
         if (jsonData != null){
             return Response.ok(jsonData).build();
