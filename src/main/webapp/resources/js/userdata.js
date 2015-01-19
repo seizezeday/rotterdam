@@ -452,7 +452,7 @@
                     startWorkingTime :  $(".time_"+ day +"_start").eq(data).val(),
                     endWorkingTime :    $(".time_"+ day +"_end").eq(data).val(),
                     restTime :          $(".time_"+ day +"_rest").eq(data).val(),
-                    dayType :          $(".time_"+ day +"_type_day").eq(data).val()
+                    dayType :           $(".time_"+ day +"_type_day").val()
                 };
             });
             return arr;
@@ -558,5 +558,20 @@
         $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date1_end');           $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_start');
         $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_end');
        //            Tab time multitrip end 
+
+    });
+        $('.time_monday_start,.time_monday_end,.time_monday_rest').keyup(function(){
+//                $(".time_monday_type_day").change(function(){
+
+        var monday_start_str =  $(".time_monday_start").val();
+        var monday_start = parseFloat(monday_start_str);
+        var monday_end_str =  $(".time_monday_end").val();
+        var monday_end = parseFloat(monday_end_str);
+        var monday_rest_str =  $(".time_monday_rest").val();
+        var monday_rest = parseFloat(monday_rest_str);
+        var total_time_monday = monday_end - monday_start - monday_rest;
+        console.log(total_time_monday)
+        $('#total_time_monday').empty()
+        $('#total_time_monday').append(total_time_monday)
     });
     });
