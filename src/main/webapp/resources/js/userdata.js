@@ -504,7 +504,7 @@
             }
         });
     };
-                    $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").keyup(function settings_day_hours(){
+                    $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").focusout(function settings_day_hours(){
 //                        alert('ok')
                     var monday_hours = $("#settings_monday").val();
                     var tuesday_hours = $("#settings_tuesday").val();
