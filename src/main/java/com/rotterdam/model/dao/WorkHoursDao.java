@@ -30,4 +30,9 @@ public class WorkHoursDao extends AbstractGenericDao<WorkHour> {
         query.setParameter("date", date);
         return (List<WorkHour>)query.getResultList();
     }
+
+    public void remove(WorkHour workHour){
+        entityManager.remove(workHour);
+        entityManager.flush();
+    }
 }

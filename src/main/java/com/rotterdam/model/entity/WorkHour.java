@@ -5,6 +5,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -30,13 +31,8 @@ public class WorkHour implements HibernateL2Cache, Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUser" , referencedColumnName = "id")
-    private User user;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idWeek")
-    private Week week;
+    @JoinColumn(name = "idDay")
+    private Day day;
 
     public WorkHour() {
     }
@@ -90,22 +86,12 @@ public class WorkHour implements HibernateL2Cache, Serializable {
     }
 
 
-    public Week getWeek() {
-        return week;
+    public Day getDay() {
+        return day;
     }
 
-    public void setWeek(Week week) {
-        this.week = week;
-    }
-
-    //    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
-
-    @JsonIgnore
-    public void setUser(User idUser) {
-        this.user = idUser;
+    public void setDay(Day day) {
+        this.day = day;
     }
 
     @Override
@@ -120,7 +106,6 @@ public class WorkHour implements HibernateL2Cache, Serializable {
         if (date != null ? !date.equals(workHours.date) : workHours.date != null) return false;
         if (endWorkingTime != null ? !endWorkingTime.equals(workHours.endWorkingTime) : workHours.endWorkingTime != null)
             return false;
-        if (user != null ? !user.equals(workHours.user) : workHours.user != null) return false;
         if (rideType != workHours.rideType) return false;
         if (startWorkingTime != null ? !startWorkingTime.equals(workHours.startWorkingTime) : workHours.startWorkingTime != null)
             return false;
@@ -136,7 +121,6 @@ public class WorkHour implements HibernateL2Cache, Serializable {
         result = 31 * result + (endWorkingTime != null ? endWorkingTime.hashCode() : 0);
         result = 31 * result + restTime;
         result = 31 * result + (rideType != null ? rideType.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
@@ -149,7 +133,17 @@ public class WorkHour implements HibernateL2Cache, Serializable {
                 ", endWorkingTime=" + endWorkingTime +
                 ", restTime=" + restTime +
                 ", rideType=" + rideType +
-                ", idUser=" + user +
                 '}';
+    }
+
+    public static WorkHourComparatorByStartWorkingTime workHourComparatorByStartWorkingTime =
+            new WorkHourComparatorByStartWorkingTime();
+
+    private static class WorkHourComparatorByStartWorkingTime implements Comparator<WorkHour> {
+
+        @Override
+        public int compare(WorkHour o1, WorkHour o2) {
+            return o1.startWorkingTime.compareTo(o2.startWorkingTime);
+        }
     }
 }

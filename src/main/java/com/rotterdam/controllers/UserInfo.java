@@ -40,15 +40,16 @@ public class UserInfo {
     @Path("/home")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getInfo(@Context HttpServletRequest hsr ) throws JsonException, ParseException {
-//        JsonObject jsonData = JsonCommands.getUserHomeData(hsr);
-//        JsonObject jsonData = jsonCommands.getInitAfterLoginData(hsr);
-        UserInfoDto jsonData = jsonCommands.getInitAfterLoginData(hsr);
-        System.out.println(jsonData);
+//        UserInfoDto jsonData = jsonCommands.getInitAfterLoginData(hsr);
+        User user = jsonCommands.getUserFromRequest(hsr);
+
+//        System.out.println(jsonData);
 
         //makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
 
-        if (jsonData != null){
-            return Response.ok(jsonData).build();
+        if (user != null){
+            UserInfoDto userInfoDto = UserInfoDto.formatForNow(user.getFirstname());
+            return Response.ok(userInfoDto).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

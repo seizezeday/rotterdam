@@ -37,7 +37,7 @@ public class Week implements HibernateL2Cache {
 
     @JsonIgnore
     @OneToMany(mappedBy = "week")
-    private List<WorkHour> workHours;
+    private List<Day> days;
 
     @ManyToOne
     @JoinColumn(name = "idPeriod")
@@ -125,12 +125,12 @@ public class Week implements HibernateL2Cache {
         this.idWeek = idWeek;
     }
 
-    public List<WorkHour> getWorkHours() {
-        return workHours;
+    public List<Day> getDays() {
+        return days;
     }
 
-    public void setWorkHours(List<WorkHour> workHours) {
-        this.workHours = workHours;
+    public void setDays(List<Day> days) {
+        this.days = days;
     }
 
     public Period getPeriod() {
@@ -154,7 +154,8 @@ public class Week implements HibernateL2Cache {
                 ", promiseFridayTime=" + promiseFridayTime +
                 ", promiseSaturdayTime=" + promiseSaturdayTime +
                 ", promiseSundayTime=" + promiseSundayTime +
-                ", workHours=" + workHours +
+                ", days=" + days +
+                ", period=" + period +
                 '}';
     }
 
@@ -166,7 +167,9 @@ public class Week implements HibernateL2Cache {
         Week week = (Week) o;
 
         if (idWeek != week.idWeek) return false;
+        if (days != null ? !days.equals(week.days) : week.days != null) return false;
         if (endDate != null ? !endDate.equals(week.endDate) : week.endDate != null) return false;
+        if (period != null ? !period.equals(week.period) : week.period != null) return false;
         if (promiseFridayTime != null ? !promiseFridayTime.equals(week.promiseFridayTime) : week.promiseFridayTime != null)
             return false;
         if (promiseMondayTime != null ? !promiseMondayTime.equals(week.promiseMondayTime) : week.promiseMondayTime != null)
@@ -182,7 +185,6 @@ public class Week implements HibernateL2Cache {
         if (promiseWednesdayTime != null ? !promiseWednesdayTime.equals(week.promiseWednesdayTime) : week.promiseWednesdayTime != null)
             return false;
         if (startDate != null ? !startDate.equals(week.startDate) : week.startDate != null) return false;
-        if (workHours != null ? !workHours.equals(week.workHours) : week.workHours != null) return false;
 
         return true;
     }
@@ -199,7 +201,8 @@ public class Week implements HibernateL2Cache {
         result = 31 * result + (promiseFridayTime != null ? promiseFridayTime.hashCode() : 0);
         result = 31 * result + (promiseSaturdayTime != null ? promiseSaturdayTime.hashCode() : 0);
         result = 31 * result + (promiseSundayTime != null ? promiseSundayTime.hashCode() : 0);
-        result = 31 * result + (workHours != null ? workHours.hashCode() : 0);
+        result = 31 * result + (days != null ? days.hashCode() : 0);
+        result = 31 * result + (period != null ? period.hashCode() : 0);
         return result;
     }
 }

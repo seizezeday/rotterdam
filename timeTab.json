@@ -1,10 +1,10 @@
 {
     "Monday":[
         {"date":"2015-01-12"},
-        {"startWorkingTime":"01:00","endWorkingTime":"12:00","restTime":"25","dayType":"1"}],
+        {"startWorkingTime":"07:00","endWorkingTime":"12:00","restTime":"25","dayType":"1"}],
     "Tuesday":[
         {"date":"2015-01-13"},
-        {"startWorkingTime":"13:50","endWorkingTime":"20:00","restTime":"10","dayType":"1"},
+        {"startWorkingTime":"12:17","endWorkingTime":"14:00","restTime":"10","dayType":"1"},
         {"startWorkingTime":"20:50","endWorkingTime":"22:00","restTime":"25","dayType":"1"}],
     "Wednesday":[
         {"date":"2015-01-14"},

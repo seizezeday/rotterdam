@@ -1,9 +1,12 @@
 package com.rotterdam.tools;
 
+import com.rotterdam.tools.json.JsonCommands;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -88,6 +91,13 @@ public class DateTools {
         return calendar.getTime();
     }
 
+    public static Date getDatePrevDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -1);
+        return calendar.getTime();
+    }
+
     public static Date getDateOfFirstMonday(){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -109,10 +119,41 @@ public class DateTools {
         return c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
     }
 
+    public static boolean isMonday(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
+    }
+
     public static Date getDateOfNextSunday(Date date){
         while(!isSunday(date))
             date = getDateNextDay(date);
         return date;
+    }
+
+    public static Date getDateOfPrevMonday(Date date){
+        while(!isMonday(date))
+            date = getDatePrevDay(date);
+        return date;
+    }
+
+    public static List<Date> getDatesOfWeekWithDate(Date date){
+        Date dateToAdd = getDateOfPrevMonday(date);
+        List<Date> dates = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            dates.add(dateToAdd);
+            dateToAdd = getDateNextDay(dateToAdd);
+        }
+        return dates;
+    }
+
+    public static List<String> formatDates(List<Date> dates){
+        DateFormat simpleDateFormat = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN);
+        List<String> dateStrings = new ArrayList<>();
+        for (Date date : dates) {
+            dateStrings.add(simpleDateFormat.format(date));
+        }
+        return dateStrings;
     }
 
 }

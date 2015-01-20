@@ -9,6 +9,8 @@ import com.rotterdam.model.entity.RideType;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.WorkHour;
 import com.rotterdam.tools.DateTools;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -53,7 +55,8 @@ public class JsonCommands {
     public static final String PARAM_CURRENT_YEAR = "currentYear";
     public static final String PARAM_CURRENT_MONTH = "currentMonth";
     public static final String PARAM_CURRENT_WEEK_NUMBER = "currentWeekNumber";
-    public static final String PARAM_DATE_PATTERN = "yyyy-MM-dd";
+//    public static final String PARAM_DATE_PATTERN = "yyyy-MM-dd";
+    public static final String PARAM_DATE_PATTERN = "dd-MM-yyyy";
     public static final String PARAM_DATE_FULL_PATTERN = "yyyy/MM/dd HH:mm";
     public static final String PARAM_YEAR_PATTERN = "yyyy";
     public static final String PARAM_MONTH_PATTERN = "MM";
@@ -193,7 +196,7 @@ public class JsonCommands {
             workHours.setEndWorkingTime(endWorkingTime);
             workHours.setDate(date);
             workHours.setRestTime(timeTabData.getInt(PARAM_REST_TIME));
-            workHours.setUser(user);
+            //workHours.setUser(user);
 
             return workHours;
         } else {
@@ -329,6 +332,17 @@ public class JsonCommands {
 
         }
         return result;
+    }
+
+    public Date getDateFromJson(String data) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(data);
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            return format.parse(node.get("currentDate").asText());
+        } catch (Exception e){
+            return null;
+        }
     }
 
 

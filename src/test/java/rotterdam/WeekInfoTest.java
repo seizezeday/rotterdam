@@ -1,73 +1,57 @@
 package rotterdam;
 
-import com.rotterdam.dto.DayDto;
 import com.rotterdam.dto.WeekDto;
-import com.rotterdam.dto.WorkHourDto;
-import com.rotterdam.model.entity.RideType;
-import com.rotterdam.tools.json.JsonCommands;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.rotterdam.service.WeekService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by root on 18.01.15.
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration("file:src/main/webapp/WEB-INF/app-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/app-context.xml")
 public class WeekInfoTest {
+
+    @Inject
+    private WeekService weekService;
+
+    private long userId = 5;
+
+    @Test
+    @Rollback(false)
+    public void saveTimeTab() throws IOException, ParseException {
+        String genreJson = readTempJson();
+        WeekDto weekDto = WeekDto.parseTimeTab(genreJson);
+
+        weekService.save(weekDto, userId);
+    }
+
     @Test
     public void timeTabRead() throws IOException, ParseException {
+        String genreJson = readTempJson();
+        WeekDto weekDto = WeekDto.parseTimeTab(genreJson);
+        System.out.println(weekDto);
+    }
+
+
+
+    public String readTempJson() throws IOException {
         String genreJson = "";
         List<String> lines = Files.readAllLines(Paths.get("timeTab.json"), Charset.defaultCharset());
         for(String s : lines)
             genreJson += s;
-
-        WeekDto weekDto = new WeekDto();
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(genreJson);
-        Iterator<Map.Entry<String, JsonNode>> days = node.getFields();
-
-        while (days.hasNext()) {
-            DayDto dayDto = new DayDto();
-            Map.Entry<String, JsonNode> day = days.next();
-            String dayTitle = day.getKey();
-            Iterator<JsonNode> dateAndWorkHours = day.getValue().getElements();
-            dayDto.date = parseDate(dateAndWorkHours.next().get("date").asText());;
-            while (dateAndWorkHours.hasNext()){
-                JsonNode workHour = dateAndWorkHours.next();
-                WorkHourDto workHourDto = new WorkHourDto();
-                workHourDto.startWorkingTime = parseTime(workHour.get("startWorkingTime").asText());
-                workHourDto.endWorkingTime = parseTime(workHour.get("endWorkingTime").asText());
-                workHourDto.restTime = workHour.get("restTime").asInt();
-                workHourDto.rideType = RideType.values()[workHour.get("dayType").asInt()-1];
-                dayDto.workHours.add(workHourDto);
-            }
-            weekDto.days.put(dayTitle, dayDto);
-        }
-        System.out.println(weekDto);
-    }
-
-    public Date parseTime(String time) throws ParseException {
-        try {
-            return new SimpleDateFormat("hh:mm").parse(time);
-        } catch (ParseException e) {
-            return new SimpleDateFormat("hh:mm").parse("00:00");
-        }
-    }
-
-    public Date parseDate(String dateString) throws ParseException {
-        DateFormat format = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN);
-        return format.parse(dateString);
+        return genreJson;
     }
 
 }
