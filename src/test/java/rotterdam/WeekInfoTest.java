@@ -2,11 +2,9 @@ package rotterdam;
 
 import com.rotterdam.dto.WeekDto;
 import com.rotterdam.service.WeekService;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -19,8 +17,8 @@ import java.util.List;
 /**
  * Created by root on 18.01.15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/app-context.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("file:src/main/webapp/WEB-INF/app-context.xml")
 public class WeekInfoTest {
 
     @Inject
@@ -52,6 +50,18 @@ public class WeekInfoTest {
         for(String s : lines)
             genreJson += s;
         return genreJson;
+    }
+
+    //reading tests
+
+    @Test
+    public void serializeWeekDto() throws IOException, ParseException {
+        String genreJson = readTempJson();
+        WeekDto weekDto = WeekDto.parseTimeTab(genreJson);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(weekDto);
+        System.out.println(json);
     }
 
 }

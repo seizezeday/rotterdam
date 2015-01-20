@@ -7,10 +7,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Roman
@@ -154,6 +151,12 @@ public class DateTools {
             dateStrings.add(simpleDateFormat.format(date));
         }
         return dateStrings;
+    }
+
+    public static String getWeekDayTitle(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
     }
 
 }

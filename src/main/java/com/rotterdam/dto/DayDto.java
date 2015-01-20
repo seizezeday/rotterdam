@@ -1,6 +1,8 @@
 package com.rotterdam.dto;
 
+import com.rotterdam.tools.json.JsonDateSerializer;
 import com.rotterdam.tools.json.JsonCommands;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
  * Created by root on 19.01.15.
  */
 public class DayDto{
+    @JsonSerialize(using=JsonDateSerializer.class)
     public Date date;
     public List<WorkHourDto> workHours = new ArrayList<>();
 

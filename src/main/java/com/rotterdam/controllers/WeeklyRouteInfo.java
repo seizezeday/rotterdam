@@ -1,6 +1,7 @@
 package com.rotterdam.controllers;
 
 import com.rotterdam.dto.WeekDto;
+import com.rotterdam.model.entity.User;
 import com.rotterdam.service.WeekService;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.JsonCommands;
@@ -88,11 +89,13 @@ public class WeeklyRouteInfo {
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response getTimeTabData(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
 
-        //we need to parse data
         Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
 
-        //we need to weekDto
+        User user = jsonCommands.getUserFromRequest(hsr);
 
-        return Response.ok().build();
+        WeekDto weekDto = weekService.getWeekByStartDateAndUserId(monday, user.getId());
+
+        return Response.ok(weekDto).build();
     }
+    //{"days":{"Monday":{"date":"12-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":20,"dayType":"1"}]},"Tuesday":{"date":"13-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"2"}]},"Wednesday":{"date":"14-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Thursday":{"date":"15-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Friday":{"date":"16-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":10,"dayType":"1"},{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":30,"dayType":"1"}]},"Saturday":{"date":"17-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Sunday":{"date":"18-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]}}}
 }

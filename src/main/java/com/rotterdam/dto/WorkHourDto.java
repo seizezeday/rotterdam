@@ -1,6 +1,10 @@
 package com.rotterdam.dto;
 
 import com.rotterdam.model.entity.RideType;
+import com.rotterdam.tools.json.JsonDateSerializer;
+import com.rotterdam.tools.json.JsonRideTypeSerializer;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -10,9 +14,13 @@ import java.util.Date;
  * Created by root on 19.01.15.
  */
 public class WorkHourDto {
+    @JsonSerialize(using=JsonDateSerializer.class)
     public Date startWorkingTime;
+    @JsonSerialize(using=JsonDateSerializer.class)
     public Date endWorkingTime;
     public int restTime;
+    @JsonSerialize(using=JsonRideTypeSerializer.class)
+    @JsonProperty("dayType")
     public RideType rideType;
 
     @Override

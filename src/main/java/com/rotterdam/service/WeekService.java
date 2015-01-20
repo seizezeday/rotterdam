@@ -9,6 +9,7 @@ import com.rotterdam.model.dao.WorkHoursDao;
 import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.Week;
 import com.rotterdam.model.entity.WorkHour;
+import com.rotterdam.tools.DateTools;
 import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -122,21 +123,27 @@ public class WeekService {
         return workHours;
     }
 
+    @Transactional
     public WeekDto getWeekByStartDateAndUserId(Date startDate, long userId){
         Week week = weekDao.selectByStartDateAndUser(startDate, userId);
-        return null;
+        return convertToWorkHourDto(week.getDays());
     }
 
-    private List<WorkHourDto> convertToWorkHourDto(List<WorkHour> workHours){
-        List<WorkHourDto> workHourDtos = new ArrayList<>();
-        for(WorkHour workHour : workHours){
-            WorkHourDto workHourDto = new WorkHourDto();
-            workHourDto.startWorkingTime = workHour.getStartWorkingTime();
-            workHourDto.endWorkingTime = workHour.getEndWorkingTime();
-            workHourDto.restTime = workHour.getRestTime();
-            workHourDto.rideType = workHour.getRideType();
-            workHourDtos.add(workHourDto);
+    private WeekDto convertToWorkHourDto(List<Day> days){
+        WeekDto weekDto = new WeekDto();
+        for(Day day : days){
+            DayDto dayDto = new DayDto();
+            dayDto.date = day.getDate();
+            for (WorkHour workHour : day.getWorkHours()) {
+                WorkHourDto workHourDto = new WorkHourDto();
+                workHourDto.startWorkingTime = workHour.getStartWorkingTime();
+                workHourDto.endWorkingTime = workHour.getEndWorkingTime();
+                workHourDto.restTime = workHour.getRestTime();
+                workHourDto.rideType = workHour.getRideType();
+                dayDto.workHours.add(workHourDto);
+            }
+            weekDto.days.put(DateTools.getWeekDayTitle(dayDto.date), dayDto);
         }
-        return workHourDtos;
+        return weekDto;
     }
 }
