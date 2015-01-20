@@ -504,7 +504,10 @@
             }
         });
     };
-                    $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").focusout(function settings_day_hours(){
+                    $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").keyup(settings_day_hours);
+                    $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").focusout(settings_day_hours)
+                        
+                    function settings_day_hours(){
 //                        alert('ok')
                     var monday_hours = $("#settings_monday").val();
                     var tuesday_hours = $("#settings_tuesday").val();
@@ -523,7 +526,7 @@
                     $(".hide_tabs").css("display","none");; 
                     $('#setting_save').attr("disabled","disabled");
                     }
-                    });
+                    };
         //            Settings tab end 
 
        //            Tab time multitrip start 
