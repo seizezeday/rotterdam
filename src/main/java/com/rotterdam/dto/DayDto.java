@@ -1,6 +1,6 @@
 package com.rotterdam.dto;
 
-import com.rotterdam.tools.json.JsonDateSerializer;
+import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import com.rotterdam.tools.json.JsonCommands;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 

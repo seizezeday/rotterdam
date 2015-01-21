@@ -1,8 +1,8 @@
 package rotterdam.dao;
 
-import com.rotterdam.controllers.UserInfo;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.User;
+import com.rotterdam.service.PeriodService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,14 +18,13 @@ import javax.inject.Inject;
 public class PeriodTests {
 
     @Inject
-    UserInfo userInfo;
-
+    PeriodService periodService;
     @Inject
     UserDao userDao;
 
     @Test
     public void checkPeriodCheck(){
         User user = userDao.selectByEmail("superuser@mail.com");
-        userInfo.makePeriodCheck(user);
+        periodService.makePeriodCheck(user);
     }
 }

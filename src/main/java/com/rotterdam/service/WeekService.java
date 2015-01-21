@@ -1,12 +1,15 @@
 package com.rotterdam.service;
 
 import com.rotterdam.dto.DayDto;
+import com.rotterdam.dto.SettingsDto;
 import com.rotterdam.dto.WeekDto;
 import com.rotterdam.dto.WorkHourDto;
 import com.rotterdam.model.dao.DayDao;
+import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.WeekDao;
 import com.rotterdam.model.dao.WorkHoursDao;
 import com.rotterdam.model.entity.Day;
+import com.rotterdam.model.entity.Period;
 import com.rotterdam.model.entity.Week;
 import com.rotterdam.model.entity.WorkHour;
 import com.rotterdam.tools.DateTools;
@@ -34,6 +37,9 @@ public class WeekService {
 
     @Inject
     private WorkHoursDao workHoursDao;
+
+    @Inject
+    private PeriodDao periodDao;
 
     @Transactional
     public boolean save(WeekDto weekDto, long userId){
@@ -145,5 +151,45 @@ public class WeekService {
             weekDto.days.put(DateTools.getWeekDayTitle(dayDto.date), dayDto);
         }
         return weekDto;
+    }
+
+    @Transactional
+    public void save(SettingsDto settingsDto, long userId){
+        //check date
+        settingsDto.currentDate = DateTools.getDateOfPrevMonday(settingsDto.currentDate);
+
+        Week week = weekDao.selectByStartDateAndUser(settingsDto.currentDate, userId);
+
+        if(week == null){
+          //need to create new week
+            week = new Week();
+            week = copyDaysOfWeek(week, settingsDto);
+            //we need to find corresponding period
+            Period period = periodDao.selectByDateBetweenAndUser(settingsDto.currentDate, userId);
+            if(period == null){
+                //logic error
+                return;
+            }
+            week.setPeriod(period);
+            week.setStartDate(settingsDto.currentDate);
+            week.setEndDate(DateTools.getDateOf7DayAfter(settingsDto.currentDate));
+
+            //now save to db
+            weekDao.insert(week);
+        } else {
+            week = copyDaysOfWeek(week, settingsDto);
+            weekDao.update(week);
+        }
+    }
+
+    private Week copyDaysOfWeek(Week week, SettingsDto settingsDto){
+        week.setPromiseMondayTime(settingsDto.monday_hours);
+        week.setPromiseTuesdayTime(settingsDto.tuesday_hours);
+        week.setPromiseWednesdayTime(settingsDto.wednesday_hours);
+        week.setPromiseThursdayTime(settingsDto.thursday_hours);
+        week.setPromiseFridayTime(settingsDto.friday_hours);
+        week.setPromiseSaturdayTime(settingsDto.saturday_hours);
+        week.setPromiseSundayTime(settingsDto.sunday_hours);
+        return week;
     }
 }

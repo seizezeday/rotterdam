@@ -470,6 +470,7 @@
 //            var sunday_hours = $("#settings_sunday").val();          
 //            alert(monday_hours);
             var selected_settings  = {
+                currentDate: $("#time_week_date").val(),
             monday_hours : $("#settings_monday").val(), 
             tuesday_hours : $("#settings_tuesday").val(), 
             wednesday_hours : $("#settings_wednesday").val(), 
@@ -499,6 +500,7 @@
             dataType: "json",
             statusCode: {
                 200: function () {
+                    $(".hide_tabs").css("display","block");
                     alert("Success...");
                 }
             }
@@ -517,10 +519,10 @@
                     var saturday_hours = $("#settings_saturday").val();
                     var sunday_hours = $("#settings_sunday").val();
                     if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !=="" && sunday_hours !=="") {
-                    $(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
+                    //$(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
 ; // Показать табы если введены поля времени
                     $('#setting_save').removeAttr("disabled","disabled")
-                    $('#setting_save').click();
+                    //$('#setting_save').click();
                     }
                         else {
                     $(".hide_tabs").css("display","none");; 

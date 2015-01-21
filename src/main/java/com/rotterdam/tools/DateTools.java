@@ -159,4 +159,11 @@ public class DateTools {
         return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
     }
 
+    public static Date getDateOf7DayAfter(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 6);
+        return calendar.getTime();
+    }
+
 }

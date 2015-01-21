@@ -1,8 +1,8 @@
 package com.rotterdam.dto;
 
 import com.rotterdam.model.entity.RideType;
-import com.rotterdam.tools.json.JsonDateSerializer;
-import com.rotterdam.tools.json.JsonRideTypeSerializer;
+import com.rotterdam.tools.json.serializer.JsonDateSerializer;
+import com.rotterdam.tools.json.serializer.JsonRideTypeSerializer;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
