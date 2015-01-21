@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * @author Anatolii
@@ -37,12 +38,30 @@ public class SettingInfo {
     @POST
     @Path("/settings")
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response getTimeInfo(@Context HttpServletRequest hsr, SettingsDto settingsDto) throws ParseException, IOException {
+    public Response saveSettings(@Context HttpServletRequest hsr, SettingsDto settingsDto) throws ParseException, IOException {
         //System.out.println(settingsDto);
         User user = jsonCommands.getUserFromRequest(hsr);
         if(user != null) {
             weekService.save(settingsDto, user.getId());
             return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @RolesAllowed({ "Driver" })
+    @POST
+    @Path("/settings/get")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response getSettings(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
+
+        User user = jsonCommands.getUserFromRequest(hsr);
+
+        if(user != null) {
+            Date date = jsonCommands.getDateFromJson(data);
+
+            SettingsDto settingsDto = weekService.getSettings(date, user.getId());
+            return Response.ok(settingsDto).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

@@ -3,8 +3,10 @@ package com.rotterdam.dto;
 import com.rotterdam.tools.json.JsonCommands;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
+import com.rotterdam.tools.json.serializer.JsonTimeSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,18 +21,25 @@ public class SettingsDto {
     public Date currentDate;
 
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date monday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date tuesday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date wednesday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date thursday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date friday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date saturday_hours;
     @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonSerialize(using = JsonTimeSerializer.class)
     public Date sunday_hours;
 
     @Override

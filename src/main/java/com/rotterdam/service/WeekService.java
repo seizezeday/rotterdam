@@ -192,4 +192,32 @@ public class WeekService {
         week.setPromiseSundayTime(settingsDto.sunday_hours);
         return week;
     }
+
+    private SettingsDto copyDaysOfWeek(SettingsDto settingsDto, Week week){
+
+        settingsDto.monday_hours = week.getPromiseMondayTime();
+        settingsDto.tuesday_hours = week.getPromiseTuesdayTime();
+        settingsDto.wednesday_hours = week.getPromiseWednesdayTime();
+        settingsDto.thursday_hours = week.getPromiseThursdayTime();
+        settingsDto.friday_hours = week.getPromiseFridayTime();
+        settingsDto.saturday_hours = week.getPromiseSaturdayTime();
+        settingsDto.sunday_hours = week.getPromiseSundayTime();
+        return settingsDto;
+    }
+
+    @Transactional
+    public SettingsDto getSettings(Date date, long userId){
+        date = DateTools.getDateOfPrevMonday(date);
+
+        Week week = weekDao.selectByStartDateAndUser(date, userId);
+
+        SettingsDto settingsDto = new SettingsDto();
+
+        if(week == null)
+            return settingsDto;
+
+        settingsDto = copyDaysOfWeek(settingsDto, week);
+
+        return settingsDto;
+    }
 }

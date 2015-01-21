@@ -327,6 +327,7 @@
             };
              $('.time_date').empty();
             time_date(selected_date);
+            readSettings();
              }); 
             function time_date(data) {
             $.ajax({
@@ -518,7 +519,8 @@
                     var friday_hours = $("#settings_friday").val();
                     var saturday_hours = $("#settings_saturday").val();
                     var sunday_hours = $("#settings_sunday").val();
-                    if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !=="" && sunday_hours !=="") {
+                    if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !==""
+                        && saturday_hours  !=="" && sunday_hours !=="") {
                     //$(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
 ; // Показать табы если введены поля времени
                     $('#setting_save').removeAttr("disabled","disabled")
@@ -580,4 +582,44 @@
         $('#total_time_monday').empty()
         $('#total_time_monday').append(total_time_monday)
     });
+
+
+        function readSettings() {
+            //setting settings tab
+            $.ajax({
+                type: "POST",
+                url: "api/settings/get",
+                datatype: "json",
+                data: JSON.stringify({currentDate: $("#time_week_date").val()}),
+                contentType: "application/json; charset=utf-8",
+                statusCode: {
+                    200: function (data) {
+                        $("#settings_monday").val(data.monday_hours);
+                        $("#settings_tuesday").val(data.tuesday_hours);
+                        $("#settings_wednesday").val(data.wednesday_hours);
+                        $("#settings_thursday").val(data.thursday_hours);
+                        $("#settings_friday").val(data.friday_hours);
+                        $("#settings_saturday").val(data.saturday_hours);
+                        $("#settings_sunday").val(data.sunday_hours);
+                        var monday_hours = $("#settings_monday").val();
+                        var tuesday_hours = $("#settings_tuesday").val();
+                        var wednesday_hours = $("#settings_wednesday").val();
+                        var thursday_hours = $("#settings_thursday").val();
+                        var friday_hours = $("#settings_friday").val();
+                        var saturday_hours = $("#settings_saturday").val();
+                        var sunday_hours = $("#settings_sunday").val();
+                        if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !==""
+                            && saturday_hours  !=="" && sunday_hours !=="") {
+                            $(".hide_tabs").css("display", "block");
+                        }else {
+                            $(".hide_tabs").css("display","none");;
+                            $('#setting_save').attr("disabled","disabled");
+                        }
+                    }
+                }
+            });
+        }
+
+        readSettings();
+
     });
