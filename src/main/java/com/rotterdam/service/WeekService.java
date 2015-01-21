@@ -58,6 +58,9 @@ public class WeekService {
                     //day is existing
                 }
 
+                //auto-rest enabled
+                checkRestTime(weekDto);
+
                 //we need to sort to ensure order
                 Collections.sort(dayDto.workHours, WorkHourDto.workHourDtoComparatorByStartWorkingTime);
                 Collections.sort(day.getWorkHours(), WorkHour.workHourComparatorByStartWorkingTime);
@@ -127,6 +130,25 @@ public class WeekService {
             workHours.add(workHour);
         }
         return workHours;
+    }
+
+    private void checkRestTime(WeekDto weekDto){
+        for (DayDto dayDto : weekDto.days.values())
+            for (WorkHourDto workHourDto : dayDto.workHours){
+                if(workHourDto.restTime == 0){
+
+                    double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
+                    double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
+                    double time = endTime - startTime;
+
+                         if (time >=  4.5 && time <   7.5) workHourDto.restTime = 30;
+                    else if (time >=  7.5 && time <  10.5) workHourDto.restTime = 60;
+                    else if (time >= 10.5 && time <  13.5) workHourDto.restTime = 90;
+                    else if (time >= 13.5 && time <  16.5) workHourDto.restTime = 120;
+                    else if (time >= 16.5 && time <= 13.5) workHourDto.restTime = 150;
+
+                }
+            }
     }
 
     @Transactional

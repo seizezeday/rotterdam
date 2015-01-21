@@ -601,16 +601,10 @@
                         $("#settings_friday").val(data.friday_hours);
                         $("#settings_saturday").val(data.saturday_hours);
                         $("#settings_sunday").val(data.sunday_hours);
-                        var monday_hours = $("#settings_monday").val();
-                        var tuesday_hours = $("#settings_tuesday").val();
-                        var wednesday_hours = $("#settings_wednesday").val();
-                        var thursday_hours = $("#settings_thursday").val();
-                        var friday_hours = $("#settings_friday").val();
-                        var saturday_hours = $("#settings_saturday").val();
-                        var sunday_hours = $("#settings_sunday").val();
-                        if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !==""
-                            && saturday_hours  !=="" && sunday_hours !=="") {
+                        if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
+                            data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="") {
                             $(".hide_tabs").css("display", "block");
+                            $('#setting_save').removeAttr("disabled","disabled")
                         }else {
                             $(".hide_tabs").css("display","none");;
                             $('#setting_save').attr("disabled","disabled");

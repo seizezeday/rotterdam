@@ -166,4 +166,15 @@ public class DateTools {
         return calendar.getTime();
     }
 
+    public static double getDoubleFormatHours(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        double hours = calendar.get(Calendar.HOUR_OF_DAY);
+        double minutes = calendar.get(Calendar.MINUTE);
+
+        hours += minutes / 60;
+
+        return hours;
+    }
+
 }
