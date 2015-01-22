@@ -442,7 +442,6 @@
                     }
                 }
             });
-            function time_save(data) {
             $.ajax({
                 type: "POST",
                 url: "api/timeTab",
