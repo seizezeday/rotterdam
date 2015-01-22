@@ -451,7 +451,14 @@
                 dataType: "json",
                 statusCode: {
                     200: function () {
+                       alert('json ok');
                        $(".time_monday_start").append(data.days.Monday.workHours[0]); 
+                       $(".time_tuesday_start").append(data.days.Tuesday.workHours[0]); 
+                       $(".time_wednesday_start").append(data.days.Wednesday.workHours[0]); 
+                       $(".time_thursday_start").append(data.days.Thursday.workHours[0]); 
+                       $(".time_friday_start").append(data.days.Friday.workHours[0]); 
+                       $(".time_saturday_start").append(data.days.Saturday.workHours[0]); 
+                       $(".time_sunday_start").append(data.days.Sunday.workHours[0]); 
                     }
                 }
             });  
