@@ -445,7 +445,7 @@
             $.ajax({
                 type: "POST",
                 url: "api/timeTab",
-                data: JSON.stringify(data),
+                data: JSON.stringify({currentDate: $("#time_week_date").val()}),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
