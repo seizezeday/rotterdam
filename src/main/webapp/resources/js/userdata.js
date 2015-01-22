@@ -443,7 +443,7 @@
                 }
             });
 
-            loadTimeTab();
+            //loadTimeTab();
 
         }
 
@@ -453,20 +453,20 @@
             $.ajax({
                 type: "POST",
                 url: "api/timeTab",
-                data: JSON.stringify(data),
+                data: JSON.stringify({currentDate: $("#time_week_date").val()}),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
 
                     200: function (data) {
                        alert('json ok');
-                       $(".time_monday_start").val(data.days.Monday.workHours[0]); 
-                       $(".time_tuesday_start").val(data.days.Tuesday.workHours[0]); 
-                       $(".time_wednesday_start").val(data.days.Wednesday.workHours[0]); 
-                       $(".time_thursday_start").val(data.days.Thursday.workHours[0]); 
-                       $(".time_friday_start").val(data.days.Friday.workHours[0]); 
-                       $(".time_saturday_start").val(data.days.Saturday.workHours[0]); 
-                       $(".time_sunday_start").val(data.days.Sunday.workHours[0]); 
+                       $(".time_monday_start").val(data.days.Monday.workHours[0].startWorkingTime);
+                       $(".time_tuesday_start").val(data.days.Tuesday.workHours[0].startWorkingTime);
+                       $(".time_wednesday_start").val(data.days.Wednesday.workHours[0].startWorkingTime);
+                       $(".time_thursday_start").val(data.days.Thursday.workHours[0].startWorkingTime);
+                       $(".time_friday_start").val(data.days.Friday.workHours[0].startWorkingTime);
+                       $(".time_saturday_start").val(data.days.Saturday.workHours[0].startWorkingTime);
+                       $(".time_sunday_start").val(data.days.Sunday.workHours[0].startWorkingTime);
                     }
                 }
             });
