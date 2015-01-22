@@ -185,4 +185,8 @@ public class DateTools {
         return Date.from(instant);
     }
 
+    public static LocalDate convertToLocalDate(Date date){
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
 }

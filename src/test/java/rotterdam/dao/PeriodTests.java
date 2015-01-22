@@ -1,12 +1,15 @@
 package rotterdam.dao;
 
+import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.UserDao;
+import com.rotterdam.model.entity.Period;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.service.PeriodService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
@@ -21,10 +24,19 @@ public class PeriodTests {
     PeriodService periodService;
     @Inject
     UserDao userDao;
+    @Inject
+    PeriodDao periodDao;
 
     @Test
     public void checkPeriodCheck(){
         User user = userDao.selectByEmail("superuser@mail.com");
         periodService.makePeriodCheck(user);
+    }
+
+    @Test
+    @Transactional
+    public void nativeQueryTest(){
+        Period period = periodDao.selectPrevPeriodByUser(5L);
+        System.out.println(period);
     }
 }

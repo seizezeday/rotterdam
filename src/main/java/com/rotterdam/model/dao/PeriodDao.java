@@ -25,15 +25,43 @@ public class PeriodDao extends AbstractGenericDao<Period> {
         }
     }
 
-    public Period selectLastPeriodByUser(Long userId){
+    public Period selectByStartAndEndDate(Date startDate, Date endDate, Long userId){
         Query query = entityManager.createQuery(
-                "select period from Period period where period.user.id = :userId and" +
-                        " PERIOD.endDate = (select max(period.endDate) from Period period)");
+                "select period from Period period where period.startDate = :startDate and period.endDate = :endDate and period.user.id = :userId");
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
         query.setParameter("userId", userId);
         try{
             return (Period)query.getSingleResult();
         } catch (Exception e){
             return null;
         }
+    }
+
+    public Period selectLastPeriodByUser(Long userId){
+        Query query = entityManager.createQuery(
+                "select period from Period period where period.user.id = :userId and" +
+                        " PERIOD.endDate = (select max(period.endDate) from Period period where period.user.id = :userId)");
+        query.setParameter("userId", userId);
+        try{
+            return (Period)query.getSingleResult();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public Period selectPrevPeriodByUser(Long userId){
+        Query nativeQuery = entityManager.createNativeQuery(
+                "SELECT * FROM PERIOD where PERIOD.endDate = (" +
+                    "select max(period.endDate) from (" +
+                        "select * from PERIOD where PERIOD.idUser = ? and PERIOD.idPeriod <> " +
+                            "(SELECT PERIOD.idPeriod FROM PERIOD " +
+                                "where PERIOD.idUser = ? and PERIOD.endDate = (" +
+                                    "select max(period.endDate) from PERIOD period))" +
+                    ") period) and PERIOD.idUser = ?", Period.class);
+        nativeQuery.setParameter(1, userId);
+        nativeQuery.setParameter(2, userId);
+        nativeQuery.setParameter(3, userId);
+        return (Period)nativeQuery.getSingleResult();
     }
 }

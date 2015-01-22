@@ -22,7 +22,7 @@ public class User implements Principal, HibernateL2Cache {
 	private String zipcode;
 	private String email;
 	private String password;
-    private Integer timeForPay;
+    private double timeForPay;
 
 	@JsonIgnore
 	@ManyToOne
@@ -131,11 +131,11 @@ public class User implements Principal, HibernateL2Cache {
 		this.password = password;
 	}
 
-    public int getTimeForPay() {
+    public double getTimeForPay() {
         return timeForPay;
     }
 
-    public void setTimeForPay(int timeForPay) {
+    public void setTimeForPay(double timeForPay) {
         this.timeForPay = timeForPay;
     }
 

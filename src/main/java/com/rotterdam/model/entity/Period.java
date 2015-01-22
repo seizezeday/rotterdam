@@ -2,6 +2,7 @@ package com.rotterdam.model.entity;
 
 import com.rotterdam.model.dao.HibernateL2Cache;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class Period  implements HibernateL2Cache {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    private int timeForTime;
+    private double timeForTime;
     @Column(name = "periodType")
     @Enumerated(EnumType.STRING)
     private PeriodType periodType;
@@ -34,6 +35,9 @@ public class Period  implements HibernateL2Cache {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     private User user;
+
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean calculated;
 
     public long getIdPeriod() {
         return idPeriod;
@@ -75,11 +79,11 @@ public class Period  implements HibernateL2Cache {
         this.periodType = periodType;
     }
 
-    public int getTimeForTime() {
+    public double getTimeForTime() {
         return timeForTime;
     }
 
-    public void setTimeForTime(int timeForTime) {
+    public void setTimeForTime(double timeForTime) {
         this.timeForTime = timeForTime;
     }
 
@@ -111,13 +115,18 @@ public class Period  implements HibernateL2Cache {
 
     @Override
     public int hashCode() {
-        int result = (int) (idPeriod ^ (idPeriod >>> 32));
+
+        int result;
+        long temp;
+        result = (int) (idPeriod ^ (idPeriod >>> 32));
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + timeForTime;
+        temp = Double.doubleToLongBits(timeForTime);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (periodType != null ? periodType.hashCode() : 0);
         result = 31 * result + (weeks != null ? weeks.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (calculated ? 1 : 0);
         return result;
     }
 
@@ -132,5 +141,13 @@ public class Period  implements HibernateL2Cache {
                 ", weeks=" + weeks +
                 ", user=" + user +
                 '}';
+    }
+
+    public boolean isCalculated() {
+        return calculated;
+    }
+
+    public void setCalculated(boolean calculated) {
+        this.calculated = calculated;
     }
 }
