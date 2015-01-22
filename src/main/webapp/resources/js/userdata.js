@@ -458,7 +458,7 @@
                 dataType: "json",
                 statusCode: {
 
-                    200: function () {
+                    200: function (data) {
                        alert('json ok');
                        $(".time_monday_start").val(data.days.Monday.workHours[0]); 
                        $(".time_tuesday_start").val(data.days.Tuesday.workHours[0]); 
