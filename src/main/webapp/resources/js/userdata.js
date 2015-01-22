@@ -442,6 +442,19 @@
                     }
                 }
             });
+            function time_save(data) {
+            $.ajax({
+                type: "POST",
+                url: "api/timeTab",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                statusCode: {
+                    200: function () {
+                       $(".time_monday_start").append(data.days.Monday.workHours[0]); 
+                    }
+                }
+            });  
         }
         function date_to_save(day, number){
             var arr = [];
