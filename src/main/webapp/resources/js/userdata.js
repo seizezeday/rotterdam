@@ -457,7 +457,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-<<<<<<< HEAD
+
                     200: function () {
                        alert('json ok');
                        $(".time_monday_start").val(data.days.Monday.workHours[0]); 
@@ -467,17 +467,6 @@
                        $(".time_friday_start").val(data.days.Friday.workHours[0]); 
                        $(".time_saturday_start").val(data.days.Saturday.workHours[0]); 
                        $(".time_sunday_start").val(data.days.Sunday.workHours[0]); 
-=======
-                    200: function (data) {
-                        alert('json ok');
-                        $(".time_monday_start").append(data.days.Monday.workHours[0]);
-                        $(".time_tuesday_start").append(data.days.Tuesday.workHours[0]);
-                        $(".time_wednesday_start").append(data.days.Wednesday.workHours[0]);
-                        $(".time_thursday_start").append(data.days.Thursday.workHours[0]);
-                        $(".time_friday_start").append(data.days.Friday.workHours[0]);
-                        $(".time_saturday_start").append(data.days.Saturday.workHours[0]);
-                        $(".time_sunday_start").append(data.days.Sunday.workHours[0]);
->>>>>>> FETCH_HEAD
                     }
                 }
             });
