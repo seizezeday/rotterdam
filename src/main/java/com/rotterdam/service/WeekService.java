@@ -62,7 +62,9 @@ public class WeekService {
                 checkRestTime(weekDto);
 
                 //we need to sort to ensure order
-                Collections.sort(dayDto.workHours, WorkHourDto.workHourDtoComparatorByStartWorkingTime);
+                if(dayDto.workHours != null)
+                    Collections.sort(dayDto.workHours, WorkHourDto.workHourDtoComparatorByStartWorkingTime);
+                if(day.getWorkHours() != null)
                 Collections.sort(day.getWorkHours(), WorkHour.workHourComparatorByStartWorkingTime);
 
                 if(isDayChanged(dayDto.workHours, day.getWorkHours())){

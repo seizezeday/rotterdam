@@ -7,6 +7,9 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -175,6 +178,11 @@ public class DateTools {
         hours += minutes / 60;
 
         return hours;
+    }
+
+    public static Date convertFromLocalDate(LocalDate ld){
+        Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        return Date.from(instant);
     }
 
 }

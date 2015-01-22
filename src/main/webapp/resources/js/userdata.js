@@ -602,7 +602,9 @@
                         $("#settings_saturday").val(data.saturday_hours);
                         $("#settings_sunday").val(data.sunday_hours);
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
-                            data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="") {
+                            data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="" &&
+                            data.monday_hours !==null && data.tuesday_hours !==null && data.wednesday_hours !==null && data.thursday_hours !==null &&
+                            data.friday_hours  !==null && data.saturday_hours  !==null && data.sunday_hours !==null) {
                             $(".hide_tabs").css("display", "block");
                             $('#setting_save').removeAttr("disabled","disabled")
                         }else {
