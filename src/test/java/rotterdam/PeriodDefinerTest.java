@@ -2,8 +2,13 @@ package rotterdam;
 
 import com.rotterdam.model.entity.PeriodType;
 import com.rotterdam.tools.PeriodDefiner;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -14,7 +19,12 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * Created by Vasya on 21.01.2015.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/app-context.xml")
 public class PeriodDefinerTest {
+    @Inject
+    PeriodDefiner periodDefiner;
+
     List<LocalDate> julyMonthPeriod = null;
     List<LocalDate> juneMonthPeriod = null;
     List<LocalDate> mayMonthPeriod = null;
@@ -60,19 +70,22 @@ public class PeriodDefinerTest {
 
     }
 
+
+
+
     @Test
     public void testCurrentMonthPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfCurrentPeriod(LocalDate.of(2015, Month.JULY, 7), PeriodType.MONTH);
         assertEquals(list, julyMonthPeriod);
 
     }
 
+
+
     @Test
     public void testCurrentMonthPeriod2() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfCurrentPeriod(LocalDate.of(2015, Month.JULY, 1), PeriodType.MONTH);
         assertEquals(list, juneMonthPeriod);
 
@@ -80,8 +93,7 @@ public class PeriodDefinerTest {
 
     @Test
     public void testPreviousMonthPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfPreviousPeriod(LocalDate.of(2015, Month.JULY, 1), PeriodType.MONTH);
         assertEquals(list, mayMonthPeriod);
 
@@ -89,8 +101,7 @@ public class PeriodDefinerTest {
 
     @Test
     public void testCurrent4WeekPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfCurrentPeriod(LocalDate.of(2015, Month.JANUARY, 6), PeriodType.FOURWEEK);
         assertEquals(list, january4WeekPeriod);
 
@@ -98,8 +109,7 @@ public class PeriodDefinerTest {
 
     @Test
     public void testPrevious4WeekPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfPreviousPeriod(LocalDate.of(2015, Month.FEBRUARY, 2), PeriodType.FOURWEEK);
         assertEquals(list, january4WeekPeriod);
 
@@ -107,8 +117,7 @@ public class PeriodDefinerTest {
 
     @Test
     public void test2Previous4WeekPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfPreviousPeriod(LocalDate.of(2015, Month.FEBRUARY, 1), PeriodType.FOURWEEK);
         assertEquals(list, december2014_4WeekPeriod);
 
@@ -116,8 +125,7 @@ public class PeriodDefinerTest {
 
     @Test
     public void test2Current4WeekPeriod() {
-        List<LocalDate> list = PeriodDefiner.
-                getPeriodDefiner().
+        List<LocalDate> list = periodDefiner.
                 getStartingDaysOfWeeksOfCurrentPeriod(LocalDate.of(2015, Month.FEBRUARY, 1), PeriodType.FOURWEEK);
         assertEquals(list, january4WeekPeriod);
 

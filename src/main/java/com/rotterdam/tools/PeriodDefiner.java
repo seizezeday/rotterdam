@@ -6,6 +6,7 @@ package com.rotterdam.tools;
 
 import com.rotterdam.model.entity.PeriodType;
 
+import javax.inject.Named;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
@@ -13,20 +14,14 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Named
 public class PeriodDefiner {
-    private static PeriodDefiner periodDefiner = null;
 
-    private PeriodDefiner() {
+
+    public PeriodDefiner() {
     }
 
-    public static PeriodDefiner getPeriodDefiner() {
-        if (periodDefiner == null) {
-            return new PeriodDefiner();
-        } else {
-            return periodDefiner;
-        }
-    }
+
 
     /**
      * @param currentDate   - current date, to get previous payment period
@@ -77,7 +72,7 @@ public class PeriodDefiner {
     }
 
     /**
-     * @param currentDate   date in current perid
+     * @param currentDate   date in current period
      * @param periodType period profile
      * @return list of starting days of full weeks in PREVIOUS, "payment" period
      */
