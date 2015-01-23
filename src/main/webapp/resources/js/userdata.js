@@ -457,16 +457,40 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-
                     200: function (data) {
-                       alert('json ok');
+//                       alert('json ok');
+                        //start
                        $(".time_monday_start").val(data.days.Monday.workHours[0].startWorkingTime);
                        $(".time_tuesday_start").val(data.days.Tuesday.workHours[0].startWorkingTime);
-                       $(".time_wednesday_start").val(data.days.Wednesday.workHours[0].startWorkingTime);
+                    $(".time_wednesday_start").val(data.days.Wednesday.workHours[0].startWorkingTime);
                        $(".time_thursday_start").val(data.days.Thursday.workHours[0].startWorkingTime);
                        $(".time_friday_start").val(data.days.Friday.workHours[0].startWorkingTime);
                        $(".time_saturday_start").val(data.days.Saturday.workHours[0].startWorkingTime);
                        $(".time_sunday_start").val(data.days.Sunday.workHours[0].startWorkingTime);
+                        //end
+                       $(".time_monday_end").val(data.days.Monday.workHours[0].endWorkingTime);
+                       $(".time_tuesday_end").val(data.days.Tuesday.workHours[0].endWorkingTime);
+                       $(".time_wednesday_end").val(data.days.Wednesday.workHours[0].endWorkingTime);
+                       $(".time_thursday_end").val(data.days.Thursday.workHours[0].endWorkingTime);
+                       $(".time_friday_end").val(data.days.Friday.workHours[0].endWorkingTime);
+                       $(".time_saturday_end").val(data.days.Saturday.workHours[0].endWorkingTime);
+                       $(".time_sunday_end").val(data.days.Sunday.workHours[0].endWorkingTime);
+                        //rest
+                       $(".time_monday_rest").val(data.days.Monday.workHours[0].restTime);
+                       $(".time_tuesday_rest").val(data.days.Tuesday.workHours[0].restTime);
+                       $(".time_wednesday_rest").val(data.days.Wednesday.workHours[0].restTime);
+                       $(".time_thursday_rest").val(data.days.Thursday.workHours[0].restTime);
+                       $(".time_friday_rest").val(data.days.Friday.workHours[0].restTime);
+                       $(".time_saturday_rest").val(data.days.Saturday.workHours[0].restTime);
+                       $(".time_sunday_rest").val(data.days.Sunday.workHours[0].restTime);
+                        //dayTape
+                       $(".time_monday_type_day").val(data.days.Monday.workHours[0].dayType);
+                       $(".time_tuesday_type_day").val(data.days.Tuesday.workHours[0].dayType);
+                       $(".time_wednesday_type_day").val(data.days.Wednesday.workHours[0].dayType);
+                       $(".time_thursday_type_day").val(data.days.Thursday.workHours[0].dayType);
+                       $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
+                       $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
+                       $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType); 
                     }
                 }
             });
