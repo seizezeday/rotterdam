@@ -500,7 +500,14 @@
                        $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
                        $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
                        $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType); 
-                        
+                       type_day_monday();
+                       type_day_tuesday();
+                       type_day_wednesday();
+                       type_day_thursday();
+                       type_day_friday();
+                       type_day_saturday();
+                       type_day_sunday();
+                       
                     }
                 }
             });
