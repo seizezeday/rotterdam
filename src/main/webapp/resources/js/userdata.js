@@ -38,7 +38,9 @@
               }
           });
         });
-        $(".time_monday_type_day").change(function(){
+        $(".time_monday_type_day").change(type_day_monday);
+        
+            function type_day_monday(){
           if($(".time_monday_type_day").val() == 2){
                 $(".add_row_monday button").hide();
                 $(".add_row_monday button").attr("disabled","disabled");
@@ -59,8 +61,9 @@
                 $(".time_monday_rest").removeAttr("disabled","disabled");
                 $(".time_monday_rest").val('') 
               }
-            });   
-        $(".time_tuesday_type_day").change(function(){
+            };   
+        $(".time_tuesday_type_day").change(type_day_tuesday);
+            function type_day_tuesday(){
           if($(".time_tuesday_type_day").val() == 2){
                 $(".add_row_tuesday button").hide();
                 $(".add_row_tuesday button").attr("disabled","disabled");
@@ -81,8 +84,9 @@
                 $(".time_tuesday_rest").removeAttr("disabled","disabled");
                 $(".time_tuesday_rest").val('') 
               }
-            });      
-        $(".time_wednesday_type_day").change(function(){
+            };      
+        $(".time_wednesday_type_day").change(type_day_tuesday);
+            function type_day_tuesday(){
           if($(".time_wednesday_type_day").val() == 2){
                 $(".add_row_wednesday button").hide();
                 $(".add_row_wednesday button").attr("disabled","disabled");
@@ -103,8 +107,9 @@
                 $(".time_wednesday_rest").removeAttr("disabled","disabled");
                 $(".time_wednesday_rest").val('') 
               }
-            });   
-        $(".time_thursday_type_day").change(function(){
+            };   
+        $(".time_thursday_type_day").change(type_day_thursday)
+            function type_day_thursday(){
           if($(".time_thursday_type_day").val() == 2){
                 $(".add_row_thursday button").hide();
                 $(".add_row_thursday button").attr("disabled","disabled");
@@ -125,8 +130,10 @@
                 $(".time_thursday_rest").removeAttr("disabled","disabled");
                 $(".time_thursday_rest").val('') 
               }
-            });      
-        $(".time_friday_type_day").change(function(){
+            };  
+        
+        $(".time_friday_type_day").change(type_day_friday)
+            function type_day_friday(){
           if($(".time_friday_type_day").val() == 2){
                 $(".add_row_friday button").hide();
                 $(".add_row_friday button").attr("disabled","disabled");
@@ -147,8 +154,9 @@
                 $(".time_friday_rest").removeAttr("disabled","disabled");
                 $(".time_friday_rest").val('') 
               }
-            }); 
-        $(".time_saturday_type_day").change(function(){
+            }; 
+        $(".time_saturday_type_day").change(type_day_saturday);
+            function type_day_saturday(){
           if($(".time_saturday_type_day").val() == 2){
                 $(".add_row_saturday button").hide();
                 $(".add_row_saturday button").attr("disabled","disabled");
@@ -169,8 +177,9 @@
                 $(".time_saturday_rest").removeAttr("disabled","disabled");
                 $(".time_saturday_rest").val('') 
               }
-            });       
-        $(".time_sunday_type_day").change(function(){
+            };       
+        $(".time_sunday_type_day").change(type_day_sunday);
+            function type_day_sunday(){
           if($(".time_sunday_type_day").val() == 2){
                 $(".add_row_sunday button").hide();
                 $(".add_row_sunday button").attr("disabled","disabled");
@@ -191,7 +200,7 @@
                 $(".time_sunday_rest").removeAttr("disabled","disabled");
                 $(".time_sunday_rest").val('') 
               }
-            });
+            };
         
 //        $(".time_monday_type_day option:nth-child(1):selected").change({
 //            $(".add_row_monday button").attr("disabled","disabled");
@@ -491,6 +500,7 @@
                        $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
                        $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
                        $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType); 
+                        
                     }
                 }
             });
