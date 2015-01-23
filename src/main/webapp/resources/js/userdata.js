@@ -85,8 +85,8 @@
                 $(".time_tuesday_rest").val('') 
               }
             };      
-        $(".time_wednesday_type_day").change(type_day_tuesday);
-            function type_day_tuesday(){
+        $(".time_wednesday_type_day").change(type_day_wednesday);
+            function type_day_wednesday(){
           if($(".time_wednesday_type_day").val() == 2){
                 $(".add_row_wednesday button").hide();
                 $(".add_row_wednesday button").attr("disabled","disabled");
