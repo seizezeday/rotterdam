@@ -1,9 +1,6 @@
 package com.rotterdam.service;
 
-import com.rotterdam.dto.DayDto;
-import com.rotterdam.dto.SettingsDto;
-import com.rotterdam.dto.WeekDto;
-import com.rotterdam.dto.WorkHourDto;
+import com.rotterdam.dto.*;
 import com.rotterdam.model.dao.DayDao;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.WeekDao;
@@ -18,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -42,8 +40,8 @@ public class WeekService {
     private PeriodDao periodDao;
 
     @Transactional
-    public double save(WeekDto weekDto, long userId){
-        double totalTime = 0;
+    public TotalTimeDto save(WeekDto weekDto, long userId){
+        TotalTimeDto totalTime = null;
         //we need to find corresponding week
         Week week = weekDao.selectByStartDateAndUser(weekDto.days.get("Monday").date, userId);
         if (week != null) {
@@ -90,7 +88,7 @@ public class WeekService {
             totalTime = calculateTotalTime(weekDto);
         } else {
             //it's possible if user not save setting tab
-            return -1;
+            return null;
         }
         return totalTime;
     }
@@ -156,17 +154,25 @@ public class WeekService {
             }
     }
 
-    private double calculateTotalTime(WeekDto weekDto){
+    final DecimalFormat df = new DecimalFormat("00.00");
+
+    private TotalTimeDto calculateTotalTime(WeekDto weekDto){
+        TotalTimeDto totalTimeDto = new TotalTimeDto();
         double totalTime = 0;
         for (DayDto dayDto : weekDto.days.values())
             for (WorkHourDto workHourDto : dayDto.workHours){
                 double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
                 double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
-                double rest = workHourDto.restTime / 60;
+                double rest = ((double)workHourDto.restTime) / (double)60;
 
-                totalTime += (endTime - startTime - rest);
+                double totalTimeDay = (endTime - startTime - rest);
+
+                totalTimeDto.days.put(DateTools.getWeekDayTitle(dayDto.date), df.format(totalTimeDay));
+
+                totalTime += totalTimeDay;
             }
-        return totalTime;
+        totalTimeDto.totalTime = totalTime;
+        return totalTimeDto;
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.rotterdam.controllers;
 
+import com.rotterdam.dto.TotalTimeDto;
 import com.rotterdam.dto.WeekDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.service.WeekService;
@@ -19,7 +20,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -45,14 +45,14 @@ public class WeeklyRouteInfo {
     public Response getTimeInfo(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
         WeekDto weekDto = WeekDto.parseTimeTab(data);
         long userId = jsonCommands.getUserFromRequest(hsr).getId();
-        final double totalTime = weekService.save(weekDto, userId);
-        if (totalTime != -1) {
-            final DecimalFormat df = new DecimalFormat("#.00");
-            final String stringTotalTime = df.format(totalTime);
-            Object obj = new Object(){
-                public String totalTime = stringTotalTime;
-            };
-            return Response.ok(obj).build();
+        final TotalTimeDto totalTime = weekService.save(weekDto, userId);
+        if (totalTime != null) {
+//            final DecimalFormat df = new DecimalFormat("#.00");
+//            final String stringTotalTime = df.format(totalTime);
+//            Object obj = new Object(){
+//                public String totalTime = stringTotalTime;
+//            };
+            return Response.ok(totalTime).build();
         } else {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
