@@ -1,4 +1,4 @@
-  $(document).ready(function(){
+    $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
                         
         //Получение значений текущего дня недели и запись на таб время
@@ -446,8 +446,9 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-                    200: function () {
+                    200: function (data) {
                         alert("good")
+                        $('#total_mon_fri').text(data)
                     }
                 }
             });
@@ -604,9 +605,9 @@
                     };
         function settings_compensation(){
           if($("#show_compensation").is(':checked')){
-              $("#compensation_tab").attr("disabled","disabled");
+              $("#compensation_tab").css("display","none");
           } else {
-              $("#compensation_tab").css("disabled","disabled");
+              $("#compensation_tab").css("display","block");
           }
         }
         //            Settings tab end 
