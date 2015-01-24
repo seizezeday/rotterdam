@@ -579,7 +579,7 @@
     };
                     $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").keyup(settings_day_hours);
                     $("#settings_monday,#settings_tuesday,#settings_wednesday,#settings_thursday,#settings_friday,#settings_saturday,#settings_sunday").focusout(settings_day_hours)
-                        
+    $("#show_compensation").click(settings_compensation);                    
                     function settings_day_hours(){
 //                        alert('ok')
                     var monday_hours = $("#settings_monday").val();
@@ -591,7 +591,6 @@
                     var sunday_hours = $("#settings_sunday").val();
                     var show_compensation = $("#show_compensation").is(':checked');
                     var allow_suterday_compensation = $("#allow_suterday_compensation").is(':checked');
-                        
                     if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !=="") {
                     //$(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
 ; // Показать табы если введены поля времени
@@ -603,6 +602,13 @@
                     $('#setting_save').attr("disabled","disabled");
                     }
                     };
+        function settings_compensation(){
+          if($("#show_compensation").is(':checked')){
+              $("#compensation_tab").css("display","none");
+          } else {
+              $("#compensation_tab").css("display","block");
+          }
+        }
         //            Settings tab end 
 
        //            Tab time multitrip start 
@@ -673,6 +679,7 @@
                         $("#settings_friday").val(data.friday_hours);
                         $("#settings_saturday").val(data.saturday_hours);
                         $("#settings_sunday").val(data.sunday_hours);
+                        settings_compensation();
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
                             data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="" &&
                             data.monday_hours !==null && data.tuesday_hours !==null && data.wednesday_hours !==null && data.thursday_hours !==null &&
