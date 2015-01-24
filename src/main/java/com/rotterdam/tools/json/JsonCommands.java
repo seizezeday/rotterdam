@@ -103,7 +103,7 @@ public class JsonCommands {
     /**
      *
      * @param hsr, useHours.
-     * @return Jsonobject containing avaliable time-for-time hours after subtraction of used hours
+     * @return Jsonobject containing avaliable java8-for-java8 hours after subtraction of used hours
      * @throws JsonException
      */
 
@@ -126,7 +126,7 @@ public class JsonCommands {
 	/**
     *
     * @param hsr, newHours.
-    * @return Jsonobject containing avaliable time-to-pay hours after subtraction of used hours
+    * @return Jsonobject containing avaliable java8-to-pay hours after subtraction of used hours
     * @throws JsonException
     */
 	
@@ -188,7 +188,7 @@ public class JsonCommands {
             timeFormat = new SimpleDateFormat(PARAM_TIME_PATTERN);
 
             Date date = dateFormat.parse(timeTabData.getString(PARAM_DATE));    //TODO: check actual date
-            Date startWorkingTime = timeFormat.parse(timeTabData.getString(PARAM_START_WORKING_TIME));  //TODO: Check if start working time earlier then end
+            Date startWorkingTime = timeFormat.parse(timeTabData.getString(PARAM_START_WORKING_TIME));  //TODO: Check if start working java8 earlier then end
             Date endWorkingTime = timeFormat.parse(timeTabData.getString(PARAM_END_WORKING_TIME));
 
             workHours.setRideType(RideType.valueOf(timeTabData.getString(PARAM_RIDE_TYPE)));

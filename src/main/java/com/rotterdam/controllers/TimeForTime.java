@@ -41,7 +41,7 @@ public class TimeForTime {
         JSONObject useTimeForTimeData = new JSONObject(data);
         Long useHours = useTimeForTimeData.getLong("use_time_for_time");
 
-        //TODO:work with db, update available time-for-time hours, Somehow use used hours as a free time
+        //TODO:work with db, update available java8-for-java8 hours, Somehow use used hours as a free java8
 
         JsonObject jsonData = jsonCommands.getTimeForTimeHours(hsr, useHours);
 

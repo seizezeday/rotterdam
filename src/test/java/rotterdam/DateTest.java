@@ -20,7 +20,7 @@ public class DateTest {
 
     @Test
     public void findFirstMondayOfCurrentMonth(){
-        Date dateOfFirstMonday = DateTools.getDateOfFirstMonday();
+        Date dateOfFirstMonday = DateTools.getDateOfFirstMonday(new Date(Date.UTC(2015, 2, 15,0,0,0)));
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss z");
 
         System.out.println(dateFormatter.format(dateOfFirstMonday.getTime()));

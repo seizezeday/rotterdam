@@ -42,7 +42,7 @@ public class PeriodService {
 
             period = periodDao.insert(period);
 
-            //now we need calculate time-for-time for previous period
+            //now we need calculate java8-for-java8 for previous period
 
         } else {
             //every thing is ok

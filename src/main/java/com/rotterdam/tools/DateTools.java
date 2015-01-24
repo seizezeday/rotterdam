@@ -98,8 +98,9 @@ public class DateTools {
         return calendar.getTime();
     }
 
-    public static Date getDateOfFirstMonday(){
+    public static Date getDateOfFirstMonday(Date date){
         Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
         cal.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         cal.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
@@ -188,5 +189,9 @@ public class DateTools {
     public static LocalDate convertToLocalDate(Date date){
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
+
+//    public static int getMonth(Date date){
+//
+//    }
 
 }

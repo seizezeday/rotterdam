@@ -71,6 +71,49 @@ public class PeriodDefiner {
         return startingDatesList;
     }
 
+//    public List<Date> getStartingDaysOfWeeksOfCurrentPeriod(Date currentDate, PeriodType periodType) {
+//        List<Date> startingDatesList = new ArrayList<>();
+//        if (periodType == PeriodType.MONTH) {
+//            Date firstMonday = DateTools.getDateOfFirstMonday(currentDate);
+////            if (currentDate.isBefore(firstMonday)) {
+////                firstMonday = currentDate.minusMonths(1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
+////            }
+//            Month currentMonth =  firstMonday.getMonth();
+//            LocalDate firstDayOfWeek = firstMonday;
+//
+//
+//            while (firstDayOfWeek.getMonth() == currentMonth) {
+//                startingDatesList.add(firstDayOfWeek);
+//                firstDayOfWeek = firstDayOfWeek.plusWeeks(1);
+//            }
+//
+//
+//        } else if (periodType == PeriodType.FOURWEEK) {
+//            LocalDate startDateOfPeriod;
+//            LocalDate endDateOfPeriod;
+//            LocalDate firstMondayOfYear = currentDate.withMonth(1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
+//            if (currentDate.isBefore(firstMondayOfYear)) {
+//                firstMondayOfYear = currentDate.withMonth(1).minusYears(1).with(TemporalAdjusters.firstInMonth(DayOfWeek.MONDAY));
+//            }
+//
+//            startDateOfPeriod = firstMondayOfYear;
+//            endDateOfPeriod = firstMondayOfYear.plusDays(27);
+//
+//
+//            while (!(((startDateOfPeriod.isBefore(currentDate)) || (startDateOfPeriod.isEqual(currentDate)))
+//                    && ((endDateOfPeriod.isAfter(currentDate)) || (endDateOfPeriod.isEqual(currentDate))))) {
+//                startDateOfPeriod = startDateOfPeriod.plusDays(28);
+//                endDateOfPeriod = endDateOfPeriod.plusDays(28);
+//            }
+//            for (int i = 0; i < 4; i++) {
+//                startingDatesList.add(startDateOfPeriod);
+//                startDateOfPeriod = startDateOfPeriod.plusWeeks(1);
+//            }
+//
+//        }
+//        return startingDatesList;
+//    }
+
     /**
      * @param currentDate   date in current period
      * @param periodType period profile

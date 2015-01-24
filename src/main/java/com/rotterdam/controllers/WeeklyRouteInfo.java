@@ -45,10 +45,14 @@ public class WeeklyRouteInfo {
     public Response getTimeInfo(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
         WeekDto weekDto = WeekDto.parseTimeTab(data);
         long userId = jsonCommands.getUserFromRequest(hsr).getId();
-        double totalTime = weekService.save(weekDto, userId);
+        final double totalTime = weekService.save(weekDto, userId);
         if (totalTime != -1) {
-            DecimalFormat df = new DecimalFormat("#.00");
-            return Response.ok(df.format(totalTime)).build();
+            final DecimalFormat df = new DecimalFormat("#.00");
+            final String stringTotalTime = df.format(totalTime);
+            Object obj = new Object(){
+                public String totalTime = stringTotalTime;
+            };
+            return Response.ok(obj).build();
         } else {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }

@@ -38,7 +38,7 @@ public class PaymentTime {
         Long availableHours = paymentTimeData.getLong("avl_time_for_pay");
 		Long payHours = 10l/*paymentTimeData.getLong("use_time_for_pay")*/;
         Long newHours = availableHours - payHours;
-        //TODO:work with db, update available time-for-time hours, Somehow use used hours as a free time
+        //TODO:work with db, update available java8-for-java8 hours, Somehow use used hours as a free java8
         
         JsonObject jsonData;
         if(newHours >= 0) {
