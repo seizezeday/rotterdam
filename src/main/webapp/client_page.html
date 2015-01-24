@@ -533,15 +533,15 @@ multitrip
 <div class="tab-pane font_size_18" id="settings">
          <div class="col-md-4 col-md-offset-8"><h3>Week ours</h3></div>
    <div class="col-md-4">
-       <div class="margin_bottom_10" data-toggle="buttons">
+       <div class="margin_bottom_10">
   <label class="btn btn-primary ">
-    <input type="checkbox">Show Tijd-voor-tijd regeling 
+    <input type="checkbox"><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>
   </label>
 </div> 
 <!--        <div class="col-md-4">-->
-       <div class="margin_bottom_10" data-toggle="buttons">
+       <div class="margin_bottom_10">
   <label class="btn btn-primary ">
-    <input id="allow_suterday_compensation" type="checkbox"> Allow Suterday time-for-time compensation
+    <input id="allow_suterday_compensation" type="checkbox"><span class="padding_left_5">Allow Suterday time-for-time compensation</span> 
 
   </label>
 </div>
@@ -576,9 +576,9 @@ multitrip
           <option>3</option>
         </select>
 -->
-<div class="margin_bottom_10" data-toggle="buttons">
+<div class="margin_bottom_10">
   <label class="btn btn-primary ">
-    <input type="checkbox">Option one is this and that&mdash;be sure to include why it's great
+    <input type="checkbox"><span class="padding_left_5">Option one is this and that&mdash;be sure to include why it's great</span> 
   </label>
 </div>
 <!--
@@ -590,9 +590,9 @@ multitrip
        Allow Suterday time-for-time compensation </br> 
        
 -->
-<div  data-toggle="buttons">
+<div  >
   <label class="btn btn-primary">
-    <input id="suterday_compensation" type="checkbox">Suterday time-for-time compensation
+    <input id="suterday_compensation" type="checkbox"><span class="padding_left_5">Suterday time-for-time compensation</span>
   </label>
 </div>
 <!--                 <button type="button" class="btn btn-primary btn-block" data-toggle="button"> Allow </button>-->
@@ -608,29 +608,29 @@ multitrip
         Option one is this and that&mdash;be sure to include why it's great
 -->
 <!--        <input id="settings_monday" type="text" class="form-control margin_bottom_10" placeholder="Monday">-->
-                <input id="settings_monday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberMondaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_monday" placeholder="Monday" bs-timepicker>
+                <input id="settings_monday" type="text" class="form-control margin_bottom_10"  placeholder="Monday">
 
 <!--        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10" placeholder="Tuesday">-->
-        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberTuesdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_tuesday" placeholder="Tuesday" bs-timepicker>
+        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10 settings_day_hours"  placeholder="Tuesday" >
 
 <!--        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10" placeholder="Wednesday">-->
-        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberWednesdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_wednesday" placeholder="Wednesday" bs-timepicker>        
+        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10 settings_day_hours"  placeholder="Wednesday">        
         
-        <input id="settings_thursday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberThursdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_thursday" placeholder="Thursday" bs-timepicker>
+        <input id="settings_thursday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Thursday">
 
 <!--        <input id="settings_thursday" type="text" class="form-control margin_bottom_10" placeholder="Thursday">-->
 <!--        <input id="settings_friday" type="text" class="form-control margin_bottom_10" placeholder="Friday">   -->
            
-            <input id="settings_friday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberFridaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_friday" placeholder="Friday" bs-timepicker>
+            <input id="settings_friday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Friday">
   
 <!--        <input id="settings_saturday" type="text" class="form-control margin_bottom_10" placeholder="Saturday">-->
            
-            <input id="settings_saturday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberSaturdaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_saturday" placeholder="Saturday" bs-timepicker>
+            <input id="settings_saturday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Saturday" >
   
         
 <!--        <input id="settings_sunday" type="text" class="form-control margin_bottom_10" placeholder="Sunday">-->
            
-            <input id="settings_sunday" type="text" class="form-control margin_bottom_10 settings_day_hours" size="5" ng-model="selectedTimeAsNumberSundaySettings" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="settings_hours_sunday" placeholder="Sunday" bs-timepicker>
+            <input id="settings_sunday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Sunday">
 
       </div>
    <div class="col-md-12">
@@ -658,10 +658,12 @@ multitrip
               <div class="form-group">
 <!--    <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range <small>(dynamic)</small></label><br>-->
     <div class="form-group col-xs-6">
-      <input type="text" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="period start" bs-datepicker>
+<!--      <input type="text" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="period start" bs-datepicker>-->
+   <p id="start_period">start_period</p>
     </div>
     <div class="form-group col-xs-6">
-      <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="period end" bs-datepicker>
+<!--      <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="period end" bs-datepicker>-->
+   <p id="end_period">end_period</p>
     </div>
   </div>
 
