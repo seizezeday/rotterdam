@@ -448,7 +448,7 @@
                 statusCode: {
                     200: function (data) {
                         alert("good")
-                        $('#total_mon_fri').text(data)
+                        $('#total_mon_fri').val(data)
                     }
                 }
             });
