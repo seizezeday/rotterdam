@@ -449,6 +449,13 @@
                     200: function (data) {
                         alert("good")
                         $('#total_mon_fri').text(data.totalTime)
+                        $('#total_time_monday').text(data.Monday)
+                        $('#total_time_tuesday').text(data.Tuesday)
+                        $('#total_time_wednesday').text(data.Wednesday)
+                        $('#total_time_thursday').text(data.Thursday)
+                        $('#total_time_friday').text(data.Friday)
+                        $('#total_time_saturday').text(data.Saturday)
+                        $('#total_time_sunday').text(data.Sunday)
                     }
                 }
             });
