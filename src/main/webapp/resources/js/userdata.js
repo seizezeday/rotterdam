@@ -1,4 +1,4 @@
-    $(document).ready(function(){
+  $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
                         
         //Получение значений текущего дня недели и запись на таб время
@@ -604,9 +604,9 @@
                     };
         function settings_compensation(){
           if($("#show_compensation").is(':checked')){
-              $("#compensation_tab").css("display","none");
+              $("#compensation_tab").attr("disabled","disabled");
           } else {
-              $("#compensation_tab").css("display","block");
+              $("#compensation_tab").css("disabled","disabled");
           }
         }
         //            Settings tab end 
