@@ -590,6 +590,7 @@
                     var saturday_hours = $("#settings_saturday").val();
                     var sunday_hours = $("#settings_sunday").val();
                     var show_compensation = $("#show_compensation").is(':checked');
+                    var allow_suterday_compensation = $("#allow_suterday_compensation").is(':checked');
                         
                     if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !=="") {
                     //$(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
