@@ -19,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -44,8 +45,10 @@ public class WeeklyRouteInfo {
     public Response getTimeInfo(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
         WeekDto weekDto = WeekDto.parseTimeTab(data);
         long userId = jsonCommands.getUserFromRequest(hsr).getId();
-        if (weekService.save(weekDto, userId)) {
-            return Response.ok().build();
+        double totalTime = weekService.save(weekDto, userId);
+        if (totalTime != -1) {
+            DecimalFormat df = new DecimalFormat("#.00");
+            return Response.ok(df.format(totalTime)).build();
         } else {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }

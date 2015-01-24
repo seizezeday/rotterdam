@@ -42,7 +42,8 @@ public class WeekService {
     private PeriodDao periodDao;
 
     @Transactional
-    public boolean save(WeekDto weekDto, long userId){
+    public double save(WeekDto weekDto, long userId){
+        double totalTime = 0;
         //we need to find corresponding week
         Week week = weekDao.selectByStartDateAndUser(weekDto.days.get("Monday").date, userId);
         if (week != null) {
@@ -85,11 +86,13 @@ public class WeekService {
                 }
 
             }
+            //we need to calculate totalTime
+            totalTime = calculateTotalTime(weekDto);
         } else {
             //it's possible if user not save setting tab
-            return false;
+            return -1;
         }
-        return true;
+        return totalTime;
     }
 
     private Day determineDayByDate(List<Day> days, Date date){
@@ -151,6 +154,19 @@ public class WeekService {
 
                 }
             }
+    }
+
+    private double calculateTotalTime(WeekDto weekDto){
+        double totalTime = 0;
+        for (DayDto dayDto : weekDto.days.values())
+            for (WorkHourDto workHourDto : dayDto.workHours){
+                double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
+                double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
+                double rest = workHourDto.restTime / 60;
+
+                totalTime += (endTime - startTime - rest);
+            }
+        return totalTime;
     }
 
     @Transactional
