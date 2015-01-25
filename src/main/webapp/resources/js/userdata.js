@@ -455,7 +455,9 @@
                         $('#total_time_thursday').text(data.Thursday)
                         $('#total_time_friday').text(data.Friday)
                         $('#total_time_saturday').text(data.Saturday)
+                        $('#total_saturday').text(data.Saturday)
                         $('#total_time_sunday').text(data.Sunday)
+                        $('#total_sunday').text(data.Sunday)
                     }
                 }
             });
