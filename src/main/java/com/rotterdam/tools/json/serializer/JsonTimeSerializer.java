@@ -19,7 +19,7 @@ import java.util.Date;
 @Scope("singleton")
 public class JsonTimeSerializer extends JsonSerializer<Date> {
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat(JsonCommands.PARAM_TIME_PATTERN);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(JsonCommands.PARAM_HOUR_PATTERN);
 
     @Override
     public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)

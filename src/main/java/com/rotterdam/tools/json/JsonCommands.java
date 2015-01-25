@@ -56,11 +56,12 @@ public class JsonCommands {
     public static final String PARAM_CURRENT_MONTH = "currentMonth";
     public static final String PARAM_CURRENT_WEEK_NUMBER = "currentWeekNumber";
 //    public static final String PARAM_DATE_PATTERN = "yyyy-MM-dd";
-    public static final String PARAM_DATE_PATTERN = "dd-MM-yyyy";
+    public static final String PARAM_DATE_PATTERN = "dd.MM.yyyy";
     public static final String PARAM_DATE_FULL_PATTERN = "yyyy/MM/dd HH:mm";
     public static final String PARAM_YEAR_PATTERN = "yyyy";
     public static final String PARAM_MONTH_PATTERN = "MM";
     public static final String PARAM_TIME_PATTERN = "HH:mm";
+    public static final String PARAM_HOUR_PATTERN = "HH";
 
 
     private JsonCommands(){}
