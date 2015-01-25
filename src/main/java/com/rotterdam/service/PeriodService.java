@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -51,17 +50,14 @@ public class PeriodService {
 
     private void setPeriodData(Period period, PeriodType periodType){
         period.setPeriodType(periodType);
-        List<LocalDate> startingDays = periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(LocalDate.now(), periodType);
-        period.setStartDate(
-                DateTools.convertFromLocalDate(
-                        startingDays.get(0)));
+        List<Date> startingDays = periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(new Date(), periodType);
+        period.setStartDate(startingDays.get(0));
 
         int weekCount = startingDays.size();
 
         period.setEndDate(
                 DateTools.getDateOf7DayAfter(
-                        DateTools.convertFromLocalDate(
-                                startingDays.get(weekCount - 1))));
+                                startingDays.get(weekCount - 1)));
 
     }
 

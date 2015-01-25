@@ -7,9 +7,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -107,6 +104,16 @@ public class DateTools {
         return cal.getTime();
     }
 
+    public static Date getDateOfFirstMondayInYear(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMinimum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        cal.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        return cal.getTime();
+    }
+
     public static Date getDateOfLastDay(){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
@@ -181,17 +188,50 @@ public class DateTools {
         return hours;
     }
 
-    public static Date convertFromLocalDate(LocalDate ld){
-        Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-        return Date.from(instant);
-    }
-
-    public static LocalDate convertToLocalDate(Date date){
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
-
-//    public static int getMonth(Date date){
-//
+//    public static Date convertFromLocalDate(LocalDate ld){
+//        Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+//        return Date.from(instant);
 //    }
+//
+//    public static LocalDate convertToLocalDate(Date date){
+//        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//    }
+
+    public static int getMonth(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        return month;
+    }
+
+    public static Date getDatePlusWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 7);
+        return calendar.getTime();
+    }
+
+    public static Date getDatePlusDays(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, days);
+        return calendar.getTime();
+    }
+
+    public static boolean isBefore(Date first, Date second) {
+        return first.compareTo(second) == -1;
+    }
+
+    public static boolean isAfter(Date first, Date second) {
+        return first.compareTo(second) == 1;
+    }
+
+    public static Date getDatePlusMonth(Date date, int months) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, months);
+        return calendar.getTime();
+    }
+
 
 }

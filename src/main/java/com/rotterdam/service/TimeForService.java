@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class TimeForService {
     private final int HOURS_LIMIT = 220;
 
     @Transactional
-    public TimeForDto getTimeForOfPrevPeriod(LocalDate now, long userId){
+    public TimeForDto getTimeForOfPrevPeriod(Date now, long userId){
         //first we need to get previous period
         //Period lastPeriod = periodDao.selectPrevPeriodByUser(userId);
         Period lastPeriod = getPrevPeriod(now, userId);
@@ -102,22 +101,20 @@ public class TimeForService {
         return time;
     }
 
-    private Period getPrevPeriod(LocalDate now, long userId){
+    private Period getPrevPeriod(Date now, long userId){
         //make propagation that previous period was four-week
-        List<LocalDate> startingDays = periodDefiner.getStartingDaysOfWeeksOfPreviousPeriod(now, PeriodType.FOURWEEK);
-        Date startDay = DateTools.convertFromLocalDate(startingDays.get(0));
+        List<Date> startingDays = periodDefiner.getStartingDaysOfWeeksOfPreviousPeriod(now, PeriodType.FOURWEEK);
+        Date startDay = startingDays.get(0);
         Date endDate = DateTools.getDateOf7DayAfter(
-                DateTools.convertFromLocalDate(
-                        startingDays.get(startingDays.size() - 1)));
+                        startingDays.get(startingDays.size() - 1));
         //search
         Period period = periodDao.selectByStartAndEndDate(startDay, endDate, userId);
         if(period == null){
             //make propagation that previous period was month
             startingDays = periodDefiner.getStartingDaysOfWeeksOfPreviousPeriod(now, PeriodType.MONTH);
-            startDay = DateTools.convertFromLocalDate(startingDays.get(0));
+            startDay = startingDays.get(0);
             endDate = DateTools.getDateOf7DayAfter(
-                    DateTools.convertFromLocalDate(
-                            startingDays.get(startingDays.size() - 1)));
+                            startingDays.get(startingDays.size() - 1));
             period = periodDao.selectByStartAndEndDate(startDay, endDate, userId);
         }
         return period;

@@ -178,7 +178,9 @@ public class WeekService {
     @Transactional
     public WeekDto getWeekByStartDateAndUserId(Date startDate, long userId){
         Week week = weekDao.selectByStartDateAndUser(startDate, userId);
-        return convertToWorkHourDto(week.getDays());
+        if(week != null)
+            return convertToWorkHourDto(week.getDays());
+        else return new WeekDto();
     }
 
     private WeekDto convertToWorkHourDto(List<Day> days){

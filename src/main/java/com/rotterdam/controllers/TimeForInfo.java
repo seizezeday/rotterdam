@@ -42,7 +42,7 @@ public class TimeForInfo {
     public Response getTimeInfo(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
         Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
         long userId = jsonCommands.getUserFromRequest(hsr).getId();
-        TimeForDto timeForOfPrevPeriod = timeForService.getTimeForOfPrevPeriod(DateTools.convertToLocalDate(monday), userId);
+        TimeForDto timeForOfPrevPeriod = timeForService.getTimeForOfPrevPeriod(monday, userId);
         if (timeForOfPrevPeriod != null) {
             return Response.ok(timeForOfPrevPeriod).build();
         } else {

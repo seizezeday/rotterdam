@@ -9,8 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
-import java.time.Month;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by root on 22.01.15.
@@ -24,8 +25,9 @@ public class TimeForServiceTests {
 
     @Test
     @Rollback(true)
-    public void basicCalculations(){
-        TimeForDto timeForTimeOfPrevPeriod = timeForService.getTimeForOfPrevPeriod(LocalDate.of(2015, Month.FEBRUARY, 10), 5);
+    public void basicCalculations() throws ParseException {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        TimeForDto timeForTimeOfPrevPeriod = timeForService.getTimeForOfPrevPeriod(df.parse("02/10/2015"), 5);
         System.out.println(timeForTimeOfPrevPeriod);
     }
 }
