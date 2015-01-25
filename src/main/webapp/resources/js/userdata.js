@@ -449,13 +449,13 @@
                     200: function (data) {
                         alert("good")
                         $('#total_mon_fri').text(data.totalTime)
-                        $('#total_time_monday').text(data.Monday)
-                        $('#total_time_tuesday').text(data.Tuesday)
-                        $('#total_time_wednesday').text(data.Wednesday)
-                        $('#total_time_thursday').text(data.Thursday)
-                        $('#total_time_friday').text(data.Friday)
-                        $('#total_time_saturday').text(data.Saturday)
-                        $('#total_time_sunday').text(data.Sunday)
+                        $('#total_time_monday').text(data.days.Monday)
+                        $('#total_time_tuesday').text(data.days.Tuesday)
+                        $('#total_time_wednesday').text(data.days.Wednesday)
+                        $('#total_time_thursday').text(data.days.Thursday)
+                        $('#total_time_friday').text(data.days.Friday)
+                        $('#total_time_saturday').text(data.days.Saturday)
+                        $('#total_time_sunday').text(data.days.Sunday)
                     }
                 }
             });
@@ -687,6 +687,8 @@
                         $("#settings_friday").val(data.friday_hours);
                         $("#settings_saturday").val(data.saturday_hours);
                         $("#settings_sunday").val(data.sunday_hours);
+                        $("#start_period").text(data.startDate);
+                        $("#end_period").text(data.endDate);
                         settings_compensation();
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
                             data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="" &&

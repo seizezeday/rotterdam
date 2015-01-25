@@ -3,6 +3,7 @@ package com.rotterdam.dto;
 import com.rotterdam.tools.json.JsonCommands;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
+import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import com.rotterdam.tools.json.serializer.JsonTimeSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
@@ -41,6 +42,10 @@ public class SettingsDto {
     @JsonDeserialize(using = JsonTimeDeserializer.class)
     @JsonSerialize(using = JsonTimeSerializer.class)
     public Date sunday_hours;
+    @JsonSerialize(using = JsonDateSerializer.class)
+    public Date startDate;
+    @JsonSerialize(using = JsonDateSerializer.class)
+    public Date endDate;
 
     @Override
     public String toString() {
@@ -55,6 +60,8 @@ public class SettingsDto {
                 ", friday_hours='" +  timeFormat.format(friday_hours) + '\'' +
                 ", saturday_hours='" +  timeFormat.format(saturday_hours) + '\'' +
                 ", sunday_hours='" +  timeFormat.format(sunday_hours) + '\'' +
+                "startDate='" + dateFormat.format(startDate) + '\'' +
+                "endDate='" + dateFormat.format(endDate) + '\'' +
                 '}';
     }
 }
