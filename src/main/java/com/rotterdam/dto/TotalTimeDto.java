@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 public class TotalTimeDto {
     @JsonSerialize(using = JsonDoubleSerializer.class)
     public double totalTime;
+    public double overTime;
     public HashMap<String, String> days = new LinkedHashMap<>();
 
 }

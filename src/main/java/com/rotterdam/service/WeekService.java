@@ -39,6 +39,9 @@ public class WeekService {
     @Inject
     private PeriodDao periodDao;
 
+    @Inject
+    private TimeForService timeForService;
+
     @Transactional
     public TotalTimeDto save(WeekDto weekDto, long userId){
         TotalTimeDto totalTime = null;
@@ -85,7 +88,7 @@ public class WeekService {
 
             }
             //we need to calculate totalTime
-            totalTime = calculateTotalTime(weekDto);
+            totalTime = calculateTotalTime(weekDto, userId);
         } else {
             //it's possible if user not save setting tab
             return null;
@@ -156,22 +159,33 @@ public class WeekService {
 
     final DecimalFormat df = new DecimalFormat("00.00");
 
-    private TotalTimeDto calculateTotalTime(WeekDto weekDto){
+    private TotalTimeDto calculateTotalTime(WeekDto weekDto, long userId){
         TotalTimeDto totalTimeDto = new TotalTimeDto();
         double totalTime = 0;
-        for (DayDto dayDto : weekDto.days.values())
-            for (WorkHourDto workHourDto : dayDto.workHours){
+        for (DayDto dayDto : weekDto.days.values()) {
+            for (WorkHourDto workHourDto : dayDto.workHours) {
                 double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
                 double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
-                double rest = ((double)workHourDto.restTime) / (double)60;
+                double rest = ((double) workHourDto.restTime) / (double) 60;
 
                 double totalTimeDay = (endTime - startTime - rest);
 
                 totalTimeDto.days.put(DateTools.getWeekDayTitle(dayDto.date), df.format(totalTimeDay));
 
-                totalTime += totalTimeDay;
+                String weekDayTitle = DateTools.getWeekDayTitle(dayDto.date);
+                if (!weekDayTitle.equals("Saturday") && !weekDayTitle.equals("Sunday")) {
+                    totalTime += totalTimeDay;
+                }
             }
+        }
         totalTimeDto.totalTime = totalTime;
+        //now we need to calculate over-time
+        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+        double promisedWeekTime = timeForService.getPromisedWeekTime(week);
+        double overTime = 0;
+        if(totalTime > promisedWeekTime)
+            overTime = totalTime - promisedWeekTime;
+        totalTimeDto.overTime  = overTime;
         return totalTimeDto;
     }
 

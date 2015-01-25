@@ -27,4 +27,15 @@ public class WeekDao extends AbstractGenericDao<Week> {
         }
     }
 
+    public Week selectByDateBetweenAndUser(Date date, long userId){
+        Query query = entityManager.createQuery("select week from Week week where :date between week.startDate and week.endDate and week.period.user.id =:userId");
+        query.setParameter("date", date);
+        query.setParameter("userId", userId);
+        try{
+            return (Week)query.getSingleResult();
+        } catch(NoResultException | NonUniqueResultException e){
+            return null;
+        }
+    }
+
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 public class WorkHourDto {
     @JsonSerialize(using= JsonTimeSerializer.class)
     public Date startWorkingTime;
-    @JsonSerialize(using=JsonTimeSerializer.class)
+    @JsonSerialize(using= JsonTimeSerializer.class)
     public Date endWorkingTime;
     public int restTime;
     @JsonSerialize(using=JsonRideTypeSerializer.class)

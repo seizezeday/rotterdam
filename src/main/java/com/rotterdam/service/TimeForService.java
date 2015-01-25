@@ -91,7 +91,7 @@ public class TimeForService {
         return new TimeForDto(timeForTime, overTime);
     }
 
-    private double getPromisedWeekTime(Week week){
+    public double getPromisedWeekTime(Week week){
         double time = 0;
         time += DateTools.getDoubleFormatHours(week.getPromiseMondayTime());
         time += DateTools.getDoubleFormatHours(week.getPromiseTuesdayTime());
