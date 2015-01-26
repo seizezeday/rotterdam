@@ -518,7 +518,8 @@
                        type_day_friday();
                        type_day_saturday();
                        type_day_sunday();
-                       
+
+
                     }
                 }
             });
