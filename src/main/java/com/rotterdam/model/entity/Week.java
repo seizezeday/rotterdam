@@ -2,6 +2,7 @@ package com.rotterdam.model.entity;
 
 import com.rotterdam.model.dao.HibernateL2Cache;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,6 +35,12 @@ public class Week implements HibernateL2Cache {
     private Date promiseSaturdayTime;
     @Temporal(TemporalType.TIME)
     private Date promiseSundayTime;
+
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean showCompensation;
+
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean saturdayCompensation;
 
     @JsonIgnore
     @OneToMany(mappedBy = "week")
@@ -141,32 +148,33 @@ public class Week implements HibernateL2Cache {
         this.period = period;
     }
 
-    @Override
-    public String toString() {
-        return "Week{" +
-                "idWeek=" + idWeek +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", promiseMondayTime=" + promiseMondayTime +
-                ", promiseTuesdayTime=" + promiseTuesdayTime +
-                ", promiseWednesdayTime=" + promiseWednesdayTime +
-                ", promiseThursdayTime=" + promiseThursdayTime +
-                ", promiseFridayTime=" + promiseFridayTime +
-                ", promiseSaturdayTime=" + promiseSaturdayTime +
-                ", promiseSundayTime=" + promiseSundayTime +
-                ", days=" + days +
-                ", period=" + period +
-                '}';
+    public boolean isShowCompensation() {
+        return showCompensation;
+    }
+
+    public void setShowCompensation(boolean show_compensation) {
+        this.showCompensation = show_compensation;
+    }
+
+    public boolean isSaturdayCompensation() {
+        return saturdayCompensation;
+    }
+
+    public void setSaturdayCompensation(boolean saturday_compensation) {
+        this.saturdayCompensation = saturday_compensation;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Week week = (Week) o;
 
         if (idWeek != week.idWeek) return false;
+        if (saturdayCompensation != week.saturdayCompensation) return false;
+        if (showCompensation != week.showCompensation) return false;
         if (days != null ? !days.equals(week.days) : week.days != null) return false;
         if (endDate != null ? !endDate.equals(week.endDate) : week.endDate != null) return false;
         if (period != null ? !period.equals(week.period) : week.period != null) return false;
@@ -201,8 +209,30 @@ public class Week implements HibernateL2Cache {
         result = 31 * result + (promiseFridayTime != null ? promiseFridayTime.hashCode() : 0);
         result = 31 * result + (promiseSaturdayTime != null ? promiseSaturdayTime.hashCode() : 0);
         result = 31 * result + (promiseSundayTime != null ? promiseSundayTime.hashCode() : 0);
+        result = 31 * result + (showCompensation ? 1 : 0);
+        result = 31 * result + (saturdayCompensation ? 1 : 0);
         result = 31 * result + (days != null ? days.hashCode() : 0);
         result = 31 * result + (period != null ? period.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Week{" +
+                "idWeek=" + idWeek +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", promiseMondayTime=" + promiseMondayTime +
+                ", promiseTuesdayTime=" + promiseTuesdayTime +
+                ", promiseWednesdayTime=" + promiseWednesdayTime +
+                ", promiseThursdayTime=" + promiseThursdayTime +
+                ", promiseFridayTime=" + promiseFridayTime +
+                ", promiseSaturdayTime=" + promiseSaturdayTime +
+                ", promiseSundayTime=" + promiseSundayTime +
+                ", show_compensation=" + showCompensation +
+                ", saturday_compensation=" + saturdayCompensation +
+                ", days=" + days +
+                ", period=" + period +
+                '}';
     }
 }
