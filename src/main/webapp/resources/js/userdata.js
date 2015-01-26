@@ -449,15 +449,16 @@
                     200: function (data) {
                         alert("good")
                         $('#total_mon_fri').text(data.totalTime)
-                        $('#total_time_monday').text(data.Monday)
-                        $('#total_time_tuesday').text(data.Tuesday)
-                        $('#total_time_wednesday').text(data.Wednesday)
-                        $('#total_time_thursday').text(data.Thursday)
-                        $('#total_time_friday').text(data.Friday)
-                        $('#total_time_saturday').text(data.Saturday)
-                        $('#total_saturday').text(data.Saturday)
-                        $('#total_time_sunday').text(data.Sunday)
-                        $('#total_sunday').text(data.Sunday)
+                        $('#total_time_monday').text(data.days.Monday)
+                        $('#total_time_tuesday').text(data.days.Tuesday)
+                        $('#total_time_wednesday').text(data.days.Wednesday)
+                        $('#total_time_thursday').text(data.days.Thursday)
+                        $('#total_time_friday').text(data.days.Friday)
+                        $('#total_time_saturday').text(data.days.Saturday)
+                        $('#total_saturday').text(data.days.Saturday)
+                        $('#total_time_sunday').text(data.days.Sunday)
+                        $('#total_sunday').text(data.days.Sunday)
+                        $('#total_over_hovers').text(data.overTime)
                     }
                 }
             });
@@ -560,14 +561,14 @@
             saturday_hours : $("#settings_saturday").val(), 
             sunday_hours : $("#settings_sunday").val(),                 
            	suterday_compensation:  $("#suterday_compensation").is(':checked'),
-        	test1:  $("#text1").text(),
+            show_compensation:  $("#show_compensation").is(':checked'),
            	allow_suterday_compensation:  $("#allow_suterday_compensation").is(':checked'),
-            select1: $("#select1 option:selected").text(),
-            select2: $("#select2 option:selected").text(),
-            select3: $("#select3 option:selected").text(),
-            check3:  $("#check3").is(':checked'),
-            check4:  $("#check4").is(':checked'),
-            select4: $("#select4 option:selected").text(),
+//            select1: $("#select1 option:selected").text(),
+//            select2: $("#select2 option:selected").text(),
+//            select3: $("#select3 option:selected").text(),
+//            check3:  $("#check3").is(':checked'),
+//            check4:  $("#check4").is(':checked'),
+//            select4: $("#select4 option:selected").text()
         };
 //            alert(selected_settings.monday_hours);
        settings(selected_settings);
@@ -614,9 +615,9 @@
                     };
         function settings_compensation(){
           if($("#show_compensation").is(':checked')){
-              $("#compensation_tab").css("display","none");
-          } else {
               $("#compensation_tab").css("display","block");
+          } else {
+              $("#compensation_tab").css("display","none");
           }
         }
         //            Settings tab end 
