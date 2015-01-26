@@ -458,7 +458,7 @@
                         $('#total_saturday').text(data.days.Saturday)
                         $('#total_time_sunday').text(data.days.Sunday)
                         $('#total_sunday').text(data.days.Sunday)
-                        $('#total_over_hovers').text(data.overTime)
+                        $('#total_over_hours').text(data.overTime)
                     }
                 }
             });
@@ -518,8 +518,17 @@
                        type_day_friday();
                        type_day_saturday();
                        type_day_sunday();
-
-
+                       $("#total_mon_fri").text(data.totalTime.totalTime);
+                       $("#total_over_hours").text(data.totalTime.overTime);
+                       $('#total_time_monday').text(data.totalTime.days.Monday)
+                       $('#total_time_tuesday').text(data.totalTime.days.Tuesday)
+                       $('#total_time_wednesday').text(data.totalTime.days.Wednesday)
+                       $('#total_time_thursday').text(data.totalTime.days.Thursday)
+                       $('#total_time_friday').text(data.totalTime.days.Friday)
+                       $('#total_time_saturday').text(data.totalTime.days.Saturday)
+                       $('#total_time_sunday').text(data.totalTime.days.Sunday)
+                       $('#total_sunday').text(data.totalTime.days.Sunday)
+                       $('#total_saturday').text(data.totalTime.days.Saturday)
                     }
                 }
             });
