@@ -102,6 +102,8 @@ public class WeeklyRouteInfo {
 
         WeekDto weekDto = weekService.getWeekByStartDateAndUserId(monday, user.getId());
 
+        weekDto.totalTime = weekService.calculateTotalTime(weekDto, user.getId());
+
         return Response.ok(weekDto).build();
     }
     //{"days":{"Monday":{"date":"12-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":20,"dayType":"1"}]},"Tuesday":{"date":"13-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"2"}]},"Wednesday":{"date":"14-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Thursday":{"date":"15-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Friday":{"date":"16-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":10,"dayType":"1"},{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":30,"dayType":"1"}]},"Saturday":{"date":"17-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]},"Sunday":{"date":"18-01-2015","workHours":[{"startWorkingTime":"01-01-1970","endWorkingTime":"01-01-1970","restTime":0,"dayType":"1"}]}}}

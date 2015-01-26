@@ -159,7 +159,7 @@ public class WeekService {
 
     final DecimalFormat df = new DecimalFormat("00.00");
 
-    private TotalTimeDto calculateTotalTime(WeekDto weekDto, long userId){
+    public TotalTimeDto calculateTotalTime(WeekDto weekDto, long userId){
         TotalTimeDto totalTimeDto = new TotalTimeDto();
         double totalTime = 0;
         for (DayDto dayDto : weekDto.days.values()) {

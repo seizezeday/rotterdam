@@ -3,6 +3,7 @@ package com.rotterdam.dto;
 import com.rotterdam.model.entity.RideType;
 import com.rotterdam.tools.json.JsonCommands;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -17,8 +18,10 @@ import java.util.Map;
 /**
  * Created by root on 19.01.15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WeekDto {
     public Map<String, DayDto> days = new LinkedHashMap<>();
+    public TotalTimeDto totalTime = new TotalTimeDto();
 
     @Override
     public String toString() {
