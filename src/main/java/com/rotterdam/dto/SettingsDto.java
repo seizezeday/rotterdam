@@ -6,6 +6,7 @@ import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
 import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import com.rotterdam.tools.json.serializer.JsonTimeHourSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -47,6 +48,12 @@ public class SettingsDto {
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date endDate;
 
+    @JsonProperty("show_compensation")
+    public boolean showCompensation;
+
+    @JsonProperty("allow_saturday_compensation")
+    public boolean saturdayCompensation;
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN);
@@ -61,7 +68,8 @@ public class SettingsDto {
                 ", saturday_hours='" +  timeFormat.format(saturday_hours) + '\'' +
                 ", sunday_hours='" +  timeFormat.format(sunday_hours) + '\'' +
                 "startDate='" + dateFormat.format(startDate) + '\'' +
-                "endDate='" + dateFormat.format(endDate) + '\'' +
+                "showCompensation='" + showCompensation + '\'' +
+                "saturdayCompensation='" + saturdayCompensation + '\'' +
                 '}';
     }
 }

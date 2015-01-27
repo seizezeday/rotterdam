@@ -225,7 +225,7 @@ public class WeekService {
         if(week == null){
           //need to create new week
             week = new Week();
-            week = copyDaysOfWeek(week, settingsDto);
+            week = copyDaysOfWeekAndCheckBoxes(week, settingsDto);
             //we need to find corresponding period
             Period period = periodDao.selectByDateBetweenAndUser(settingsDto.currentDate, userId);
             if(period == null){
@@ -239,12 +239,12 @@ public class WeekService {
             //now save to db
             weekDao.insert(week);
         } else {
-            week = copyDaysOfWeek(week, settingsDto);
+            week = copyDaysOfWeekAndCheckBoxes(week, settingsDto);
             weekDao.update(week);
         }
     }
 
-    private Week copyDaysOfWeek(Week week, SettingsDto settingsDto){
+    private Week copyDaysOfWeekAndCheckBoxes(Week week, SettingsDto settingsDto){
         week.setPromiseMondayTime(settingsDto.monday_hours);
         week.setPromiseTuesdayTime(settingsDto.tuesday_hours);
         week.setPromiseWednesdayTime(settingsDto.wednesday_hours);
@@ -252,6 +252,8 @@ public class WeekService {
         week.setPromiseFridayTime(settingsDto.friday_hours);
         week.setPromiseSaturdayTime(settingsDto.saturday_hours);
         week.setPromiseSundayTime(settingsDto.sunday_hours);
+        week.setShowCompensation(settingsDto.showCompensation);
+        week.setSaturdayCompensation(settingsDto.saturdayCompensation);
         return week;
     }
 
@@ -264,6 +266,8 @@ public class WeekService {
         settingsDto.friday_hours = week.getPromiseFridayTime();
         settingsDto.saturday_hours = week.getPromiseSaturdayTime();
         settingsDto.sunday_hours = week.getPromiseSundayTime();
+        settingsDto.showCompensation = week.isShowCompensation();
+        settingsDto.saturdayCompensation = week.isSaturdayCompensation();
         return settingsDto;
     }
 

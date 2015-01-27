@@ -572,9 +572,9 @@
             friday_hours : $("#settings_friday").val(), 
             saturday_hours : $("#settings_saturday").val(), 
             sunday_hours : $("#settings_sunday").val(),                 
-           	suterday_compensation:  $("#suterday_compensation").is(':checked'),
+           	saturday_compensation:  $("#suterday_compensation").is(':checked'),
             show_compensation:  $("#show_compensation").is(':checked'),
-           	allow_suterday_compensation:  $("#allow_suterday_compensation").is(':checked'),
+            allow_saturday_compensation:  $("#allow_saturday_compensation").is(':checked')
 //            select1: $("#select1 option:selected").text(),
 //            select2: $("#select2 option:selected").text(),
 //            select3: $("#select3 option:selected").text(),
@@ -613,7 +613,7 @@
                     var saturday_hours = $("#settings_saturday").val();
                     var sunday_hours = $("#settings_sunday").val();
                     var show_compensation = $("#show_compensation").is(':checked');
-                    var allow_suterday_compensation = $("#allow_suterday_compensation").is(':checked');
+                    var allow_saturday_compensation = $("#allow_saturday_compensation").is(':checked');
                     if (monday_hours !=="" && tuesday_hours !=="" && wednesday_hours !=="" && thursday_hours !=="" && friday_hours  !=="") {
                     //$(".hide_tabs").css("display","block"); // Показать табы если введены поля времени
 ; // Показать табы если введены поля времени
@@ -704,6 +704,8 @@
                         $("#settings_sunday").val(data.sunday_hours);
                         $("#start_period").text(data.startDate);
                         $("#end_period").text(data.endDate);
+                        $("#show_compensation").prop('checked', data.show_compensation);
+                        $("#allow_saturday_compensation").prop('checked', data.allow_saturday_compensation);
                         settings_compensation();
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
                             data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="" &&
