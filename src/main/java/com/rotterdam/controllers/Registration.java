@@ -1,6 +1,7 @@
 package com.rotterdam.controllers;
 
 import com.rotterdam.dto.UserDto;
+import com.rotterdam.model.entity.UserRole;
 import com.rotterdam.service.UserService;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class Registration {
 	@Path("/registration")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public Response registerNewUser(UserDto userDto) {
-        if (userService.save(userDto, PARAM_ROLE_ID))
+        if (userService.save(userDto, UserRole.Driver))
             return Response.ok().build();
         else
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();

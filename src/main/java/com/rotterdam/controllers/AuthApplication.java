@@ -1,6 +1,6 @@
 package com.rotterdam.controllers;
 
-import com.rotterdam.controllers.auth.CookieUtil;
+import com.rotterdam.tools.CookieUtil;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.tools.SecuritySettings;

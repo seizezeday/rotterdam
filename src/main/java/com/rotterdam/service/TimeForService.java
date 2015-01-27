@@ -41,17 +41,17 @@ public class TimeForService {
             //we need to calculate timeForTime and timeForPay
             timeForDto = calculateTimeFor(lastPeriod);
             //now we need to store timeForTime
-            lastPeriod.setTimeForTime(timeForDto.timeForTime);
+            lastPeriod.setOverTime(timeForDto.overTime);
             lastPeriod.setCalculated(true);
             periodDao.update(lastPeriod);
             //now we need to increase timeForPay
             User user = lastPeriod.getUser();
-            user.setTimeForPay(user.getTimeForPay() + timeForDto.timeForPay);
+            user.setTimeForTime(user.getTimeForTime() + timeForDto.timeForTime);
             userDao.update(user);
         } else {
-            double timeForTime = lastPeriod.getTimeForTime();
-            double timeForPay = lastPeriod.getUser().getTimeForPay();
-            timeForDto = new TimeForDto(timeForTime, timeForPay);
+            double timeForTime = lastPeriod.getUser().getTimeForTime();
+            double overTime = lastPeriod.getOverTime();
+            timeForDto = new TimeForDto(timeForTime, overTime);
         }
 
         return timeForDto;

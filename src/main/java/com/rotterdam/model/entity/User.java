@@ -22,11 +22,9 @@ public class User implements Principal, HibernateL2Cache {
 	private String zipcode;
 	private String email;
 	private String password;
-    private double timeForPay;
+    private double timeForTime;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "idUserRole")
+    @Enumerated(EnumType.STRING)
 	private UserRole role;
 
 	@JsonIgnore
@@ -131,19 +129,19 @@ public class User implements Principal, HibernateL2Cache {
 		this.password = password;
 	}
 
-    public double getTimeForPay() {
-        return timeForPay;
+    public double getTimeForTime() {
+        return timeForTime;
     }
 
-    public void setTimeForPay(double timeForPay) {
-        this.timeForPay = timeForPay;
+    public void setTimeForTime(double timeForTime) {
+        this.timeForTime = timeForTime;
     }
 
     @Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", surname="
 				+ surname + ", zipcode=" + zipcode + ", email=" + email
-				+ ", password=" + password + "]";
+				+ ", password=" + password +  ", role=" + role + "]";
 	}
 
 	@Override

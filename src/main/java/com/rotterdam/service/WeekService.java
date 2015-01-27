@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -157,7 +156,7 @@ public class WeekService {
             }
     }
 
-    final DecimalFormat df = new DecimalFormat("00.00");
+    //final DecimalFormat df = new DecimalFormat("00.00");
 
     public TotalTimeDto calculateTotalTime(WeekDto weekDto, long userId){
         TotalTimeDto totalTimeDto = new TotalTimeDto();
@@ -168,9 +167,13 @@ public class WeekService {
                 double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
                 double rest = ((double) workHourDto.restTime) / (double) 60;
 
-                double totalTimeDay = (endTime - startTime - rest);
+                Double totalTimeDay = (endTime - startTime - rest);
 
-                totalTimeDto.days.put(DateTools.getWeekDayTitle(dayDto.date), df.format(totalTimeDay));
+                int h = totalTimeDay.intValue();
+
+                int m = (int)((totalTimeDay -h) * 60);
+
+                totalTimeDto.days.put(DateTools.getWeekDayTitle(dayDto.date), h + "h " + m + "m");
 
                 String weekDayTitle = DateTools.getWeekDayTitle(dayDto.date);
                 if (!weekDayTitle.equals("Saturday") && !weekDayTitle.equals("Sunday")) {

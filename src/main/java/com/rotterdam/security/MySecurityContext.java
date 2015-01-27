@@ -1,9 +1,10 @@
-package com.rotterdam.controllers.auth;
+package com.rotterdam.security;
 
 
 
 import com.rotterdam.model.entity.Session;
 import com.rotterdam.model.entity.User;
+import com.rotterdam.model.entity.UserRole;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -12,7 +13,7 @@ import java.security.Principal;
 
 /**
  */
-public class MySecurityContext implements javax.ws.rs.core.SecurityContext {
+public class MySecurityContext implements SecurityContext {
 
     private final User user;
     private final Session session;//
@@ -47,10 +48,8 @@ public class MySecurityContext implements javax.ws.rs.core.SecurityContext {
 
         try {
             // this user has this role?
-            //return user.getRoles().contains(User.Role.valueOf(role));
-            return user.getRole().getName().equals(role);
-        } catch (Exception e) {
-        }
+            return user.getRole().equals(UserRole.valueOf(role));
+        } catch (Exception ignored) {}
 
         return false;
     }

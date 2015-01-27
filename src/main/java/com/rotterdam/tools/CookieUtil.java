@@ -1,9 +1,10 @@
-package com.rotterdam.controllers.auth;
+package com.rotterdam.tools;
 
 
-import com.rotterdam.model.dao.SessionDao;
+import com.rotterdam.security.SessionIdentifierGenerator;
 import com.rotterdam.model.entity.Session;
 import com.rotterdam.model.entity.User;
+import com.rotterdam.service.SessionService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ public class CookieUtil {
 	private SessionIdentifierGenerator sessionIdentifierGenerator;
 
     @Inject
-    private SessionDao sessionDao;
+    private SessionService sessionService;
 
     public String getSessionIdFromRequest(HttpServletRequest hsr) {
         if (hsr == null) return null;
@@ -36,7 +37,7 @@ public class CookieUtil {
     @Transactional
     public boolean insertSessionUID(HttpServletResponse rspn, User user) {
         String sessionUID =sessionIdentifierGenerator.nextSessionId();
-        if (sessionDao.insert(new Session(sessionUID, user)) != null) {
+        if (sessionService.insert(new Session(sessionUID, user)) != null) {
             Cookie newCookie = new Cookie("sessionUID", sessionUID);
             rspn.addCookie(newCookie);
             return true;
@@ -46,7 +47,7 @@ public class CookieUtil {
     @Transactional
     public boolean removeSessionUID(HttpServletRequest hsr, HttpServletResponse rspn){
         String sessionId = getSessionIdFromRequest(hsr);
-        if(sessionId != null && sessionDao.deleteBySessionId(sessionId)) {
+        if(sessionId != null && sessionService.removeByStringId(sessionId)) {
             Cookie invalidateCookie = new Cookie("sessionUID", sessionId);
             invalidateCookie.setMaxAge(0);
             rspn.addCookie(invalidateCookie);

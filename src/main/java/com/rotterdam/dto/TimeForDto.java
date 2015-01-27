@@ -5,21 +5,21 @@ package com.rotterdam.dto;
  */
 public class TimeForDto {
     public double timeForTime;
-    public double timeForPay;
+    public double overTime;
 
     public TimeForDto() {
     }
 
-    public TimeForDto(double timeForTime, double timeForPay) {
+    public TimeForDto(double timeForTime, double overTime) {
         this.timeForTime = timeForTime;
-        this.timeForPay = timeForPay;
+        this.overTime = overTime;
     }
 
     @Override
     public String toString() {
         return "TimeForDto{" +
                 "timeForTime=" + timeForTime +
-                ", timeForPay=" + timeForPay +
+                ", overTime=" + overTime +
                 '}';
     }
 }

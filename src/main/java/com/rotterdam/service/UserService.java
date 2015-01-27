@@ -2,7 +2,6 @@ package com.rotterdam.service;
 
 import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.dao.UserDao;
-import com.rotterdam.model.dao.UserRoleDao;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.UserRole;
 import com.rotterdam.tools.SecuritySettings;
@@ -22,12 +21,8 @@ public class UserService {
     @Inject
     private UserDao userDao;
 
-    @Inject
-    private UserRoleDao userRoleDao;
-
     @Transactional
-    public boolean save(UserDto userDto, int roleId){
-        UserRole userRole = userRoleDao.selectById(roleId);
+    public boolean save(UserDto userDto, UserRole userRole){
         if (checkPassword(userDto.pass, userDto.passconfirm) && checkEmail(userDto.email) && userRole != null) {
             User user = convertToUser(userDto);
             user.setPassword(SecuritySettings.code(userDto.pass));

@@ -1,4 +1,4 @@
-package com.rotterdam.controllers.auth;
+package com.rotterdam.security;
 
 
 import javax.inject.Named;

@@ -1,8 +1,8 @@
 package com.rotterdam.tools.json;
 
-import com.rotterdam.controllers.auth.CookieUtil;
+import com.rotterdam.service.SessionService;
+import com.rotterdam.tools.CookieUtil;
 import com.rotterdam.dto.UserInfoDto;
-import com.rotterdam.model.dao.SessionDao;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.dao.WorkHoursDao;
 import com.rotterdam.model.entity.RideType;
@@ -34,7 +34,7 @@ import java.util.List;
 public class JsonCommands {
 
     @Inject
-    private SessionDao sessionDao;
+    private SessionService sessionService;
 
     @Inject
     private UserDao userDao;
@@ -250,8 +250,8 @@ public class JsonCommands {
 
     public  User getUserFromRequest(HttpServletRequest hsr) {
         CookieUtil cookieUtil = new CookieUtil();
-        return sessionDao
-                .selectBySessionId(cookieUtil.getSessionIdFromRequest(hsr))
+        return sessionService
+                .getByStringId(cookieUtil.getSessionIdFromRequest(hsr))
                 .getUser();
     }
 

@@ -22,7 +22,7 @@ public class Period  implements HibernateL2Cache {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    private double timeForTime;
+    private double overTime;
     @Column(name = "periodType")
     @Enumerated(EnumType.STRING)
     private PeriodType periodType;
@@ -79,12 +79,12 @@ public class Period  implements HibernateL2Cache {
         this.periodType = periodType;
     }
 
-    public double getTimeForTime() {
-        return timeForTime;
+    public double getOverTime() {
+        return overTime;
     }
 
-    public void setTimeForTime(double timeForTime) {
-        this.timeForTime = timeForTime;
+    public void setOverTime(double overTime) {
+        this.overTime = overTime;
     }
 
     public List<Week> getWeeks() {
@@ -103,7 +103,7 @@ public class Period  implements HibernateL2Cache {
         Period period = (Period) o;
 
         if (idPeriod != period.idPeriod) return false;
-        if (timeForTime != period.timeForTime) return false;
+        if (overTime != period.overTime) return false;
         if (endDate != null ? !endDate.equals(period.endDate) : period.endDate != null) return false;
         if (periodType != period.periodType) return false;
         if (startDate != null ? !startDate.equals(period.startDate) : period.startDate != null) return false;
@@ -121,7 +121,7 @@ public class Period  implements HibernateL2Cache {
         result = (int) (idPeriod ^ (idPeriod >>> 32));
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        temp = Double.doubleToLongBits(timeForTime);
+        temp = Double.doubleToLongBits(overTime);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (periodType != null ? periodType.hashCode() : 0);
         result = 31 * result + (weeks != null ? weeks.hashCode() : 0);
@@ -136,7 +136,7 @@ public class Period  implements HibernateL2Cache {
                 "idPeriod=" + idPeriod +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", timeForTime=" + timeForTime +
+                ", overTime=" + overTime +
                 ", periodType=" + periodType +
                 ", weeks=" + weeks +
                 ", user=" + user +

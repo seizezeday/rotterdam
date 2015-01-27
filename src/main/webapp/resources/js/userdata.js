@@ -21,7 +21,10 @@
                         $(".time_date").eq(6).append(data.weekList[6]);
 //                        $(".time_mount :nth-child("+data.currentMonth+")").attr("selected", "selected");
 //                        $(".time_week :nth-child("+data.currentWeekNumber+")").attr("selected", "selected");
-            }     
+            },
+                            403 : function(){
+                                window.location.href = "/index.html";
+                            }
                         }
                     });
         // Редирект на index.html после нажатия кнопки logout
