@@ -337,6 +337,7 @@
              $('.time_date').empty();
             time_date(selected_date);
             readSettings();
+            loadTimeTab();
              }); 
             function time_date(data) {
             $.ajax({
@@ -355,6 +356,7 @@
                         $(".time_date").eq(4).append(data.weekList[4]);
                         $(".time_date").eq(5).append(data.weekList[5]);
                         $(".time_date").eq(6).append(data.weekList[6]);
+                        
                     }
                 }
             });
