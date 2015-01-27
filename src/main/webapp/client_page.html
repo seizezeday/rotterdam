@@ -531,7 +531,7 @@ multitrip
                </div>
   </div>
 <div class="tab-pane font_size_18" id="settings">
-         <div class="col-md-4 col-md-offset-8"><h3>Week Hours</h3></div>
+         <div class="col-md-4 col-md-offset-8"><h3>Scheduled work hours</h3></div>
    <div class="col-md-4">
        <div class="margin_bottom_10">
   <label class="btn btn-primary ">
@@ -541,7 +541,7 @@ multitrip
 <!--        <div class="col-md-4">-->
        <div class="margin_bottom_10">
   <label class="btn btn-primary ">
-    <input id="allow_saturday_compensation" type="checkbox"><span class="padding_left_5">Allow Suterday time-for-time compensation</span>
+    <input id="allow_saturday_compensation" type="checkbox"><span class="padding_left_5">Use Saturday hours as time-for-time</span>
 
   </label>
 </div>
@@ -554,11 +554,13 @@ multitrip
         <input id="check1" type="checkbox" value="">
         Allow Suterday time-for-time compensation
 -->
-               <div class="col-xs-12 padding_fix"><label for="work_time">Work_time</label></div> 
+               <!--<div class="col-xs-12 padding_fix"><label for="work_time">Work_time</label></div> -->
+<!--
         <select name="work_time" class="form-control margin_vertical_10">
           <option>fulltime </option>
           <option>parttime</option>
         </select>
+-->
         
 <!--
         <label for="Max hours">Max hours</label>
@@ -599,7 +601,7 @@ multitrip
    </div>  
        <div class="col-md-4">
 <!--                 <input id="text1" type="text" class="form-control" >-->
-    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start time-for-time">
+    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start time-for-time regulation">
 
       </div>
        <div class="col-md-4">
@@ -625,12 +627,12 @@ multitrip
   
 <!--        <input id="settings_saturday" type="text" class="form-control margin_bottom_10" placeholder="Saturday">-->
            
-            <input id="settings_saturday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Saturday" >
+            <!--<input id="settings_saturday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Saturday" >-->
   
         
 <!--        <input id="settings_sunday" type="text" class="form-control margin_bottom_10" placeholder="Sunday">-->
            
-            <input id="settings_sunday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Sunday">
+            <!--<input id="settings_sunday" type="text" class="form-control margin_bottom_10 settings_day_hours" placeholder="Sunday">-->
 
       </div>
    <div class="col-md-12">
@@ -654,16 +656,16 @@ multitrip
 -->
         </div>
             <div class="col-md-4">
-              <div class="col-xs-12 text-center"><label for="">Period range</label></div>
+              <div class="col-xs-12 text-center"><label>Period</label></div>
               <div class="form-group">
 <!--    <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range <small>(dynamic)</small></label><br>-->
     <div class="form-group col-xs-6">
 <!--      <input type="text" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="period start" bs-datepicker>-->
-   <p id="start_period">start_period</p>
+   <p class="text-center" id="start_period">start_period</p>
     </div>
     <div class="form-group col-xs-6">
 <!--      <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="period end" bs-datepicker>-->
-   <p id="end_period">end_period</p>
+   <p class="text-center" id="end_period">end_period</p>
     </div>
   </div>
 
