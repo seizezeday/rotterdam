@@ -387,7 +387,7 @@
             $.ajax({
                 type: "POST",
                 url: "api/timeFor",
-                data: JSON.stringify(data),
+//                data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
