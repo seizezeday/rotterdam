@@ -6,7 +6,6 @@ import com.rotterdam.service.TimeForService;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.JsonCommands;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +24,7 @@ import java.util.Date;
  * Created by root on 21.01.15.
  */
 @Path("/timeFor")
-@PermitAll
+//@PermitAll
 @Named
 public class TimeForInfo {
 
