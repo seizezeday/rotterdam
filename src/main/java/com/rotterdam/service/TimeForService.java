@@ -35,7 +35,7 @@ public class TimeForService {
         //first we need to get previous period
         //Period lastPeriod = periodDao.selectPrevPeriodByUser(userId);
         Period lastPeriod = getPrevPeriod(now, userId);
-        if(lastPeriod == null) return null;
+        if(lastPeriod == null) return new TimeForDto(0, 0);
         TimeForDto timeForDto;
         if(!lastPeriod.isCalculated()){
             //we need to calculate timeForTime and timeForPay
@@ -118,5 +118,19 @@ public class TimeForService {
             period = periodDao.selectByStartAndEndDate(startDay, endDate, userId);
         }
         return period;
+    }
+
+    @Transactional
+    public boolean saveOverTime(double overTime, long userId){
+        Date now = new Date();
+        Period lastPeriod = getPrevPeriod(now, userId);
+        if(lastPeriod != null){
+            lastPeriod.setOverTime(overTime);
+            periodDao.update(lastPeriod);
+            return true;
+        } else {
+            // error in logic
+            return false;
+        }
     }
 }
