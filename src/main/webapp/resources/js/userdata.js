@@ -470,9 +470,7 @@
                     }
                 }
             });
-
-            //loadTimeTab();
-
+            loadTimeTab();
         }
 
         loadTimeTab();
