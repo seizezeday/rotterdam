@@ -386,13 +386,15 @@
             function compensation_json(data) {
             $.ajax({
                 type: "POST",
-                url: "api/usetimefortime",
+                url: "api/timeFor",
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-                    200: function () {
+                    200: function (data) {
                         alert("Success...");
+                        $('#payment_time_avaliable').text(data.overTime);
+                        
                     }
                 }
             });
