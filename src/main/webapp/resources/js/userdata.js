@@ -1,8 +1,7 @@
     $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
-                        
         //Получение значений текущего дня недели и запись на таб время
-                        $.ajax({  
+                        $.ajax({
                         type: "POST",
                         url: "api/home",
                         datatype: "json",
@@ -27,6 +26,8 @@
                             }
                         }
                     });
+        compensation_json();
+//        payment_json();
         // Редирект на index.html после нажатия кнопки logout
         $('#logout').click(function(){
              $.ajax({
@@ -381,9 +382,9 @@
                     use_time_for_time: $('#compensation_time').val()   
                 };
 
-                  compensation_json(compensation);
+                  compensation_json();
                });
-            function compensation_json(data) {
+            function compensation_json(){
             $.ajax({
                 type: "POST",
                 url: "api/timeFor",
@@ -392,9 +393,9 @@
                 dataType: "json",
                 statusCode: {
                     200: function (data) {
-                        alert("Success...");
+//                        alert("Success...");
+                        $('#compensation_time_avaliable').text(data.timeForTime);
                         $('#payment_time_avaliable').text(data.overTime);
-                        
                     }
                 }
             });
@@ -415,22 +416,22 @@
                     avl_time_for_pay: $('#payment_time_field').val()   
                 };
                   alert(paymenttime.avl_time_for_pay);
-                  payment_json(avl_time_for_pay);
+//                  payment_json();
                });
-            function payment_json(data) {
-            $.ajax({
-                type: "POST",
-                url: "api/paymenttime",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                statusCode: {
-                    200: function () {
-                        alert("Success...");
-                    }
-                }
-            });
-        };
+//            function payment_json() {
+//            $.ajax({
+//                type: "POST",
+//                url: "api/timeFor",
+////                data: JSON.stringify(data),
+//                contentType: "application/json; charset=utf-8",
+//                dataType: "json",
+//                statusCode: {
+//                    200: function () {
+//                        alert("Success...");
+//                    }
+//                }
+//            });
+//        };
 //        Time tab start
         $('#date_save').click(function date_save(){
             var s_date  = {
