@@ -280,9 +280,11 @@ public class WeekService {
 
         Week week = weekDao.selectByStartDateAndUser(date, userId);
 
+        Period period = week.getPeriod();
+
         SettingsDto settingsDto = new SettingsDto();
-        settingsDto.startDate = week.getStartDate();
-        settingsDto.endDate = week.getEndDate();
+        settingsDto.startDate = period.getStartDate();
+        settingsDto.endDate = period.getEndDate();
 
         if(week == null)
             return settingsDto;

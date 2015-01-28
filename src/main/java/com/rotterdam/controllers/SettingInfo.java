@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * @author Anatolii
  */
-@Path("/")
+@Path("/settings")
 @PermitAll
 @Named
 public class SettingInfo {
@@ -36,7 +36,6 @@ public class SettingInfo {
 
     @RolesAllowed({ "Driver" })
     @POST
-    @Path("/settings")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response saveSettings(@Context HttpServletRequest hsr, SettingsDto settingsDto) throws ParseException, IOException {
         //System.out.println(settingsDto);
@@ -51,7 +50,7 @@ public class SettingInfo {
 
     @RolesAllowed({ "Driver" })
     @POST
-    @Path("/settings/get")
+    @Path("/get")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response getSettings(@Context HttpServletRequest hsr, String data) throws ParseException, IOException {
 
