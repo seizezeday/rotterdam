@@ -22,6 +22,7 @@ import java.util.Map;
 public class WeekDto {
     public Map<String, DayDto> days = new LinkedHashMap<>();
     public TotalTimeDto totalTime = new TotalTimeDto();
+    public boolean active = false;
 
     @Override
     public String toString() {

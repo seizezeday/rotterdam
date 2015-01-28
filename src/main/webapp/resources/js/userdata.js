@@ -485,61 +485,70 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-                    200: function (data) {
-//                       alert('json ok');
-                        //start
-                       $(".time_monday_start").val(data.days.Monday.workHours[0].startWorkingTime);
-                       $(".time_tuesday_start").val(data.days.Tuesday.workHours[0].startWorkingTime);
-                    $(".time_wednesday_start").val(data.days.Wednesday.workHours[0].startWorkingTime);
-                       $(".time_thursday_start").val(data.days.Thursday.workHours[0].startWorkingTime);
-                       $(".time_friday_start").val(data.days.Friday.workHours[0].startWorkingTime);
-                       $(".time_saturday_start").val(data.days.Saturday.workHours[0].startWorkingTime);
-                       $(".time_sunday_start").val(data.days.Sunday.workHours[0].startWorkingTime);
-                        //end
-                       $(".time_monday_end").val(data.days.Monday.workHours[0].endWorkingTime);
-                       $(".time_tuesday_end").val(data.days.Tuesday.workHours[0].endWorkingTime);
-                       $(".time_wednesday_end").val(data.days.Wednesday.workHours[0].endWorkingTime);
-                       $(".time_thursday_end").val(data.days.Thursday.workHours[0].endWorkingTime);
-                       $(".time_friday_end").val(data.days.Friday.workHours[0].endWorkingTime);
-                       $(".time_saturday_end").val(data.days.Saturday.workHours[0].endWorkingTime);
-                       $(".time_sunday_end").val(data.days.Sunday.workHours[0].endWorkingTime);
-                        //rest
-                       $(".time_monday_rest").val(data.days.Monday.workHours[0].restTime);
-                       $(".time_tuesday_rest").val(data.days.Tuesday.workHours[0].restTime);
-                       $(".time_wednesday_rest").val(data.days.Wednesday.workHours[0].restTime);
-                       $(".time_thursday_rest").val(data.days.Thursday.workHours[0].restTime);
-                       $(".time_friday_rest").val(data.days.Friday.workHours[0].restTime);
-                       $(".time_saturday_rest").val(data.days.Saturday.workHours[0].restTime);
-                       $(".time_sunday_rest").val(data.days.Sunday.workHours[0].restTime);
-                        //dayTape
-                       $(".time_monday_type_day").val(data.days.Monday.workHours[0].dayType);
-                       $(".time_tuesday_type_day").val(data.days.Tuesday.workHours[0].dayType);
-                       $(".time_wednesday_type_day").val(data.days.Wednesday.workHours[0].dayType);
-                       $(".time_thursday_type_day").val(data.days.Thursday.workHours[0].dayType);
-                       $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
-                       $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
-                       $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType); 
-                       type_day_monday();
-                       type_day_tuesday();
-                       type_day_wednesday();
-                       type_day_thursday();
-                       type_day_friday();
-                       type_day_saturday();
-                       type_day_sunday();
-                       $("#total_mon_fri").text(data.totalTime.totalTime);
-                       $("#total_over_hours").text(data.totalTime.overTime);
-                       $('#total_time_monday').text(data.totalTime.days.Monday)
-                       $('#total_time_tuesday').text(data.totalTime.days.Tuesday)
-                       $('#total_time_wednesday').text(data.totalTime.days.Wednesday)
-                       $('#total_time_thursday').text(data.totalTime.days.Thursday)
-                       $('#total_time_friday').text(data.totalTime.days.Friday)
-                       $('#total_time_saturday').text(data.totalTime.days.Saturday)
-                       $('#total_time_sunday').text(data.totalTime.days.Sunday)
-                       $('#total_sunday').text(data.totalTime.days.Sunday)
-                       $('#total_saturday').text(data.totalTime.days.Saturday)
-                    }
+            200: function (data) {
+
+                if(data.active){
+                    $(".hide_tabs").css("display", "block");
+                    $('#date_save').removeAttr("disabled","disabled")
+                }else {
+                    $(".hide_tabs").css("display","none");;
+                    $('#date_save').attr("disabled","disabled");
                 }
-            });
+//                       alert('json ok');
+                //start
+                $(".time_monday_start").val(data.days.Monday.workHours[0].startWorkingTime);
+                $(".time_tuesday_start").val(data.days.Tuesday.workHours[0].startWorkingTime);
+                $(".time_wednesday_start").val(data.days.Wednesday.workHours[0].startWorkingTime);
+                $(".time_thursday_start").val(data.days.Thursday.workHours[0].startWorkingTime);
+                $(".time_friday_start").val(data.days.Friday.workHours[0].startWorkingTime);
+                $(".time_saturday_start").val(data.days.Saturday.workHours[0].startWorkingTime);
+                $(".time_sunday_start").val(data.days.Sunday.workHours[0].startWorkingTime);
+                //end
+                $(".time_monday_end").val(data.days.Monday.workHours[0].endWorkingTime);
+                $(".time_tuesday_end").val(data.days.Tuesday.workHours[0].endWorkingTime);
+                $(".time_wednesday_end").val(data.days.Wednesday.workHours[0].endWorkingTime);
+                $(".time_thursday_end").val(data.days.Thursday.workHours[0].endWorkingTime);
+                $(".time_friday_end").val(data.days.Friday.workHours[0].endWorkingTime);
+                $(".time_saturday_end").val(data.days.Saturday.workHours[0].endWorkingTime);
+                $(".time_sunday_end").val(data.days.Sunday.workHours[0].endWorkingTime);
+                //rest
+                $(".time_monday_rest").val(data.days.Monday.workHours[0].restTime);
+                $(".time_tuesday_rest").val(data.days.Tuesday.workHours[0].restTime);
+                $(".time_wednesday_rest").val(data.days.Wednesday.workHours[0].restTime);
+                $(".time_thursday_rest").val(data.days.Thursday.workHours[0].restTime);
+                $(".time_friday_rest").val(data.days.Friday.workHours[0].restTime);
+                $(".time_saturday_rest").val(data.days.Saturday.workHours[0].restTime);
+                $(".time_sunday_rest").val(data.days.Sunday.workHours[0].restTime);
+                //dayTape
+                $(".time_monday_type_day").val(data.days.Monday.workHours[0].dayType);
+                $(".time_tuesday_type_day").val(data.days.Tuesday.workHours[0].dayType);
+                $(".time_wednesday_type_day").val(data.days.Wednesday.workHours[0].dayType);
+                $(".time_thursday_type_day").val(data.days.Thursday.workHours[0].dayType);
+                $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
+                $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
+                $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType);
+                type_day_monday();
+                type_day_tuesday();
+                type_day_wednesday();
+                type_day_thursday();
+                type_day_friday();
+                type_day_saturday();
+                type_day_sunday();
+                $("#total_mon_fri").text(data.totalTime.totalTime);
+                $("#total_over_hours").text(data.totalTime.overTime);
+                $('#total_time_monday').text(data.totalTime.days.Monday)
+                $('#total_time_tuesday').text(data.totalTime.days.Tuesday)
+                $('#total_time_wednesday').text(data.totalTime.days.Wednesday)
+                $('#total_time_thursday').text(data.totalTime.days.Thursday)
+                $('#total_time_friday').text(data.totalTime.days.Friday)
+                $('#total_time_saturday').text(data.totalTime.days.Saturday)
+                $('#total_time_sunday').text(data.totalTime.days.Sunday)
+                $('#total_sunday').text(data.totalTime.days.Sunday)
+
+                $('#total_saturday').text(data.totalTime.days.Saturday)
+            }
+        }
+    });
         }
 
         function date_to_save(day, number){

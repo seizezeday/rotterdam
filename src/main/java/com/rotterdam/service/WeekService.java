@@ -183,12 +183,16 @@ public class WeekService {
         }
         totalTimeDto.totalTime = totalTime;
         //now we need to calculate over-time
-        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
-        double promisedWeekTime = timeForService.getPromisedWeekTime(week);
-        double overTime = 0;
-        if(totalTime > promisedWeekTime)
-            overTime = totalTime - promisedWeekTime;
-        totalTimeDto.overTime  = overTime;
+        if(weekDto.days.size() != 0) {
+            Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+            if (week != null) {
+                double promisedWeekTime = timeForService.getPromisedWeekTime(week);
+                double overTime = 0;
+                if (totalTime > promisedWeekTime)
+                    overTime = totalTime - promisedWeekTime;
+                totalTimeDto.overTime = overTime;
+            }
+        }
         return totalTimeDto;
     }
 
@@ -278,13 +282,17 @@ public class WeekService {
     public SettingsDto getSettings(Date date, long userId){
         date = DateTools.getDateOfPrevMonday(date);
 
+        SettingsDto settingsDto = new SettingsDto();
+
+        Period period = periodDao.selectByDateBetweenAndUser(date, userId);
+
+        if(period != null) {
+            settingsDto.startDate = period.getStartDate();
+            settingsDto.endDate = period.getEndDate();
+        }
+
         Week week = weekDao.selectByStartDateAndUser(date, userId);
 
-        Period period = week.getPeriod();
-
-        SettingsDto settingsDto = new SettingsDto();
-        settingsDto.startDate = period.getStartDate();
-        settingsDto.endDate = period.getEndDate();
 
         if(week == null)
             return settingsDto;
@@ -292,5 +300,14 @@ public class WeekService {
         settingsDto = copyDaysOfWeek(settingsDto, week);
 
         return settingsDto;
+    }
+
+    public boolean isActive(Date weekDate, long userId){
+        Period weekPeriod = periodDao.selectByDateBetweenAndUser(weekDate, userId);
+        Period currentPeriod = periodDao.selectByDateBetweenAndUser(new Date(), userId);
+        if(weekPeriod == null || currentPeriod == null) return false;
+        return weekPeriod.getStartDate().equals(currentPeriod.getStartDate());
+
+
     }
 }

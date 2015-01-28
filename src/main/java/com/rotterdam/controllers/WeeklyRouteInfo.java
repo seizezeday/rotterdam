@@ -104,6 +104,8 @@ public class WeeklyRouteInfo {
 
         weekDto.totalTime = weekService.calculateTotalTime(weekDto, user.getId());
 
+        weekDto.active = weekService.isActive(monday, user.getId());
+
         return Response.ok(weekDto).build();
     }
 }
