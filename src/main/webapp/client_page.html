@@ -963,6 +963,11 @@ multitrip
      	<script type="text/javascript">
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
         $("[name='my-checkbox']").bootstrapSwitch();
+//        $('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+//            console.log(this); // DOM element
+//            console.log(event); // jQuery event
+//            console.log(state); // true | false
+//        });
       </script>
      
   </body>
