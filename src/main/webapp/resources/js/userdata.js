@@ -630,7 +630,7 @@
                     }
                     };
         function settings_compensation(){
-          if($("#show_compensation").is(':checked')){
+          if($('#show_compensation').bootstrapSwitch('state')){
               $("#compensation_tab").css("display","block");
           } else {
               $("#compensation_tab").css("display","none");
@@ -704,19 +704,22 @@
                         $("#settings_wednesday").val(data.wednesday_hours);
                         $("#settings_thursday").val(data.thursday_hours);
                         $("#settings_friday").val(data.friday_hours);
-                        $("#settings_saturday").val(data.saturday_hours);
-                        $("#settings_sunday").val(data.sunday_hours);
+                        //$("#settings_saturday").val(data.saturday_hours);
+                        //$("#settings_sunday").val(data.sunday_hours);
                         $("#start_period").text(data.startDate);
                         $("#end_period").text(data.endDate);
 //                        $("#show_compensation").prop('checked', data.show_compensation);
                         $('#show_compensation').bootstrapSwitch('state',data.show_compensation);
 
-                        $("#allow_saturday_compensation").prop('checked', data.allow_saturday_compensation);
+                        $("#allow_saturday_compensation").bootstrapSwitch('state', data.allow_saturday_compensation);
                         settings_compensation();
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
-                            data.friday_hours  !=="" && data.saturday_hours  !=="" && data.sunday_hours !=="" &&
+                            data.friday_hours  !=="" &&
+                            //data.saturday_hours  !=="" && data.sunday_hours !=="" &&
                             data.monday_hours !==null && data.tuesday_hours !==null && data.wednesday_hours !==null && data.thursday_hours !==null &&
-                            data.friday_hours  !==null && data.saturday_hours  !==null && data.sunday_hours !==null) {
+                            data.friday_hours  !==null
+                            //&& data.saturday_hours  !==null && data.sunday_hours !==null
+                            ) {
                             $(".hide_tabs").css("display", "block");
                             $('#setting_save').removeAttr("disabled","disabled")
                         }else {
