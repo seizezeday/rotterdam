@@ -2,6 +2,7 @@
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]; 
+//        alert (week_days[0]);
 //        $.each(week_days,function(){
 ////            alert(this);
 //        });
@@ -51,7 +52,6 @@
              if($(".time_"+this+"_type_day").val() != 1){
                 $(".time_tab_"+this+"_del").click();
                 $(".add_row_"+this+" button").hide();
-                $(".add_row_"+this+" button").attr("disabled","disabled");
                 $(".time_"+this+"_start").attr("disabled","disabled");
                 $(".time_"+this+"_start").val('00:00')
                 $(".time_"+this+"_end").attr("disabled","disabled");
@@ -61,15 +61,13 @@
               } 
             else {
                 $(".add_row_"+this+" button").show();
-                $(".add_row"+this+" button").removeAttr("disabled","disabled");
                 $(".time_"+this+"_start").removeAttr("disabled","disabled");
                 $(".time_"+this+"_end").removeAttr("disabled","disabled");
                 $(".time_"+this+"_rest").removeAttr("disabled","disabled");
               } 
 });  
-    };
-                $(".time_monday_type_day, .time_tuesday_type_day, .time_wednesday_type_day, .time_thursday_type_day, .time_friday_type_day, .time_saturday_type_day, .time_sunday_type_day   ").change(type_day);
-
+    };       
+                $(".time_"+week_days[0]+"_type_day, .time_"+week_days[1]+"_type_day, .time_"+week_days[2]+"_type_day, .time_"+week_days[3]+"_type_day, .time_"+week_days[4]+"_type_day, .time_"+week_days[5]+"_type_day, .time_"+week_days[6]+"_type_day").change(type_day);
 //            function type_day_monday(){
 //          if($(".time_monday_type_day").val() != 1){
 //                $(".time_tab_monday_del").click();
@@ -497,8 +495,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-            200: function (data) {
-
+                200: function (data) { 
                 $(".time_monday_start").val('');
                 $(".time_monday_end").val('');
                 $(".time_monday_rest").val('');
