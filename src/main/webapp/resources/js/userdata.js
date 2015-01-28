@@ -708,7 +708,9 @@
                         $("#settings_sunday").val(data.sunday_hours);
                         $("#start_period").text(data.startDate);
                         $("#end_period").text(data.endDate);
-                        $("#show_compensation").prop('checked', data.show_compensation);
+//                        $("#show_compensation").prop('checked', data.show_compensation);
+                        $('#show_compensation').bootstrapSwitch('state',data.show_compensation);
+
                         $("#allow_saturday_compensation").prop('checked', data.allow_saturday_compensation);
                         settings_compensation();
                         if (data.monday_hours !=="" && data.tuesday_hours !=="" && data.wednesday_hours !=="" && data.thursday_hours !=="" &&
