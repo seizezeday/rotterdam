@@ -46,6 +46,7 @@
         
             function type_day_monday(){
           if($(".time_monday_type_day").val() != 1){
+                $(".time_tab_monday_del").click();
                 $(".add_row_monday button").hide();
                 $(".add_row_monday button").attr("disabled","disabled");
                 $(".time_monday_start").attr("disabled","disabled");
@@ -69,7 +70,9 @@
         $(".time_tuesday_type_day").change(type_day_tuesday);
             function type_day_tuesday(){
           if($(".time_tuesday_type_day").val() != 1){
-                $(".add_row_tuesday button").hide();
+              $(".time_tab_tuesday_del").click();
+
+              $(".add_row_tuesday button").hide();
                 $(".add_row_tuesday button").attr("disabled","disabled");
                 $(".time_tuesday_start").attr("disabled","disabled");
                 $(".time_tuesday_start").val('00:00')
@@ -92,7 +95,9 @@
         $(".time_wednesday_type_day").change(type_day_wednesday);
             function type_day_wednesday(){
           if($(".time_wednesday_type_day").val() != 1){
-                $(".add_row_wednesday button").hide();
+              $(".time_tab_wednesday_del").click();
+
+              $(".add_row_wednesday button").hide();
                 $(".add_row_wednesday button").attr("disabled","disabled");
                 $(".time_wednesday_start").attr("disabled","disabled");
                 $(".time_wednesday_start").val('00:00')
@@ -115,7 +120,9 @@
         $(".time_thursday_type_day").change(type_day_thursday)
             function type_day_thursday(){
           if($(".time_thursday_type_day").val() != 1){
-                $(".add_row_thursday button").hide();
+              $(".time_tab_thursday_del").click();
+
+              $(".add_row_thursday button").hide();
                 $(".add_row_thursday button").attr("disabled","disabled");
                 $(".time_thursday_start").attr("disabled","disabled");
                 $(".time_thursday_start").val('00:00')
@@ -139,7 +146,8 @@
         $(".time_friday_type_day").change(type_day_friday)
             function type_day_friday(){
           if($(".time_friday_type_day").val() != 1){
-                $(".add_row_friday button").hide();
+              $(".time_tab_friday_del").click();
+              $(".add_row_friday button").hide();
                 $(".add_row_friday button").attr("disabled","disabled");
                 $(".time_friday_start").attr("disabled","disabled");
                 $(".time_friday_start").val('00:00')
@@ -162,7 +170,8 @@
         $(".time_saturday_type_day").change(type_day_saturday);
             function type_day_saturday(){
           if($(".time_saturday_type_day").val() != 1){
-                $(".add_row_saturday button").hide();
+              $(".time_tab_saturday_del").click();
+              $(".add_row_saturday button").hide();
                 $(".add_row_saturday button").attr("disabled","disabled");
                 $(".time_saturday_start").attr("disabled","disabled");
                 $(".time_saturday_start").val('00:00')
@@ -185,6 +194,7 @@
         $(".time_sunday_type_day").change(type_day_sunday);
             function type_day_sunday(){
           if($(".time_sunday_type_day").val() != 1){
+              $(".time_tab_sunday_del").click();
                 $(".add_row_sunday button").hide();
                 $(".add_row_sunday button").attr("disabled","disabled");
                 $(".time_sunday_start").attr("disabled","disabled");
@@ -234,7 +244,7 @@
         $('.add_row_monday').bind('click',function(){
          var time_day_add = tryOne("monday");
          $(this).parent().after(time_day_add);
-         $('.time_tab_del').bind('click',function(){
+         $('.time_tab_monday_del').bind('click',function(){
          $($(this).parents().get(2)).remove();
          });
          });
@@ -242,7 +252,7 @@
         $('.add_row_tuesday').click(function(){
             var time_day_add = tryOne("tuesday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_tuesday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
@@ -250,35 +260,35 @@
         $('.add_row_wednesday').click(function(){
             var time_day_add = tryOne("wednesday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_wednesday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
         $('.add_row_thursday').click(function(){
             var time_day_add = tryOne("thursday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_thursday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
         $('.add_row_friday').click(function(){
             var time_day_add = tryOne("friday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_friday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
         $('.add_row_saturday').click(function(){
             var time_day_add = tryOne("saturday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_saturday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
         $('.add_row_sunday').click(function(){
             var time_day_add = tryOne("sunday");
             $(this).parent().after(time_day_add);
-            $('.time_tab_del').bind('click',function(){
+            $('.time_tab_sunday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
         });
@@ -286,8 +296,8 @@
     function tryOne(data) {
         var time_day_add = '<div class="time_tab_row">' +
             '<div class="col-md-4 margin_bottom_10 ">' +
-            '<div class="col-md-4 font_size_18 time_date"></div>' +
-            '<div class="col-md-4 font_size_18 time_day"></div>' +
+//            '<div class="col-md-4 font_size_18 time_date"></div>' +
+//            '<div class="col-md-4 font_size_18 time_day"></div>' +
             '<div class="col-md-4">' +
             '<input type="text" class="form-control time_' + data +'_start" placeholder="Start"></div></div>' +
             '<div class="col-md-4 margin_bottom_10"><div class="col-md-6"><input type="text" class="form-control time_' + data +'_end" placeholder="End"></div>' +
@@ -300,7 +310,7 @@
 //            '<option>2</option>' +
 //            '</select>'+
 //            '</div>' +
-            '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_del">Delete</button></div></div></div>'
+            '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_'+ data +'_del">Delete</button></div></div></div>'
         return time_day_add;
     };   
 //        function tryOne(data) {
@@ -609,7 +619,6 @@
                     $(".time_saturday_rest").attr("disabled","disabled");
                     $(".time_saturday_type_day").attr("disabled","disabled");
                     $(".add_row_saturday button").css("display","none");
-
 
                     $(".time_sunday_start").attr("disabled","disabled");
                     $(".time_sunday_end").attr("disabled","disabled");
