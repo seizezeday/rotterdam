@@ -54,6 +54,15 @@ public class TimeForService {
             timeForDto = new TimeForDto(timeForTime, overTime);
         }
 
+        //need to correct by already used timeForTime
+
+        Period period = periodDao.selectByDateBetweenAndUser(now, userId);
+        double correctionTimeForTime = decreaseTimeForTime(period);
+
+        if(correctionTimeForTime != -1){
+            timeForDto.timeForTime -= correctionTimeForTime;
+        }
+
         return timeForDto;
     }
 
@@ -88,7 +97,41 @@ public class TimeForService {
                 overTime = HOURS_LIMIT - promisedPeriodTime;
             }
         }
+
+        double correctionTimeForTime = decreaseTimeForTime(lastPeriod);
+
+        if(correctionTimeForTime != -1){
+            timeForTime -= correctionTimeForTime;
+        }
+
         return new TimeForDto(timeForTime, overTime);
+    }
+
+    private final int HOURS_OF_ONE_TIME_FOR_TIME = 11;
+
+    public double decreaseTimeForTime(Period period){
+        //now we need to decrease time-for-time because of workHours that marked
+        //first we need to find how many timeForTime user have?
+        double tFTUserHave = period.getUser().getTimeForTime();
+        //need to calculate how many timeForTime  user use
+        double tFtUserUsed = 0;
+        for (Week week : period.getWeeks()){
+            for (Day day : week.getDays()){
+                String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
+                if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
+                    continue;
+                for(WorkHour workHour : day.getWorkHours()){
+                    if(workHour.getRideType().equals(RideType.Tijd_voor_tijd))
+                        tFtUserUsed += HOURS_OF_ONE_TIME_FOR_TIME;
+                }
+            }
+        }
+        if(tFtUserUsed > tFTUserHave){
+            //front-end error
+            return -1;
+        } else{
+            return tFtUserUsed;
+        }
     }
 
     public double getPromisedWeekTime(Week week){
@@ -105,17 +148,17 @@ public class TimeForService {
         //make propagation that previous period was four-week
         List<Date> startingDays = periodDefiner.getStartingDaysOfWeeksOfPreviousPeriod(now, PeriodType.FOURWEEK);
         Date startDay = startingDays.get(0);
-        Date endDate = DateTools.getDateOf7DayAfter(
-                        startingDays.get(startingDays.size() - 1));
-        //search
-        Period period = periodDao.selectByStartAndEndDate(startDay, endDate, userId);
+//        Date endDate = DateTools.getDateOf7DayAfter(
+//                        startingDays.get(startingDays.size() - 1));
+//        //search
+        Period period = periodDao.selectByStartDate(startDay, userId);
         if(period == null){
             //make propagation that previous period was month
             startingDays = periodDefiner.getStartingDaysOfWeeksOfPreviousPeriod(now, PeriodType.MONTH);
             startDay = startingDays.get(0);
-            endDate = DateTools.getDateOf7DayAfter(
-                            startingDays.get(startingDays.size() - 1));
-            period = periodDao.selectByStartAndEndDate(startDay, endDate, userId);
+//            endDate = DateTools.getDateOf7DayAfter(
+//                            startingDays.get(startingDays.size() - 1));
+            period = periodDao.selectByStartDate(startDay, userId);
         }
         return period;
     }
