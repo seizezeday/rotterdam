@@ -1,5 +1,6 @@
 package com.rotterdam.controllers;
 
+import com.rotterdam.dto.OverTimeDto;
 import com.rotterdam.dto.TimeForDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.service.TimeForService;
@@ -55,16 +56,12 @@ public class TimeForInfo {
     @POST
     @Path("/setOverTime")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response setTimeInfo(@Context HttpServletRequest hsr, OverTimeParam overTimeParam) throws ParseException, IOException {
+    public Response setTimeInfo(@Context HttpServletRequest hsr, OverTimeDto overTimeParam) throws ParseException, IOException {
         User user = jsonCommands.getUserFromRequest(hsr);
         if (timeForService.saveOverTime(overTimeParam.overTime, user.getId()))
             return Response.ok().build();
         else return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         // {"overTime" : "5"}
-    }
-
-    private class OverTimeParam{
-        public double overTime;
     }
 
 }

@@ -168,7 +168,7 @@ public class TimeForService {
         Date now = new Date();
         Period lastPeriod = getPrevPeriod(now, userId);
         if(lastPeriod != null){
-            lastPeriod.setOverTime(overTime);
+            lastPeriod.setOverTime(lastPeriod.getOverTime() - overTime);
             periodDao.update(lastPeriod);
             return true;
         } else {

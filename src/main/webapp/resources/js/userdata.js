@@ -411,37 +411,38 @@
             });
         };
         //            compensation time end
-        $("#payment_time_field").keyup(function payment_hide_btn(){
-           var payment = $("#payment_time_field").val();
-           var paymant_avaliable = $('#payment_time_avaliable').text();     
-     if (payment !=="" && payment <= paymant_avaliable) {
-        $("#payment_time_btn").removeAttr("disabled");
-    }
-        else {
-                $("#payment_time_btn").attr("disabled","disabled");
-        }                  
-                         });
+        $("#payment_time_field").keyup(function payment_hide_btn() {
+            var payment = parseInt($("#payment_time_field").val());
+            var paymant_avaliable = parseInt($('#payment_time_avaliable').text());
+            if (payment !== "" && payment != 0 && payment <= paymant_avaliable && payment % 11 == 0) {
+                $("#payment_time_btn").removeAttr("disabled");
+            }
+            else {
+                $("#payment_time_btn").attr("disabled", "disabled");
+            }
+        });
    $('#payment_time_btn').click(function payment_time(){
                 var paymenttime = {
-                    avl_time_for_pay: $('#payment_time_field').val()   
+                    overTime: $('#payment_time_field').val()
                 };
-                  alert(paymenttime.avl_time_for_pay);
-//                  payment_json();
+                  //alert(paymenttime.avl_time_for_pay);
+                  payment_json(paymenttime);
                });
-//            function payment_json() {
-//            $.ajax({
-//                type: "POST",
-//                url: "api/timeFor",
-////                data: JSON.stringify(data),
-//                contentType: "application/json; charset=utf-8",
-//                dataType: "json",
-//                statusCode: {
-//                    200: function () {
-//                        alert("Success...");
-//                    }
-//                }
-//            });
-//        };
+            function payment_json(data) {
+            $.ajax({
+                type: "POST",
+                url: "api/timeFor/setOverTime",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                statusCode: {
+                    200: function () {
+                        compensation_json();
+                        alert("Success...");
+                    }
+                }
+            });
+        };
 //        Time tab start
         $('#date_save').click(function date_save(){
             var s_date  = {
