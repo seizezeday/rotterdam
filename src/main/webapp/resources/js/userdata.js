@@ -1,6 +1,11 @@
     $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
+        var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]; 
+//        $.each(week_days,function(){
+////            alert(this);
+//        });
+
                         $.ajax({
                         type: "POST",
                         url: "api/home",
@@ -18,8 +23,6 @@
                         $(".time_date").eq(4).append(data.weekList[4]);   
                         $(".time_date").eq(5).append(data.weekList[5]);   
                         $(".time_date").eq(6).append(data.weekList[6]);
-//                        $(".time_mount :nth-child("+data.currentMonth+")").attr("selected", "selected");
-//                        $(".time_week :nth-child("+data.currentWeekNumber+")").attr("selected", "selected");
             },
                             403 : function(){
                                 window.location.href = "/index.html";
@@ -41,180 +44,179 @@
                   }
               }
           });
-        });
-        $(".time_monday_type_day").change(type_day_monday);
+        });        
+    function type_day(){
+    $.each(week_days,function(){
+//                alert(this);
+             if($(".time_"+this+"_type_day").val() != 1){
+                $(".time_tab_"+this+"_del").click();
+                $(".add_row_"+this+" button").hide();
+                $(".add_row_"+this+" button").attr("disabled","disabled");
+                $(".time_"+this+"_start").attr("disabled","disabled");
+                $(".time_"+this+"_start").val('00:00')
+                $(".time_"+this+"_end").attr("disabled","disabled");
+                $(".time_"+this+"_end").val('00:00')
+                $(".time_"+this+"_rest").attr("disabled","disabled");
+                $(".time_"+this+"_rest").val('00:00')
+              } 
+            else {
+                $(".add_row_"+this+" button").show();
+                $(".add_row"+this+" button").removeAttr("disabled","disabled");
+                $(".time_"+this+"_start").removeAttr("disabled","disabled");
+                $(".time_"+this+"_end").removeAttr("disabled","disabled");
+                $(".time_"+this+"_rest").removeAttr("disabled","disabled");
+              } 
+});  
+    };
+                $(".time_monday_type_day, .time_tuesday_type_day, .time_wednesday_type_day, .time_thursday_type_day, .time_friday_type_day, .time_saturday_type_day, .time_sunday_type_day   ").change(type_day);
+
+//            function type_day_monday(){
+//          if($(".time_monday_type_day").val() != 1){
+//                $(".time_tab_monday_del").click();
+//                $(".add_row_monday button").hide();
+//                $(".add_row_monday button").attr("disabled","disabled");
+//                $(".time_monday_start").attr("disabled","disabled");
+//                $(".time_monday_start").val('00:00')
+//                $(".time_monday_end").attr("disabled","disabled");
+//                $(".time_monday_end").val('00:00')
+//                $(".time_monday_rest").attr("disabled","disabled");
+//                $(".time_monday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_monday button").show();
+//                $(".add_row_monday button").removeAttr("disabled","disabled");
+//                $(".time_monday_start").removeAttr("disabled","disabled");
+//                $(".time_monday_end").removeAttr("disabled","disabled");
+//                $(".time_monday_rest").removeAttr("disabled","disabled");
+//              }
+//            };    
+ 
         
-            function type_day_monday(){
-          if($(".time_monday_type_day").val() != 1){
-                $(".time_tab_monday_del").click();
-                $(".add_row_monday button").hide();
-                $(".add_row_monday button").attr("disabled","disabled");
-                $(".time_monday_start").attr("disabled","disabled");
-                $(".time_monday_start").val('00:00')
-                $(".time_monday_end").attr("disabled","disabled");
-                $(".time_monday_end").val('00:00')
-                $(".time_monday_rest").attr("disabled","disabled");
-                $(".time_monday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_monday button").show();
-                $(".add_row_monday button").removeAttr("disabled","disabled");
-                $(".time_monday_start").removeAttr("disabled","disabled");
-//                $(".time_monday_start").val('')
-                $(".time_monday_end").removeAttr("disabled","disabled");
-//                $(".time_monday_end").val('')
-                $(".time_monday_rest").removeAttr("disabled","disabled");
-//                $(".time_monday_rest").val('') 
-              }
-            };   
-        $(".time_tuesday_type_day").change(type_day_tuesday);
-            function type_day_tuesday(){
-          if($(".time_tuesday_type_day").val() != 1){
-              $(".time_tab_tuesday_del").click();
-
-              $(".add_row_tuesday button").hide();
-                $(".add_row_tuesday button").attr("disabled","disabled");
-                $(".time_tuesday_start").attr("disabled","disabled");
-                $(".time_tuesday_start").val('00:00')
-                $(".time_tuesday_end").attr("disabled","disabled");
-                $(".time_tuesday_end").val('00:00')
-                $(".time_tuesday_rest").attr("disabled","disabled");
-                $(".time_tuesday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_tuesday button").show();
-                $(".add_row_tuesday button").removeAttr("disabled","disabled");
-                $(".time_tuesday_start").removeAttr("disabled","disabled");
-//                $(".time_tuesday_start").val('')
-                $(".time_tuesday_end").removeAttr("disabled","disabled");
-//                $(".time_tuesday_end").val('')
-                $(".time_tuesday_rest").removeAttr("disabled","disabled");
-//                $(".time_tuesday_rest").val('') 
-              }
-            };      
-        $(".time_wednesday_type_day").change(type_day_wednesday);
-            function type_day_wednesday(){
-          if($(".time_wednesday_type_day").val() != 1){
-              $(".time_tab_wednesday_del").click();
-
-              $(".add_row_wednesday button").hide();
-                $(".add_row_wednesday button").attr("disabled","disabled");
-                $(".time_wednesday_start").attr("disabled","disabled");
-                $(".time_wednesday_start").val('00:00')
-                $(".time_wednesday_end").attr("disabled","disabled");
-                $(".time_wednesday_end").val('00:00')
-                $(".time_wednesday_rest").attr("disabled","disabled");
-                $(".time_wednesday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_wednesday button").show();
-                $(".add_row_wednesday button").removeAttr("disabled","disabled");
-                $(".time_wednesday_start").removeAttr("disabled","disabled");
-//                $(".time_wednesday_start").val('')
-                $(".time_wednesday_end").removeAttr("disabled","disabled");
-//                $(".time_wednesday_end").val('')
-                $(".time_wednesday_rest").removeAttr("disabled","disabled");
-//                $(".time_wednesday_rest").val('') 
-              }
-            };   
-        $(".time_thursday_type_day").change(type_day_thursday)
-            function type_day_thursday(){
-          if($(".time_thursday_type_day").val() != 1){
-              $(".time_tab_thursday_del").click();
-
-              $(".add_row_thursday button").hide();
-                $(".add_row_thursday button").attr("disabled","disabled");
-                $(".time_thursday_start").attr("disabled","disabled");
-                $(".time_thursday_start").val('00:00')
-                $(".time_thursday_end").attr("disabled","disabled");
-                $(".time_thursday_end").val('00:00')
-                $(".time_thursday_rest").attr("disabled","disabled");
-                $(".time_thursday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_thursday button").show();
-                $(".add_row_thursday button").removeAttr("disabled","disabled");
-                $(".time_thursday_start").removeAttr("disabled","disabled");
-//                $(".time_thursday_start").val('')
-                $(".time_thursday_end").removeAttr("disabled","disabled");
-//                $(".time_thursday_end").val('')
-                $(".time_thursday_rest").removeAttr("disabled","disabled");
-//                $(".time_thursday_rest").val('') 
-              }
-            };  
+//            function type_day_tuesday(){
+//          if($(".time_tuesday_type_day").val() != 1){
+//              $(".time_tab_tuesday_del").click();
+//
+//              $(".add_row_tuesday button").hide();
+//                $(".add_row_tuesday button").attr("disabled","disabled");
+//                $(".time_tuesday_start").attr("disabled","disabled");
+//                $(".time_tuesday_start").val('00:00')
+//                $(".time_tuesday_end").attr("disabled","disabled");
+//                $(".time_tuesday_end").val('00:00')
+//                $(".time_tuesday_rest").attr("disabled","disabled");
+//                $(".time_tuesday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_tuesday button").show();
+//                $(".add_row_tuesday button").removeAttr("disabled","disabled");
+//                $(".time_tuesday_start").removeAttr("disabled","disabled");
+//                $(".time_tuesday_end").removeAttr("disabled","disabled");
+//                $(".time_tuesday_rest").removeAttr("disabled","disabled");
+//              }
+//            };      
+//            function type_day_wednesday(){
+//          if($(".time_wednesday_type_day").val() != 1){
+//              $(".time_tab_wednesday_del").click();
+//
+//              $(".add_row_wednesday button").hide();
+//                $(".add_row_wednesday button").attr("disabled","disabled");
+//                $(".time_wednesday_start").attr("disabled","disabled");
+//                $(".time_wednesday_start").val('00:00')
+//                $(".time_wednesday_end").attr("disabled","disabled");
+//                $(".time_wednesday_end").val('00:00')
+//                $(".time_wednesday_rest").attr("disabled","disabled");
+//                $(".time_wednesday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_wednesday button").show();
+//                $(".add_row_wednesday button").removeAttr("disabled","disabled");
+//                $(".time_wednesday_start").removeAttr("disabled","disabled");
+//                $(".time_wednesday_end").removeAttr("disabled","disabled");
+//                $(".time_wednesday_rest").removeAttr("disabled","disabled");
+//              }
+//            };   
+//            function type_day_thursday(){
+//          if($(".time_thursday_type_day").val() != 1){
+//              $(".time_tab_thursday_del").click();
+//
+//              $(".add_row_thursday button").hide();
+//                $(".add_row_thursday button").attr("disabled","disabled");
+//                $(".time_thursday_start").attr("disabled","disabled");
+//                $(".time_thursday_start").val('00:00')
+//                $(".time_thursday_end").attr("disabled","disabled");
+//                $(".time_thursday_end").val('00:00')
+//                $(".time_thursday_rest").attr("disabled","disabled");
+//                $(".time_thursday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_thursday button").show();
+//                $(".add_row_thursday button").removeAttr("disabled","disabled");
+//                $(".time_thursday_start").removeAttr("disabled","disabled");
+//                $(".time_thursday_end").removeAttr("disabled","disabled");
+//                $(".time_thursday_rest").removeAttr("disabled","disabled");
+//              }
+//            };  
         
-        $(".time_friday_type_day").change(type_day_friday)
-            function type_day_friday(){
-          if($(".time_friday_type_day").val() != 1){
-              $(".time_tab_friday_del").click();
-              $(".add_row_friday button").hide();
-                $(".add_row_friday button").attr("disabled","disabled");
-                $(".time_friday_start").attr("disabled","disabled");
-                $(".time_friday_start").val('00:00')
-                $(".time_friday_end").attr("disabled","disabled");
-                $(".time_friday_end").val('00:00')
-                $(".time_friday_rest").attr("disabled","disabled");
-                $(".time_friday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_friday button").show();
-                $(".add_row_friday button").removeAttr("disabled","disabled");
-                $(".time_friday_start").removeAttr("disabled","disabled");
-//                $(".time_friday_start").val('')
-                $(".time_friday_end").removeAttr("disabled","disabled");
-//                $(".time_friday_end").val('')
-                $(".time_friday_rest").removeAttr("disabled","disabled");
-//                $(".time_friday_rest").val('') 
-              }
-            }; 
-        $(".time_saturday_type_day").change(type_day_saturday);
-            function type_day_saturday(){
-          if($(".time_saturday_type_day").val() != 1){
-              $(".time_tab_saturday_del").click();
-              $(".add_row_saturday button").hide();
-                $(".add_row_saturday button").attr("disabled","disabled");
-                $(".time_saturday_start").attr("disabled","disabled");
-                $(".time_saturday_start").val('00:00')
-                $(".time_saturday_end").attr("disabled","disabled");
-                $(".time_saturday_end").val('00:00')
-                $(".time_saturday_rest").attr("disabled","disabled");
-                $(".time_saturday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_saturday button").show();
-                $(".add_row_saturday button").removeAttr("disabled","disabled");
-                $(".time_saturday_start").removeAttr("disabled","disabled");
-//                $(".time_saturday_start").val('')
-                $(".time_saturday_end").removeAttr("disabled","disabled");
-//                $(".time_saturday_end").val('')
-                $(".time_saturday_rest").removeAttr("disabled","disabled");
-//                $(".time_saturday_rest").val('') 
-              }
-            };       
-        $(".time_sunday_type_day").change(type_day_sunday);
-            function type_day_sunday(){
-          if($(".time_sunday_type_day").val() != 1){
-              $(".time_tab_sunday_del").click();
-                $(".add_row_sunday button").hide();
-                $(".add_row_sunday button").attr("disabled","disabled");
-                $(".time_sunday_start").attr("disabled","disabled");
-                $(".time_sunday_start").val('00:00')
-                $(".time_sunday_end").attr("disabled","disabled");
-                $(".time_sunday_end").val('00:00')
-                $(".time_sunday_rest").attr("disabled","disabled");
-                $(".time_sunday_rest").val('00:00')
-              } 
-            else {
-                $(".add_row_sunday button").show();
-                $(".add_row_sunday button").removeAttr("disabled","disabled");
-                $(".time_sunday_start").removeAttr("disabled","disabled");
-//                $(".time_sunday_start").val('')
-                $(".time_sunday_end").removeAttr("disabled","disabled");
-//                $(".time_sunday_end").val('')
-                $(".time_sunday_rest").removeAttr("disabled","disabled");
-//                $(".time_sunday_rest").val('') 
-              }
-            };
+//            function type_day_friday(){
+//          if($(".time_friday_type_day").val() != 1){
+//              $(".time_tab_friday_del").click();
+//              $(".add_row_friday button").hide();
+//                $(".add_row_friday button").attr("disabled","disabled");
+//                $(".time_friday_start").attr("disabled","disabled");
+//                $(".time_friday_start").val('00:00')
+//                $(".time_friday_end").attr("disabled","disabled");
+//                $(".time_friday_end").val('00:00')
+//                $(".time_friday_rest").attr("disabled","disabled");
+//                $(".time_friday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_friday button").show();
+//                $(".add_row_friday button").removeAttr("disabled","disabled");
+//                $(".time_friday_start").removeAttr("disabled","disabled");
+//                $(".time_friday_end").removeAttr("disabled","disabled");
+//                $(".time_friday_rest").removeAttr("disabled","disabled");
+//              }
+//            }; 
+//            function type_day_saturday(){
+//          if($(".time_saturday_type_day").val() != 1){
+//              $(".time_tab_saturday_del").click();
+//              $(".add_row_saturday button").hide();
+//                $(".add_row_saturday button").attr("disabled","disabled");
+//                $(".time_saturday_start").attr("disabled","disabled");
+//                $(".time_saturday_start").val('00:00')
+//                $(".time_saturday_end").attr("disabled","disabled");
+//                $(".time_saturday_end").val('00:00')
+//                $(".time_saturday_rest").attr("disabled","disabled");
+//                $(".time_saturday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_saturday button").show();
+//                $(".add_row_saturday button").removeAttr("disabled","disabled");
+//                $(".time_saturday_start").removeAttr("disabled","disabled");
+//                $(".time_saturday_end").removeAttr("disabled","disabled");
+//                $(".time_saturday_rest").removeAttr("disabled","disabled");
+//              }
+//            };       
+//        $(".time_sunday_type_day").change(type_day_sunday);
+//            function type_day_sunday(){
+//          if($(".time_sunday_type_day").val() != 1){
+//              $(".time_tab_sunday_del").click();
+//                $(".add_row_sunday button").hide();
+//                $(".add_row_sunday button").attr("disabled","disabled");
+//                $(".time_sunday_start").attr("disabled","disabled");
+//                $(".time_sunday_start").val('00:00')
+//                $(".time_sunday_end").attr("disabled","disabled");
+//                $(".time_sunday_end").val('00:00')
+//                $(".time_sunday_rest").attr("disabled","disabled");
+//                $(".time_sunday_rest").val('00:00')
+//              } 
+//            else {
+//                $(".add_row_sunday button").show();
+//                $(".add_row_sunday button").removeAttr("disabled","disabled");
+//                $(".time_sunday_start").removeAttr("disabled","disabled");
+//                $(".time_sunday_end").removeAttr("disabled","disabled");
+//                $(".time_sunday_rest").removeAttr("disabled","disabled");
+//              }
+//            };
         
 //        $(".time_monday_type_day option:nth-child(1):selected").change({
 //            $(".add_row_monday button").attr("disabled","disabled");
@@ -660,13 +662,14 @@
                 $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
                 $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
                 $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType);
-                type_day_monday();
-                type_day_tuesday();
-                type_day_wednesday();
-                type_day_thursday();
-                type_day_friday();
-                type_day_saturday();
-                type_day_sunday();
+                type_day();
+//                type_day_monday();
+//                type_day_tuesday();
+//                type_day_wednesday();
+//                type_day_thursday();
+//                type_day_friday();
+//                type_day_saturday();
+//                type_day_sunday();
                 $("#total_mon_fri").text(data.totalTime.totalTime);
                 $("#total_over_hours").text(data.totalTime.overTime);
                 $('#total_time_monday').text(data.totalTime.days.Monday)
