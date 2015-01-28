@@ -367,23 +367,23 @@
         };
         //        Time tab end
         //            compensation time start
-            $("#compensation_time").keyup(function compensation_hide_btn(){
-           var compensation=$("#compensation_time").val();
-     if (compensation !=="") {
-        $("#compensation_btn").removeAttr("disabled");
-    }
-        else {
-                $("#compensation_btn").attr("disabled","disabled");
-        }                  
-                         });
+//            $("#compensation_time").keyup(function compensation_hide_btn(){
+//           var compensation=$("#compensation_time").val();
+//     if (compensation !=="") {
+//        $("#compensation_btn").removeAttr("disabled");
+//    }
+//        else {
+//                $("#compensation_btn").attr("disabled","disabled");
+//        }                  
+//                         });
         
-               $('#compensation_btn').click(function compensation(){
-                var compensation = {
-                    use_time_for_time: $('#compensation_time').val()   
-                };
-
-                  compensation_json();
-               });
+//               $('#compensation_btn').click(function compensation(){
+//                var compensation = {
+//                    use_time_for_time: $('#compensation_time').val()   
+//                };
+//
+//                  compensation_json();
+//               });
             function compensation_json(){
             $.ajax({
                 type: "POST",
