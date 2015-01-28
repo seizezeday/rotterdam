@@ -11,6 +11,7 @@
     <link href="resources/css/librares.min.css" rel="stylesheet">
     <link href="resources/css/angular-motion.css" rel="stylesheet">
     <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-switch.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -612,17 +613,23 @@ multitrip
 <div class="tab-pane font_size_18" id="settings">
          <div class="col-md-4 col-md-offset-8"><h3>Scheduled work hours</h3></div>
    <div class="col-md-4">
+
+             
+             
        <div class="margin_bottom_10">
+<!--
   <label class="btn btn-primary ">
     <input id="show_compensation" type="checkbox"><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>
   </label>
+-->
+             <input id="show_compensation" type="checkbox" name="my-checkbox" checked><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>
 </div> 
 <!--        <div class="col-md-4">-->
        <div class="margin_bottom_10">
-  <label class="btn btn-primary ">
-    <input id="allow_saturday_compensation" type="checkbox"><span class="padding_left_5">Use Saturday hours as time-for-time</span>
+<!--  <label class="btn btn-primary ">-->
+    <input id="allow_saturday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">Use Saturday hours as time-for-time</span>
 
-  </label>
+<!--  </label>-->
 </div>
 
 <!--
@@ -658,9 +665,9 @@ multitrip
         </select>
 -->
 <div class="margin_bottom_10">
-  <label class="btn btn-primary ">
-    <input type="checkbox"><span class="padding_left_5">Option one is this and that&mdash;be sure to include why it's great</span> 
-  </label>
+<!--  <label class="btn btn-primary ">-->
+    <input type="checkbox" name="my-checkbox"><span class="padding_left_5">Option one is this and that&mdash;be sure to include why it's great</span> 
+<!--  </label>-->
 </div>
 <!--
                 <input id="check1" type="checkbox" value="">
@@ -672,11 +679,13 @@ multitrip
        
 -->
 <div  >
-  <label class="btn btn-primary">
-    <input id="suterday_compensation" type="checkbox"><span class="padding_left_5">Suterday time-for-time compensation</span>
-  </label>
+<!--  <label class="btn btn-primary">-->
+    <input id="suterday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">Suterday time-for-time compensation</span>
+<!--  </label>-->
 </div>
 <!--                 <button type="button" class="btn btn-primary btn-block" data-toggle="button"> Allow </button>-->
+
+
    </div>  
        <div class="col-md-4">
 <!--                 <input id="text1" type="text" class="form-control" >-->
@@ -936,10 +945,11 @@ multitrip
      <script src="resources/js/userdata.js"></script>
      <script src="resources/js/autorization.js"></script>
      <script src="resources/js/numeric.js"></script>
+     <script src="resources/js/bootstrap-switch.js"></script>
 <!--     <script src="resources/js/compensation_btn_hide.js"></script>-->
      	<script type="text/javascript">
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
-
+        $("[name='my-checkbox']").bootstrapSwitch();
       </script>
      
   </body>
