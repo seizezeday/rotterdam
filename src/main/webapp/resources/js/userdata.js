@@ -521,10 +521,50 @@
                     $(".time_monday_start").removeAttr("disabled","disabled");
                     $(".time_monday_end").removeAttr("disabled","disabled");
                     $(".time_monday_rest").removeAttr("disabled","disabled");
+                    $(".time_monday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_monday button").css("display","block");
 
                     $(".time_tuesday_start").removeAttr("disabled","disabled");
                     $(".time_tuesday_end").removeAttr("disabled","disabled");
                     $(".time_tuesday_rest").removeAttr("disabled","disabled");
+                    $(".time_tuesday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_tuesday button").css("display","block");
+
+                    $(".time_wednesday_start").removeAttr("disabled","disabled");
+                    $(".time_wednesday_end").removeAttr("disabled","disabled");
+                    $(".time_wednesday_rest").removeAttr("disabled","disabled");
+                    $(".time_wednesday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_wednesday button").css("display","block");
+
+
+                    $(".time_thursday_start").removeAttr("disabled","disabled");
+                    $(".time_thursday_end").removeAttr("disabled","disabled");
+                    $(".time_thursday_rest").removeAttr("disabled","disabled");
+                    $(".time_thursday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_thursday button").css("display","block");
+
+
+                    $(".time_friday_start").removeAttr("disabled","disabled");
+                    $(".time_friday_end").removeAttr("disabled","disabled");
+                    $(".time_friday_rest").removeAttr("disabled","disabled");
+                    $(".time_friday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_friday button").css("display","block");
+
+
+                    $(".time_saturday_start").removeAttr("disabled","disabled");
+                    $(".time_saturday_end").removeAttr("disabled","disabled");
+                    $(".time_saturday_rest").removeAttr("disabled","disabled");
+                    $(".time_saturday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_saturday button").css("display","block");
+
+
+                    $(".time_sunday_start").removeAttr("disabled","disabled");
+                    $(".time_sunday_end").removeAttr("disabled","disabled");
+                    $(".time_sunday_rest").removeAttr("disabled","disabled");
+                    $(".time_sunday_type_day").removeAttr("disabled","disabled");
+                    $(".add_row_sunday button").css("display","block");
+
+
                 }else {
                     $('#date_save').attr("disabled","disabled");
 
