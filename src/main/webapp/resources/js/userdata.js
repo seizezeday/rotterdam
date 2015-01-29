@@ -17,7 +17,6 @@
                         200: function (data) {
                         $(".username").append(data.firstname);
                         $("#userdate").append(data.date);   
-//                        $(".time_year option").append(data.currentYear);   
                         $(".time_date").eq(0).append(data.weekList[0]);   
                         $(".time_date").eq(1).append(data.weekList[1]);   
                         $(".time_date").eq(2).append(data.weekList[2]);   

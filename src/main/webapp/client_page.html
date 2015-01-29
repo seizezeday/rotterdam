@@ -240,12 +240,14 @@ multitrip
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Wednesday</div>
         <div class="col-md-4 form-group col-xs-12">
-        <input type="text" class="form-control  time_wednesday_start" size="5" ng-model="selectedTimeAsNumberWednesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_wednesday" placeholder="Start" bs-timepicker>
+<!--        <input type="text" class="form-control  time_wednesday_start" size="5" ng-model="selectedTimeAsNumberWednesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_wednesday" placeholder="Start" bs-timepicker>-->
+        <input class="form-control clockpicker time_wednesday_start" value="" placeholder="Start">
        </div>
        </div>
        <div class="col-md-3 form-group col-xs-12">
       <div class="col-md-6">
-        <input type="text" class="form-control time_wednesday_end" size="5" ng-model="selectedTimeAsNumberWednesdayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" placeholder="End" bs-timepicker>
+<!--        <input type="text" class="form-control time_wednesday_end" size="5" ng-model="selectedTimeAsNumberWednesdayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" placeholder="End" bs-timepicker>-->
+        <input class="form-control clockpicker time_wednesday_end" value="" placeholder="End">
       </div>
         <div class="col-md-6"><input type="text" class="form-control time_wednesday_rest positive-integer"  placeholder="Rest min" number-mask=""></div>
 <!--
@@ -292,7 +294,8 @@ multitrip
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Thursday</div>
         <div class="col-md-4 form-group col-xs-12">
-        <input type="text" class="form-control time_thursday_start" size="5" ng-model="selectedTimeAsNumberThursdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_thursday" placeholder="Start" bs-timepicker>
+<!--        <input type="text" class="form-control time_thursday_start" size="5" ng-model="selectedTimeAsNumberThursdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_thursday" placeholder="Start" bs-timepicker>-->
+              <input class="form-control clockpicker time_wednesday_start" value="" placeholder="Start">
        </div>
        </div>
        <div class="col-md-3 form-group col-xs-12">
@@ -981,7 +984,7 @@ multitrip
      	<script type="text/javascript">
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
         $("[name='my-checkbox']").bootstrapSwitch();
-        $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });
+//        $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });
     $(".decimal-2-places").numeric({ decimalPlaces: 2 });
       </script>
   </body>
