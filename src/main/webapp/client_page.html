@@ -13,7 +13,7 @@
     <link href="resources/css/style.css" rel="stylesheet">
     <link href="resources/css/bootstrap-switch.css" rel="stylesheet">
     <link href="resources/css/bootstrap-clockpicker.min.css" rel="stylesheet">
-    <link href="resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!--    <link href="resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">-->
     
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -744,12 +744,14 @@ multitrip
    </div>  
        <div class="col-md-4">
 <!--                 <input id="text1" type="text" class="form-control" >-->
-<!--    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start time-for-time regulation">-->
+    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start time-for-time regulation">
+<!--
                               <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
+-->
 
       </div>
        <div class="col-md-4">
@@ -1007,7 +1009,7 @@ multitrip
      <script src="resources/js/numeric.js"></script>
      <script src="resources/js/bootstrap-switch.js"></script>
      <script src="resources/js/bootstrap-clockpicker.min.js"></script>
-     <script src="resources/js/bootstrap-datetimepicker.js"></script>
+<!--     <script src="resources/js/bootstrap-datetimepicker.js"></script>-->
      	<script type="text/javascript">
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
         $("[name='my-checkbox']").bootstrapSwitch();
@@ -1018,16 +1020,16 @@ multitrip
 //        weekStart: 1,
 //        daysOfWeekDisabled: "0,2,3,4,5,6"
 //    }); 
-        $('.form_date').datetimepicker({
-//        language:  'fr',
-        weekStart: 1,
-//        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
+//        $('.form_date').datetimepicker({
+////        language:  'fr',
+//        weekStart: 1,
+////        todayBtn:  1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		minView: 2,
+//		forceParse: 0
+//    });
       </script>
 
   </body>
