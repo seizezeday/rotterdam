@@ -12,6 +12,8 @@
     <link href="resources/css/angular-motion.css" rel="stylesheet">
     <link href="resources/css/style.css" rel="stylesheet">
     <link href="resources/css/bootstrap-switch.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -132,12 +134,16 @@ multitrip
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10">Monday</div>
         <div class="col-md-4 col-xs-12 padding_bottom_10">
-        <input type="text" class="form-control time_monday_start" size="5" ng-model="selectedTimeAsNumberMondayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_monday" placeholder="Start" bs-timepicker >
+<!--        <input type="text" class="form-control time_monday_start" size="5" ng-model="selectedTimeAsNumberMondayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_monday" placeholder="Start" bs-timepicker >-->
+      <input class="form-control clockpicker time_monday_start" value="" placeholder="Start">
+
+
        </div>
        </div>
        <div class="col-md-3 form-group col-xs-12">
       <div class="col-md-6 col-xs-12 padding_bottom_10">
-        <input type="text" class="form-control time_monday_end" size="5" ng-model="selectedTimeAsNumberMondayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_end_monday" placeholder="End" bs-timepicker >
+<!--        <input type="text" class="form-control time_monday_end" size="5" ng-model="selectedTimeAsNumberMondayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_end_monday" placeholder="End" bs-timepicker >-->
+           <input class="form-control clockpicker time_monday_end" value="" placeholder="End">
       </div>
         <div class="col-md-6 col-xs-12">
                 <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3" number-mask="" placeholder="Rest min">
@@ -153,14 +159,7 @@ multitrip
        </div>
        <div class="col-md-5 form-group col-xs-12">
          <div class="col-md-4">
-<!--
-  <label class="btn btn-primary btn-block margin_bottom_10">
-    <input name="checkbox-0" id="time_monday_type_day" type="checkbox" value="option1"><span class="padding_left_5">Weekend</span>
-  </label>
--->
          <select class="form-control time_monday_type_day margin_bottom_10">
-<!--          <option value="1">Work</option>-->
-<!--          <option value="2">Time-for-time</option>-->
           <option value="1">Werkdag</option>
           <option value="2">Weekenddag</option>
           <option value="3">Wachtdag</option>
@@ -187,12 +186,14 @@ multitrip
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
        <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Tuesday</div>
         <div class="col-md-4 form-group col-xs-12">
-        <input type="text" class="form-control time_start time_tuesday_start" size="5" ng-model="selectedTimeAsNumberTuesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_tuesday" placeholder="Start" bs-timepicker>
+<!--        <input type="text" class="form-control time_start time_tuesday_start" size="5" ng-model="selectedTimeAsNumberTuesdayStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_tuesday" placeholder="Start" bs-timepicker>-->
+            <input class="form-control clockpicker time_tuesday_start" value="" placeholder="Start">
        </div>
        </div>
        <div class="col-md-3 form-group col-xs-12">
       <div class="col-md-6 col-xs-12">
-        <input type="text" class="form-control time_tuesday_end" size="5" ng-model="selectedTimeAsNumberTuesdayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_end_tuesday" placeholder="End" bs-timepicker >
+<!--        <input type="text" class="form-control time_tuesday_end" size="5" ng-model="selectedTimeAsNumberTuesdayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_end_tuesday" placeholder="End" bs-timepicker >-->
+                <input class="form-control clockpicker time_tuesday_end" value="" placeholder="End">
       </div>
         <div class="col-md-6 col-xs-12"><input type="text" class="form-control time_tuesday_rest positive-integer" type="text" placeholder="Rest min" number-mask=""></div>
 <!--
@@ -644,14 +645,15 @@ multitrip
 
              
              
-       <div class="margin_bottom_10">
-<!--
-  <label class="btn btn-primary ">
-    <input id="show_compensation" type="checkbox"><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>
-  </label>
--->
-             <input id="show_compensation" type="checkbox" name="my-checkbox" checked><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>
-</div> 
+       <!--<div class="margin_bottom_10">-->
+<!--&lt;!&ndash;-->
+  <!--<label class="btn btn-primary ">-->
+    <!--<input id="show_compensation" type="checkbox"><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>-->
+  <!--</label>-->
+<!--&ndash;&gt;-->
+             <!--<input id="show_compensation" type="checkbox" name="my-checkbox" checked><span class="padding_left_5">Show Tijd-voor-tijd regeling </span>-->
+<!--</div> -->
+
 <!--        <div class="col-md-4">-->
        <div class="margin_bottom_10">
 <!--  <label class="btn btn-primary ">-->
@@ -692,11 +694,11 @@ multitrip
           <option>3</option>
         </select>
 -->
-<div class="margin_bottom_10">
-<!--  <label class="btn btn-primary ">-->
-    <input type="checkbox" name="my-checkbox"><span class="padding_left_5">Option one is this and that&mdash;be sure to include why it's great</span> 
-<!--  </label>-->
-</div>
+<!--<div class="margin_bottom_10">-->
+<!--&lt;!&ndash;  <label class="btn btn-primary ">&ndash;&gt;-->
+    <!--<input type="checkbox" name="my-checkbox"><span class="padding_left_5">Option one is this and that&mdash;be sure to include why it's great</span> -->
+<!--&lt;!&ndash;  </label>&ndash;&gt;-->
+<!--</div>-->
 <!--
                 <input id="check1" type="checkbox" value="">
         Option one is this and that&mdash;be sure to include why it's great </br> 
@@ -706,11 +708,11 @@ multitrip
        Allow Suterday time-for-time compensation </br> 
        
 -->
-<div  >
-<!--  <label class="btn btn-primary">-->
-    <input id="suterday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">Suterday time-for-time compensation</span>
-<!--  </label>-->
-</div>
+<!--<div  >-->
+<!--&lt;!&ndash;  <label class="btn btn-primary">&ndash;&gt;-->
+    <!--<input id="suterday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">Suterday time-for-time compensation</span>-->
+<!--&lt;!&ndash;  </label>&ndash;&gt;-->
+<!--</div>-->
 <!--                 <button type="button" class="btn btn-primary btn-block" data-toggle="button"> Allow </button>-->
 
 
@@ -974,6 +976,7 @@ multitrip
      <script src="resources/js/autorization.js"></script>
      <script src="resources/js/numeric.js"></script>
      <script src="resources/js/bootstrap-switch.js"></script>
+     <script src="resources/js/bootstrap-clockpicker.min.js"></script>
 <!--     <script src="resources/js/compensation_btn_hide.js"></script>-->
      	<script type="text/javascript">
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
@@ -981,6 +984,5 @@ multitrip
         $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });
     $(".decimal-2-places").numeric({ decimalPlaces: 2 });
       </script>
-     
   </body>
 </html>

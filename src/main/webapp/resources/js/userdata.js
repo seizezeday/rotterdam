@@ -6,6 +6,7 @@
 //        $.each(week_days,function(){
 ////            alert(this);
 //        });
+          clockPicker();
 
                         $.ajax({
                         type: "POST",
@@ -244,6 +245,7 @@
         $('.add_row_monday').bind('click',function(){
          var time_day_add = tryOne("monday");
          $(this).parent().after(time_day_add);
+         clockPicker();    
          $('.time_tab_monday_del').bind('click',function(){
          $($(this).parents().get(2)).remove();
          });
@@ -252,6 +254,7 @@
         $('.add_row_tuesday').click(function(){
             var time_day_add = tryOne("tuesday");
             $(this).parent().after(time_day_add);
+            clockPicker();    
             $('.time_tab_tuesday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -260,6 +263,7 @@
         $('.add_row_wednesday').click(function(){
             var time_day_add = tryOne("wednesday");
             $(this).parent().after(time_day_add);
+            clockPicker();    
             $('.time_tab_wednesday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -267,6 +271,7 @@
         $('.add_row_thursday').click(function(){
             var time_day_add = tryOne("thursday");
             $(this).parent().after(time_day_add);
+            clockPicker();
             $('.time_tab_thursday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -274,6 +279,7 @@
         $('.add_row_friday').click(function(){
             var time_day_add = tryOne("friday");
             $(this).parent().after(time_day_add);
+            clockPicker();
             $('.time_tab_friday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -281,6 +287,7 @@
         $('.add_row_saturday').click(function(){
             var time_day_add = tryOne("saturday");
             $(this).parent().after(time_day_add);
+            clockPicker();
             $('.time_tab_saturday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -288,6 +295,7 @@
         $('.add_row_sunday').click(function(){
             var time_day_add = tryOne("sunday");
             $(this).parent().after(time_day_add);
+            clockPicker();
             $('.time_tab_sunday_del').bind('click',function(){
                 $($(this).parents().get(2)).remove();
             });
@@ -299,8 +307,8 @@
 //            '<div class="col-md-4 font_size_18 time_date"></div>' +
 //            '<div class="col-md-4 font_size_18 time_day"></div>' +
             '<div class="col-md-4">' +
-            '<input type="text" class="form-control time_' + data +'_start" placeholder="Start"></div></div>' +
-            '<div class="col-md-4 margin_bottom_10"><div class="col-md-6"><input type="text" class="form-control time_' + data +'_end" placeholder="End"></div>' +
+            '<input type="text" class="form-control time_' + data +'_start clockpicker" placeholder="Start"></div></div>' +
+            '<div class="col-md-4 margin_bottom_10"><div class="col-md-6"><input type="text" class="form-control time_' + data +'_end clockpicker" placeholder="End"></div>' +
             '<div class="col-md-6"><input type="text" class="form-control time_' + data +'_rest" placeholder="Rest" number-mask=""></div>' +
             '</div>'+
             '<div class="col-md-4 margin_bottom_10">'+
@@ -411,38 +419,37 @@
             });
         };
         //            compensation time end
-        $("#payment_time_field").keyup(function payment_hide_btn() {
-            var payment = parseInt($("#payment_time_field").val());
-            var paymant_avaliable = parseInt($('#payment_time_avaliable').text());
-            if (payment !== "" && payment != 0 && payment <= paymant_avaliable && payment % 11 == 0) {
-                $("#payment_time_btn").removeAttr("disabled");
-            }
-            else {
-                $("#payment_time_btn").attr("disabled", "disabled");
-            }
-        });
+        $("#payment_time_field").keyup(function payment_hide_btn(){
+           var payment = $("#payment_time_field").val();
+           var paymant_avaliable = $('#payment_time_avaliable').text();     
+     if (payment !=="" && payment <= paymant_avaliable) {
+        $("#payment_time_btn").removeAttr("disabled");
+    }
+        else {
+                $("#payment_time_btn").attr("disabled","disabled");
+        }                  
+                         });
    $('#payment_time_btn').click(function payment_time(){
                 var paymenttime = {
-                    overTime: $('#payment_time_field').val()
+                    avl_time_for_pay: $('#payment_time_field').val()   
                 };
-                  //alert(paymenttime.avl_time_for_pay);
-                  payment_json(paymenttime);
+                  alert(paymenttime.avl_time_for_pay);
+//                  payment_json();
                });
-            function payment_json(data) {
-            $.ajax({
-                type: "POST",
-                url: "api/timeFor/setOverTime",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                statusCode: {
-                    200: function () {
-                        compensation_json();
-                        alert("Success...");
-                    }
-                }
-            });
-        };
+//            function payment_json() {
+//            $.ajax({
+//                type: "POST",
+//                url: "api/timeFor",
+////                data: JSON.stringify(data),
+//                contentType: "application/json; charset=utf-8",
+//                dataType: "json",
+//                statusCode: {
+//                    200: function () {
+//                        alert("Success...");
+//                    }
+//                }
+//            });
+//        };
 //        Time tab start
         $('#date_save').click(function date_save(){
             var s_date  = {
@@ -869,7 +876,7 @@
                             $(".hide_tabs").css("display", "block");
                             $('#setting_save').removeAttr("disabled","disabled")
                         }else {
-                            $(".hide_tabs").css("display","none");;
+                            $(".hide_tabs").css("display","none");
                             $('#setting_save').attr("disabled","disabled");
                         }
                     }
@@ -878,5 +885,13 @@
         }
 
         readSettings();
-
+    function clockPicker(){
+        var input = $('.clockpicker').clockpicker({
+        placement: 'bottom',
+        align: 'left',
+        autoclose: true,
+        'default': 'now'
+    });   
+    }    
+ 
     });
