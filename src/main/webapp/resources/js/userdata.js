@@ -6,6 +6,10 @@
 //        $.each(week_days,function(){
 ////            alert(this);
 //        });
+//           $(".alert").css('');
+//        $('.close').click(function() {
+//            $('.alert').hide();
+//        })
           clockPicker();
 
                         $.ajax({
@@ -320,36 +324,17 @@
             '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_'+ data +'_del">Delete</button></div></div></div>'
         return time_day_add;
     };   
-//        function tryOne(data) {
-////        var n = 1;    
-//        var time_day_add = '<div class="time_tab_row">' +
-//            '<div class="col-md-4 margin_bottom_10 ">' +
-//            '<div class="col-md-4 font_size_18 time_date"></div>' +
-//            '<div class="col-md-4 font_size_18 time_day"></div>' +
-//            '<div class="col-md-4 form-group">'+
-//            '<div>'+
-//            '<input type="text" class="form-control" size="5" ng-model="selectedTimeAsNumberStart" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time_start_monday" placeholder="Start" bs-timepicker>'+
-//      '</div>'+      
-//       '</div>'+
-//        '<div class="col-md-4 form-group">'+
-//      '<div class="col-md-6">'+
-//       '<div >'+
-//        '<input type="text" class="form-control time_' + data +'_end" size="5" ng-model="selectedTimeAsNumberTuesdayEnd" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" name="time2" placeholder="End" bs-timepicker>'+
-//      '</div>'+
-//      '</div>'+
-//        '<div class="col-md-6"><input type="text" class="form-control time_tuesday_rest" placeholder="Rest"></div>'+
-//       '</div>'+
-//            '<div class="col-md-6"><input type="text" class="form-control time_' + data +'_rest" placeholder="Rest"></div>' +
-//            '</div><div class="col-md-4 margin_bottom_10"><div class="col-md-4">' +
-//            '<select class="form-control time_' + data +'_ride_type">' +
-//            '<option>1</option>' +
-//            '<option>2</option>' +
-//            '</select></div>' +
-//            '<div class="col-md-4 "><button type="button" class="btn btn-danger btn-block time_tab_del">Delete</button></div>'+
-//        '</div>'+
-//        '</div>'
-//        return time_day_add;
-//    };
+        function addAlert() {
+                        $(".append_alert").append(
+                        '<div class="alert alert-success alert-dismissable">'+
+                        '<button type="button" class="close" ' + 
+                        'data-dismiss="alert" aria-hidden="true">' + 
+                        '&times;' + 
+                        '</button>' + 
+                        'Saved' + 
+                        '</div>');
+                        $(".alert").show();
+        };   
 // получения новых дат 
         $('#date_submit').click(function date_submit(){
                 var selected_date  = {
@@ -472,18 +457,18 @@
                 dataType: "json",
                 statusCode: {
                     200: function (data) {
-                        alert("good")
-                        $('#total_mon_fri').text(data.totalTime)
-                        $('#total_time_monday').text(data.days.Monday)
-                        $('#total_time_tuesday').text(data.days.Tuesday)
-                        $('#total_time_wednesday').text(data.days.Wednesday)
-                        $('#total_time_thursday').text(data.days.Thursday)
-                        $('#total_time_friday').text(data.days.Friday)
-                        $('#total_time_saturday').text(data.days.Saturday)
-                        $('#total_saturday').text(data.days.Saturday)
-                        $('#total_time_sunday').text(data.days.Sunday)
-                        $('#total_sunday').text(data.days.Sunday)
-                        $('#total_over_hours').text(data.overTime)
+                        addAlert();
+                        $('#total_mon_fri').text(data.totalTime);
+                        $('#total_time_monday').text(data.days.Monday);
+                        $('#total_time_tuesday').text(data.days.Tuesday);
+                        $('#total_time_wednesday').text(data.days.Wednesday);
+                        $('#total_time_thursday').text(data.days.Thursday);
+                        $('#total_time_friday').text(data.days.Friday);
+                        $('#total_time_saturday').text(data.days.Saturday);
+                        $('#total_saturday').text(data.days.Saturday);
+                        $('#total_time_sunday').text(data.days.Sunday);
+                        $('#total_sunday').text(data.days.Sunday);
+                        $('#total_over_hours').text(data.overTime);
                         loadTimeTab();
                         compensation_json();
                     }

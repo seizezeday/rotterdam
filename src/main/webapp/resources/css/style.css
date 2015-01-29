@@ -118,3 +118,6 @@ hr {
 .modal-footer{
     border-top:none;
 }
+.alert {
+    display: none;
+}
