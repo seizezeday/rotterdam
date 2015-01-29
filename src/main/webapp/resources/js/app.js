@@ -54,7 +54,7 @@ app.config(function($datepickerProvider) {
   angular.extend($datepickerProvider.defaults, {
     dateFormat: 'dd.MM.yyyy',
     startWeek: 1,
-    daysOfWeekDisabled: '0234567'
+//    daysOfWeekDisabled: '0234567'
   });
 });
 app.directive('numberMask', function() {

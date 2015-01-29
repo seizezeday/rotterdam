@@ -14,14 +14,11 @@ $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]; 
+        var week_days_upercase = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; 
 //        alert (week_days[0]);
 //        $.each(week_days,function(){
 ////            alert(this);
 //        });
-//           $(".alert").css('');
-//        $('.close').click(function() {
-//            $('.alert').hide();
-//        })
           clockPicker();
 
                         $.ajax({
