@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,7 @@ public class AuthApplication {
 
 	@POST
 	@Path("/logout")
+    @RolesAllowed({ "Driver" })
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logoutAuth(@Context HttpServletRequest hsr,
 			@Context HttpServletResponse rspn) {
@@ -57,5 +59,12 @@ public class AuthApplication {
 		else
 			return Response.status(Response.Status.NOT_FOUND).build();
 	}
+
+    @POST
+    @Path("/ok")
+    @RolesAllowed({ "Driver" })
+    public Response ok(){
+        return Response.ok().build();
+    }
 
 }

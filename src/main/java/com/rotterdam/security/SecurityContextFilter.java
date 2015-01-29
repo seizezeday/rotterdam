@@ -26,7 +26,7 @@ import java.util.Calendar;
 @Scope("singleton")
 public class SecurityContextFilter implements ContainerRequestFilter {
 
-    public static final long timeout = 3600000; //3600000
+    public static final double timeout = 0.5; // 30 minutes
 
     @Inject
     private SessionService sessionService;

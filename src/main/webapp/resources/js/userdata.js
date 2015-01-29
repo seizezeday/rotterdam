@@ -1,4 +1,16 @@
-    $(document).ready(function(){
+$.ajax({
+    type: "POST",
+    url: "api/ok",
+    datatype: "json",
+    contentType: "application/json; charset=utf-8",
+    statusCode: {
+        403 : function(){
+            window.location.href = "/index.html";
+        }
+    }
+});
+
+$(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]; 
@@ -28,10 +40,11 @@
                         $(".time_date").eq(4).append(data.weekList[4]);   
                         $(".time_date").eq(5).append(data.weekList[5]);   
                         $(".time_date").eq(6).append(data.weekList[6]);
-            },
-                            403 : function(){
-                                window.location.href = "/index.html";
-                            }
+            }
+//                            ,
+//                            403 : function(){
+//                                window.location.href = "/index.html";
+//                            }
                         }
                     });
         compensation_json();
