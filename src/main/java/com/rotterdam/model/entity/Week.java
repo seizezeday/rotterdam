@@ -50,6 +50,10 @@ public class Week implements HibernateL2Cache {
     @JoinColumn(name = "idPeriod")
     private Period period;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "week")
+    private List<Declaration> declarations;
+
 
     public Date getStartDate() {
         return startDate;
@@ -164,9 +168,16 @@ public class Week implements HibernateL2Cache {
         this.saturdayCompensation = saturday_compensation;
     }
 
+    public List<Declaration> getDeclarations() {
+        return declarations;
+    }
+
+    public void setDeclarations(List<Declaration> declarations) {
+        this.declarations = declarations;
+    }
+
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -176,6 +187,7 @@ public class Week implements HibernateL2Cache {
         if (saturdayCompensation != week.saturdayCompensation) return false;
         if (showCompensation != week.showCompensation) return false;
         if (days != null ? !days.equals(week.days) : week.days != null) return false;
+        if (declarations != null ? !declarations.equals(week.declarations) : week.declarations != null) return false;
         if (endDate != null ? !endDate.equals(week.endDate) : week.endDate != null) return false;
         if (period != null ? !period.equals(week.period) : week.period != null) return false;
         if (promiseFridayTime != null ? !promiseFridayTime.equals(week.promiseFridayTime) : week.promiseFridayTime != null)
@@ -213,6 +225,7 @@ public class Week implements HibernateL2Cache {
         result = 31 * result + (saturdayCompensation ? 1 : 0);
         result = 31 * result + (days != null ? days.hashCode() : 0);
         result = 31 * result + (period != null ? period.hashCode() : 0);
+        result = 31 * result + (declarations != null ? declarations.hashCode() : 0);
         return result;
     }
 
@@ -229,10 +242,11 @@ public class Week implements HibernateL2Cache {
                 ", promiseFridayTime=" + promiseFridayTime +
                 ", promiseSaturdayTime=" + promiseSaturdayTime +
                 ", promiseSundayTime=" + promiseSundayTime +
-                ", show_compensation=" + showCompensation +
-                ", saturday_compensation=" + saturdayCompensation +
+                ", showCompensation=" + showCompensation +
+                ", saturdayCompensation=" + saturdayCompensation +
                 ", days=" + days +
                 ", period=" + period +
+                ", declarations=" + declarations +
                 '}';
     }
 }

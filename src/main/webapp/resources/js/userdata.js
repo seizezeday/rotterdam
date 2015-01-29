@@ -1,14 +1,19 @@
-$.ajax({
-    type: "POST",
-    url: "api/ok",
-    datatype: "json",
-    contentType: "application/json; charset=utf-8",
-    statusCode: {
-        403 : function(){
-            window.location.href = "/index.html";
-        }
-    }
-});
+function preloadFunc()
+{
+    $.ajax({
+        type: "POST",
+        url: "api/ok",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        statusCode: {
+            403 : function(){
+                window.location.href = "/index.html";
+            }
+        },
+        async:   false
+    });
+}
+window.onload = preloadFunc();
 
 $(document).ready(function(){
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
