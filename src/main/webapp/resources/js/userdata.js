@@ -72,178 +72,6 @@
 });  
     };       
                 $(".time_"+week_days[0]+"_type_day, .time_"+week_days[1]+"_type_day, .time_"+week_days[2]+"_type_day, .time_"+week_days[3]+"_type_day, .time_"+week_days[4]+"_type_day, .time_"+week_days[5]+"_type_day, .time_"+week_days[6]+"_type_day").change(type_day);
-//            function type_day_monday(){
-//          if($(".time_monday_type_day").val() != 1){
-//                $(".time_tab_monday_del").click();
-//                $(".add_row_monday button").hide();
-//                $(".add_row_monday button").attr("disabled","disabled");
-//                $(".time_monday_start").attr("disabled","disabled");
-//                $(".time_monday_start").val('00:00')
-//                $(".time_monday_end").attr("disabled","disabled");
-//                $(".time_monday_end").val('00:00')
-//                $(".time_monday_rest").attr("disabled","disabled");
-//                $(".time_monday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_monday button").show();
-//                $(".add_row_monday button").removeAttr("disabled","disabled");
-//                $(".time_monday_start").removeAttr("disabled","disabled");
-//                $(".time_monday_end").removeAttr("disabled","disabled");
-//                $(".time_monday_rest").removeAttr("disabled","disabled");
-//              }
-//            };    
- 
-        
-//            function type_day_tuesday(){
-//          if($(".time_tuesday_type_day").val() != 1){
-//              $(".time_tab_tuesday_del").click();
-//
-//              $(".add_row_tuesday button").hide();
-//                $(".add_row_tuesday button").attr("disabled","disabled");
-//                $(".time_tuesday_start").attr("disabled","disabled");
-//                $(".time_tuesday_start").val('00:00')
-//                $(".time_tuesday_end").attr("disabled","disabled");
-//                $(".time_tuesday_end").val('00:00')
-//                $(".time_tuesday_rest").attr("disabled","disabled");
-//                $(".time_tuesday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_tuesday button").show();
-//                $(".add_row_tuesday button").removeAttr("disabled","disabled");
-//                $(".time_tuesday_start").removeAttr("disabled","disabled");
-//                $(".time_tuesday_end").removeAttr("disabled","disabled");
-//                $(".time_tuesday_rest").removeAttr("disabled","disabled");
-//              }
-//            };      
-//            function type_day_wednesday(){
-//          if($(".time_wednesday_type_day").val() != 1){
-//              $(".time_tab_wednesday_del").click();
-//
-//              $(".add_row_wednesday button").hide();
-//                $(".add_row_wednesday button").attr("disabled","disabled");
-//                $(".time_wednesday_start").attr("disabled","disabled");
-//                $(".time_wednesday_start").val('00:00')
-//                $(".time_wednesday_end").attr("disabled","disabled");
-//                $(".time_wednesday_end").val('00:00')
-//                $(".time_wednesday_rest").attr("disabled","disabled");
-//                $(".time_wednesday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_wednesday button").show();
-//                $(".add_row_wednesday button").removeAttr("disabled","disabled");
-//                $(".time_wednesday_start").removeAttr("disabled","disabled");
-//                $(".time_wednesday_end").removeAttr("disabled","disabled");
-//                $(".time_wednesday_rest").removeAttr("disabled","disabled");
-//              }
-//            };   
-//            function type_day_thursday(){
-//          if($(".time_thursday_type_day").val() != 1){
-//              $(".time_tab_thursday_del").click();
-//
-//              $(".add_row_thursday button").hide();
-//                $(".add_row_thursday button").attr("disabled","disabled");
-//                $(".time_thursday_start").attr("disabled","disabled");
-//                $(".time_thursday_start").val('00:00')
-//                $(".time_thursday_end").attr("disabled","disabled");
-//                $(".time_thursday_end").val('00:00')
-//                $(".time_thursday_rest").attr("disabled","disabled");
-//                $(".time_thursday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_thursday button").show();
-//                $(".add_row_thursday button").removeAttr("disabled","disabled");
-//                $(".time_thursday_start").removeAttr("disabled","disabled");
-//                $(".time_thursday_end").removeAttr("disabled","disabled");
-//                $(".time_thursday_rest").removeAttr("disabled","disabled");
-//              }
-//            };  
-        
-//            function type_day_friday(){
-//          if($(".time_friday_type_day").val() != 1){
-//              $(".time_tab_friday_del").click();
-//              $(".add_row_friday button").hide();
-//                $(".add_row_friday button").attr("disabled","disabled");
-//                $(".time_friday_start").attr("disabled","disabled");
-//                $(".time_friday_start").val('00:00')
-//                $(".time_friday_end").attr("disabled","disabled");
-//                $(".time_friday_end").val('00:00')
-//                $(".time_friday_rest").attr("disabled","disabled");
-//                $(".time_friday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_friday button").show();
-//                $(".add_row_friday button").removeAttr("disabled","disabled");
-//                $(".time_friday_start").removeAttr("disabled","disabled");
-//                $(".time_friday_end").removeAttr("disabled","disabled");
-//                $(".time_friday_rest").removeAttr("disabled","disabled");
-//              }
-//            }; 
-//            function type_day_saturday(){
-//          if($(".time_saturday_type_day").val() != 1){
-//              $(".time_tab_saturday_del").click();
-//              $(".add_row_saturday button").hide();
-//                $(".add_row_saturday button").attr("disabled","disabled");
-//                $(".time_saturday_start").attr("disabled","disabled");
-//                $(".time_saturday_start").val('00:00')
-//                $(".time_saturday_end").attr("disabled","disabled");
-//                $(".time_saturday_end").val('00:00')
-//                $(".time_saturday_rest").attr("disabled","disabled");
-//                $(".time_saturday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_saturday button").show();
-//                $(".add_row_saturday button").removeAttr("disabled","disabled");
-//                $(".time_saturday_start").removeAttr("disabled","disabled");
-//                $(".time_saturday_end").removeAttr("disabled","disabled");
-//                $(".time_saturday_rest").removeAttr("disabled","disabled");
-//              }
-//            };       
-//        $(".time_sunday_type_day").change(type_day_sunday);
-//            function type_day_sunday(){
-//          if($(".time_sunday_type_day").val() != 1){
-//              $(".time_tab_sunday_del").click();
-//                $(".add_row_sunday button").hide();
-//                $(".add_row_sunday button").attr("disabled","disabled");
-//                $(".time_sunday_start").attr("disabled","disabled");
-//                $(".time_sunday_start").val('00:00')
-//                $(".time_sunday_end").attr("disabled","disabled");
-//                $(".time_sunday_end").val('00:00')
-//                $(".time_sunday_rest").attr("disabled","disabled");
-//                $(".time_sunday_rest").val('00:00')
-//              } 
-//            else {
-//                $(".add_row_sunday button").show();
-//                $(".add_row_sunday button").removeAttr("disabled","disabled");
-//                $(".time_sunday_start").removeAttr("disabled","disabled");
-//                $(".time_sunday_end").removeAttr("disabled","disabled");
-//                $(".time_sunday_rest").removeAttr("disabled","disabled");
-//              }
-//            };
-        
-//        $(".time_monday_type_day option:nth-child(1):selected").change({
-//            $(".add_row_monday button").attr("disabled","disabled");
-//        })
-//        $(".time_monday_type_day option:nth-child(2):selected").change({
-//                 $(".add_row_monday button").removeAttr("disabled","disabled");
-//        }
-        
-//        $(".time_monday_type_day").change(function(){
-////          $(".add_row_monday button").removeAttr("disabled","disabled");
-//          var tape_day_moyday = $(".time_monday_type_day option:selected").text()
-//           if (tape_day_moyday = 'Weekend'){
-//            $(".add_row_monday button").attr("disabled","disabled");
-//
-////          $('.add_row_monday button').prop('disabled', !(checkval == '1' || checkval == '2'));
-////          if (tape_day_moyday = 'Weekend'){
-////          $(".add_row_monday button").attr("disabled","disabled");
-////          }
-//            else {
-////                if (tape_day_moyday = 'Work'){
-//             $(".add_row_monday button").removeAttr("disabled","disabled");
-//            };
-//            }; 
-//        });
-
         
         $('.add_row_monday').bind('click',function(){
          var time_day_add = tryOne("monday");
@@ -307,9 +135,7 @@
     function tryOne(data) {
         var time_day_add = '<div class="time_tab_row">' +
             '<div class="col-md-4 margin_bottom_10 ">' +
-//            '<div class="col-md-4 font_size_18 time_date"></div>' +
-//            '<div class="col-md-4 font_size_18 time_day"></div>' +
-            '<div class="col-md-4">' +
+            '<div class="col-md-4 col-md-offset-8">' +
             '<input type="text" class="form-control time_' + data +'_start clockpicker" placeholder="Start"></div></div>' +
             '<div class="col-md-4 margin_bottom_10"><div class="col-md-6"><input type="text" class="form-control time_' + data +'_end clockpicker" placeholder="End"></div>' +
             '<div class="col-md-6"><input type="text" class="form-control time_' + data +'_rest" placeholder="Rest" number-mask=""></div>' +
@@ -324,6 +150,7 @@
             '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_'+ data +'_del">Delete</button></div></div></div>'
         return time_day_add;
     };   
+        
         function addAlert() {
                         $(".append_alert").append(
                         '<div class="alert alert-success alert-dismissable">'+
@@ -334,6 +161,11 @@
                         'Saved' + 
                         '</div>');
                         $(".alert").show();
+                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+                            $(".alert").alert('close');
+                        });
+//                        window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+//                        $(".close").click()
         };   
 // получения новых дат 
         $('#date_submit').click(function date_submit(){
@@ -390,7 +222,6 @@
             $.ajax({
                 type: "POST",
                 url: "api/timeFor",
-//                data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
