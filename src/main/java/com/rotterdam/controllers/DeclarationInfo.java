@@ -50,6 +50,7 @@ public class DeclarationInfo {
 
         return Response.ok(declarationsDto).build();
     }
+    //{"currentDate":"29.01.2015"}
 
     @RolesAllowed({ "Driver" })
     @POST
