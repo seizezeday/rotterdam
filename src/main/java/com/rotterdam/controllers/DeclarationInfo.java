@@ -36,6 +36,7 @@ public class DeclarationInfo {
     @Inject
     private DeclarationService declarationService;
 
+    //{"currentDate":"29.01.2015"}
     @RolesAllowed({ "Driver" })
     @POST
     @Path("/get")
@@ -50,7 +51,8 @@ public class DeclarationInfo {
 
         return Response.ok(declarationsDto).build();
     }
-    //{"currentDate":"29.01.2015"}
+
+    //{"date":"29.01.2015", "declarations":[ {"costType":"SomeType","price":"5"}, {"costType":"SomeType2","price":"50"} ]}
 
     @RolesAllowed({ "Driver" })
     @POST
@@ -64,5 +66,5 @@ public class DeclarationInfo {
 
         return Response.ok().build();
     }
-    //{"date":"29.01.2015", "declarations":[ {"costType":"SomeType","price":"5"}, {"costType":"SomeType2","price":"50"} ]}
+
 }
