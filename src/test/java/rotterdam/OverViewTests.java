@@ -16,7 +16,7 @@ public class OverViewTests {
     public void serializeWeekDto() throws IOException, ParseException {
 
         OverViewDto overViewDto = new OverViewDto();
-        overViewDto.usedWeeks.addAll(Arrays.asList(new Boolean[]{true, true, true, true}));
+        overViewDto.usedWeeks.addAll(Arrays.asList(new Integer[]{2,4}));
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(overViewDto);

@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OverViewDto {
     public List<WeekOverViewDto> weekList = new ArrayList<>();
-    public List<Boolean> usedWeeks = new ArrayList<>();
+    public List<Integer> usedWeeks = new ArrayList<>();
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date date;
