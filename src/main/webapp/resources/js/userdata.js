@@ -81,8 +81,11 @@ $(document).ready(function(){
             else {
                 $(".add_row_"+this+" button").show();
                 $(".time_"+this+"_start").removeAttr("disabled","disabled");
+//                $(".time_"+this+"_start").val('')
                 $(".time_"+this+"_end").removeAttr("disabled","disabled");
+//                $(".time_"+this+"_end").val('')
                 $(".time_"+this+"_rest").removeAttr("disabled","disabled");
+//                $(".time_"+this+"_rest").val('')
               } 
 });  
     };       
@@ -339,6 +342,7 @@ $(document).ready(function(){
                 $(".time_sunday_start").val('');
                 $(".time_sunday_end").val('');
                 $(".time_sunday_rest").val('');
+                type_day();
 
                 if(data.active){
                     $('#date_save').removeAttr("disabled","disabled");
@@ -475,7 +479,6 @@ $(document).ready(function(){
                 $(".time_friday_type_day").val(data.days.Friday.workHours[0].dayType);
                 $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
                 $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType);
-                type_day();
                 $("#total_mon_fri").text(data.totalTime.totalTime);
                 $("#total_over_hours").text(data.totalTime.overTime);
                 $('#total_time_monday').text(data.totalTime.days.Monday)
