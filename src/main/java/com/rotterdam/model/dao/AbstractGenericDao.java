@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Created by root on 07.10.14.
+ * Created by vasax32 on 07.10.14.
  */
 @Repository
 public abstract class AbstractGenericDao<T> implements HibernateL2Cache {

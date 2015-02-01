@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * Created by root on 24.01.15.
+ * Created by vasax32 on 24.01.15.
  */
 public class TotalTimeDto {
     @JsonSerialize(using = JsonDoubleTimeSerializer.class)

@@ -1,7 +1,7 @@
 package com.rotterdam.dto;
 
 /**
- * Created by root on 21.01.15.
+ * Created by vasax32 on 21.01.15.
  */
 public class UserDto {
     public String Name;

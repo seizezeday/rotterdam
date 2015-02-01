@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
- * Created by root on 27.01.15.
+ * Created by vasax32 on 27.01.15.
  */
 @Provider    // register as jersey's provider
 @PreMatching

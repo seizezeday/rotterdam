@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import javax.persistence.*;
 
 /**
- * Created by root on 29.01.15.
+ * Created by vasax32 on 29.01.15.
  */
 @Entity
 public class Declaration {

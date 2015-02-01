@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by root on 20.01.15.
+ * Created by vasax32 on 20.01.15.
  */
 @Component
 @Scope("singleton")

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Named;
 
 /**
- * Created by root on 17.01.15.
+ * Created by vasax32 on 17.01.15.
  */
 @Named
 @Scope("singleton")

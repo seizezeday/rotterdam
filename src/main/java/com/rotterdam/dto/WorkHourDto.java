@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- * Created by root on 19.01.15.
+ * Created by vasax32 on 19.01.15.
  */
 public class WorkHourDto {
     @JsonSerialize(using= JsonTimeSerializer.class)

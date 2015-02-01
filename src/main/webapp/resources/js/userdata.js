@@ -735,10 +735,10 @@ $(document).ready(function(){
             statusCode: {
                 200: function (data) {
                     alert("Success...");
-                    $("overview_total").text(data.total);
-                    $("overview_total_130").text(data.total130);
-                    $("overview_total_150").text(data.total150);
-                    $("overview_total_200").text(data.total200);
+                    $("#overview_total").text(data.total);
+                    $("#overview_total_130").text(data.total130);
+                    $("#overview_total_150").text(data.total150);
+                    $("#overview_total_200").text(data.total200);
                 }
             }
         });  

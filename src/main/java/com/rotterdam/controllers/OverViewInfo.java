@@ -1,8 +1,10 @@
 package com.rotterdam.controllers;
 
+import com.rotterdam.dto.OverViewDetailDto;
 import com.rotterdam.dto.OverViewDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.service.OverViewService;
+import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.JsonCommands;
 
 import javax.annotation.security.PermitAll;
@@ -19,9 +21,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
- * @author Anatolii
+ * @author vasax32
  */
 @Path("/overView")
 @PermitAll
@@ -38,9 +41,9 @@ public class OverViewInfo {
     //{"date":"29.01.2015", "usedWeeks":[true,true,true,true] }
     @RolesAllowed({ "Driver" })
     @POST
-    @Path("/get")
+    @Path("/getPdf")
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response getDeclarations(@Context HttpServletRequest hsr, OverViewDto overViewDto) throws JsonException, IOException, ParseException {
+    public Response getOverView(@Context HttpServletRequest hsr, OverViewDto overViewDto) throws JsonException, IOException, ParseException {
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
@@ -61,5 +64,20 @@ public class OverViewInfo {
 //          "Saturday":{"date":"31.01.2015","workHours":[{"startWorkingTime":"00:00","endWorkingTime":"00:00","restTime":0,"dayType":"1"}]},
 //          "Sunday":{"date":"01.02.2015","workHours":[{"startWorkingTime":"00:00","endWorkingTime":"00:00","restTime":0,"dayType":"1"}]}}}
 //      ],"usedWeeks":[true,true,true,true],"date":"29.01.2015"}
+
+    @RolesAllowed({ "Driver" })
+    @POST
+    @Path("/getDetail")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response getOverViewDetail(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
+
+        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
+
+        User user = jsonCommands.getUserFromRequest(hsr);
+
+        OverViewDetailDto overViewDetail = overViewService.getOverViewDetail(monday, user.getId());
+
+        return Response.ok(overViewDetail).build();
+    }
 
 }

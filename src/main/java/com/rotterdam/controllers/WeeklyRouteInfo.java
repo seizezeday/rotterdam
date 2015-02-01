@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Anatolii
+ * @author vasax32
  */
 @Path("/")
 @PermitAll

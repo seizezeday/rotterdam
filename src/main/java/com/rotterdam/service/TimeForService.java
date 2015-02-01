@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by root on 22.01.15.
+ * Created by vasax32 on 22.01.15.
  */
 @Named
 public class TimeForService {
@@ -66,7 +66,7 @@ public class TimeForService {
         return timeForDto;
     }
 
-    private TimeForDto calculateTimeFor(Period lastPeriod){
+    public TimeForDto calculateTimeFor(Period lastPeriod){
         double promisedPeriodTime = 0;
         double periodTime = 0;
         for (Week week : lastPeriod.getWeeks()){

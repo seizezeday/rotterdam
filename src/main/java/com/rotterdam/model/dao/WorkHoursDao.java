@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by root on 17.01.15.
+ * Created by vasax32 on 17.01.15.
  */
 @Named
 @Scope("singleton")

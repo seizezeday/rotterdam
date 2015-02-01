@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by root on 29.01.15.
+ * Created by vasax32 on 29.01.15.
  */
 @Named
 public class DeclarationService {

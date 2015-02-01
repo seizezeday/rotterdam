@@ -22,7 +22,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * Created by root on 21.01.15.
+ * Created by vasax32 on 21.01.15.
  */
 @Path("/timeFor")
 //@PermitAll

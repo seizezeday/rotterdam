@@ -21,7 +21,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * @author Anatolii
+ * @author vasax32
  */
 @Path("/settings")
 @PermitAll

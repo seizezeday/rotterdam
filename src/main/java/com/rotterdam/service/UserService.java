@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by root on 21.01.15.
+ * Created by vasax32 on 21.01.15.
  */
 @Named
 public class UserService {
