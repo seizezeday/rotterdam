@@ -733,8 +733,12 @@ $(document).ready(function(){
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             statusCode: {
-                200: function () {
+                200: function (data) {
                     alert("Success...");
+                    $("overview_total").text(data.total);
+                    $("overview_total_130").text(data.total130);
+                    $("overview_total_150").text(data.total150);
+                    $("overview_total_200").text(data.total200);
                 }
             }
         });  
