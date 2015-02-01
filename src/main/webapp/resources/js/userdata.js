@@ -20,6 +20,7 @@ $(document).ready(function(){
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]; 
         var week_days_upercase = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; 
+        var pdf_report = [];
 //        alert (week_days[0]);
 //        $.each(week_days,function(){
 ////            alert(this);
@@ -714,9 +715,16 @@ $(document).ready(function(){
             dataType: "json",
             statusCode: {
                 200: function (data) {
-                    alert("Success...");
-                    generatefromjson();
-
+//                    alert("Success...");
+                    console.log(data)
+                    console.log(data.weekList[0].days);
+//                    console.log(data.weekList.);
+//                    console.log();
+//                    generatefromjson();
+//                $.each(data, function(i, data) {
+//                    pdf_report.push(data.days);
+//                });
+//                    alert(pdf_report);
                 }
             }
         });  
@@ -726,25 +734,28 @@ $(document).ready(function(){
 				doc = new jsPDF('p', 'pt', 'a4', true);
 				doc.setFont("times", "normal");
 				doc.setFontSize(fontSize);
-//				doc.text(20, 20, "hi table");
+				doc.text(20, 20, "Driver name");
+				doc.text(20, 35, "Period");
 				data = [];
-				for (var insert = 0; insert <= 20; insert++) {
+				for (var insert = 0; insert <= 7; insert++) {
 					data.push({
-						"name" : "jspdf plugin",
-						"version" : insert,
-						"author" : "Prashanth Nelli",
-						"Designation" : "jspdf table plugin"
+						"days" : "monday",
+						"date" : "19.01.2015",
+						"time start" : "09:00",
+						"Time end" : "18:00",
+						"Rest" : "90",
+						"Total time" : "08:00"
 					});
 				}
 				height = doc.drawTable(data, {
 					xstart : 10,
 					ystart : 10,
-					tablestart : 40,
-					marginright :100,
+					tablestart : 50,
+					marginright :50,
 					xOffset : 10,
 					yOffset : 10
 				});
-//				doc.text(50, height + 20, 'hi world');
+				doc.text(50, height + 20, 'Created date');
 				doc.save("some-file.pdf");
 			};
     });
