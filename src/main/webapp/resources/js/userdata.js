@@ -725,5 +725,18 @@ $(document).ready(function(){
         'default': 'now'
     });   
     }    
- 
+         $('#overview_submit').click(function overview_date(){
+            $.ajax({
+            type: "POST",
+            url: "api/overView/getDetail",
+            data: JSON.stringify({currentDate: $("#overview_calendar").val()}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            statusCode: {
+                200: function () {
+                    alert("Success...");
+                }
+            }
+        });  
+        });  
     });
