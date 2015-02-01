@@ -715,9 +715,36 @@ $(document).ready(function(){
             statusCode: {
                 200: function (data) {
                     alert("Success...");
+                    generatefromjson();
 
                 }
             }
         });  
-        });  
+        }); 
+    			function generatefromjson() {
+				var data = [], fontSize = 12, height = 0, doc;
+				doc = new jsPDF('p', 'pt', 'a4', true);
+				doc.setFont("times", "normal");
+				doc.setFontSize(fontSize);
+//				doc.text(20, 20, "hi table");
+				data = [];
+				for (var insert = 0; insert <= 20; insert++) {
+					data.push({
+						"name" : "jspdf plugin",
+						"version" : insert,
+						"author" : "Prashanth Nelli",
+						"Designation" : "jspdf table plugin"
+					});
+				}
+				height = doc.drawTable(data, {
+					xstart : 10,
+					ystart : 10,
+					tablestart : 40,
+					marginright :100,
+					xOffset : 10,
+					yOffset : 10
+				});
+//				doc.text(50, height + 20, 'hi world');
+				doc.save("some-file.pdf");
+			};
     });
