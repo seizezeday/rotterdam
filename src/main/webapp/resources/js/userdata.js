@@ -742,5 +742,24 @@ $(document).ready(function(){
                 }
             }
         });  
+        }); 
+
+    $('#download_pdf_btn').click(function download_pdf(){
+            $.ajax({
+            type: "POST",
+            url: "api/overView/get",
+            data: JSON.stringify({
+                date: $("#overview_calendar").val(),
+                usedWeeks: $('#overview_week_select').val()                  
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            statusCode: {
+                200: function (data) {
+                    alert("Success...");
+
+                }
+            }
+        });  
         });  
     });
