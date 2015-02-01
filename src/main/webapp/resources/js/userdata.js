@@ -156,12 +156,6 @@ $(document).ready(function(){
             '<div class="col-md-6"><input type="text" class="form-control time_' + data +'_rest" placeholder="Rest" number-mask=""></div>' +
             '</div>'+
             '<div class="col-md-4 margin_bottom_10">'+
-//            '<div class="col-md-4">' +
-//            '<select class="form-control time_' + data +'_ride_type">' +
-//            '<option>1</option>' +
-//            '<option>2</option>' +
-//            '</select>'+
-//            '</div>' +
             '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_'+ data +'_del">Delete</button></div></div></div>'
         return time_day_add;
     };   
@@ -215,24 +209,6 @@ $(document).ready(function(){
             });
         };
         //        Time tab end
-        //            compensation time start
-//            $("#compensation_time").keyup(function compensation_hide_btn(){
-//           var compensation=$("#compensation_time").val();
-//     if (compensation !=="") {
-//        $("#compensation_btn").removeAttr("disabled");
-//    }
-//        else {
-//                $("#compensation_btn").attr("disabled","disabled");
-//        }                  
-//                         });
-        
-//               $('#compensation_btn').click(function compensation(){
-//                var compensation = {
-//                    use_time_for_time: $('#compensation_time').val()   
-//                };
-//
-//                  compensation_json();
-//               });
             function compensation_json(){
             $.ajax({
                 type: "POST",
@@ -500,13 +476,6 @@ $(document).ready(function(){
                 $(".time_saturday_type_day").val(data.days.Saturday.workHours[0].dayType);
                 $(".time_sunday_type_day").val(data.days.Sunday.workHours[0].dayType);
                 type_day();
-//                type_day_monday();
-//                type_day_tuesday();
-//                type_day_wednesday();
-//                type_day_thursday();
-//                type_day_friday();
-//                type_day_saturday();
-//                type_day_sunday();
                 $("#total_mon_fri").text(data.totalTime.totalTime);
                 $("#total_over_hours").text(data.totalTime.overTime);
                 $('#total_time_monday').text(data.totalTime.days.Monday)
@@ -544,14 +513,6 @@ $(document).ready(function(){
         //            Settings tab start 
 
         $('#setting_save').click(function save_btn(){
-//            var monday_hours = $("#settings_monday").val();
-//            var tuesday_hours = $("#settings_tuesday").val();
-//            var wednesday_hours = $("#settings_wednesday").val();
-//            var thursday_hours = $("#settings_thursday").val();
-//            var friday_hours = $("#settings_friday").val();
-//            var saturday_hours = $("#settings_saturday").val();
-//            var sunday_hours = $("#settings_sunday").val();          
-//            alert(monday_hours);
             var selected_settings  = {
                 currentDate: $("#time_week_date").val(),
             monday_hours : $("#settings_monday").val(), 
@@ -559,17 +520,11 @@ $(document).ready(function(){
             wednesday_hours : $("#settings_wednesday").val(), 
             thursday_hours : $("#settings_thursday").val(), 
             friday_hours : $("#settings_friday").val(), 
-            saturday_hours : $("#settings_saturday").val(), 
-            sunday_hours : $("#settings_sunday").val(),                 
+//            saturday_hours : $("#settings_saturday").val(), 
+//            sunday_hours : $("#settings_sunday").val(),                 
            	saturday_compensation:  $("#suterday_compensation").is(':checked'),
-            show_compensation:  $("#show_compensation").is(':checked'),
+//            show_compensation:  $("#show_compensation").is(':checked'),
             allow_saturday_compensation:  $("#allow_saturday_compensation").is(':checked')
-//            select1: $("#select1 option:selected").text(),
-//            select2: $("#select2 option:selected").text(),
-//            select3: $("#select3 option:selected").text(),
-//            check3:  $("#check3").is(':checked'),
-//            check4:  $("#check4").is(':checked'),
-//            select4: $("#select4 option:selected").text()
         };
 //            alert(selected_settings.monday_hours);
        settings(selected_settings);
@@ -659,7 +614,6 @@ $(document).ready(function(){
 
     });
         $('.time_monday_start,.time_monday_end,.time_monday_rest').keyup(function(){
-//                $(".time_monday_type_day").change(function(){
 
         var monday_start_str =  $(".time_monday_start").val();
         var monday_start = parseFloat(monday_start_str);
@@ -747,7 +701,7 @@ $(document).ready(function(){
     $('#download_pdf_btn').click(function download_pdf(){
             $.ajax({
             type: "POST",
-            url: "api/overView/get",
+            url: "api/overView/getPdf",
             data: JSON.stringify({
                 date: $("#overview_calendar").val(),
                 usedWeeks: $('#overview_week_select').val()                  
