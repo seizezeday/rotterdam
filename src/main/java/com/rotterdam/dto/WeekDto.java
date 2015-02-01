@@ -43,7 +43,8 @@ public class WeekDto {
             Map.Entry<String, JsonNode> day = days.next();
             String dayTitle = day.getKey();
             Iterator<JsonNode> dateAndWorkHours = day.getValue().getElements();
-            dayDto.date = parseDate(dateAndWorkHours.next().get("date").asText());;
+            String date = dateAndWorkHours.next().get("date").asText();
+            dayDto.date = parseDate(date);
             while (dateAndWorkHours.hasNext()){
                 JsonNode workHour = dateAndWorkHours.next();
                 WorkHourDto workHourDto = new WorkHourDto();
