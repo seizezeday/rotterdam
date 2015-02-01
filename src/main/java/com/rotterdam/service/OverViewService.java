@@ -37,21 +37,11 @@ public class OverViewService {
                 periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(overViewDto.date, PeriodType.FOURWEEK);
 
         for (int i = 0; i < overViewDto.usedWeeks.size(); i++){
-            WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i)), userId);
+            WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i)-1), userId);
 
             //just add it
             overViewDto.weekList.add(new WeekOverViewDto(weekDto));
         }
-
-//        for(int i = 0; i < startingDaysOfWeeksOfCurrentPeriod.size(); i++){
-//            if(overViewDto.usedWeeks.get(i)){
-//                //if week needle
-//                WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startingDaysOfWeeksOfCurrentPeriod.get(i), userId);
-//
-//                //just add it
-//                overViewDto.weekList.add(new WeekOverViewDto(weekDto));
-//            }
-//        }
 
         return overViewDto;
     }
