@@ -37,7 +37,8 @@ public class OverViewService {
                 periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(overViewDto.date, PeriodType.FOURWEEK);
 
         for (int i = 0; i < overViewDto.usedWeeks.size(); i++){
-            WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i)-1), userId);
+            Date startDate = startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i) - 1);
+            WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startDate, userId);
 
             //just add it
             overViewDto.weekList.add(new WeekOverViewDto(weekDto));
