@@ -734,41 +734,45 @@ $(document).ready(function(){
 
         var height = 0;
 
-        for (var weekI = 0; weekI < jsonData.weekList.length; weekI++) {
+        if(jsonData.weekList.length == 0)
+            doc.text(50, 60, 'No data selected');
+        else{
+            for (var weekI = 0; weekI < jsonData.weekList.length; weekI++) {
 
-            data = [];
+                data = [];
 
-            var week = jsonData.weekList[weekI];
+                var week = jsonData.weekList[weekI];
 
-            for (var dayI in week.days) {
+                for (var dayI in week.days) {
 
-                var day = week.days[dayI];
+                    var day = week.days[dayI];
 
-                for (var workHourI = 0; workHourI < day.workHours.length; workHourI++) {
+                    for (var workHourI = 0; workHourI < day.workHours.length; workHourI++) {
 
-                    var workHour = day.workHours[workHourI];
+                        var workHour = day.workHours[workHourI];
 
-                    data.push({
-                        "Week Day": dayI,
-                        "Date": day.date,
-                        "Time start": workHour.startWorkingTime,
-                        "Time end": workHour.endWorkingTime,
-                        "Rest": workHour.restTime,
-                        "Total time": day.total
-                    });
+                        data.push({
+                            "Week Day": dayI,
+                            "Date": day.date,
+                            "Time start": workHour.startWorkingTime,
+                            "Time end": workHour.endWorkingTime,
+                            "Rest": workHour.restTime,
+                            "Total time": day.total
+                        });
+                    }
                 }
-            }
 
-            if(data.length != 0){
-                height += doc.drawTable(data, {
-                    xstart: 10,
-                    ystart: 10,
-                    tablestart: 50 + height,
-                    marginright: 50,
-                    xOffset: 10,
-                    yOffset: 10,
-                    pagesplit: true
-                }) ;
+                if(data.length != 0){
+                    height += doc.drawTable(data, {
+                        xstart: 10,
+                        ystart: 10,
+                        tablestart: 50 + height,
+                        marginright: 50,
+                        xOffset: 10,
+                        yOffset: 10,
+                        pagesplit: true
+                    }) ;
+                }
             }
         }
 

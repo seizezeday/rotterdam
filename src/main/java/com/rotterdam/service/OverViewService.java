@@ -37,9 +37,20 @@ public class OverViewService {
     @Transactional
     public OverViewDto getOverView(OverViewDto overViewDto, long userId) {
 
+        User user = userDao.selectById(userId);
+        overViewDto.user = new UserDto(user.getFirstname(), user.getSurname());
+
+        if(overViewDto.date == null)
+            return overViewDto;
         List<Date> startingDaysOfWeeksOfCurrentPeriod =
                 periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(overViewDto.date, PeriodType.FOURWEEK);
 
+        Date start = startingDaysOfWeeksOfCurrentPeriod.get(0);
+        Date end = DateTools.getDatePlusDays(startingDaysOfWeeksOfCurrentPeriod.get(3), 6);
+        overViewDto.startEnd = new StartEndDto(start, end);
+
+        if(overViewDto.usedWeeks == null)
+            return overViewDto;
         for (int i = 0; i < overViewDto.usedWeeks.size(); i++){
             Date startDate = startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i) - 1);
             WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startDate, userId);
@@ -49,11 +60,7 @@ public class OverViewService {
             weekOverViewDto.calculateTotal();
             overViewDto.weekList.add(weekOverViewDto);
         }
-        Date start = startingDaysOfWeeksOfCurrentPeriod.get(0);
-        Date end = DateTools.getDatePlusDays(startingDaysOfWeeksOfCurrentPeriod.get(3), 6);
-        overViewDto.startEnd = new StartEndDto(start, end);
-        User user = userDao.selectById(userId);
-        overViewDto.user = new UserDto(user.getFirstname(), user.getSurname());
+
 
         return overViewDto;
     }
