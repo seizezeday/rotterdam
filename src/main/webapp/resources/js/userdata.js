@@ -716,11 +716,14 @@ $(document).ready(function(){
             statusCode: {
                 200: function (data) {
 //                    alert("Success...");
-                    console.log(data)
-                    console.log(data.weekList[0].days);
+//                    console.log(data)
+//                    console.log(data.weekList[0].days);
 //                    console.log(data.weekList.);
 //                    console.log();
-//                    generatefromjson();
+//                    var week1 = data.weekList[0].days;
+                    pdf_report.push(data.weekList[0].days);
+//                    console.log(pdf_report);
+                    generatefromjson(pdf_report);
 //                $.each(data, function(i, data) {
 //                    pdf_report.push(data.days);
 //                });
@@ -729,24 +732,33 @@ $(document).ready(function(){
             }
         });  
         }); 
-    			function generatefromjson() {
-				var data = [], fontSize = 12, height = 0, doc;
+    			function generatefromjson(data) {
+				var data, fontSize = 12, height = 0, doc;
 				doc = new jsPDF('p', 'pt', 'a4', true);
 				doc.setFont("times", "normal");
 				doc.setFontSize(fontSize);
 				doc.text(20, 20, "Driver name");
 				doc.text(20, 35, "Period");
-				data = [];
-				for (var insert = 0; insert <= 7; insert++) {
-					data.push({
-						"days" : "monday",
-						"date" : "19.01.2015",
-						"time start" : "09:00",
-						"Time end" : "18:00",
-						"Rest" : "90",
-						"Total time" : "08:00"
-					});
-				}
+//				data = [];
+                console.log(data);
+//				for (var insert = 0; insert <= 7; insert++) {
+//					data.push({
+//						"days" : data.Monday,
+//						"date" : data.Monday.date,
+//						"time start" : "09:00",
+//						"Time end" : "18:00",
+//						"Rest" : "90",
+//						"Total time" : "08:00"
+//					});
+//				}
+                data.push({
+                 		"days" : data.Monday,
+						"date" : data.Monday.date,
+						"time start" : data.Monday.date.workHours.startWorkingTime,
+						"Time end" : data.Monday.date.workHours.endWorkingTime,
+						"Rest" : data.Monday.date.workHours.restTime,
+						"Total time" : "08:00"   
+                })    
 				height = doc.drawTable(data, {
 					xstart : 10,
 					ystart : 10,
