@@ -1,5 +1,6 @@
 package com.rotterdam.dto;
 
+import com.rotterdam.tools.DateTools;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.LinkedHashMap;
@@ -24,6 +25,19 @@ public class WeekOverViewDto {
 
     public WeekOverViewDto(WeekDto weekDto){
         this.days = weekDto.days;
+    }
+
+    public void calculateTotal() {
+        for(DayDto dayDto : days.values()){
+            double total = 0;
+            for (WorkHourDto workHourDto : dayDto.workHours){
+                double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
+                double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
+                int restTime = workHourDto.restTime / 60;
+                total += endTime - startTime - restTime;
+            }
+            dayDto.total =  DateTools.getDateFromDouble(total);
+        }
     }
 }
 

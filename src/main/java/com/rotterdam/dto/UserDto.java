@@ -9,4 +9,12 @@ public class UserDto {
     public String email;
     public String pass;
     public String passconfirm;
+
+    public UserDto(String name, String lastName) {
+        Name = name;
+        LastName = lastName;
+    }
+
+    public UserDto() {
+    }
 }

@@ -2,6 +2,7 @@ package com.rotterdam.service;
 
 import com.rotterdam.dto.*;
 import com.rotterdam.model.dao.PeriodDao;
+import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.*;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.PeriodDefiner;
@@ -30,6 +31,9 @@ public class OverViewService {
     @Inject
     private PeriodDao periodDao;
 
+    @Inject
+    private UserDao userDao;
+
     @Transactional
     public OverViewDto getOverView(OverViewDto overViewDto, long userId) {
 
@@ -41,8 +45,15 @@ public class OverViewService {
             WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startDate, userId);
 
             //just add it
-            overViewDto.weekList.add(new WeekOverViewDto(weekDto));
+            WeekOverViewDto weekOverViewDto = new WeekOverViewDto(weekDto);
+            weekOverViewDto.calculateTotal();
+            overViewDto.weekList.add(weekOverViewDto);
         }
+        Date start = startingDaysOfWeeksOfCurrentPeriod.get(0);
+        Date end = DateTools.getDatePlusDays(startingDaysOfWeeksOfCurrentPeriod.get(3), 6);
+        overViewDto.startEnd = new StartEndDto(start, end);
+        User user = userDao.selectById(userId);
+        overViewDto.user = new UserDto(user.getFirstname(), user.getSurname());
 
         return overViewDto;
     }

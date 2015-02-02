@@ -233,5 +233,15 @@ public class DateTools {
         return calendar.getTime();
     }
 
+    public static Date getDateFromDouble(Double num){
+        int h = num.intValue();
+
+        int m = (int)((num -h) * 60);
+
+        Calendar calendar = Calendar.getInstance();;
+        calendar.set(0,0,0,h,m);
+        return calendar.getTime();
+    }
+
 
 }

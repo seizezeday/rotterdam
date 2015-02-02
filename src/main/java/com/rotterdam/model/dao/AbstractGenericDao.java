@@ -37,7 +37,7 @@ public abstract class AbstractGenericDao<T> implements HibernateL2Cache {
         return allQuery.getResultList();
     }
 
-    public T selectById(int id) {
+    public T selectById(long id) {
         return (T)entityManager.find(type, id);
     }
 

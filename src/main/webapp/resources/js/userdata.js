@@ -704,88 +704,77 @@ $(document).ready(function(){
         }); 
 
     $('#download_pdf_btn').click(function download_pdf(){
+//        var testData = '{"date":"26.01.2015","usedWeeks":["1", "2", "3", "4"]}';
             $.ajax({
             type: "POST",
             url: "api/overView/getPdf",
             data: JSON.stringify({
                 date: $("#overview_calendar").val(),
-                usedWeeks: $('#overview_week_select').val()                  
+                usedWeeks: $('#overview_week_select').val()
             }),
+//                data : testData,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             statusCode: {
                 200: function (data) {
 //                    alert("Success...");
-//                    console.log(data)
-//                    console.log(data.weekList[0].days);
-//                    console.log(data.weekList.);
-//                    console.log();
-//                    var week1 = data.weekList[0].days;
-                    pdf_report.push(data.weekList[0].days);
-//                    console.log(pdf_report);
-                    generatefromjson(pdf_report);
-//                $.each(data, function(i, data) {
-//                    pdf_report.push(data.days);
-//                });
-//                    alert(pdf_report);
+                    //data.weekList.push(data.weekList[2]);
+                    generatefromjson(pdf_report, data);
                 }
             }
         });  
-        }); 
-    			function generatefromjson(data) {
-				var fontSize = 12, height = 0, doc;
-				doc = new jsPDF('p', 'pt', 'a4', true);
-				doc.setFont("times", "normal");
-				doc.setFontSize(fontSize);
-				doc.text(20, 20, "Driver name");
-				doc.text(20, 35, "Period");
-				data = [];
-//                console.log(data);
-////                console.log(data[0].Monday.date);
-                    
-				for (var insert = 0; insert <= 7; insert++) {
-					data.push({
-						"days" : "Monday",
-						"date" : "19.01.2015",
-						"time start" : "09:00",
-						"Time end" : "18:00",
-						"Rest" : "90",
-						"Total time" : "08:00"
-					});
-				}
-//                console.log(data);
-//                console.log(pdf_report);
-//                data.push({
-//						"days" : "days",
-//						"date" : "date",
-//						"time start" : "time start",
-//						"Time end" : "Time end",
-//						"Rest" : "Rest",
-//						"Total time" : "Total time"
-//					});
-//                data.push({
-//                 		"days" : "Monday",
-//						"date" : data[0].Monday.date,
-//						"time start" : data[0].Monday.workHours[0].startWorkingTime,
-//						"Time end" : data[0].Monday.workHours[0].endWorkingTime,
-//						"Rest" : data[0].Monday.workHours[0].restTime,
-//						"Total time" : "08:00"   
-//                }) 
-                
-                console.log(data);
-                    data.splice(data.indexOf(1));
-//                console.log(pdf_report);
-//                delete data[0];
-//                delete data[1];
-				height = doc.drawTable(data, {
-					xstart : 10,
-					ystart : 10,
-					tablestart : 50,
-					marginright :50,
-					xOffset : 10,
-					yOffset : 10
-				});
-				doc.text(50, height + 20, 'Created date');
-				doc.save("some-file.pdf");
-			};
+        });
+    function generatefromjson(data, jsonData) {
+        var fontSize = 12;
+        var doc = new jsPDF('p', 'pt', 'a4', true);
+        doc.setFont("times", "normal");
+        doc.setFontSize(fontSize);
+        doc.text(20, 20, "Driver: " + jsonData.user.Name + " " + jsonData.user.LastName);
+        doc.text(20, 35, "Period: " + jsonData.startEnd.start + " - " + jsonData.startEnd.end);
+
+        var height = 0;
+
+        for (var weekI = 0; weekI < jsonData.weekList.length; weekI++) {
+
+            data = [];
+
+            var week = jsonData.weekList[weekI];
+
+            for (var dayI in week.days) {
+
+                var day = week.days[dayI];
+
+                for (var workHourI = 0; workHourI < day.workHours.length; workHourI++) {
+
+                    var workHour = day.workHours[workHourI];
+
+                    data.push({
+                        "Week Day": dayI,
+                        "Date": day.date,
+                        "Time start": workHour.startWorkingTime,
+                        "Time end": workHour.endWorkingTime,
+                        "Rest": workHour.restTime,
+                        "Total time": day.total
+                    });
+                }
+            }
+
+            if(data.length != 0){
+                height += doc.drawTable(data, {
+                    xstart: 10,
+                    ystart: 10,
+                    tablestart: 50 + height,
+                    marginright: 50,
+                    xOffset: 10,
+                    yOffset: 10,
+                    pagesplit: true
+                }) ;
+            }
+        }
+
+
+
+//        doc.text(50, height + 20, 'Created date');
+        doc.save("some-file.pdf");
+    };
     });

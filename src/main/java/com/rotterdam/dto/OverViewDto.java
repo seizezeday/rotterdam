@@ -20,6 +20,9 @@ public class OverViewDto {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date date;
+    public StartEndDto startEnd;
+    public UserDto user;
+
 
     @Override
     public String toString() {

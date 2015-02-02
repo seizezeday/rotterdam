@@ -46,7 +46,8 @@ public class TimeForService {
             periodDao.update(lastPeriod);
             //now we need to increase timeForPay
             User user = lastPeriod.getUser();
-            user.setTimeForTime(user.getTimeForTime() + timeForDto.timeForTime);
+            timeForDto.timeForTime = user.getTimeForTime() + timeForDto.timeForTime;
+            user.setTimeForTime(timeForDto.timeForTime);
             userDao.update(user);
         } else {
             double timeForTime = lastPeriod.getUser().getTimeForTime();
