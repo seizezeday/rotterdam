@@ -733,32 +733,50 @@ $(document).ready(function(){
         });  
         }); 
     			function generatefromjson(data) {
-				var data, fontSize = 12, height = 0, doc;
+				var fontSize = 12, height = 0, doc;
 				doc = new jsPDF('p', 'pt', 'a4', true);
 				doc.setFont("times", "normal");
 				doc.setFontSize(fontSize);
 				doc.text(20, 20, "Driver name");
 				doc.text(20, 35, "Period");
-//				data = [];
-                console.log(data);
-//				for (var insert = 0; insert <= 7; insert++) {
-//					data.push({
-//						"days" : data.Monday,
-//						"date" : data.Monday.date,
-//						"time start" : "09:00",
-//						"Time end" : "18:00",
-//						"Rest" : "90",
-//						"Total time" : "08:00"
+				data = [];
+//                console.log(data);
+////                console.log(data[0].Monday.date);
+                    
+				for (var insert = 0; insert <= 7; insert++) {
+					data.push({
+						"days" : "Monday",
+						"date" : "19.01.2015",
+						"time start" : "09:00",
+						"Time end" : "18:00",
+						"Rest" : "90",
+						"Total time" : "08:00"
+					});
+				}
+//                console.log(data);
+//                console.log(pdf_report);
+//                data.push({
+//						"days" : "days",
+//						"date" : "date",
+//						"time start" : "time start",
+//						"Time end" : "Time end",
+//						"Rest" : "Rest",
+//						"Total time" : "Total time"
 //					});
-//				}
-                data.push({
-                 		"days" : data.Monday,
-						"date" : data.Monday.date,
-						"time start" : data.Monday.date.workHours.startWorkingTime,
-						"Time end" : data.Monday.date.workHours.endWorkingTime,
-						"Rest" : data.Monday.date.workHours.restTime,
-						"Total time" : "08:00"   
-                })    
+//                data.push({
+//                 		"days" : "Monday",
+//						"date" : data[0].Monday.date,
+//						"time start" : data[0].Monday.workHours[0].startWorkingTime,
+//						"Time end" : data[0].Monday.workHours[0].endWorkingTime,
+//						"Rest" : data[0].Monday.workHours[0].restTime,
+//						"Total time" : "08:00"   
+//                }) 
+                
+                console.log(data);
+                    data.splice(data.indexOf(1));
+//                console.log(pdf_report);
+//                delete data[0];
+//                delete data[1];
 				height = doc.drawTable(data, {
 					xstart : 10,
 					ystart : 10,
