@@ -2,7 +2,7 @@ package com.rotterdam.controllers;
 
 import com.rotterdam.dto.SettingsDto;
 import com.rotterdam.model.entity.User;
-import com.rotterdam.service.WeekService;
+import com.rotterdam.service.SettingsService;
 import com.rotterdam.tools.json.JsonCommands;
 
 import javax.annotation.security.PermitAll;
@@ -29,7 +29,7 @@ import java.util.Date;
 public class SettingsController {
 
     @Inject
-    private WeekService weekService;
+    private SettingsService settingsService;
 
     @Inject
     private JsonCommands jsonCommands;
@@ -41,7 +41,7 @@ public class SettingsController {
         //System.out.println(settingsDto);
         User user = jsonCommands.getUserFromRequest(hsr);
         if(user != null) {
-            weekService.save(settingsDto, user.getId());
+            settingsService.save(settingsDto, user.getId());
             return Response.ok().build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -59,7 +59,7 @@ public class SettingsController {
         if(user != null) {
             Date date = jsonCommands.getDateFromJson(data);
 
-            SettingsDto settingsDto = weekService.getSettings(date, user.getId());
+            SettingsDto settingsDto = settingsService.getSettings(date, user.getId());
             return Response.ok(settingsDto).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();

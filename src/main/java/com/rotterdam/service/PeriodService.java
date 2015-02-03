@@ -60,30 +60,4 @@ public class PeriodService {
                                 startingDays.get(weekCount - 1)));
 
     }
-
-//    private void setPeriodDateFourWeek(Period period, Long userId){
-//        //first we need to check for existing of last period
-//        Period lastPeriodByUser = periodDao.selectLastPeriodByUser(userId);
-//        Date startDate;
-//        if(period == null){
-//            //we just need to find first monday of current month
-//            startDate = DateTools.getDateOfFirstMonday();
-//        } else {
-//            //we need to find next date after end of last period
-//            startDate = DateTools.getDateNextDay(lastPeriodByUser.getEndDate());//this will be monday
-//        }
-//        period.setStartDate(startDate);
-//        period.setEndDate(DateTools.getDateAfterFourWeeks(startDate));
-//    }
-//
-//    private void setPeriodDateMonth(Period period){
-//        Date startDate = DateTools.getDateOfFirstMonday();
-//        Date endDate = DateTools.getDateOfLastDay();
-//        if(!DateTools.isSunday(endDate)){
-//            //we need to find end of this week
-//            endDate = DateTools.getDateOfNextSunday(endDate);
-//        }
-//        period.setStartDate(startDate);
-//        period.setEndDate(endDate);
-//    }
 }

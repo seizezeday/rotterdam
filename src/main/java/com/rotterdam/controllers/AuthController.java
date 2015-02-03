@@ -73,6 +73,7 @@ public class AuthController {
         return Response.ok().build();
     }
 
+    @POST
     @Path("/registration")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response registerNewUser(UserDto userDto) {

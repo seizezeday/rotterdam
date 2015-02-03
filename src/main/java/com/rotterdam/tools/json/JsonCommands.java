@@ -61,7 +61,7 @@ public class JsonCommands {
     public static final String PARAM_YEAR_PATTERN = "yyyy";
     public static final String PARAM_MONTH_PATTERN = "MM";
     public static final String PARAM_TIME_PATTERN = "HH:mm";
-    public static final String PARAM_HOUR_PATTERN = "HH";
+    public static final String PARAM_HOUR_PATTERN = "H";
 
 
     private JsonCommands(){}

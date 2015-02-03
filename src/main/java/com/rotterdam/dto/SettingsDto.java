@@ -1,5 +1,6 @@
 package com.rotterdam.dto;
 
+import com.rotterdam.model.entity.Week;
 import com.rotterdam.tools.json.JsonCommands;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
@@ -71,5 +72,31 @@ public class SettingsDto {
                 "showCompensation='" + showCompensation + '\'' +
                 "saturdayCompensation='" + saturdayCompensation + '\'' +
                 '}';
+    }
+
+    public Week copyDaysOfWeekAndCheckBoxesToWeek(Week week){
+        week.setPromiseMondayTime(monday_hours);
+        week.setPromiseTuesdayTime(tuesday_hours);
+        week.setPromiseWednesdayTime(wednesday_hours);
+        week.setPromiseThursdayTime(thursday_hours);
+        week.setPromiseFridayTime(friday_hours);
+        week.setPromiseSaturdayTime(saturday_hours);
+        week.setPromiseSundayTime(sunday_hours);
+        week.setShowCompensation(showCompensation);
+        week.setSaturdayCompensation(saturdayCompensation);
+        return week;
+    }
+
+    public SettingsDto copyDaysOfWeekToSettingsDto(Week week){
+        monday_hours = week.getPromiseMondayTime();
+        tuesday_hours = week.getPromiseTuesdayTime();
+        wednesday_hours = week.getPromiseWednesdayTime();
+        thursday_hours = week.getPromiseThursdayTime();
+        friday_hours = week.getPromiseFridayTime();
+        saturday_hours = week.getPromiseSaturdayTime();
+        sunday_hours = week.getPromiseSundayTime();
+        showCompensation = week.isShowCompensation();
+        saturdayCompensation = week.isSaturdayCompensation();
+        return this;
     }
 }

@@ -1,8 +1,10 @@
 package com.rotterdam.service;
 
 import com.rotterdam.dto.TimeForDto;
+import com.rotterdam.dto.WeekDto;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.UserDao;
+import com.rotterdam.model.dao.WeekDao;
 import com.rotterdam.model.entity.*;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.PeriodDefiner;
@@ -27,6 +29,12 @@ public class TimeForService {
 
     @Inject
     private UserDao userDao;
+
+    @Inject
+    private WeekService weekService;
+
+    @Inject
+    private WeekDao weekDao;
 
     private final int HOURS_LIMIT = 220;
 
@@ -76,11 +84,21 @@ public class TimeForService {
                 String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
                 if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
                     continue;
-                for(WorkHour workHour : day.getWorkHours()){
-                    double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                    double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                    int restTime = workHour.getRestTime() / 60;
-                    timeDays += endTime - startTime - restTime;
+                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                    RideType rideType = day.getWorkHours().get(0).getRideType();
+                    if(rideType.equals(RideType.Werkdag)) {
+                        for (WorkHour workHour : day.getWorkHours()) {
+                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                            int restTime = workHour.getRestTime() / 60;
+                            timeDays += endTime - startTime - restTime;
+                        }
+                    } else {
+                        if(isNormalCalculationNotForWorkDay(rideType)){
+                            Date promisedTimeByDate = getPromisedTimeByDate(day.getDate(), week);
+                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                        }
+                    }
                 }
             }
             promisedPeriodTime += getPromisedWeekTime(week);
@@ -106,6 +124,48 @@ public class TimeForService {
         }
 
         return new TimeForDto(timeForTime, overTime);
+    }
+
+    public boolean isNormalCalculationNotForWorkDay(RideType rideType){
+        switch (rideType.name()){
+            case "Wachtdag" : return true;
+            case "Ziektedag" : return true;
+            case "Vakantiedag" : return true;
+            case "Betaald_verlof" : return true;
+            case "Zwangerschapsverlof" : return true;
+            case "Feestdag" : return true;
+            default: return false;
+        }
+    }
+
+    public Date getPromisedTimeByDate(Date date, Week week){
+        String weekDayTitle = DateTools.getWeekDayTitle(date);
+        switch (weekDayTitle){
+            case "Monday" : return week.getPromiseMondayTime();
+            case "Tuesday" : return week.getPromiseTuesdayTime();
+            case "Wednesday" : return week.getPromiseWednesdayTime();
+            case "Thursday" : return week.getPromiseThursdayTime();
+            case "Friday" : return week.getPromiseFridayTime();
+            case "Saturday" : return week.getPromiseSaturdayTime();
+            case "Sunday" : return week.getPromiseSundayTime();
+            default: return null;
+        }
+    }
+
+    @Transactional
+    public Date getPromisedTimeByDate(Date date, WeekDto weekDto, long userId){
+        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+        String weekDayTitle = DateTools.getWeekDayTitle(date);
+        switch (weekDayTitle){
+            case "Monday" : return week.getPromiseMondayTime();
+            case "Tuesday" : return week.getPromiseTuesdayTime();
+            case "Wednesday" : return week.getPromiseWednesdayTime();
+            case "Thursday" : return week.getPromiseThursdayTime();
+            case "Friday" : return week.getPromiseFridayTime();
+            case "Saturday" : return week.getPromiseSaturdayTime();
+            case "Sunday" : return week.getPromiseSundayTime();
+            default: return null;
+        }
     }
 
     private final int HOURS_OF_ONE_TIME_FOR_TIME = 11;
@@ -135,13 +195,36 @@ public class TimeForService {
         }
     }
 
+
     public double getPromisedWeekTime(Week week){
+        Date startDate = week.getStartDate();
         double time = 0;
-        time += DateTools.getDoubleFormatHours(week.getPromiseMondayTime());
-        time += DateTools.getDoubleFormatHours(week.getPromiseTuesdayTime());
-        time += DateTools.getDoubleFormatHours(week.getPromiseWednesdayTime());
-        time += DateTools.getDoubleFormatHours(week.getPromiseThursdayTime());
-        time += DateTools.getDoubleFormatHours(week.getPromiseFridayTime());
+
+        Day day = weekService.determineDayByDate(week.getDays(), startDate);
+        if(day != null && day.getWorkHours() != null)
+            if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
+                time += DateTools.getDoubleFormatHours(week.getPromiseMondayTime());
+
+        day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 1));
+        if(day != null && day.getWorkHours() != null)
+            if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
+                time += DateTools.getDoubleFormatHours(week.getPromiseTuesdayTime());
+
+        day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 2));
+        if(day != null && day.getWorkHours() != null)
+            if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
+                time += DateTools.getDoubleFormatHours(week.getPromiseWednesdayTime());
+
+        day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 3));
+        if(day != null && day.getWorkHours() != null)
+            if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
+                time += DateTools.getDoubleFormatHours(week.getPromiseThursdayTime());
+
+        day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 4));
+        if(day != null && day.getWorkHours() != null)
+            if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
+                time += DateTools.getDoubleFormatHours(week.getPromiseFridayTime());
+
         return time;
     }
 

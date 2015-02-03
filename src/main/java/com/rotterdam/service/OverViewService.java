@@ -91,11 +91,21 @@ public class OverViewService {
                 String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
                 if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
                     continue;
-                for(WorkHour workHour : day.getWorkHours()){
-                    double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                    double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                    int restTime = workHour.getRestTime() / 60;
-                    timeDays += endTime - startTime - restTime;
+                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                    RideType rideType = day.getWorkHours().get(0).getRideType();
+                    if(rideType.equals(RideType.Werkdag)) {
+                        for (WorkHour workHour : day.getWorkHours()) {
+                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                            int restTime = workHour.getRestTime() / 60;
+                            timeDays += endTime - startTime - restTime;
+                        }
+                    } else {
+                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                        }
+                    }
                 }
             }
             promisedPeriodTime += timeForService.getPromisedWeekTime(week);
@@ -105,8 +115,8 @@ public class OverViewService {
 
 
         if(periodTime > promisedPeriodTime)
-            overViewDetailDto.total130 = new Double(periodTime - promisedPeriodTime);
-        else overViewDetailDto.total130 = new Double(0);
+            overViewDetailDto.total130 = periodTime - promisedPeriodTime;
+        else overViewDetailDto.total130 = (double) 0;
     }
 
     private void calculate150(OverViewDetailDto overViewDetailDto, Period period){
@@ -114,16 +124,26 @@ public class OverViewService {
         for (Week week : period.getWeeks()){
             for(Day day : week.getDays()){
                 if(DateTools.getWeekDayTitle(day.getDate()).equals("Saturday")){
-                    for (WorkHour workHour : day.getWorkHours()){
-                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                        int restTime = workHour.getRestTime() / 60;
-                        worked += endTime - startTime - restTime;
+                    if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                        RideType rideType = day.getWorkHours().get(0).getRideType();
+                        if(rideType.equals(RideType.Werkdag)) {
+                            for (WorkHour workHour : day.getWorkHours()) {
+                                double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                                double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                                int restTime = workHour.getRestTime() / 60;
+                                worked += endTime - startTime - restTime;
+                            }
+                        } else {
+                            if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                                Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                                worked += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                            }
+                        }
                     }
                 }
             }
         }
-            overViewDetailDto.total150 = new Double(worked);
+            overViewDetailDto.total150 = worked;
     }
 
     private void calculate200(OverViewDetailDto overViewDetailDto, Period period){
@@ -131,16 +151,26 @@ public class OverViewService {
         for (Week week : period.getWeeks()){
             for(Day day : week.getDays()){
                 if(DateTools.getWeekDayTitle(day.getDate()).equals("Sunday")){
-                    for (WorkHour workHour : day.getWorkHours()){
-                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                        int restTime = workHour.getRestTime() / 60;
-                        worked += endTime - startTime - restTime;
+                    if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                        RideType rideType = day.getWorkHours().get(0).getRideType();
+                        if(rideType.equals(RideType.Werkdag)) {
+                            for (WorkHour workHour : day.getWorkHours()) {
+                                double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                                double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                                int restTime = workHour.getRestTime() / 60;
+                                worked += endTime - startTime - restTime;
+                            }
+                        } else {
+                            if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                                Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                                worked += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                            }
+                        }
                     }
                 }
             }
         }
-        overViewDetailDto.total200 = new Double(worked);
+        overViewDetailDto.total200 = worked;
     }
 
     private void calculateTotal(OverViewDetailDto overViewDetailDto, Period period){
@@ -148,17 +178,27 @@ public class OverViewService {
         for (Week week : period.getWeeks()){
             double timeDays = 0;
             for (Day day : week.getDays()){
-                for(WorkHour workHour : day.getWorkHours()){
-                    double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                    double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                    int restTime = workHour.getRestTime() / 60;
-                    timeDays += endTime - startTime - restTime;
+                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                    RideType rideType = day.getWorkHours().get(0).getRideType();
+                    if(rideType.equals(RideType.Werkdag)) {
+                        for (WorkHour workHour : day.getWorkHours()) {
+                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                            int restTime = workHour.getRestTime() / 60;
+                            timeDays += endTime - startTime - restTime;
+                        }
+                    } else {
+                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                        }
+                    }
                 }
             }
             periodTime += timeDays;
         }
 
-        overViewDetailDto.total = new Double(periodTime);
+        overViewDetailDto.total = periodTime;
 
     }
 

@@ -1,6 +1,9 @@
 package com.rotterdam.dto;
 
+import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.RideType;
+import com.rotterdam.model.entity.WorkHour;
+import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.JsonCommands;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -10,10 +13,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by vasax32 on 19.01.15.
@@ -70,6 +70,43 @@ public class WeekDto {
     private static Date parseDate(String dateString) throws ParseException {
         DateFormat format = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN);
         return format.parse(dateString);
+    }
+
+    public void checkRestTime(){
+        for (DayDto dayDto : days.values())
+            for (WorkHourDto workHourDto : dayDto.workHours){
+                if(workHourDto.restTime == 0){
+
+                    double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
+                    double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
+                    double time = endTime - startTime;
+
+                    if (time >=  4.5 && time <   7.5) workHourDto.restTime = 30;
+                    else if (time >=  7.5 && time <  10.5) workHourDto.restTime = 60;
+                    else if (time >= 10.5 && time <  13.5) workHourDto.restTime = 90;
+                    else if (time >= 13.5 && time <  16.5) workHourDto.restTime = 120;
+                    else if (time >= 16.5 && time <= 13.5) workHourDto.restTime = 150;
+
+                }
+            }
+    }
+
+    public static WeekDto convertDaysToWorkHourDto(List<Day> days){
+        WeekDto weekDto = new WeekDto();
+        for(Day day : days){
+            DayDto dayDto = new DayDto();
+            dayDto.date = day.getDate();
+            for (WorkHour workHour : day.getWorkHours()) {
+                WorkHourDto workHourDto = new WorkHourDto();
+                workHourDto.startWorkingTime = workHour.getStartWorkingTime();
+                workHourDto.endWorkingTime = workHour.getEndWorkingTime();
+                workHourDto.restTime = workHour.getRestTime();
+                workHourDto.rideType = workHour.getRideType();
+                dayDto.workHours.add(workHourDto);
+            }
+            weekDto.days.put(DateTools.getWeekDayTitle(dayDto.date), dayDto);
+        }
+        return weekDto;
     }
 }
 
