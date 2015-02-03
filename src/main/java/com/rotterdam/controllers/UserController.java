@@ -44,7 +44,7 @@ public class UserController {
         periodService.makePeriodCheck(jsonCommands.getUserFromRequest(hsr));
 
         if (user != null){
-            UserInfoDto userInfoDto = UserInfoDto.formatForNow(user.getFirstname());
+            UserInfoDto userInfoDto = UserInfoDto.formatForNow(user.getFirstname(), user.getRegNum());
             return Response.ok(userInfoDto).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();

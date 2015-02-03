@@ -74,10 +74,20 @@ public class OverViewService {
         calculate130(overViewDetailDto, period);
         calculate150(overViewDetailDto, period);
         calculate200(overViewDetailDto, period);
+        calculateWeekDates(overViewDetailDto, period);
         TimeForDto timeForOfPrevPeriod = timeForService.getTimeForOfPrevPeriod(date, userId);
         overViewDetailDto.overTime = timeForOfPrevPeriod.overTime;
 
         return overViewDetailDto;
+    }
+
+    private void calculateWeekDates(OverViewDetailDto overViewDetailDto, Period period) {
+        List<Date> startingDays = periodDefiner.getStartingDaysOfWeeksOfCurrentPeriod(period.getStartDate(), PeriodType.FOURWEEK);
+        for (Date date : startingDays){
+            overViewDetailDto.weekDates.add(
+                    new StartEndDto(date, DateTools.getDatePlusDays(date, 6))
+            );
+        }
     }
 
     private void calculate130(OverViewDetailDto overViewDetailDto, Period period){

@@ -43,13 +43,13 @@ DROP TABLE IF EXISTS `Declaration`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Declaration` (
   `idDeclaration` bigint(20) NOT NULL AUTO_INCREMENT,
-  `costType` varchar(450) DEFAULT NULL,
-  `price` double DEFAULT NULL,
+  `costType` varchar(255) DEFAULT NULL,
+  `price` double NOT NULL,
   `idWeek` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`idDeclaration`),
-  KEY `fk_Declaration_1_idx` (`idWeek`),
-  CONSTRAINT `fk_Declaration_1` FOREIGN KEY (`idWeek`) REFERENCES `WEEK` (`idWeek`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  KEY `FK_ejvjakyv5ikpl19nr1fkym857` (`idWeek`),
+  CONSTRAINT `FK_ejvjakyv5ikpl19nr1fkym857` FOREIGN KEY (`idWeek`) REFERENCES `WEEK` (`idWeek`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `PERIOD` (
   PRIMARY KEY (`idPeriod`),
   KEY `fk_PERIOD_1_idx` (`idUser`),
   CONSTRAINT `fk_PERIOD_1` FOREIGN KEY (`idUser`) REFERENCES `USER` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,6 +107,7 @@ CREATE TABLE `USER` (
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `timeForTime` double DEFAULT '0',
+  `regNum` varchar(45) DEFAULT NULL,
   `role` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
@@ -137,7 +138,7 @@ CREATE TABLE `WEEK` (
   PRIMARY KEY (`idWeek`),
   KEY `fk_WEEK_1_idx` (`idPeriod`),
   CONSTRAINT `fk_WEEK_1` FOREIGN KEY (`idPeriod`) REFERENCES `PERIOD` (`idPeriod`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +160,7 @@ CREATE TABLE `WORKHOURS` (
   UNIQUE KEY `idWorkHours_UNIQUE` (`idWorkHours`),
   KEY `fk_WORKHOURS_1_idx` (`idDay`),
   CONSTRAINT `fk_WORKHOURS_1` FOREIGN KEY (`idDay`) REFERENCES `Day` (`idDay`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -171,4 +172,4 @@ CREATE TABLE `WORKHOURS` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-29 21:13:11
+-- Dump completed on 2015-02-03 13:30:00

@@ -19,6 +19,7 @@ public class UserInfoDto {
     public String currentMonth;
     public int currentWeekNumber;
     public List<String> weekList;
+    public String regNum;
 
     @Override
     public String toString() {
@@ -28,15 +29,17 @@ public class UserInfoDto {
                 ", currentYear='" + currentYear + '\'' +
                 ", currentMonth='" + currentMonth + '\'' +
                 ", currentWeekNumber=" + currentWeekNumber +
+                ", regNum=" + regNum +
                 ", weekList=" + weekList +
                 '}';
     }
 
-    public static UserInfoDto formatForNow(String userName){
+    public static UserInfoDto formatForNow(String userName, String regNum){
         Date currentDate = new Date();
         UserInfoDto userInfoDto = new UserInfoDto();
 
         userInfoDto.firstname = userName;
+        userInfoDto.regNum = regNum;
         userInfoDto.date = new SimpleDateFormat(JsonCommands.PARAM_DATE_FULL_PATTERN).format(currentDate);
         userInfoDto.currentYear = new SimpleDateFormat(JsonCommands.PARAM_YEAR_PATTERN).format(currentDate);
         userInfoDto.currentMonth = new SimpleDateFormat(JsonCommands.PARAM_MONTH_PATTERN).format(currentDate);

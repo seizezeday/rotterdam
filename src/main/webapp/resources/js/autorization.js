@@ -12,7 +12,8 @@
                 LastName: $('#inputLastName').val(),
                 pass: $('#inputPassword').val(),
                 email: $('#inputEmail').val(),
-                passconfirm:$('#inputPasswordConfirm').val()
+                passconfirm:$('#inputPasswordConfirm').val(),
+                regNum:$('#regNum').val()
             };
             addUser(User);
         });

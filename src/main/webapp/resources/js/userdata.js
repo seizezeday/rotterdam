@@ -35,8 +35,9 @@ $(document).ready(function(){
                         statusCode: {
                         200: function (data) {
                         $(".username").append(data.firstname);
-                        $("#userdate").append(data.date);   
-                        $(".time_date").eq(0).append(data.weekList[0]);   
+                        $("#userdate").append(data.date);
+                        $("#registrationNumber").append(data.regNum);
+                        $(".time_date").eq(0).append(data.weekList[0]);
                         $(".time_date").eq(1).append(data.weekList[1]);   
                         $(".time_date").eq(2).append(data.weekList[2]);   
                         $(".time_date").eq(3).append(data.weekList[3]);   
@@ -698,6 +699,11 @@ $(document).ready(function(){
                     $("#overview_total_130").text(data.total130);
                     $("#overview_total_150").text(data.total150);
                     $("#overview_total_200").text(data.total200);
+                    for(var i = 0; i < data.weekDates.length; i++)
+                        $("#overview_week_select :nth-child(" + (i+1) +")")
+                            .text(data.weekDates[i].start + " - " + data.weekDates[i].end);
+
+                    $("#download_pdf_btn").removeAttr("disabled","disabled");
                 }
             }
         });  

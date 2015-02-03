@@ -9,6 +9,7 @@ public class UserDto {
     public String email;
     public String pass;
     public String passconfirm;
+    public String regNum;
 
     public UserDto(String name, String lastName) {
         Name = name;

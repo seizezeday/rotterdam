@@ -28,6 +28,7 @@ public class UserService {
             User user = convertToUser(userDto);
             user.setPassword(SecuritySettings.code(userDto.pass));
             user.setRole(userRole);
+            user.setRegNum(userDto.regNum);
             userDao.insert(user);
             return true;
         } else {

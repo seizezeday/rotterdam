@@ -23,6 +23,7 @@ public class User implements Principal, HibernateL2Cache {
 	private String email;
 	private String password;
     private double timeForTime;
+    private String regNum;
 
     @Enumerated(EnumType.STRING)
 	private UserRole role;
@@ -135,6 +136,14 @@ public class User implements Principal, HibernateL2Cache {
 
     public void setTimeForTime(double timeForTime) {
         this.timeForTime = timeForTime;
+    }
+
+    public String getRegNum() {
+        return regNum;
+    }
+
+    public void setRegNum(String regNum) {
+        this.regNum = regNum;
     }
 
     @Override
