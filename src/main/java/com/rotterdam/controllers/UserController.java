@@ -22,7 +22,7 @@ import java.text.ParseException;
 @Path("/")
 @PermitAll
 @Named
-public class UserInfo {
+public class UserController {
 
     @Inject
     private JsonCommands jsonCommands;

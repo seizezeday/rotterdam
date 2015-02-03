@@ -29,7 +29,7 @@ import java.util.Date;
 @Path("/overView")
 @PermitAll
 @Named
-public class OverViewInfo {
+public class OverViewController {
 
     @Inject
     private JsonCommands jsonCommands;

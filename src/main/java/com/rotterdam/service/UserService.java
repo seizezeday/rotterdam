@@ -21,6 +21,7 @@ public class UserService {
     @Inject
     private UserDao userDao;
 
+
     @Transactional
     public boolean save(UserDto userDto, UserRole userRole){
         if (checkPassword(userDto.pass, userDto.passconfirm) && checkEmail(userDto.email) && userRole != null) {
@@ -63,5 +64,12 @@ public class UserService {
         }
         User user = userDao.selectByEmail(email);
         return user == null;
+    }
+
+    @Transactional
+    public User getByEmailAndPass(String login, String pass){
+        return userDao
+                .selectByEmailAndPass(login,
+                        SecuritySettings.code(pass));
     }
 }

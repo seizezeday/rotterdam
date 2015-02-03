@@ -1,9 +1,13 @@
 package com.rotterdam.controllers;
 
-import com.rotterdam.tools.CookieUtil;
-import com.rotterdam.model.dao.UserDao;
+import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.entity.User;
+import com.rotterdam.model.entity.UserRole;
+import com.rotterdam.service.UserService;
+import com.rotterdam.tools.CookieUtil;
+import com.rotterdam.tools.EmailSender;
 import com.rotterdam.tools.SecuritySettings;
+import com.rotterdam.tools.json.JsonCommands;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,13 +28,16 @@ import javax.ws.rs.core.Response;
 @Path("/")
 @PermitAll
 @Named
-public class AuthApplication {
+public class AuthController {
 
 	@Inject
 	public CookieUtil cookieUtil;
 
     @Inject
-    public UserDao userDao;
+    private UserService userService;
+
+    @Inject
+    private JsonCommands jsonCommands;
 
 	@POST
 	@Path("/login")
@@ -39,9 +46,8 @@ public class AuthApplication {
 			@Context HttpServletResponse rspn, String data)
 			throws JSONException {
 		JSONObject loginData = new JSONObject(data);
-		User user = userDao
-				.selectByEmailAndPass(loginData.getString("login"),
-						SecuritySettings.code(loginData.getString("password")));
+		User user = userService
+				.getByEmailAndPass(loginData.getString("login"), loginData.getString("password"));
 		if (user != null && cookieUtil.insertSessionUID(rspn, user))
 			return Response.ok().build();
 		else
@@ -65,6 +71,29 @@ public class AuthApplication {
     @RolesAllowed({ "Driver" })
     public Response ok(){
         return Response.ok().build();
+    }
+
+    @Path("/registration")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response registerNewUser(UserDto userDto) {
+        if (userService.save(userDto, UserRole.Driver))
+            return Response.ok().build();
+        else
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    }
+
+    @POST
+    @Path("/restore")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public Response restorePassword(@Context HttpServletRequest hsr,
+                                    @Context HttpServletResponse rspn, String data) {
+        User user = jsonCommands.getRestoreData(data);
+        if (user != null && user.getEmail() != null){
+            EmailSender.sendForgotPassword(user.getFirstname(), user.getEmail(), SecuritySettings.decode(user.getPassword()));
+            return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
     }
 
 }

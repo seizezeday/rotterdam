@@ -30,7 +30,7 @@ import java.util.List;
 @Path("/")
 @PermitAll
 @Named
-public class WeeklyRouteInfo {
+public class WeekController {
 
     @Inject
     private JsonCommands jsonCommands;
@@ -38,6 +38,7 @@ public class WeeklyRouteInfo {
     @Inject
     private WeekService weekService;
 
+    //save timeTab and return totalTime
     @RolesAllowed({ "Driver" })
     @POST
     @Path("/time")
@@ -47,11 +48,6 @@ public class WeeklyRouteInfo {
         long userId = jsonCommands.getUserFromRequest(hsr).getId();
         final TotalTimeDto totalTime = weekService.save(weekDto, userId);
         if (totalTime != null) {
-//            final DecimalFormat df = new DecimalFormat("#.00");
-//            final String stringTotalTime = df.format(totalTime);
-//            Object obj = new Object(){
-//                public String totalTime = stringTotalTime;
-//            };
             return Response.ok(totalTime).build();
         } else {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
@@ -59,19 +55,7 @@ public class WeeklyRouteInfo {
 
     }
 
-//    @RolesAllowed({ "Driver" })
-//    @POST
-//    @Path("/time2")
-//    @Produces({ MediaType.APPLICATION_JSON })
-//    public Response getTimeInfo2(@Context HttpServletRequest hsr) throws ParseException {
-//        JsonArray jsonData = jsonCommands.getUserTimeData(hsr, "2014-12-07");   //TODO: date -  will be string from front-end (Week number)
-//        if (jsonData != null){
-//            return Response.ok(jsonData).build();
-//        } else {
-//            return Response.status(Response.Status.UNAUTHORIZED).build();
-//        }
-//    }
-
+    //return week dates from monday to sunday
     @RolesAllowed({ "Driver" })
     @POST
     @Path("/week")
@@ -90,6 +74,7 @@ public class WeeklyRouteInfo {
         }
     }
 
+    //return data for timeTab by passed date
     @RolesAllowed({ "Driver" })
     @POST
     @Path("/timeTab")

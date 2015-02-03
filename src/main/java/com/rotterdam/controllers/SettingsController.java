@@ -26,7 +26,7 @@ import java.util.Date;
 @Path("/settings")
 @PermitAll
 @Named
-public class SettingInfo {
+public class SettingsController {
 
     @Inject
     private WeekService weekService;

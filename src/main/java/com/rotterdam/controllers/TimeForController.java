@@ -27,7 +27,7 @@ import java.util.Date;
 @Path("/timeFor")
 //@PermitAll
 @Named
-public class TimeForInfo {
+public class TimeForController {
 
     @Inject
     private JsonCommands jsonCommands;

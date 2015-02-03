@@ -28,7 +28,7 @@ import java.util.Date;
 @Path("/declaration")
 @PermitAll
 @Named
-public class DeclarationInfo {
+public class DeclarationController {
 
     @Inject
     private JsonCommands jsonCommands;
