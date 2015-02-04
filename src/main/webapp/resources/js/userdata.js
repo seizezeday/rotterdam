@@ -46,6 +46,7 @@ $(document).ready(function(){
                         $(".time_date").eq(6).append(data.weekList[6]);
                         compensation_json();
                         overview_date();
+                        declaration_submit();
                         }
 //                            ,
 //                            403 : function(){
@@ -865,7 +866,8 @@ $(document).ready(function(){
             }
         });
     });
-    $('#declaration_submit').click(function declaration_submit() {
+    $('#declaration_submit').click(declaration_submit);
+        function declaration_submit() {
         $.ajax({
             type: "POST",
             url: "api/declaration/get",
@@ -892,6 +894,6 @@ $(document).ready(function(){
                 }
             }
         });
-    });
+    };
 
 });
