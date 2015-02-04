@@ -708,8 +708,9 @@ $(document).ready(function(){
                 }
             }
         });  
-        }); 
+        });
 
+//    $("#download_pdf_btn").removeAttr("disabled","disabled");
     $('#download_pdf_btn').click(function download_pdf(){
 //        var testData = '{"date":"26.01.2015","usedWeeks":["1", "2", "3", "4"]}';
             $.ajax({
@@ -725,7 +726,7 @@ $(document).ready(function(){
             statusCode: {
                 200: function (data) {
 //                    alert("Success...");
-                    //data.weekList.push(data.weekList[2]);
+                    //data.weekList.push(data.weekList[1]);
                     generatefromjson(pdf_report, data);
                 }
             }
@@ -733,59 +734,77 @@ $(document).ready(function(){
         });
     function generatefromjson(data, jsonData) {
         var fontSize = 12;
+        var xOffset = 50;
         var doc = new jsPDF('p', 'pt', 'a4', true);
         doc.setFont("times", "normal");
         doc.setFontSize(fontSize);
-        doc.text(20, 20, "Driver: " + jsonData.user.Name + " " + jsonData.user.LastName);
-        doc.text(20, 35, "Period: " + jsonData.startEnd.start + " - " + jsonData.startEnd.end);
+        doc.text(10 + xOffset, 20, "Driver: " + jsonData.user.Name + " " + jsonData.user.LastName);
+        doc.text(10 + xOffset, 35, "Period: " + jsonData.startEnd.start + " - " + jsonData.startEnd.end);
+        doc.text(10 + xOffset, 50, "Driver ID: " + jsonData.user.regNum);
 
-        var height = 0;
+        var heightDefault = 80, height = heightDefault;
+        var pageHeight = 500;
 
         if(jsonData.weekList.length == 0)
             doc.text(50, 60, 'No data selected');
         else{
             for (var weekI = 0; weekI < jsonData.weekList.length; weekI++) {
-
-                data = [];
-
                 var week = jsonData.weekList[weekI];
 
-                for (var dayI in week.days) {
+                height = drawTotalTable(doc, data, week, height, xOffset, false);
 
-                    var day = week.days[dayI];
-
-                    for (var workHourI = 0; workHourI < day.workHours.length; workHourI++) {
-
-                        var workHour = day.workHours[workHourI];
-
-                        data.push({
-                            "Week Day": dayI,
-                            "Date": day.date,
-                            "Time start": workHour.startWorkingTime,
-                            "Time end": workHour.endWorkingTime,
-                            "Rest": workHour.restTime,
-                            "Total time": day.total
-                        });
-                    }
+                if (height >= pageHeight) {
+                    doc.addPage();
+                    height = heightDefault;
                 }
-
-                if(data.length != 0){
-                    height += doc.drawTable(data, {
-                        xstart: 10,
-                        ystart: 10,
-                        tablestart: 50 + height,
-                        marginright: 50,
-                        xOffset: 10,
-                        yOffset: 10,
-                        pagesplit: true
-                    }) ;
-                }
+            }
+            if(jsonData.weekList.length > 1){
+                var totalData = [];
+                totalData.detail = jsonData.totalPeriodDetail;
+                height = drawTotalTable(doc, data, totalData, height, xOffset, true);
             }
         }
 
 
 
-//        doc.text(50, height + 20, 'Created date');
+        doc.text(346 + xOffset, height + 20, 'Report created: ' + jsonData.date);
         doc.save("some-file.pdf");
-    };
-    });
+    }
+
+    function drawTotalTable(doc, data, week, height, xOff, isTotal){
+        data = [];
+        var weekDetail = week.detail;
+
+        var jsonDetailAdapter = {"total" : "Total hours","total100" : "100% hours",
+            "total130" : "130% hours", "total150" : "150% hours", "total200" : "200% hours"};
+
+        for (var detail in weekDetail) {
+
+            if(detail in jsonDetailAdapter)
+                data.push({
+                    "Time": jsonDetailAdapter[detail],
+                    "Value": weekDetail[detail]
+                });
+        }
+
+        if(data.length != 0) {
+            if (!isTotal) {
+                var startEnd = week.startEnd;
+                doc.text(20 + xOff, height, 'Week: ' + startEnd.start + " - " + startEnd.end);
+            } else {
+                doc.text(20 + xOff, height, 'Total in the selected weeks');
+            }
+            doc.drawTable(data, {
+                xstart: 10 + xOff,
+                ystart: 10,
+                tablestart: 10 + height,
+                marginright: 50,
+                xOffset: 10,
+                yOffset: 10,
+                pagesplit: true
+            }) ;
+            height += 200;
+        }
+        return height;
+    }
+});

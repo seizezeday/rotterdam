@@ -22,6 +22,7 @@ public class OverViewDto {
     public Date date;
     public StartEndDto startEnd;
     public UserDto user;
+    public OverViewDetailDto totalPeriodDetail;
 
 
     @Override

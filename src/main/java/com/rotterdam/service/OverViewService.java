@@ -3,6 +3,7 @@ package com.rotterdam.service;
 import com.rotterdam.dto.*;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.UserDao;
+import com.rotterdam.model.dao.WeekDao;
 import com.rotterdam.model.entity.*;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.PeriodDefiner;
@@ -34,11 +35,14 @@ public class OverViewService {
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private WeekDao weekDao;
+
     @Transactional
     public OverViewDto getOverView(OverViewDto overViewDto, long userId) {
 
         User user = userDao.selectById(userId);
-        overViewDto.user = new UserDto(user.getFirstname(), user.getSurname());
+        overViewDto.user = new UserDto(user.getFirstname(), user.getSurname(), user.getRegNum());
 
         if(overViewDto.date == null)
             return overViewDto;
@@ -53,13 +57,27 @@ public class OverViewService {
             return overViewDto;
         for (int i = 0; i < overViewDto.usedWeeks.size(); i++){
             Date startDate = startingDaysOfWeeksOfCurrentPeriod.get(overViewDto.usedWeeks.get(i) - 1);
-            WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startDate, userId);
+            Week week = weekDao.selectByStartDateAndUser(startDate, userId);
 
-            //just add it
-            WeekOverViewDto weekOverViewDto = new WeekOverViewDto(weekDto);
-            weekOverViewDto.calculateTotal();
-            overViewDto.weekList.add(weekOverViewDto);
+            if(week != null) {
+                //just add it
+                WeekOverViewDto weekOverViewDto = new WeekOverViewDto();
+
+                weekOverViewDto.startEnd = new StartEndDto(week.getStartDate(), week.getEndDate());
+
+                weekOverViewDto.detail = new OverViewDetailDto(); //
+                calculateTotal(weekOverViewDto.detail, week);
+                calculate100(weekOverViewDto.detail, week);
+                calculate130(weekOverViewDto.detail, week);
+                calculate150(weekOverViewDto.detail, week);
+                calculate200(weekOverViewDto.detail, week);
+
+                overViewDto.weekList.add(weekOverViewDto);
+            }
         }
+
+        overViewDto.totalPeriodDetail = getOverViewDetail(start, userId);
+        overViewDto.date = new Date();
 
 
         return overViewDto;
@@ -92,136 +110,83 @@ public class OverViewService {
     }
 
     private void calculate100(OverViewDetailDto overViewDetailDto, Period period){
-        double periodTime = 0;
-        for (Week week : period.getWeeks()){
-            double timeDays = 0;
-            for (Day day : week.getDays()){
-                String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
-                if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
-                    continue;
-                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
-                    RideType rideType = day.getWorkHours().get(0).getRideType();
-                    if(rideType.equals(RideType.Werkdag)) {
-                        for (WorkHour workHour : day.getWorkHours()) {
-                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                            int restTime = workHour.getRestTime() / 60;
-                            timeDays += endTime - startTime - restTime;
-                        }
-                    } else {
-                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
-                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
-                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
-                        }
+        for (Week week : period.getWeeks())
+            calculate100(overViewDetailDto, week);
+    }
+
+    private void calculate100(OverViewDetailDto overViewDetailDto, Week week){
+        double weekTime = 0;
+        for (Day day : week.getDays()){
+            String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
+            if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
+                continue;
+            if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                RideType rideType = day.getWorkHours().get(0).getRideType();
+                if(rideType.equals(RideType.Werkdag)) {
+                    for (WorkHour workHour : day.getWorkHours()) {
+                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                        int restTime = workHour.getRestTime() / 60;
+                        weekTime += endTime - startTime - restTime;
+                    }
+                } else {
+                    if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                        Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                        weekTime += DateTools.getDoubleFormatHours(promisedTimeByDate);
                     }
                 }
             }
-            periodTime += timeDays;
         }
 
-
-
-        overViewDetailDto.total100 = periodTime;
+        overViewDetailDto.total100 += weekTime;
     }
 
     private void calculate130(OverViewDetailDto overViewDetailDto, Period period){
-        //calculate mon-fri
-        double promisedPeriodTime = 0;
-        double periodTime = 0;
-        for (Week week : period.getWeeks()){
-            double timeDays = 0;
-            for (Day day : week.getDays()){
-                String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
-                if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
-                    continue;
-                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
-                    RideType rideType = day.getWorkHours().get(0).getRideType();
-                    if(rideType.equals(RideType.Werkdag)) {
-                        for (WorkHour workHour : day.getWorkHours()) {
-                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                            int restTime = workHour.getRestTime() / 60;
-                            timeDays += endTime - startTime - restTime;
-                        }
-                    } else {
-                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
-                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
-                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
-                        }
+        for (Week week : period.getWeeks())
+            calculate130(overViewDetailDto, week);
+
+
+    }
+
+    private void calculate130(OverViewDetailDto overViewDetailDto, Week week){
+        double weekTime = 0;
+        for (Day day : week.getDays()){
+            String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
+            if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
+                continue;
+            if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                RideType rideType = day.getWorkHours().get(0).getRideType();
+                if(rideType.equals(RideType.Werkdag)) {
+                    for (WorkHour workHour : day.getWorkHours()) {
+                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                        int restTime = workHour.getRestTime() / 60;
+                        weekTime += endTime - startTime - restTime;
+                    }
+                } else {
+                    if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                        Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                        weekTime += DateTools.getDoubleFormatHours(promisedTimeByDate);
                     }
                 }
             }
-            promisedPeriodTime += timeForService.getPromisedWeekTime(week);
-            periodTime += timeDays;
         }
+        double promisedWeekTime = timeForService.getPromisedWeekTime(week);
 
-
-
-        if(periodTime > promisedPeriodTime)
-            overViewDetailDto.total130 = periodTime - promisedPeriodTime;
-        else overViewDetailDto.total130 = (double) 0;
-
+       if(weekTime > promisedWeekTime)
+            overViewDetailDto.total130 += (weekTime - promisedWeekTime);
     }
 
     private void calculate150(OverViewDetailDto overViewDetailDto, Period period){
-        double worked = 0;
-        for (Week week : period.getWeeks()){
-            for(Day day : week.getDays()){
-                if(DateTools.getWeekDayTitle(day.getDate()).equals("Saturday")){
-                    if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
-                        RideType rideType = day.getWorkHours().get(0).getRideType();
-                        if(rideType.equals(RideType.Werkdag)) {
-                            for (WorkHour workHour : day.getWorkHours()) {
-                                double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                                double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                                int restTime = workHour.getRestTime() / 60;
-                                worked += endTime - startTime - restTime;
-                            }
-                        } else {
-                            if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
-                                Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
-                                worked += DateTools.getDoubleFormatHours(promisedTimeByDate);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-            overViewDetailDto.total150 = worked;
+        for (Week week : period.getWeeks())
+            calculate150(overViewDetailDto, week);
+
     }
 
-    private void calculate200(OverViewDetailDto overViewDetailDto, Period period){
+    private void calculate150(OverViewDetailDto overViewDetailDto, Week week){
         double worked = 0;
-        for (Week week : period.getWeeks()){
-            for(Day day : week.getDays()){
-                if(DateTools.getWeekDayTitle(day.getDate()).equals("Sunday")){
-                    if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
-                        RideType rideType = day.getWorkHours().get(0).getRideType();
-                        if(rideType.equals(RideType.Werkdag)) {
-                            for (WorkHour workHour : day.getWorkHours()) {
-                                double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                                double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                                int restTime = workHour.getRestTime() / 60;
-                                worked += endTime - startTime - restTime;
-                            }
-                        } else {
-                            if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
-                                Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
-                                worked += DateTools.getDoubleFormatHours(promisedTimeByDate);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        overViewDetailDto.total200 = worked;
-    }
-
-    private void calculateTotal(OverViewDetailDto overViewDetailDto, Period period){
-        double periodTime = 0;
-        for (Week week : period.getWeeks()){
-            double timeDays = 0;
-            for (Day day : week.getDays()){
+        for(Day day : week.getDays()){
+            if(DateTools.getWeekDayTitle(day.getDate()).equals("Saturday")){
                 if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
                     RideType rideType = day.getWorkHours().get(0).getRideType();
                     if(rideType.equals(RideType.Werkdag)) {
@@ -229,21 +194,78 @@ public class OverViewService {
                             double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
                             double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
                             int restTime = workHour.getRestTime() / 60;
-                            timeDays += endTime - startTime - restTime;
+                            worked = endTime - startTime - restTime;
                         }
                     } else {
                         if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
                             Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
-                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                            worked = DateTools.getDoubleFormatHours(promisedTimeByDate);
                         }
                     }
                 }
             }
-            periodTime += timeDays;
         }
 
-        overViewDetailDto.total = periodTime;
+        overViewDetailDto.total150 += worked;
+    }
 
+    private void calculate200(OverViewDetailDto overViewDetailDto, Period period){
+        for (Week week : period.getWeeks())
+            calculate200(overViewDetailDto, week);
+
+    }
+
+    private void calculate200(OverViewDetailDto overViewDetailDto, Week week){
+        double worked = 0;
+        for(Day day : week.getDays()){
+            if(DateTools.getWeekDayTitle(day.getDate()).equals("Sunday")){
+                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                    RideType rideType = day.getWorkHours().get(0).getRideType();
+                    if(rideType.equals(RideType.Werkdag)) {
+                        for (WorkHour workHour : day.getWorkHours()) {
+                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                            int restTime = workHour.getRestTime() / 60;
+                            worked = endTime - startTime - restTime;
+                        }
+                    } else {
+                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                            worked = DateTools.getDoubleFormatHours(promisedTimeByDate);
+                        }
+                    }
+                }
+            }
+        }
+        overViewDetailDto.total200 += worked;
+    }
+
+    private void calculateTotal(OverViewDetailDto overViewDetailDto, Period period){
+        for (Week week : period.getWeeks())
+            calculateTotal(overViewDetailDto, week);
+    }
+
+    private void calculateTotal(OverViewDetailDto overViewDetailDto, Week week){
+        double weekTime = 0;
+        for (Day day : week.getDays()){
+            if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                RideType rideType = day.getWorkHours().get(0).getRideType();
+                if(rideType.equals(RideType.Werkdag)) {
+                    for (WorkHour workHour : day.getWorkHours()) {
+                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                        int restTime = workHour.getRestTime() / 60;
+                        weekTime += endTime - startTime - restTime;
+                    }
+                } else {
+                    if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                        Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                        weekTime += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                    }
+                }
+            }
+        }
+        overViewDetailDto.total += weekTime;
     }
 
 

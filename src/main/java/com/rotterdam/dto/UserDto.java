@@ -11,11 +11,10 @@ public class UserDto {
     public String passconfirm;
     public String regNum;
 
-    public UserDto(String name, String lastName) {
-        Name = name;
-        LastName = lastName;
+    public UserDto(String name, String lastName, String regNum) {
+        this.Name = name;
+        this.LastName = lastName;
+        this.regNum = regNum;
     }
 
-    public UserDto() {
-    }
 }
