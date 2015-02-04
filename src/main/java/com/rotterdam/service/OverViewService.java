@@ -71,6 +71,7 @@ public class OverViewService {
 
         Period period = periodDao.selectByDateBetweenAndUser(date, userId);
         calculateTotal(overViewDetailDto, period);
+        calculate100(overViewDetailDto, period);
         calculate130(overViewDetailDto, period);
         calculate150(overViewDetailDto, period);
         calculate200(overViewDetailDto, period);
@@ -90,9 +91,41 @@ public class OverViewService {
         }
     }
 
+    private void calculate100(OverViewDetailDto overViewDetailDto, Period period){
+        double periodTime = 0;
+        for (Week week : period.getWeeks()){
+            double timeDays = 0;
+            for (Day day : week.getDays()){
+                String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
+                if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
+                    continue;
+                if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
+                    RideType rideType = day.getWorkHours().get(0).getRideType();
+                    if(rideType.equals(RideType.Werkdag)) {
+                        for (WorkHour workHour : day.getWorkHours()) {
+                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
+                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
+                            int restTime = workHour.getRestTime() / 60;
+                            timeDays += endTime - startTime - restTime;
+                        }
+                    } else {
+                        if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
+                            Date promisedTimeByDate = timeForService.getPromisedTimeByDate(day.getDate(), week);
+                            timeDays += DateTools.getDoubleFormatHours(promisedTimeByDate);
+                        }
+                    }
+                }
+            }
+            periodTime += timeDays;
+        }
+
+
+
+        overViewDetailDto.total100 = periodTime;
+    }
+
     private void calculate130(OverViewDetailDto overViewDetailDto, Period period){
         //calculate mon-fri
-
         double promisedPeriodTime = 0;
         double periodTime = 0;
         for (Week week : period.getWeeks()){
@@ -127,6 +160,7 @@ public class OverViewService {
         if(periodTime > promisedPeriodTime)
             overViewDetailDto.total130 = periodTime - promisedPeriodTime;
         else overViewDetailDto.total130 = (double) 0;
+
     }
 
     private void calculate150(OverViewDetailDto overViewDetailDto, Period period){

@@ -13,6 +13,8 @@ public class OverViewDetailDto {
     @JsonSerialize(using = JsonDoubleTimeSerializer.class)
     public Double total;
     @JsonSerialize(using = JsonDoubleTimeSerializer.class)
+    public Double total100;
+    @JsonSerialize(using = JsonDoubleTimeSerializer.class)
     public Double total130;
     @JsonSerialize(using = JsonDoubleTimeSerializer.class)
     public Double total150;
