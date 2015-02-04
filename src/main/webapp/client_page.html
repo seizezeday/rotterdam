@@ -476,46 +476,7 @@
 
       </div>
        <div class="col-md-4" ng-controller="settings_controller">
-<!--
-               <div ng-controller="bookCtrl">
-    <div ng-repeat="tag in book.tags track by $index">
-        <input type="text" ng-model="book.tags[$index]"/>
-    </div>
-    
-    My tags are <b>really</b>: {{ book.tags }}
-</div>
--->
-<!--  <div >-->
-<!--
-  	<li ng-repeat="country in countries">
-        {{country.name}} has population of {{country.population}}
-    </li>  
--->
-      	                <input ng-repeat="day in days" id="settings_{{day.settingsDay}}" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="{{day.day}}">
-<!--
-       	<li ng-repeat="day in days">
-        {{day.day}} has population of {{day.settingsDay}}
-    </li>
--->
-<!--
-        <input ng-repeat="country in countries"
-         id="settings_monday" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="Monday">
--->
-<!--    <hr>-->
-<!--World's population: {{population}} millions-->
-<!--</div>-->
-<!--
-                <input id="settings_monday" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="Monday">
-
-        <input id="settings_tuesday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer"  placeholder="Tuesday" >
-
-        <input id="settings_wednesday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer"  placeholder="Wednesday">        
-        
-        <input id="settings_thursday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer" placeholder="Thursday">
-
-            <input id="settings_friday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer" placeholder="Friday">
--->
-
+      	 <input ng-repeat="day in days" id="settings_{{day.settingsDay}}" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="{{day.day}}">
       </div>
    <div class="col-md-12">
         <div class="col-md-4">

@@ -76,16 +76,8 @@ app.directive('numberMask', function() {
 //        ]
 //    };
 app.controller("settings_controller", ['$scope', function($scope){
-
-//$scope.population = 7000;
-//$scope.countries = [
-//    {name: 'France', population: 63.1},
-//    {name: 'United Kingdom', population: 61.8}
-//];
 $scope.days = [
     {day: 'Monday', settingsDay: 'monday'},{day: 'Tuesday',settingsDay: 'tuesday'},{day: 'Wednesday',settingsDay: 'wednesday'},{day: 'Thursday',settingsDay: 'thursday'},{day: 'Friday',settingsDay: 'friday'}
-//    {name: 'United Kingdom', population: 61.8}
-//    {settingsDay: 'monday'},{settingsDay: 'tuesday'},{settingsDay: 'wednesday'},{settingsDay: 'thursday'},{settingsDay: 'friday'}
 ];
     
 
