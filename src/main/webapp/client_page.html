@@ -475,7 +475,7 @@
     <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start time-for-time regulation">
 
       </div>
-       <div class="col-md-4">
+       <div class="col-md-4" ng-controller="settings_controller">
 <!--
                <div ng-controller="bookCtrl">
     <div ng-repeat="tag in book.tags track by $index">
@@ -485,7 +485,7 @@
     My tags are <b>really</b>: {{ book.tags }}
 </div>
 -->
-  <div ng-controller="settings_controller">
+<!--  <div >-->
 <!--
   	<li ng-repeat="country in countries">
         {{country.name}} has population of {{country.population}}
@@ -501,9 +501,10 @@
         <input ng-repeat="country in countries"
          id="settings_monday" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="Monday">
 -->
-    <hr>
+<!--    <hr>-->
 <!--World's population: {{population}} millions-->
-</div>
+<!--</div>-->
+<!--
                 <input id="settings_monday" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="Monday">
 
         <input id="settings_tuesday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer"  placeholder="Tuesday" >
@@ -513,6 +514,7 @@
         <input id="settings_thursday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer" placeholder="Thursday">
 
             <input id="settings_friday" type="text" class="form-control margin_bottom_10 settings_day_hours positive-integer" placeholder="Friday">
+-->
 
       </div>
    <div class="col-md-12">
