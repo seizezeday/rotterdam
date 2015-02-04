@@ -65,19 +65,16 @@ app.directive('numberMask', function() {
         }
     }
 });
-//app.controller('bookCtrl', function($scope) {
-//    $scope.book = {
-//        name: 'A Game of Thrones',
-//        tags: [
-//            'Tyrion',
-//            'John Snow',
-//            'Arya',
-//            'Sean Bean'
-//        ]
-//    };
 app.controller("settings_controller", ['$scope', function($scope){
 $scope.days = [
     {day: 'Monday', settingsDay: 'monday'},{day: 'Tuesday',settingsDay: 'tuesday'},{day: 'Wednesday',settingsDay: 'wednesday'},{day: 'Thursday',settingsDay: 'thursday'},{day: 'Friday',settingsDay: 'friday'}
+];
+    
+
+  }]);
+app.controller("overview_controller", ['$scope', function($scope){
+$scope.totalTimes = [
+    {tolalProc: '', overviewId: ''},{tolalProc: '100%', overviewId: '_100'},{tolalProc: '130%', overviewId: '_130'},{tolalProc: '150%', overviewId: '_150'},{tolalProc: '200%', overviewId: '_200'},
 ];
     
 

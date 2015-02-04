@@ -33,7 +33,6 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
   <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Time</a></li>
-<!--  <li id="compensation_tab" class="hide_tabs"><a href="#compensation" role="tab" data-toggle="tab">Compensation</a></li>-->
   <li class="hide_tabs"><a href="#payment_time" role="tab" data-toggle="tab">Payment time</a></li>
   <li class="hide_tabs"><a href="#sheet_overview" role="tab" data-toggle="tab">Overview</a></li>
   <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaration</a></li>
@@ -123,7 +122,6 @@
           <option value="11">Zwangerschapsverlof</option>
           <option value="12">Feestdag</option>
           <option value="13">Geen werkdag</option>
-          
         </select>
         </div>  
         <div class="col-md-4 add_row_monday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
@@ -422,12 +420,8 @@
           <option value="4"></option>
         </select>
     </div>
-    <div class="col-md-6 col-md-offset-1">
-        <p class="font_size_18">Total hours worked: <span id="overview_total"></span></p>
-        <p class="font_size_18">Total 100% hours worked: <span id="overview_total_100"></span></p>
-        <p class="font_size_18">Total 130% hours worked: <span id="overview_total_130"></span></p>
-        <p class="font_size_18">Total 150% hours worked : <span id="overview_total_150"></span></p>
-        <p class="font_size_18">Total 200% hours worked : <span id="overview_total_200"></span></p>
+         <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
+        <p class="font_size_18" ng-repeat="totalTime in totalTimes">Total hours {{totalTime.tolalProc}} worked: <span id="overview_total{{totalTime.overviewId}}"></span></p>
     </div>
          <div class="col-md-12">
           <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1" disabled>Download PDF</button>
