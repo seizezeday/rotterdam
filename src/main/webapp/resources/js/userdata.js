@@ -833,48 +833,27 @@ $(document).ready(function(){
     }; 
       $('#declaration_save').click(function declaration_save(){
           var dec = [];
-//          var type_food = $('.type_food').val();
-//          var declaration_price = $('.declaration_price input');
-//          var costType =  $('.type_food');
-//          console.log(declaration_price);
-          $('.declaration_price input, .type_food').each(function() {
-//               alert(this);
-              console.log($(this).val());
-              $(this).val();
-              dec.push($(this).val());
-              console.log(dec);
-          });  
-            console.log(dec);
-//        var declaration_row = {              
-//              costType: $('.type_food').val(),
-//              price : $('.declaration_price input').val()}
-//          alert(declaration_row);
-//          declaration_price.each(function() {
-////               alert(this);
-//              console.log($(this).val());
-//              $(this).val();
-//          });  
-//          costType.each(function() {
-////               alert(this);
-//              console.log($(this).val());
-//              $(this).val();
-//          });
-//        $.each(declaration_price,function(){
-//            alert(this);
-//        });    
-//          $.each(type_food,function(){
-//            alert(this);
-//        });
-//          dec.push({
-//              costType: $('.type_food').val(),
-//              price : $('.declaration_price input').val()
-//          });
+          $(".declaration_row").each(function(){
+              var costTypeSelect = $($(this).children().get(0));
+              var costType = ($(costTypeSelect.children().get(0))).val();
+              console.log(costType);
+
+              var priceInput = $($(this).children().get(1));
+              var price = ($(priceInput.children().get(0))).val();
+              console.log(price);
+
+            dec.push({
+              costType: costType,
+              price : price
+            });
+          });
+
             $.ajax({
             type: "POST",
             url: "api/declaration/set",
             data: JSON.stringify({
                 date: $("#declaration_calendar").val(),
-//                declarations: dec
+                declarations: dec
             }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
