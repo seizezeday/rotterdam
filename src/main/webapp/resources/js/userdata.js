@@ -44,14 +44,16 @@ $(document).ready(function(){
                         $(".time_date").eq(4).append(data.weekList[4]);   
                         $(".time_date").eq(5).append(data.weekList[5]);   
                         $(".time_date").eq(6).append(data.weekList[6]);
-            }
+                        compensation_json();
+                        overview_date();
+                        }
 //                            ,
 //                            403 : function(){
 //                                window.location.href = "/index.html";
 //                            }
                         }
                     });
-        compensation_json();
+
 //        payment_json();
         // Редирект на index.html после нажатия кнопки logout
         $('#logout').click(function(){
@@ -684,7 +686,8 @@ $(document).ready(function(){
         'default': 'now'
     });   
     }    
-         $('#overview_submit').click(function overview_date(){
+         $('#overview_submit').click(overview_date);
+             function overview_date(){
             $.ajax({
             type: "POST",
             url: "api/overView/getDetail",
@@ -693,7 +696,7 @@ $(document).ready(function(){
             dataType: "json",
             statusCode: {
                 200: function (data) {
-                    alert("Success...");
+//                    alert("Success...");
                     $("#overview_total").text(data.total);
                     $("#overview_time_to_pay").text(data.overTime);
                     $("#overview_total_100").text(data.total100);
@@ -708,7 +711,7 @@ $(document).ready(function(){
                 }
             }
         });  
-        });
+        };
 
 //    $("#download_pdf_btn").removeAttr("disabled","disabled");
     $('#download_pdf_btn').click(function download_pdf(){
