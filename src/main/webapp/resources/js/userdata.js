@@ -820,35 +820,67 @@ $(document).ready(function(){
     function declarationAdd() {
        var declarationRow = '<div class="col-md-12 margin_top_15 declaration_row">'+
        '<div class="col-md-4">'+
-        '<select class="form-control">'+
+        '<select class="form-control type_food">'+
           '<option>type food</option>'+
           '<option>2015</option>'+
           '<option>2016</option>'+
         '</select>'+
        '</div>'+
-        '<div class="col-md-2"><input type="text" class="form-control" placeholder="Cost"></div>'+
+        '<div class="col-md-2 declaration_price"><input type="text" class="form-control" placeholder="Cost"></div>'+
         '<div class="col-md-2"><button class="btn btn-block btn-danger declaration_del_row">Delete</button></div>'+
        '</div>'
         return declarationRow;
     }; 
       $('#declaration_save').click(function declaration_save(){
           var dec = [];
-          dec.push({
-              costType: $('.type_food').val(),
-              price : $('.declaration_price').val()
-          });
+//          var type_food = $('.type_food').val();
+//          var declaration_price = $('.declaration_price input');
+//          var costType =  $('.type_food');
+//          console.log(declaration_price);
+          $('.declaration_price input, .type_food').each(function() {
+//               alert(this);
+              console.log($(this).val());
+              $(this).val();
+              dec.push($(this).val());
+              console.log(dec);
+          });  
+            console.log(dec);
+//        var declaration_row = {              
+//              costType: $('.type_food').val(),
+//              price : $('.declaration_price input').val()}
+//          alert(declaration_row);
+//          declaration_price.each(function() {
+////               alert(this);
+//              console.log($(this).val());
+//              $(this).val();
+//          });  
+//          costType.each(function() {
+////               alert(this);
+//              console.log($(this).val());
+//              $(this).val();
+//          });
+//        $.each(declaration_price,function(){
+//            alert(this);
+//        });    
+//          $.each(type_food,function(){
+//            alert(this);
+//        });
+//          dec.push({
+//              costType: $('.type_food').val(),
+//              price : $('.declaration_price input').val()
+//          });
             $.ajax({
             type: "POST",
             url: "api/declaration/set",
             data: JSON.stringify({
                 date: $("#declaration_calendar").val(),
-                declarations: dec
+//                declarations: dec
             }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             statusCode: {
                 200: function (data) {
-
+                    alert("ok");
                 }
             }
         });  
