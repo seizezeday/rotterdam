@@ -830,25 +830,25 @@ $(document).ready(function(){
         '<div class="col-md-2"><button class="btn btn-block btn-danger declaration_del_row">Delete</button></div>'+
        '</div>'
         return declarationRow;
-    }; 
-      $('#declaration_save').click(function declaration_save(){
-          var dec = [];
-          $(".declaration_row").each(function(){
-              var costTypeSelect = $($(this).children().get(0));
-              var costType = ($(costTypeSelect.children().get(0))).val();
-              console.log(costType);
+    };
+    $('#declaration_save').click(function declaration_save() {
+        var dec = [];
+        $(".declaration_row").each(function () {
+            var costTypeSelect = $($(this).children().get(0));
+            var costType = ($(costTypeSelect.children().get(0))).val();
+            //console.log(costType);
 
-              var priceInput = $($(this).children().get(1));
-              var price = ($(priceInput.children().get(0))).val();
-              console.log(price);
+            var priceInput = $($(this).children().get(1));
+            var price = ($(priceInput.children().get(0))).val();
+            //console.log(price);
 
             dec.push({
-              costType: costType,
-              price : price
+                costType: costType,
+                price: price
             });
-          });
+        });
 
-            $.ajax({
+        $.ajax({
             type: "POST",
             url: "api/declaration/set",
             data: JSON.stringify({
@@ -862,6 +862,6 @@ $(document).ready(function(){
                     alert("ok");
                 }
             }
-        });  
         });
+    });
 });
