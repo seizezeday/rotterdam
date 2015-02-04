@@ -862,4 +862,33 @@ $(document).ready(function(){
             }
         });
     });
+    $('#declaration_submit').click(function declaration_submit() {
+        $.ajax({
+            type: "POST",
+            url: "api/declaration/get",
+            data: JSON.stringify({
+                currentDate: $("#declaration_calendar").val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            statusCode: {
+                200: function (data) {
+                    var declarations = data.declarations;
+
+                    while(declarations.length > $(".declaration_row").length){
+                        $('.declaration_add_row').click();
+                    }
+
+                    for(var decI = 0; decI < $(".declaration_row").length; decI++) {
+                        var costTypeSelect = $($($(".declaration_row")[decI]).children().get(0));
+                        ($(costTypeSelect.children().get(0))).val(declarations[decI].costType);
+
+                        var priceInput = $($($(".declaration_row")[decI]).children().get(1));
+                        ($(priceInput.children().get(0))).val(declarations[decI].price);
+                    }
+                }
+            }
+        });
+    });
+
 });

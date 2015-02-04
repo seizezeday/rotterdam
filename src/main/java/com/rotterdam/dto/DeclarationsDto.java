@@ -2,8 +2,10 @@ package com.rotterdam.dto;
 
 import com.rotterdam.model.entity.Declaration;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
+import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.List;
 public class DeclarationsDto {
     public List<Declaration> declarations = new ArrayList<>();
     @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonSerialize(using = JsonDateSerializer.class)
     public Date date;
 
     public DeclarationsDto() {
