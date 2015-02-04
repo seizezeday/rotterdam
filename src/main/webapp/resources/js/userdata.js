@@ -836,11 +836,9 @@ $(document).ready(function(){
         $(".declaration_row").each(function () {
             var costTypeSelect = $($(this).children().get(0));
             var costType = ($(costTypeSelect.children().get(0))).val();
-            //console.log(costType);
 
             var priceInput = $($(this).children().get(1));
             var price = ($(priceInput.children().get(0))).val();
-            //console.log(price);
 
             dec.push({
                 costType: costType,

@@ -404,8 +404,9 @@
   </div>
     <div class="tab-pane" id="sheet_overview">
     <div class="col-md-12">
-    <div class="col-md-4 margin_bottom_20">   
-        <div class="col-md-8"><input id="overview_calendar" type="text" class="form-control" ng-model="selectedDatePeriod" name="date" bs-datepicker placeholder="Calendar"></div>   
+    <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">   
+        <div class="col-md-8"><input id="overview_calendar" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker>
+        </div>   
         <div class="col-md-4"><button id="overview_submit" class="btn btn-warning btn-block">Apply</button></div>
     </div> 
           <div class="col-md-6 col-md-offset-1">            
@@ -437,8 +438,10 @@
     <div class="col-md-12">            
         <p class="font_size_18">Korten declaration</p>
     </div>
-    <div class="col-md-4 margin_bottom_20">   
-        <div class="col-md-8"><input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDateDeclaration" name="date" bs-datepicker placeholder="Calendar"></div>   
+    <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">   
+                <div class="form-group col-md-8" ng-class="{'has-error': datepickerForm.date.$invalid}">
+        <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"  bs-datepicker>
+      </div>
         <div class="col-md-4"><button id="declaration_submit" class="btn btn-warning btn-block">Apply</button></div>
     </div> 
       <div class="col-md-12 margin_top_15 declaration_row">
