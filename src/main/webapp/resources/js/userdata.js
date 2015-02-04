@@ -832,15 +832,17 @@ $(document).ready(function(){
         return declarationRow;
     }; 
       $('#declaration_save').click(function declaration_save(){
+          var dec = [];
+          dec.push({
+              costType: $('.type_food').val(),
+              price : $('.declaration_price').val()
+          });
             $.ajax({
             type: "POST",
             url: "api/declaration/set",
             data: JSON.stringify({
                 date: $("#declaration_calendar").val(),
-                declarations: {
-                    costType: $('.type_food').val(),
-                    price : $('.declaration_price').val() 
-                }
+                declarations: dec
             }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
