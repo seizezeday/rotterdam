@@ -4,6 +4,7 @@ import com.rotterdam.dto.DeclarationsDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.service.DeclarationService;
 import com.rotterdam.tools.DateTools;
+import com.rotterdam.tools.json.DateParameter;
 import com.rotterdam.tools.json.JsonCommands;
 
 import javax.annotation.security.PermitAll;
@@ -12,9 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,12 +37,11 @@ public class DeclarationController {
 
     //{"currentDate":"29.01.2015"}
     @RolesAllowed({ "Driver" })
-    @POST
-    @Path("/get")
+    @GET
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response getDeclarations(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
+    public Response getDeclarations(@Context HttpServletRequest hsr,@QueryParam("date") DateParameter date) throws JsonException, IOException, ParseException {
 
-        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
+        Date monday = DateTools.getDateOfPrevMonday(date.getDate());
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
@@ -56,7 +54,6 @@ public class DeclarationController {
 
     @RolesAllowed({ "Driver" })
     @POST
-    @Path("/set")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response setDeclarations(@Context HttpServletRequest hsr, DeclarationsDto declarationsDto) throws JsonException, IOException, ParseException {
 

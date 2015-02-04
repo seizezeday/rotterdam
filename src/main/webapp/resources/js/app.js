@@ -56,7 +56,7 @@ app.controller('DatepickerDemoController', function($scope, $http) {
 app.config(function($datepickerProvider) {
   angular.extend($datepickerProvider.defaults, {
     dateFormat: 'dd.MM.yyyy',
-    startWeek: 1,
+    startWeek: 1
 //    daysOfWeekDisabled: '0234567'
   });
 });
@@ -75,11 +75,59 @@ $scope.days = [
     
 
   }]);
+app.controller("declaration_controller", function($scope, $http, $filter){
+
+    $scope.selectedDate = new Date();
+
+    $scope.costTypes = [
+        { id: "0", name: 'type food' },
+        { id: "1", name: '2015' },
+        { id: "2", name: '2016' }
+    ];
+
+    $scope.removeRow = function(index){
+        $scope.declarations.splice(index, 1);
+    };
+
+    $scope.addRow = function(){
+        $scope.declarations.push({
+                costType: $scope.costTypes["0"].id,
+                price: 0
+            }
+        )
+    };
+
+    $scope.applyDate = function(){
+        var formattedDate = $filter('date')($scope.selectedDate, 'dd.MM.yyyy');
+
+        $http.get('api/declaration', {params : {date : formattedDate}}).then(function(res){
+            $scope.declarations = res.data.declarations;
+            if($scope.declarations.length == 0)
+                $scope.addRow();
+        });
+    };
+
+    $scope.save = function(){
+        var declarationsToTransfer = {
+            date : $filter('date')($scope.selectedDate, 'dd.MM.yyyy'),
+            declarations : $scope.declarations
+        };
+        $http.post('api/declaration', declarationsToTransfer).then(function(){
+           addAlert();
+        });
+    };
+
+    $scope.applyDate();
+
+});
 app.controller("overview_controller", ['$scope', function($scope){
 $scope.totalTimes = [
-    {tolalProc: '', overviewId: ''},{tolalProc: '100%', overviewId: '_100'},{tolalProc: '130%', overviewId: '_130'},{tolalProc: '150%', overviewId: '_150'},{tolalProc: '200%', overviewId: '_200'},
+    {tolalProc: '', overviewId: ''},{tolalProc: '100%', overviewId: '_100'},{tolalProc: '130%', overviewId: '_130'},{tolalProc: '150%', overviewId: '_150'},{tolalProc: '200%', overviewId: '_200'}
 ];
   }]);
+
+
+
 //app.controller("time_select", ['$scope', function($scope){
 //$scope.options = [
 //    {val: '1', deskription: 'Werkdag'},{val: '2', deskription: 'Weekenddag'},{val: '3', deskription: 'Wachtdag'},{val: '4', deskription: 'Ziektedag'},{val: '5', deskription: 'Vakantiedag'},{val: '6', deskription: 'ATV-dag'},{val: '7', deskription: 'Betaald verlof'},{val: '8', deskription: 'Ontbetaald verlof'},{val: '9', deskription: 'Tijd-voor-tijd'},{val: '10', deskription: 'Overstaandag'},{val: '11', deskription: 'Zwangerschapsverlof'},{val: '12', deskription: 'Feestdag'},{val: '13', deskription: 'Geen werkdag'}

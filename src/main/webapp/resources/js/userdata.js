@@ -1,3 +1,21 @@
+function addAlert() {
+    $(".append_alert").append(
+            '<div class="alert alert-success alert-dismissable">'+
+            '<button type="button" class="close" ' +
+            'data-dismiss="alert" aria-hidden="true">' +
+            '&times;' +
+            '</button>' +
+            'Saved' +
+            '</div>');
+    $(".alert").show();
+    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").alert('close');
+    });
+//                        window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+//                        $(".close").click()
+};
+
+
 function preloadFunc()
 {
     $.ajax({
@@ -46,7 +64,6 @@ $(document).ready(function(){
                         $(".time_date").eq(6).append(data.weekList[6]);
                         compensation_json();
                         overview_date();
-                        declaration_submit();
                         }
 //                            ,
 //                            403 : function(){
@@ -168,22 +185,7 @@ $(document).ready(function(){
         return time_day_add;
     };   
         
-        function addAlert() {
-                        $(".append_alert").append(
-                        '<div class="alert alert-success alert-dismissable">'+
-                        '<button type="button" class="close" ' + 
-                        'data-dismiss="alert" aria-hidden="true">' + 
-                        '&times;' + 
-                        '</button>' + 
-                        'Saved' + 
-                        '</div>');
-                        $(".alert").show();
-                        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-                            $(".alert").alert('close');
-                        });
-//                        window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
-//                        $(".close").click()
-        };   
+
 // получения новых дат 
         $('#date_submit').click(function date_submit(){
                 var selected_date  = {
@@ -811,89 +813,4 @@ $(document).ready(function(){
         }
         return height;
     }
-    //declaration add row
-    
-        $('.declaration_add_row').click(function(){
-            var declaration_add_row = declarationAdd();
-            $(this).parent().after(declaration_add_row);
-            $('.declaration_del_row').bind('click',function(){
-                $($(this).parents().get(1)).remove();
-            });
-        });
-
-    function declarationAdd() {
-       var declarationRow = '<div class="col-md-12 margin_top_15 declaration_row">'+
-       '<div class="col-md-4">'+
-        '<select class="form-control type_food">'+
-          '<option>type food</option>'+
-          '<option>2015</option>'+
-          '<option>2016</option>'+
-        '</select>'+
-       '</div>'+
-        '<div class="col-md-2 declaration_price"><input type="text" class="form-control" placeholder="Cost"></div>'+
-        '<div class="col-md-2"><button class="btn btn-block btn-danger declaration_del_row">Delete</button></div>'+
-       '</div>'
-        return declarationRow;
-    };
-    $('#declaration_save').click(function declaration_save() {
-        var dec = [];
-        $(".declaration_row").each(function () {
-            var costTypeSelect = $($(this).children().get(0));
-            var costType = ($(costTypeSelect.children().get(0))).val();
-
-            var priceInput = $($(this).children().get(1));
-            var price = ($(priceInput.children().get(0))).val();
-
-            dec.push({
-                costType: costType,
-                price: price
-            });
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "api/declaration/set",
-            data: JSON.stringify({
-                date: $("#declaration_calendar").val(),
-                declarations: dec
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            statusCode: {
-                200: function (data) {
-                    alert("ok");
-                }
-            }
-        });
-    });
-    $('#declaration_submit').click(declaration_submit);
-        function declaration_submit() {
-        $.ajax({
-            type: "POST",
-            url: "api/declaration/get",
-            data: JSON.stringify({
-                currentDate: $("#declaration_calendar").val()
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            statusCode: {
-                200: function (data) {
-                    var declarations = data.declarations;
-
-                    while(declarations.length > $(".declaration_row").length){
-                        $('.declaration_add_row').click();
-                    }
-
-                    for(var decI = 0; decI < $(".declaration_row").length; decI++) {
-                        var costTypeSelect = $($($(".declaration_row")[decI]).children().get(0));
-                        ($(costTypeSelect.children().get(0))).val(declarations[decI].costType);
-
-                        var priceInput = $($($(".declaration_row")[decI]).children().get(1));
-                        ($(priceInput.children().get(0))).val(declarations[decI].price);
-                    }
-                }
-            }
-        });
-    };
-
 });
