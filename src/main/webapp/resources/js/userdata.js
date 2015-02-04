@@ -807,22 +807,16 @@ $(document).ready(function(){
         }
         return height;
     }
-            $('.declaration_add_row').click(function(){
+    //declaration add row
+    
+        $('.declaration_add_row').click(function(){
             var declaration_add_row = declarationAdd();
             $(this).parent().after(declaration_add_row);
-//            clockPicker();
             $('.declaration_del_row').bind('click',function(){
                 $($(this).parents().get(1)).remove();
             });
         });
-//        $('.add_row_sunday').click(function(){
-//            var time_day_add = tryOne("sunday");
-//            $(this).parent().after(time_day_add);
-//            clockPicker();
-//            $('.time_tab_sunday_del').bind('click',function(){
-//                $($(this).parents().get(2)).remove();
-//            });
-//        });
+
     function declarationAdd() {
        var declarationRow = '<div class="col-md-12 margin_top_15 declaration_row">'+
        '<div class="col-md-4">'+
@@ -835,15 +829,26 @@ $(document).ready(function(){
         '<div class="col-md-2"><input type="text" class="form-control" placeholder="Cost"></div>'+
         '<div class="col-md-2"><button class="btn btn-block btn-danger declaration_del_row">Delete</button></div>'+
        '</div>'
-//        var time_day_add = '<div class="time_tab_row">' +
-//            '<div class="col-md-4 margin_bottom_10 ">' +
-//            '<div class="col-md-4 col-md-offset-8">' +
-//            '<input type="text" class="form-control time_' + data +'_start clockpicker" placeholder="Start"></div></div>' +
-//            '<div class="col-md-4 margin_bottom_10"><div class="col-md-6"><input type="text" class="form-control time_' + data +'_end clockpicker" placeholder="End"></div>' +
-//            '<div class="col-md-6"><input type="text" class="form-control time_' + data +'_rest" placeholder="Rest" number-mask=""></div>' +
-//            '</div>'+
-//            '<div class="col-md-4 margin_bottom_10">'+
-//            '<div class="col-md-4"><button type="button" class="btn btn-danger btn-block time_tab_'+ data +'_del">Delete</button></div></div></div>'
         return declarationRow;
-    };   
+    }; 
+      $('#declaration_save').click(function declaration_save(){
+            $.ajax({
+            type: "POST",
+            url: "api/declaration/set",
+            data: JSON.stringify({
+                date: $("#declaration_calendar").val(),
+                declarations: {
+                    costType: $('.type_food').val(),
+                    price : $('.declaration_price').val() 
+                }
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            statusCode: {
+                200: function (data) {
+
+                }
+            }
+        });  
+        });
 });
