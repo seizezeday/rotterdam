@@ -1,0 +1,14 @@
+/target/
+target
+.settings/*
+!.settings/.jsdtscope
+.project
+.classpath
+.idea
+*.iml
+.openshift
+.settings
+/deployments
+#.gitignore
+src/main/resources/rebel.xml
+#src/main/webapp/WEB-INF/app-context.xml
