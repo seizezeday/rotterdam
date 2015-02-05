@@ -47,7 +47,9 @@ public class DeclarationController {
 
         DeclarationsDto declarationsDto = declarationService.selectByWeekIdAndUserId(monday, user.getId());
 
-        return Response.ok(declarationsDto).build();
+        if(declarationsDto !=null)
+            return Response.ok(declarationsDto).build();
+        else return Response.status(Response.Status.NO_CONTENT).build();//204
     }
 
     //{"date":"29.01.2015", "declarations":[ {"costType":"SomeType","price":"5"}, {"costType":"SomeType2","price":"50"} ]}
@@ -59,7 +61,7 @@ public class DeclarationController {
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
-        declarationService.save(declarationsDto, user.getId());
+        //declarationService.save(declarationsDto, user.getId());
 
         return Response.ok().build();
     }

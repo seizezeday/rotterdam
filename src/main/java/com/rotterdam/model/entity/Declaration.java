@@ -1,8 +1,13 @@
 package com.rotterdam.model.entity;
 
+import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
+import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by vasax32 on 29.01.15.
@@ -18,6 +23,11 @@ public class Declaration {
     private String costType;
 
     private double price;
+
+    @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idWeek")
@@ -56,6 +66,14 @@ public class Declaration {
         this.week = week;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,6 +84,7 @@ public class Declaration {
         if (idDeclaration != that.idDeclaration) return false;
         if (Double.compare(that.price, price) != 0) return false;
         if (costType != null ? !costType.equals(that.costType) : that.costType != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (week != null ? !week.equals(that.week) : that.week != null) return false;
 
         return true;
@@ -79,6 +98,7 @@ public class Declaration {
         result = 31 * result + (costType != null ? costType.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (week != null ? week.hashCode() : 0);
         return result;
     }
@@ -89,6 +109,7 @@ public class Declaration {
                 "idDeclaration=" + idDeclaration +
                 ", costType='" + costType + '\'' +
                 ", price=" + price +
+                ", date=" + date +
                 ", week=" + week +
                 '}';
     }

@@ -365,6 +365,9 @@
           </div>
           <div class="col-md-2 declaration_price"><input type="text" class="form-control" placeholder="Cost"
                                                          ng-model="declaration.price"></div>
+          <div class="col-md-2 declaration_price">
+              <input type="text" class="form-control" ng-model="declaration.date" name="date" bs-datepicker>
+          </div>
           <div class="col-md-2">
               <button class="btn btn-block btn-warning declaration_add_row"
                       ng-show="$index == 0" ng-click="addRow()">Add

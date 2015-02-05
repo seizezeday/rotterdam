@@ -30,7 +30,9 @@ public class DeclarationService {
         Date monday = DateTools.getDateOfPrevMonday(date);
 
         Week week = weekDao.selectByStartDateAndUser(monday, userId);
-        return new DeclarationsDto(declarationDao.selectByStartDateAndUser(week.getIdWeek(), userId));
+        if(week != null)
+            return new DeclarationsDto(declarationDao.selectByStartDateAndUser(week.getIdWeek(), userId));
+        return null;
     }
 
     @Transactional
@@ -58,7 +60,9 @@ public class DeclarationService {
             Declaration secondDeclaration = second.get(i);
             if(!firstDeclaration.getCostType().equals(secondDeclaration.getCostType()))
                 return false;
-            if(Double.compare(firstDeclaration.getPrice(), secondDeclaration.getPrice()) < 0)
+            if(Double.compare(firstDeclaration.getPrice(), secondDeclaration.getPrice()) != 0)
+                return false;
+            if(!firstDeclaration.getDate().equals(secondDeclaration.getDate()))
                 return false;
         }
         return true;

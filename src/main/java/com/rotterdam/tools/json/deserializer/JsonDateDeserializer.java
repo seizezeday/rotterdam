@@ -28,9 +28,14 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
 
         Date date = null;
         try {
-            date = format.parse(dateString);
-        } catch (ParseException e) {
+            date = new Date(dateString);
+        } catch (Exception e) {
             e.printStackTrace();
+            try {
+                date = format.parse(dateString);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
         }
         return date;
     }
