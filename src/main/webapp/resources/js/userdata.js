@@ -732,7 +732,8 @@ $(document).ready(function(){
             statusCode: {
                 200: function (data) {
 //                    alert("Success...");
-                    //data.weekList.push(data.weekList[1]);
+//                    data.weekOverViews.push(data.weekOverViews[1]);
+//                    data.weeks.push(data.weeks[1]);
                     generatefromjson(pdf_report, data);
                 }
             }
@@ -744,27 +745,38 @@ $(document).ready(function(){
         var doc = new jsPDF('p', 'pt', 'a4', true);
         doc.setFont("times", "normal");
         doc.setFontSize(fontSize);
-        doc.text(10 + xOffset, 20, "Driver: " + jsonData.user.Name + " " + jsonData.user.LastName);
-        doc.text(10 + xOffset, 35, "Period: " + jsonData.startEnd.start + " - " + jsonData.startEnd.end);
-        doc.text(10 + xOffset, 50, "Driver ID: " + jsonData.user.regNum);
+        doc.text(10 + xOffset, 20, "Name: " + jsonData.user.Name);
+        doc.text(10 + xOffset, 35, "Surname: " + jsonData.user.LastName);
+        doc.text(10 + xOffset, 50, "Period: " + jsonData.startEnd.start + " - " + jsonData.startEnd.end);
+        doc.text(10 + xOffset, 65, "Driver ID: " + jsonData.user.regNum);
+        doc.text(10 + xOffset, 80, "Time-for-Time: " + jsonData.timeForTime);
+        doc.text(10 + xOffset, 95, "Scheduled Hours: " + jsonData.scheduledHours);
 
-        var heightDefault = 80, height = heightDefault;
+        var heightDefault = 125, height = heightDefault;
         var pageHeight = 500;
 
-        if(jsonData.weekList.length == 0)
-            doc.text(50, 60, 'No data selected');
+        if(jsonData.weekOverViews.length == 0)
+            doc.text(50, 60 + height, 'No data selected');
         else{
-            for (var weekI = 0; weekI < jsonData.weekList.length; weekI++) {
-                var week = jsonData.weekList[weekI];
+            for (var weekI = 0; weekI < jsonData.weekOverViews.length; weekI++) {
+                var weekOverView = jsonData.weekOverViews[weekI];
 
-                height = drawTotalTable(doc, data, week, height, xOffset, false);
+                height = drawTotalTable(doc, data, weekOverView, height, xOffset, false);
+
+                var week = jsonData.weeks[weekI];
+
+                height = drawWeekTable(doc, data, week, height, xOffset);
+
+                var declaration = jsonData.declarations[weekI];
+
+                height = drawDeclarationsTable(doc, data, declaration, height, xOffset);
 
                 if (height >= pageHeight) {
                     doc.addPage();
                     height = heightDefault;
                 }
             }
-            if(jsonData.weekList.length > 1){
+            if(jsonData.weekOverViews.length > 1){
                 var totalData = [];
                 totalData.detail = jsonData.totalPeriodDetail;
                 height = drawTotalTable(doc, data, totalData, height, xOffset, true);
@@ -796,10 +808,72 @@ $(document).ready(function(){
         if(data.length != 0) {
             if (!isTotal) {
                 var startEnd = week.startEnd;
-                doc.text(20 + xOff, height, 'Week: ' + startEnd.start + " - " + startEnd.end);
+                doc.text(20 + xOff, height, 'Week #' + week.weekNum + ': ' + startEnd.start + " - " + startEnd.end);
             } else {
                 doc.text(20 + xOff, height, 'Total in the selected weeks');
             }
+            doc.drawTable(data, {
+                xstart: 10 + xOff,
+                ystart: 10,
+                tablestart: 10 + height,
+                marginright: 50,
+                xOffset: 10,
+                yOffset: 10,
+                pagesplit: true
+            }) ;
+            height += 200;
+        }
+        return height;
+    }
+
+    function drawWeekTable(doc, data, week, height, xOff){
+        data = [];
+        for (var dayI in week.days) {
+
+            var day = week.days[dayI];
+
+            for (var workHourI = 0; workHourI < day.workHours.length; workHourI++) {
+
+                var workHour = day.workHours[workHourI];
+
+                data.push({
+                    "Week Day": dayI,
+                    "Date": day.date,
+                    "Time start": workHour.startWorkingTime,
+                    "Time end": workHour.endWorkingTime,
+                    "Rest": workHour.restTime,
+                    "Total time": day.total
+                });
+            }
+        }
+
+        if(data.length != 0){
+            height +=doc.drawTable(data, {
+                xstart: 10 + xOff,
+                ystart: 10,
+                tablestart: 10 + height,
+                marginright: 50,
+                xOffset: 10,
+                yOffset: 10,
+                pagesplit: true
+            }) ;
+            //height += 200;
+        }
+        return height;
+    }
+
+    function drawDeclarationsTable(doc, data, declaraion, height, xOff){
+        data = [];
+        var decs = declaraion.declarations;
+        for (var dec in declaraion.declarations) {
+               data.push({
+                    "Type": decs[dec].costType,
+                    "Date": "Will be date",
+                    "Price": decs[dec].price
+                });
+        }
+
+        if(data.length != 0){
             doc.drawTable(data, {
                 xstart: 10 + xOff,
                 ystart: 10,

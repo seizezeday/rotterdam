@@ -243,5 +243,11 @@ public class DateTools {
         return calendar.getTime();
     }
 
+    public static int getWeekNumber(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int week = cal.get(Calendar.WEEK_OF_YEAR);
+        return week;
+    }
 
 }

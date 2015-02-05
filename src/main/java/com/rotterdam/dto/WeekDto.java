@@ -31,6 +31,19 @@ public class WeekDto {
                 '}';
     }
 
+    public void calculateTotal() {
+        for(DayDto dayDto : days.values()){
+            double total = 0;
+            for (WorkHourDto workHourDto : dayDto.workHours){
+                double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
+                double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
+                int restTime = workHourDto.restTime / 60;
+                total += endTime - startTime - restTime;
+            }
+            dayDto.total =  DateTools.getDateFromDouble(total);
+        }
+    }
+
     public static WeekDto parseTimeTab(String genreJson) throws ParseException, IOException {
         WeekDto weekDto = new WeekDto();
 

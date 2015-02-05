@@ -51,7 +51,7 @@ public class OverViewController {
 
         return Response.ok(overView).build();
     }
-    //{"weekList":[
+    //{"weekOverViews":[
     // {"days":{}},
     // {"days":{}},
     // {"days":{}},

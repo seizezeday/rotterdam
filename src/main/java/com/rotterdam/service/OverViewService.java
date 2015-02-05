@@ -38,11 +38,15 @@ public class OverViewService {
     @Inject
     private WeekDao weekDao;
 
+    @Inject
+    private DeclarationService declarationService;
+
     @Transactional
     public OverViewDto getOverView(OverViewDto overViewDto, long userId) {
 
         User user = userDao.selectById(userId);
         overViewDto.user = new UserDto(user.getFirstname(), user.getSurname(), user.getRegNum());
+        overViewDto.timeForTime = (int)user.getTimeForTime();
 
         if(overViewDto.date == null)
             return overViewDto;
@@ -63,6 +67,8 @@ public class OverViewService {
                 //just add it
                 WeekOverViewDto weekOverViewDto = new WeekOverViewDto();
 
+                weekOverViewDto.weekNum = DateTools.getCurrentWeekNumber(week.getStartDate()) - 1;
+
                 weekOverViewDto.startEnd = new StartEndDto(week.getStartDate(), week.getEndDate());
 
                 weekOverViewDto.detail = new OverViewDetailDto(); //
@@ -72,13 +78,22 @@ public class OverViewService {
                 calculate150(weekOverViewDto.detail, week);
                 calculate200(weekOverViewDto.detail, week);
 
-                overViewDto.weekList.add(weekOverViewDto);
+                overViewDto.weekOverViews.add(weekOverViewDto);
+
+                overViewDto.scheduledHours += (int)timeForService.getPromisedWeekTime(week);
+
+                //weeks
+                WeekDto weekDto = weekService.getWeekByStartDateAndUserId(startDate, userId);
+                weekDto.calculateTotal();
+                overViewDto.weeks.add(weekDto);
+
+                //declarations
+                overViewDto.declarations.add(declarationService.selectByWeekIdAndUserId(startDate, userId));
             }
         }
 
         overViewDto.totalPeriodDetail = getOverViewDetail(start, userId);
         overViewDto.date = new Date();
-
 
         return overViewDto;
     }

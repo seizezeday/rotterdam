@@ -9,6 +9,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class WeekOverViewDto {
     public OverViewDetailDto detail;
     public StartEndDto startEnd;
+    public int weekNum;
 
     @Override
     public String toString() {

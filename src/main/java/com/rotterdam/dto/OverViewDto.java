@@ -15,7 +15,7 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OverViewDto {
-    public List<WeekOverViewDto> weekList = new ArrayList<>();
+    public List<WeekOverViewDto> weekOverViews = new ArrayList<>();
     public List<Integer> usedWeeks = new ArrayList<>();
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
@@ -23,12 +23,16 @@ public class OverViewDto {
     public StartEndDto startEnd;
     public UserDto user;
     public OverViewDetailDto totalPeriodDetail;
+    public int timeForTime;
+    public int scheduledHours;
+    public List<WeekDto> weeks = new ArrayList<>();
+    public List<DeclarationsDto> declarations = new ArrayList<>();
 
 
     @Override
     public String toString() {
         return "OverViewDto{" +
-                "weekList=" + weekList +
+                "weekOverViews=" + weekOverViews +
                 ", usedWeeks=" + usedWeeks +
                 ", date=" + date +
                 '}';
