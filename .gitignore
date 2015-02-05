@@ -11,4 +11,4 @@ target
 /deployments
 #.gitignore
 src/main/resources/rebel.xml
-#src/main/webapp/WEB-INF/app-context.xml
+src/main/webapp/WEB-INF/app-context.xml
