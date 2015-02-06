@@ -3,6 +3,7 @@ package com.rotterdam.model.entity;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -13,6 +14,7 @@ import java.util.Date;
  * Created by vasax32 on 29.01.15.
  */
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Declaration {
 
     @Id
@@ -30,9 +32,9 @@ public class Declaration {
     private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idWeek")
+    @JoinColumn(name = "idDay")
     @JsonIgnore
-    private Week week;
+    private Day day;
 
     public long getIdDeclaration() {
         return idDeclaration;
@@ -58,12 +60,12 @@ public class Declaration {
         this.price = price;
     }
 
-    public Week getWeek() {
-        return week;
+    public Day getDay() {
+        return day;
     }
 
-    public void setWeek(Week week) {
-        this.week = week;
+    public void setDay(Day day) {
+        this.day = day;
     }
 
     public Date getDate() {
@@ -85,7 +87,7 @@ public class Declaration {
         if (Double.compare(that.price, price) != 0) return false;
         if (costType != null ? !costType.equals(that.costType) : that.costType != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
-        if (week != null ? !week.equals(that.week) : that.week != null) return false;
+        if (day != null ? !day.equals(that.day) : that.day != null) return false;
 
         return true;
     }
@@ -99,7 +101,7 @@ public class Declaration {
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (week != null ? week.hashCode() : 0);
+        result = 31 * result + (day != null ? day.hashCode() : 0);
         return result;
     }
 
@@ -110,7 +112,7 @@ public class Declaration {
                 ", costType='" + costType + '\'' +
                 ", price=" + price +
                 ", date=" + date +
-                ", week=" + week +
+                ", day=" + day +
                 '}';
     }
 }

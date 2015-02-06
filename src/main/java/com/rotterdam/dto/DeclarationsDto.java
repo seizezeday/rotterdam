@@ -1,6 +1,5 @@
 package com.rotterdam.dto;
 
-import com.rotterdam.model.entity.Declaration;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeclarationsDto {
-    public List<Declaration> declarations = new ArrayList<>();
+    public List<DayDeclarationDto> daysDeclaration = new ArrayList<>();
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date date;
@@ -24,7 +23,7 @@ public class DeclarationsDto {
     public DeclarationsDto() {
     }
 
-    public DeclarationsDto(List<Declaration> declarations) {
-        this.declarations = declarations;
+    public DeclarationsDto(List<DayDeclarationDto> daysDeclaration) {
+        this.daysDeclaration = daysDeclaration;
     }
 }

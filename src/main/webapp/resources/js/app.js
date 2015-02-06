@@ -77,7 +77,9 @@ $scope.days = [
   }]);
 app.controller("declaration_controller", function($scope, $http, $filter){
 
-    $scope.selectedDate = DateConverter.convertDateToString(new Date());;
+    $scope.selectedDate = DateConverter.convertDateToString(new Date());
+
+    $scope.total = 0;
 
     $scope.costTypes = [
         { id: "0", name: 'Eendaagse netto' },
@@ -87,14 +89,15 @@ app.controller("declaration_controller", function($scope, $http, $filter){
         { id: "4", name: 'Overstaan bruto' }
     ];
 
-    $scope.removeRow = function(index){
-        $scope.declarations.splice(index, 1);
+    $scope.removeRow = function(dayIndex, index){
+        $scope.days[dayIndex].declarations.splice(index, 1);
     };
 
-    $scope.addRow = function(){
-        $scope.declarations.push({
+    $scope.addRow = function(index){
+        $scope.days[index].declarations.push({
                 costType: $scope.costTypes["0"].id,
-                price: 0
+                price: 0,
+                active: true
             }
         )
     };
@@ -104,15 +107,23 @@ app.controller("declaration_controller", function($scope, $http, $filter){
 
         $http.get('api/declaration', {params : {date : formattedDate}}).then(function(res){
             switch (res.status){
-                case 200 : {
-                    $scope.declarations = res.data.declarations;
-                    if($scope.declarations.length == 0)
-                        $scope.addRow();
+                case 200 :
+                {
+                    $scope.days = res.data.daysDeclaration;
+                    for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+                        for(var decI = 0; decI<$scope.days[dayI].declarations.length; decI++){
+                            $scope.days[dayI].declarations[decI].active = false;
+                        }
+                        if($scope.days[dayI].declarations.length == 0)
+                            $scope.addRow(dayI);
+
+                    }
+                    $scope.calculateTotal();
                     break;
                 }
                 case 204 : {
-                    $scope.declarations = [];
-                    $scope.addRow();
+                    $scope.days = [];
+                    //$scope.addRow();
                     break;
                 }
             }
@@ -121,17 +132,37 @@ app.controller("declaration_controller", function($scope, $http, $filter){
 
     };
 
+    $scope.calculateTotal = function(){
+        var total = 0;
+        for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+            for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
+                total += parseInt($scope.days[dayI].declarations[decI].price);
+            }
+        }
+        $scope.total = total;
+    };
+
     $scope.save = function(){
         var declarationsToTransfer = {
             date : $scope.selectedDate,
-            declarations : $scope.declarations
+            daysDeclaration : $scope.days
         };
         $http.post('api/declaration', declarationsToTransfer).then(function(){
+            for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+                for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
+                    if($scope.days[dayI].declarations[decI].price != 0)
+                        $scope.days[dayI].declarations[decI].active = false;
+                }
+            }
            addAlert();
         });
     };
 
-
+    $scope.getDecLength = function(index){
+        var length = $scope.days[index].declarations.length;
+        if(length > 0) length--;
+        return  length;
+    };
 
     $scope.applyDate();
 

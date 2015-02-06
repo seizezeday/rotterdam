@@ -1,5 +1,9 @@
 package com.rotterdam.model.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,11 @@ public class Day {
 
     @OneToMany(mappedBy = "day")
     private List<WorkHour> workHours;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "day")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Declaration> declarations;
 
     public Day(Date date, Week week) {
         this.date = date;
@@ -60,6 +69,14 @@ public class Day {
 
     public void setWorkHours(List<WorkHour> workHours) {
         this.workHours = workHours;
+    }
+
+    public List<Declaration> getDeclarations() {
+        return declarations;
+    }
+
+    public void setDeclarations(List<Declaration> declarations) {
+        this.declarations = declarations;
     }
 
     @Override

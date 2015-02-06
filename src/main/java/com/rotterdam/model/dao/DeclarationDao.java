@@ -15,8 +15,8 @@ import java.util.List;
 public class DeclarationDao extends AbstractGenericDao<Declaration> {
     public List<Declaration> selectByStartDateAndUser(long weekId, long userId){
         Query query = entityManager.createQuery("select declaration from Declaration declaration where" +
-                " declaration.week.idWeek = :weekId" +
-                " and declaration.week.period.user.id =:userId");
+                " declaration.day.week.idWeek = :weekId" +
+                " and declaration.day.week.period.user.id =:userId");
         query.setParameter("weekId", weekId);
         query.setParameter("userId", userId);
 

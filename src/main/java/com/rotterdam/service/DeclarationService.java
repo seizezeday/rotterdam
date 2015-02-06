@@ -1,8 +1,10 @@
 package com.rotterdam.service;
 
+import com.rotterdam.dto.DayDeclarationDto;
 import com.rotterdam.dto.DeclarationsDto;
 import com.rotterdam.model.dao.DeclarationDao;
 import com.rotterdam.model.dao.WeekDao;
+import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.Declaration;
 import com.rotterdam.model.entity.Week;
 import com.rotterdam.tools.DateTools;
@@ -30,8 +32,17 @@ public class DeclarationService {
         Date monday = DateTools.getDateOfPrevMonday(date);
 
         Week week = weekDao.selectByStartDateAndUser(monday, userId);
-        if(week != null)
-            return new DeclarationsDto(declarationDao.selectByStartDateAndUser(week.getIdWeek(), userId));
+        if(week != null) {
+            List<Day> days = week.getDays();
+            if(days != null){
+                DeclarationsDto declarationsDto = new DeclarationsDto();
+                for (Day day : days){
+                    DayDeclarationDto dayDeclarationDto = new DayDeclarationDto(day);
+                    declarationsDto.daysDeclaration.add(dayDeclarationDto);
+                }
+                return declarationsDto;
+            }
+        }
         return null;
     }
 
@@ -41,14 +52,21 @@ public class DeclarationService {
 
         Week week = weekDao.selectByStartDateAndUser(monday, userId);
 
-        if(!declarationEquals(week.getDeclarations(), declarationsDto.declarations)){
-            //lazy version
-            for (Declaration declaration : week.getDeclarations())
-                declarationDao.delete(declaration);
+        for (int i = 0; i < 7; i++) {
+            Day day = week.getDays().get(i);
+            List<Declaration> declarations = day.getDeclarations();
+            DayDeclarationDto dayDeclarationDto = declarationsDto.daysDeclaration.get(i);
+            if (!declarationEquals(declarations, dayDeclarationDto.declarations)) {
+                //lazy version
+                for (Declaration declaration : declarations)
+                    declarationDao.delete(declaration);
 
-            for(Declaration declaration : declarationsDto.declarations){
-                declaration.setWeek(week);
-                declarationDao.insert(declaration);
+                for (Declaration declaration : dayDeclarationDto.declarations) {
+                    if(declaration.getPrice() != 0) {
+                        declaration.setDay(day);
+                        declarationDao.insert(declaration);
+                    }
+                }
             }
         }
     }
@@ -62,8 +80,8 @@ public class DeclarationService {
                 return false;
             if(Double.compare(firstDeclaration.getPrice(), secondDeclaration.getPrice()) != 0)
                 return false;
-            if(!firstDeclaration.getDate().equals(secondDeclaration.getDate()))
-                return false;
+//            if(!firstDeclaration.getDate().equals(secondDeclaration.getDate()))
+//                return false;
         }
         return true;
     }

@@ -124,3 +124,7 @@ hr {
 .alert {
     display: none;
 }
+
+.margin_bottom_10_declaration_row div{
+    margin-bottom: 10px;
+}

@@ -348,43 +348,61 @@
       <div class="col-md-12">
           <p class="font_size_18">Korten declaration</p>
       </div>
-      <div class="col-md-4 margin_bottom_20">
-          <div class="form-group col-md-8" ng-class="{'has-error': datepickerForm.date.$invalid}">
+      <div class="margin_bottom_20">
+          <div class="form-group col-md-3" ng-class="{'has-error': datepickerForm.date.$invalid}">
               <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"
                      bs-datepicker >
           </div>
-          <div class="col-md-4">
+          <div class="col-md-1">
               <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Apply</button>
           </div>
-      </div>
-      <div class="col-md-12 margin_top_15 declaration_row" ng-repeat="declaration in declarations">
-          <div class="col-md-4">
-              <select class="form-control type_food"
-                      ng-model="declaration.costType"
-                      ng-options="costType.id as costType.name for costType in costTypes"></select>
-          </div>
-          <div class="col-md-2 declaration_price"><input type="text" class="form-control" placeholder="Cost"
-                                                         ng-model="declaration.price"></div>
-          <div class="col-md-2 declaration_price">
-              <input type="text" class="form-control" ng-model="declaration.date" name="date" bs-datepicker>
-          </div>
-          <div class="col-md-2">
-              <button class="btn btn-block btn-warning declaration_add_row"
-                      ng-show="$index == 0" ng-click="addRow()">Add
-              </button>
-              <button class="btn btn-block btn-danger declaration_del_row"
-                      ng-show="$index != 0" ng-click="removeRow($index)">Delete
-              </button>
-          </div>
-      </div>
-      <div class="col-md-4 col-md-offset-4 margin_top_15">
-          <p class="font_size_18 ">Total</p>
-      </div>
-      <div class="col-md-12">
-          <div class="col-md-3">
+          <div class="col-md-1">
               <button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">Save</button>
           </div>
+          <div class="col-md-2">
+              <p class="font_size_18 text-right">Total: {{total}}</p>
+          </div>
       </div>
+      <hr class="col-xs-12">
+      <div class="col-md-12 declaration_row" ng-repeat="day in days">
+          <div class="col-md-2 text-center font_size_18">
+              {{day.date}}
+          </div>
+          <div class="margin_bottom_10_declaration_row" ng-repeat="declaration in day.declarations">
+              <div class="col-md-4 " ng-class="{'col-md-offset-2': $index != 0}">
+                  <select class="form-control type_food"
+                          ng-model="declaration.costType"
+                          ng-options="costType.id as costType.name for costType in costTypes" ng-show="declaration.active"></select>
+                  <div class="font_size_18" ng-show="!declaration.active">
+                        {{costTypes[declaration.costType].name}}
+                  </div>
+              </div>
+              <div class="col-md-2 declaration_price">
+                  <input type="text" class="form-control" placeholder="Cost" ng-change="calculateTotal()"
+                                                             ng-model="declaration.price" ng-show="declaration.active">
+                  <div class="font_size_18" ng-show="!declaration.active">
+                      {{declaration.price}}
+                  </div>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-block btn-warning declaration_add_row"
+                          ng-show="$index == 0" ng-click="addRow($parent.$index)">Add
+                  </button>
+                  <button class="btn btn-block btn-danger declaration_del_row" ng-show="declaration.active && $index > 0"
+                          ng-click="removeRow($parent.$index, $index)">Delete
+                  </button>
+              </div>
+          </div>
+          <hr class="col-xs-12">
+      </div>
+      <div class="col-md-4 col-md-offset-4 margin_top_15">
+          <p class="font_size_18 ">Total: {{total}}</p>
+      </div>
+      <!--<div class="col-md-12">-->
+          <!--<div class="col-md-3">-->
+              <!--<button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">Save</button>-->
+          <!--</div>-->
+      <!--</div>-->
   </div>
 <div class="tab-pane font_size_18" id="settings">
          <div class="col-md-4 col-md-offset-8"><h3>Scheduled work hours</h3></div>
