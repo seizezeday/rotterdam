@@ -2,8 +2,6 @@ package com.rotterdam.model.entity;
 
 import com.rotterdam.model.dao.HibernateL2Cache;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.security.Principal;
@@ -30,12 +28,12 @@ public class User implements Principal, HibernateL2Cache {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
-	@LazyCollection(LazyCollectionOption.FALSE)
+//	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Session> sessions;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Period> periods;
 
 	public UserRole getRole() {

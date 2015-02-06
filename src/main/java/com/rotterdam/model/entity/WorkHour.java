@@ -30,7 +30,7 @@ public class WorkHour implements HibernateL2Cache, Serializable {
     private RideType rideType;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idDay")
     private Day day;
 

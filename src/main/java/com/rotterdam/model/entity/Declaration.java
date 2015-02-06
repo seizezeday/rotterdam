@@ -31,7 +31,7 @@ public class Declaration {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     private Date date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "idDay")
     @JsonIgnore
     private Day day;
@@ -112,7 +112,7 @@ public class Declaration {
                 ", costType='" + costType + '\'' +
                 ", price=" + price +
                 ", date=" + date +
-                ", day=" + day +
+//                ", day=" + day +
                 '}';
     }
 }

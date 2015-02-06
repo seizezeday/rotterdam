@@ -32,7 +32,7 @@ public class Period  implements HibernateL2Cache {
     private List<Week> weeks;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     private User user;
 
@@ -138,8 +138,8 @@ public class Period  implements HibernateL2Cache {
                 ", endDate=" + endDate +
                 ", overTime=" + overTime +
                 ", periodType=" + periodType +
-                ", weeks=" + weeks +
-                ", user=" + user +
+//                ", weeks=" + weeks +
+//                ", user=" + user +
                 '}';
     }
 

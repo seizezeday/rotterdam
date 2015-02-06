@@ -2,8 +2,6 @@ package com.rotterdam.model.entity;
 
 import com.rotterdam.model.dao.HibernateL2Cache;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -46,10 +44,10 @@ public class Week implements HibernateL2Cache {
 
     @JsonIgnore
     @OneToMany(mappedBy = "week")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Day> days;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPeriod")
     private Period period;
 
@@ -234,8 +232,8 @@ public class Week implements HibernateL2Cache {
                 ", promiseSundayTime=" + promiseSundayTime +
                 ", showCompensation=" + showCompensation +
                 ", saturdayCompensation=" + saturdayCompensation +
-                ", days=" + days +
-                ", period=" + period +
+//                ", days=" + days +
+//                ", period=" + period +
                 '}';
     }
 }

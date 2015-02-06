@@ -4,7 +4,7 @@ var DateConverter = new function(){
         var curr_month = this.prefixZeros(date.getMonth() + 1, 2);
         var curr_year = date.getFullYear();
         var formattedDate = curr_date + "." + (curr_month) + "." + curr_year;
-        console.log("Converted: " + date + " : To : " + formattedDate);
+//        console.log("Converted: " + date + " : To : " + formattedDate);
         return formattedDate;
     };
     this.prefixZeros = function (num, length)

@@ -1,8 +1,6 @@
 package com.rotterdam.model.entity;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,7 +18,7 @@ public class Day {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idWeek")
     private Week week;
 
@@ -29,7 +27,7 @@ public class Day {
 
     @JsonIgnore
     @OneToMany(mappedBy = "day")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Declaration> declarations;
 
     public Day(Date date, Week week) {
@@ -108,8 +106,8 @@ public class Day {
         return "Day{" +
                 "id=" + idDay +
                 ", date=" + date +
-                ", week=" + week +
-                ", workHours=" + workHours +
+//                ", week=" + week +
+//                ", workHours=" + workHours +
                 '}';
     }
 }

@@ -30,7 +30,7 @@ public class DayDeclarationDto {
 
     public DayDeclarationDto(Day day){
         this.date = day.getDate();
-        this.declarations = day.getDeclarations();
+        this.declarations = new ArrayList<>(day.getDeclarations());
     }
 
     @Override
