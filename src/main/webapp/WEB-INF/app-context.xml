@@ -19,7 +19,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://localhost:3306/rotterdam"/>
         <property name="username" value="root"/>
-        <property name="password" value="Access!22"/>
+        <property name="password" value="gfhjkm"/>
 	</bean>
 	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

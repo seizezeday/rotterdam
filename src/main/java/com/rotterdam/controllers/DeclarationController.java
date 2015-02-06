@@ -61,7 +61,7 @@ public class DeclarationController {
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
-        //declarationService.save(declarationsDto, user.getId());
+        declarationService.save(declarationsDto, user.getId());
 
         return Response.ok().build();
     }
