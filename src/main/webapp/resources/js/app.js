@@ -3,10 +3,60 @@ var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcr
 angular.module('mgcrea.ngStrapDocs');
 
 app.controller('time_tab_controller', function($scope, $http, $timeout) {
-//  $scope.time = new Date(1970, 0, 1, 10, 30);
-//  $scope.selectedTimeAsNumber = 10 * 36e5;
-////  $scope.selectedTimeAsString = '10:00';
-//  $scope.sharedDate = new Date(new Date().setMinutes(0));
+
+    $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
+
+    $scope.overNight.start.date = DateConverter.convertDateToString(new Date());
+//    $scope.overNight.start.date = "03.02.2015";
+    $scope.overNight.start.time = DateConverter.convertTimeToString(new Date());
+//    $scope.overNight.start.time = "14:20";
+
+    $scope.overNight.end.time = DateConverter.convertTimeToString(new Date());
+//    $scope.overNight.end.time = "20:33";
+
+    $scope.overNightSave = function(){
+        var days = $scope.days;
+        var startDayI, endDayI;
+        for(var dayI in days){
+            var day = days[dayI];
+            if(day.date == $scope.overNight.start.date)
+                startDayI = dayI;
+        }
+        endDayI = startDayI + 1;
+        $scope.days[startDayI].workHours.push({
+                startWorkingTime: $scope.overNight.start.time,
+                endWorkingTime: "24:00",
+                restTime: "",
+                dayType : '1'
+            }
+        );
+        $scope.days[endDayI].workHours.push({
+                startWorkingTime: "00:00",
+                endWorkingTime: $scope.overNight.end.time,
+                restTime: "",
+                dayType : '1'
+            }
+        );
+        console.log($scope.days);
+        $scope.clearWorkHours(startDayI);
+        $scope.rowChanged(startDayI);
+        $scope.clearWorkHours(endDayI);
+        $scope.rowChanged(endDayI);
+        $('#modal_close').click();
+    };
+
+    $scope.clearWorkHours = function(dayIndex){
+          var day = $scope.days[dayIndex];
+        for(var whI in day.workHours){
+            var wh = day.workHours[whI];
+            if((wh.startWorkingTime == "00:00" || wh.startWorkingTime == "" )
+                && (wh.endWorkingTime == "00:00" || wh.endWorkingTime == "" )
+                && (wh.restTime == "0" || wh.restTime == "" )){
+                day.workHours.splice(whI, 1);
+            }
+        }
+    };
+
     $scope.dayTypes = [
         {val: '0', description: 'Werkdag'},
         {val: '1', description: 'Weekenddag'},
@@ -129,6 +179,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         }
         return total;
     };
+
     $scope.calculateTableTotal = function(){
         //fully calculate
         var totalFull = 0;
@@ -159,6 +210,15 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         }
     };
 
+    $scope.dayTypeIsDisabled = function(dayIndex, index){
+        var rez = $scope.days[dayIndex].workHours[index].dayType != '0';
+        if(rez){
+            $scope.days[dayIndex].workHours[index].startWorkingTime = "00:00";
+            $scope.days[dayIndex].workHours[index].endWorkingTime = "00:00";
+            $scope.days[dayIndex].workHours[index].restTime = "0";
+        }
+        return  rez;
+    };
 
     $scope.applyDate();
 });
@@ -181,6 +241,27 @@ app.directive('timepicker', ['$parse', function($parse) {
                         scope.$apply();
                     }
                 })
+        }
+    }
+}]);
+
+app.directive('timepickerModal', ['$parse', function($parse) {
+    return {
+        restrict: "A",
+        link: function(scope, element, attrs) {
+            //attrs.ngModel contains title of model element
+            var modelElement = $parse(attrs.ngModel);
+            $(element).clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                autoclose: true,
+                'default': 'now',
+                afterDone: function() {
+                    //assign html element value to model value
+                    modelElement.assign(scope, element.val());
+                    scope.$apply();
+                }
+            })
         }
     }
 }]);

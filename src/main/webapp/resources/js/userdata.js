@@ -48,7 +48,7 @@ $(document).ready(function(){
                         $(".username").append(data.firstname);
                         $("#userdate").append(data.date);
                         $("#registrationNumber").append(data.regNum);
-                        compensation_json();
+                        //compensation_json();
                         overview_date();
                         }
                         }
@@ -70,21 +70,21 @@ $(document).ready(function(){
           });
         });
 
-    function compensation_json(){
-                $.ajax({
-                type: "POST",
-                url: "api/timeFor",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                statusCode: {
-                    200: function (data) {
-//                        alert("Success...");
-                        //$('#compensation_time_avaliable').text(data.timeForTime);
-                        $('#payment_time_avaliable').text(data.overTime);
-                    }
-                }
-            });
-            };
+//    function compensation_json(){
+//                $.ajax({
+//                type: "POST",
+//                url: "api/timeFor",
+//                contentType: "application/json; charset=utf-8",
+//                dataType: "json",
+//                statusCode: {
+//                    200: function (data) {
+////                        alert("Success...");
+//                        //$('#compensation_time_avaliable').text(data.timeForTime);
+//                        $('#payment_time_avaliable').text(data.overTime);
+//                    }
+//                }
+//            });
+//            };
     //            compensation time end
         $("#payment_time_field").keyup(function payment_hide_btn(){
            var payment = parseInt($("#payment_time_field").val());
@@ -101,24 +101,24 @@ $(document).ready(function(){
                     overTime: $('#payment_time_field').val()
                 };
                   //alert(paymenttime.avl_time_for_pay);
-                  payment_json(paymenttime);
+                  //payment_json(paymenttime);
                });
-    function payment_json(data) {
-                $.ajax({
-                type: "POST",
-                url: "api/timeFor/setOverTime",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                statusCode: {
-                    200: function () {
-                        compensation_json();
-                        //alert("Success...");
-                        $('#payment_time_field').val('');
-                    }
-                }
-            });
-            };
+//    function payment_json(data) {
+//                $.ajax({
+//                type: "POST",
+//                url: "api/timeFor/setOverTime",
+//                data: JSON.stringify(data),
+//                contentType: "application/json; charset=utf-8",
+//                dataType: "json",
+//                statusCode: {
+//                    200: function () {
+//                        compensation_json();
+//                        //alert("Success...");
+//                        $('#payment_time_field').val('');
+//                    }
+//                }
+//            });
+//            };
 
         //            Settings tab start
     $('#setting_save').click(function save_btn(){
@@ -188,40 +188,40 @@ $(document).ready(function(){
     //            Settings tab end
 
        //            Tab time multitrip start
-        $('#multitrip_save').click(function multitrip(day){
-        var multitripDateStart = $('#time_week_date_modal1').val();
-        var multitripTimeStart = $('#time_start_modal').val();
-        var multitripDateEnd = $('#time_week_date_modal2').val();
-        var multitripTimeEnd = $('#time_end_modal').val();
-
-        $('#time_week_date_modal1').val('');
-        $('#time_start_modal').val('');
-        $('#time_week_date_modal2').val('');
-        $('#time_end_modal').val('');
-
-        $('#modal_close').click();
-
-        $( ".time_tab div:contains("+multitripDateStart+")").children(3).addClass('modal_date1_start');
-        $( ".modal_date1_start:nth-child(3) input").val(multitripTimeStart);
-        $( ".modal_date1_start:nth-child(3) input.ng-pristine").attr('disabled','disabled');
-
-        $( ".time_tab div:contains("+multitripDateStart+")").next().addClass('modal_parent_date1_end');         $( ".modal_parent_date1_end:nth-child(2) input.ng-pristine").val('00:00');
-        $( ".modal_parent_date1_end:nth-child(2) input.ng-pristine").attr('disabled','disabled');
-
-        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).addClass('modal_date2_start');
-        $( ".modal_date2_start:nth-child(3) input").val("00:00");
-        $( ".modal_date2_start:nth-child(3) input").attr('disabled','disabled');
-
-        $( ".time_tab div:contains("+multitripDateEnd+")").next().addClass('modal_parent_date2_end');
-        $( ".modal_parent_date2_end:nth-child(2) input.ng-pristine").val(multitripTimeEnd);
-        $( ".modal_parent_date2_end:nth-child(2) input.ng-pristine").attr('disabled','disabled');
-
-        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date1_start');
-        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date1_end');           $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_start');
-        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_end');
-       //            Tab time multitrip end
-
-    });
+//        $('#multitrip_save').click(function multitrip(day){
+//        var multitripDateStart = $('#time_week_date_modal1').val();
+//        var multitripTimeStart = $('#time_start_modal').val();
+//        var multitripDateEnd = $('#time_week_date_modal2').val();
+//        var multitripTimeEnd = $('#time_end_modal').val();
+//
+//        $('#time_week_date_modal1').val('');
+//        $('#time_start_modal').val('');
+//        $('#time_week_date_modal2').val('');
+//        $('#time_end_modal').val('');
+//
+//        $('#modal_close').click();
+//
+//        $( ".time_tab div:contains("+multitripDateStart+")").children(3).addClass('modal_date1_start');
+//        $( ".modal_date1_start:nth-child(3) input").val(multitripTimeStart);
+//        $( ".modal_date1_start:nth-child(3) input.ng-pristine").attr('disabled','disabled');
+//
+//        $( ".time_tab div:contains("+multitripDateStart+")").next().addClass('modal_parent_date1_end');         $( ".modal_parent_date1_end:nth-child(2) input.ng-pristine").val('00:00');
+//        $( ".modal_parent_date1_end:nth-child(2) input.ng-pristine").attr('disabled','disabled');
+//
+//        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).addClass('modal_date2_start');
+//        $( ".modal_date2_start:nth-child(3) input").val("00:00");
+//        $( ".modal_date2_start:nth-child(3) input").attr('disabled','disabled');
+//
+//        $( ".time_tab div:contains("+multitripDateEnd+")").next().addClass('modal_parent_date2_end');
+//        $( ".modal_parent_date2_end:nth-child(2) input.ng-pristine").val(multitripTimeEnd);
+//        $( ".modal_parent_date2_end:nth-child(2) input.ng-pristine").attr('disabled','disabled');
+//
+//        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date1_start');
+//        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date1_end');           $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_start');
+//        $( ".time_tab div:contains("+multitripDateEnd+")").children(3).removeClass('modal_date2_end');
+//       //            Tab time multitrip end
+//
+//    });
 
 
         $('.time_monday_start,.time_monday_end,.time_monday_rest').keyup(function(){

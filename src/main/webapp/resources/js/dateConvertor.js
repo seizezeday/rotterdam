@@ -7,6 +7,14 @@ var DateConverter = new function(){
 //        console.log("Converted: " + date + " : To : " + formattedDate);
         return formattedDate;
     };
+
+    this.convertTimeToString = function (date){
+        var curr_hours = this.prefixZeros(date.getHours(), 2);
+        var curr_minutes = this.prefixZeros(date.getMinutes(), 2);
+        var formattedTime = curr_hours + ":" + curr_minutes;
+        return formattedTime;
+    };
+
     this.prefixZeros = function (num, length)
     {
         var r = "" + num;

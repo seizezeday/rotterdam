@@ -98,7 +98,8 @@
                    </div>
                    <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
                        <input class="form-control time_monday_start" maxlength="5"
-                              placeholder="Start" ng-model="workHour.startWorkingTime" timepicker ng-show="active" ng-change="rowChanged($parent.$index)">
+                              placeholder="Start" ng-model="workHour.startWorkingTime" timepicker
+                              ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
                        <div class="font_size_18" ng-show="!active">
                            {{workHour.startWorkingTime}}
                        </div>
@@ -107,14 +108,17 @@
                <div class="col-md-3 form-group col-xs-12">
                    <div class="col-md-6 col-xs-12 padding_bottom_10">
                        <input class="form-control clockpicker time_monday_end" maxlength="5"
-                              placeholder="End" ng-model="workHour.endWorkingTime" timepicker ng-show="active" ng-change="rowChanged($parent.$index)">
+                              placeholder="End" ng-model="workHour.endWorkingTime" timepicker
+                              ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
                        <div class="font_size_18" ng-show="!active">
                            {{workHour.endWorkingTime}}
                        </div>
                    </div>
                    <div class="col-md-6 col-xs-12">
                        <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3"
-                              number-mask="" placeholder="Rest min" maxlength="3" ng-model="workHour.restTime" ng-show="active" ng-change="rowChanged($parent.$index)">
+                              number-mask="" placeholder="Rest min" maxlength="3"
+                              ng-model="workHour.restTime" ng-show="active" ng-change="rowChanged($parent.$index)"
+                              data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
                        <div class="font_size_18" ng-show="!active">
                            {{workHour.restTime}}
                        </div>
@@ -163,6 +167,37 @@
       <p class="font_size_18">Total worked Sunday: <span id="total_sunday">{{daysTotalTime[6].h}}h {{daysTotalTime[6].m}}m</span></p>
 
              </div> 
+      </div>
+      <div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button id="modal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Overnight trip</h4>
+                  </div>
+                  <div id="multitripform" class="modal-body">
+                      <div class="col-md-12">
+                          <div class="form-group col-md-4">
+                              <input id="time_week_date_modal1" type="text" class="form-control" ng-model="overNight.start.date" name="date" bs-datepicker placeholder="start date">
+
+                          </div>
+                          <div class="form-group col-md-4">
+                              <input id="time_start_modal" class="form-control" maxlength="5" placeholder="Start" ng-model="overNight.start.time" timepicker-modal>
+                          </div>
+                          <div class="form-group col-md-4 ">
+                              <input id="time_end_modal" class="form-control" maxlength="5" placeholder="End" ng-model="overNight.end.time" timepicker-modal>
+                          </div>
+                      </div>
+                      <!--<div class="col-md-12">-->
+                          <!---->
+                      <!--</div>-->
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button id="multitrip_save" type="button" class="btn btn-primary" ng-click="overNightSave()">Save changes</button>
+                  </div>
+              </div>
+          </div>
       </div>
   </div>
     <div class="tab-pane" id="payment_time">
@@ -329,39 +364,7 @@
 			</div>
 		</div>
     
-<div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button id="modal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Overnight trip</h4>
-      </div>
-      <div id="multitripform" class="modal-body">
-        <div class="col-md-12">
-                     <div class="form-group col-md-4" ng-controller="DatepickerDemoController">
-        <input id="time_week_date_modal1" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="start date">
 
-      </div>
-             <div class="form-group col-md-4">
-                <input id="time_start_modal" class="form-control clockpicker" maxlength="5" placeholder="Start">
-                         </div>
-            </div>       
-                     <div class="col-md-12">
-                     <div class="form-group col-md-4" ng-controller="DatepickerDemoController">
-        <input id="time_week_date_modal2" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="end date">
-      </div>
-            <div class="form-group col-md-4 ">
-                <input id="time_end_modal" class="form-control clockpicker" maxlength="5" placeholder="End">
-            </div>      
-      </div>
-    </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="multitrip_save" type="button" class="btn btn-primary">Save changes</button>
-      </div>
-  </div>
-</div>
-</div>
      <script src="resources/js/angular.js"></script>
      <script src="resources/js/angular-animate.js"></script>
      <script src="resources/js/angular-sanitize.min.js"></script>
