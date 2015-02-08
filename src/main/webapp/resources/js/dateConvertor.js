@@ -70,6 +70,32 @@ var DateConverter = new function(){
             }
         }
     };
+
+    this.convertTimeStringToIntMinutes = function(time){
+        if(time == "") return 0;
+        var times = time.split(":");
+        if(times.length < 1) return 0;
+        var h = parseInt(times[0]);
+        var m = parseInt(times[1]);
+        return h * 60 + m;
+    }
+
+    this.convertIntMinutesToTimeArray = function(time){
+        var times = [];
+        var h = parseInt(time /60, 0); times[0] = h;
+        var m = time - h * 60; times[1] = m;
+        return times;
+    }
+
+    this.convertTimePairToIntMinutes = function(times){
+        return times.h * 60 + times.m;
+    }
+
+    this.convertIntMinutesToTimePair = function(time){
+        var h = parseInt(time /60, 0);
+        var m = time - h * 60;
+        return {h : h, m : m};
+    }
 }
 
 

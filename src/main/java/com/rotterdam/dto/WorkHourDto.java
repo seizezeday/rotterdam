@@ -3,9 +3,12 @@ package com.rotterdam.dto;
 import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.RideType;
 import com.rotterdam.model.entity.WorkHour;
+import com.rotterdam.tools.json.deserializer.JsonRideTypeDeserializer;
+import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
 import com.rotterdam.tools.json.serializer.JsonRideTypeSerializer;
 import com.rotterdam.tools.json.serializer.JsonTimeSerializer;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.text.SimpleDateFormat;
@@ -19,19 +22,22 @@ import java.util.List;
  */
 public class WorkHourDto {
     @JsonSerialize(using= JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
     public Date startWorkingTime;
     @JsonSerialize(using= JsonTimeSerializer.class)
+    @JsonDeserialize(using = JsonTimeDeserializer.class)
     public Date endWorkingTime;
     public int restTime;
     @JsonSerialize(using=JsonRideTypeSerializer.class)
+    @JsonDeserialize(using = JsonRideTypeDeserializer.class)
     @JsonProperty("dayType")
     public RideType rideType;
 
     @Override
     public String toString() {
         return "WorkHourDto{" +
-                "startWorkingTime=" + new SimpleDateFormat("hh:mm").format(startWorkingTime) +
-                ", endWorkingTime=" + new SimpleDateFormat("hh:mm").format(endWorkingTime) +
+                "startWorkingTime=" + new SimpleDateFormat("HH:mm").format(startWorkingTime) +
+                ", endWorkingTime=" + new SimpleDateFormat("HH:mm").format(endWorkingTime) +
                 ", restTime=" + restTime +
                 ", rideType=" + rideType +
                 '}';

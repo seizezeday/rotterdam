@@ -1,9 +1,6 @@
 package com.rotterdam.service;
 
-import com.rotterdam.dto.DayDto;
-import com.rotterdam.dto.TotalTimeDto;
-import com.rotterdam.dto.WeekDto;
-import com.rotterdam.dto.WorkHourDto;
+import com.rotterdam.dto.*;
 import com.rotterdam.model.dao.DayDao;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.WeekDao;
@@ -15,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,10 +42,11 @@ public class WeekService {
     public TotalTimeDto save(WeekDto weekDto, long userId){
         TotalTimeDto totalTime = null;
         //we need to find corresponding week
-        Week week = weekDao.selectByStartDateAndUser(weekDto.days.get("Monday").date, userId);
+//        Week week = weekDao.selectByStartDateAndUser(weekDto.days.get("Monday").date, userId);
+        Week week = weekDao.selectByStartDateAndUser(weekDto.days.get(0).date, userId);
         if (week != null) {
             //we need to determine what was changed or we can override
-            for(DayDto dayDto :weekDto.days.values() ){
+            for(DayDto dayDto :weekDto.days ){
                 Day day = determineDayByDate(week.getDays(), dayDto.date);
                 if(day == null){
                     //we need to create new day entry
@@ -105,7 +104,8 @@ public class WeekService {
     public TotalTimeDto calculateTotalTime(WeekDto weekDto, long userId){
         TotalTimeDto totalTimeDto = new TotalTimeDto();
         double totalTime = 0;
-        for (DayDto dayDto : weekDto.days.values()) {
+        for (DayDto dayDto : weekDto.days) {
+            Double totalTimeDay = new Double(0);
             if(dayDto.workHours != null && dayDto.workHours.size() != 0) {
                 RideType rideType = dayDto.workHours.get(0).rideType;
                 if(rideType.equals(RideType.Werkdag)) {
@@ -114,18 +114,7 @@ public class WeekService {
                         double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
                         double rest = ((double) workHourDto.restTime) / (double) 60;
 
-                        Double totalTimeDay = (endTime - startTime - rest);
-
-                        int h = totalTimeDay.intValue();
-
-                        int m = (int) ((totalTimeDay - h) * 60);
-
-                        totalTimeDto.days.put(DateTools.getWeekDayTitle(dayDto.date), h + "h " + m + "m");
-
-                        String weekDayTitle = DateTools.getWeekDayTitle(dayDto.date);
-                        if (!weekDayTitle.equals("Saturday") && !weekDayTitle.equals("Sunday")) {
-                            totalTime += totalTimeDay;
-                        }
+                        totalTimeDay += (endTime - startTime - rest);
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
@@ -134,11 +123,22 @@ public class WeekService {
                     }
                 }
             }
+            int h = totalTimeDay.intValue();
+
+            int m = (int) ((totalTimeDay - h) * 60);
+
+            totalTimeDto.days.add(new TimeDto(h, m));
+
+            String weekDayTitle = DateTools.getWeekDayTitle(dayDto.date);
+            if (!weekDayTitle.equals("Saturday") && !weekDayTitle.equals("Sunday")) {
+                totalTime += totalTimeDay;
+            }
         }
         totalTimeDto.totalTime = totalTime;
         //now we need to calculate over-time
         if(weekDto.days.size() != 0) {
-            Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+//            Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+            Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get(0).date, userId);
             if (week != null) {
                 double promisedWeekTime = timeForService.getPromisedWeekTime(week);
                 double overTime = 0;
@@ -167,5 +167,19 @@ public class WeekService {
         return weekPeriod.getStartDate().equals(currentPeriod.getStartDate());
 
 
+    }
+
+    @Transactional
+    public List<Integer> getPromisedWeekTime(Date startDate, long userId){
+        Week week = weekDao.selectByStartDateAndUser(startDate, userId);
+        if(week != null){
+            List<Integer> promises = new ArrayList<>();
+            promises.add(new Double(DateTools.getDoubleFormatHours(week.getPromiseMondayTime())).intValue());
+            promises.add(new Double(DateTools.getDoubleFormatHours(week.getPromiseTuesdayTime())).intValue());
+            promises.add(new Double(DateTools.getDoubleFormatHours(week.getPromiseWednesdayTime())).intValue());
+            promises.add(new Double(DateTools.getDoubleFormatHours(week.getPromiseThursdayTime())).intValue());
+            promises.add(new Double(DateTools.getDoubleFormatHours(week.getPromiseFridayTime())).intValue());
+            return promises;
+        } else return null;
     }
 }

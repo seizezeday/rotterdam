@@ -5,9 +5,11 @@ import com.rotterdam.model.entity.RideType;
 import com.rotterdam.model.entity.WorkHour;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.JsonCommands;
+import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -20,9 +22,12 @@ import java.util.*;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeekDto {
-    public Map<String, DayDto> days = new LinkedHashMap<>();
+    public List<DayDto> days = new ArrayList<>();
     public TotalTimeDto totalTime = new TotalTimeDto();
+    public List<Integer> promisedTime = new ArrayList<>();
     public boolean active = false;
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    public Date date;
 
     @Override
     public String toString() {
@@ -32,7 +37,7 @@ public class WeekDto {
     }
 
     public void calculateTotal() {
-        for(DayDto dayDto : days.values()){
+        for(DayDto dayDto : days){
             double total = 0;
             for (WorkHourDto workHourDto : dayDto.workHours){
                 double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
@@ -54,7 +59,7 @@ public class WeekDto {
         while (days.hasNext()) {
             DayDto dayDto = new DayDto();
             Map.Entry<String, JsonNode> day = days.next();
-            String dayTitle = day.getKey();
+            //String dayTitle = day.getKey();
             Iterator<JsonNode> dateAndWorkHours = day.getValue().getElements();
             String date = dateAndWorkHours.next().get("date").asText();
             dayDto.date = parseDate(date);
@@ -67,7 +72,8 @@ public class WeekDto {
                 workHourDto.rideType = RideType.values()[workHour.get("dayType").asInt()-1];
                 dayDto.workHours.add(workHourDto);
             }
-            weekDto.days.put(dayTitle, dayDto);
+//            weekDto.days.put(dayTitle, dayDto);
+            weekDto.days.add(dayDto);
         }
         return weekDto;
     }
@@ -86,7 +92,7 @@ public class WeekDto {
     }
 
     public void checkRestTime(){
-        for (DayDto dayDto : days.values())
+        for (DayDto dayDto : days)
             for (WorkHourDto workHourDto : dayDto.workHours){
                 if(workHourDto.restTime == 0){
 
@@ -117,7 +123,8 @@ public class WeekDto {
                 workHourDto.rideType = workHour.getRideType();
                 dayDto.workHours.add(workHourDto);
             }
-            weekDto.days.put(DateTools.getWeekDayTitle(dayDto.date), dayDto);
+//            weekDto.days.put(DateTools.getWeekDayTitle(dayDto.date), dayDto);
+            weekDto.days.add(dayDto);
         }
         return weekDto;
     }

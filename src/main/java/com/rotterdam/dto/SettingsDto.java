@@ -3,7 +3,7 @@ package com.rotterdam.dto;
 import com.rotterdam.model.entity.Week;
 import com.rotterdam.tools.json.JsonCommands;
 import com.rotterdam.tools.json.deserializer.JsonDateDeserializer;
-import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
+import com.rotterdam.tools.json.deserializer.JsonTimeHourDeserializer;
 import com.rotterdam.tools.json.serializer.JsonDateSerializer;
 import com.rotterdam.tools.json.serializer.JsonTimeHourSerializer;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -23,25 +23,25 @@ public class SettingsDto {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     public Date currentDate;
 
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date monday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date tuesday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date wednesday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date thursday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date friday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date saturday_hours;
-    @JsonDeserialize(using = JsonTimeDeserializer.class)
+    @JsonDeserialize(using = JsonTimeHourDeserializer.class)
     @JsonSerialize(using = JsonTimeHourSerializer.class)
     public Date sunday_hours;
     @JsonSerialize(using = JsonDateSerializer.class)

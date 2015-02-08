@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -37,7 +38,7 @@ public class TimeForController {
 
 
     @RolesAllowed({ "Driver" })
-    @POST
+    @GET
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response getTimeInfo(@Context HttpServletRequest hsr) throws ParseException, IOException {
         Date monday = DateTools.getDateOfPrevMonday(new Date());

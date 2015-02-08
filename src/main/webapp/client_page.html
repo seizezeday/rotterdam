@@ -64,13 +64,13 @@
             </dl>
         </div>
   </div>
-  <div class="tab-pane" id="Time" >
-   <div class="row col-xs-12" ng-controller="DatepickerDemoController">
-         <div class="form-group col-md-4" ng-class="{'has-error': datepickerForm.date.$invalid}">
+  <div class="tab-pane" id="Time" ng-controller="time_tab_controller">
+   <div class="row col-xs-12" >
+         <div class="form-group col-md-4" ng-class="">
         <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date"  bs-datepicker>
       </div>
         <div class="col-md-1 col-xs-6 margin_bottom_10">
-    <button id="date_submit" class="btn btn-warning btn-block">Apply</button>
+    <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Apply</button>
        </div>
     <div class="col-md-2 col-xs-6 margin_bottom_10">
 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
@@ -80,211 +80,87 @@
              <div class="col-md-2 col-xs-6 margin_bottom_10">
             <dl class="dl-horizontal margin_fix">
               <dt>Avaliable time-for-time:</dt>
-              <dd id='compensation_time_avaliable'></dd>
+              <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
             </dl>
          </div>  
     <div class="col-md-1 col-xs-12 col-md-offset-2">
-        <button id="date_save" type="button" class="btn btn-success btn-block">Save</button>
+        <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">Save</button>
     </div>
         <hr class="col-xs-12">
    </div>
-   <div ng-controller="TimepickerDemoController">
- <div class="row col-xs-12 time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10">Monday</div>
-        <div class="col-md-4 col-xs-12 padding_bottom_10">
-      <input class="form-control clockpicker time_monday_start" maxlength="5"
- placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6 col-xs-12 padding_bottom_10">
-           <input class="form-control clockpicker time_monday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6 col-xs-12">
-                <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3" number-mask="" placeholder="Rest min" maxlength="3">
-        </div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4">
-         <select class="form-control time_monday_type_day margin_bottom_10">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_monday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_monday"></span></div>
-       </div>
-        <hr class="col-xs-12 margin_top_10">
-   </div>
-   <div class="row col-xs-12 time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Tuesday</div>
-        <div class="col-md-4 form-group col-xs-12">
-            <input class="form-control clockpicker time_tuesday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6 col-xs-12">
+   <div ng-repeat="day in days">
+       <div ng-repeat="workHour in day.workHours">
+           <div class="row col-xs-12 time_tab">
+               <div class="col-md-4 col-xs-12 ">
+                   <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
+                   <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
+                       {{weekTitles[$parent.$index]}}
+                   </div>
+                   <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
+                       <input class="form-control time_monday_start" maxlength="5"
+                              placeholder="Start" ng-model="workHour.startWorkingTime" timepicker ng-show="active" ng-change="rowChanged($parent.$index)">
+                       <div class="font_size_18" ng-show="!active">
+                           {{workHour.startWorkingTime}}
+                       </div>
+                   </div>
+               </div>
+               <div class="col-md-3 form-group col-xs-12">
+                   <div class="col-md-6 col-xs-12 padding_bottom_10">
+                       <input class="form-control clockpicker time_monday_end" maxlength="5"
+                              placeholder="End" ng-model="workHour.endWorkingTime" timepicker ng-show="active" ng-change="rowChanged($parent.$index)">
+                       <div class="font_size_18" ng-show="!active">
+                           {{workHour.endWorkingTime}}
+                       </div>
+                   </div>
+                   <div class="col-md-6 col-xs-12">
+                       <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3"
+                              number-mask="" placeholder="Rest min" maxlength="3" ng-model="workHour.restTime" ng-show="active" ng-change="rowChanged($parent.$index)">
+                       <div class="font_size_18" ng-show="!active">
+                           {{workHour.restTime}}
+                       </div>
+                   </div>
+               </div>
+               <div class="col-md-5 form-group col-xs-12">
+                   <div class="col-md-4" ng-show="$index == 0">
+                       <select class="form-control type_food"
+                               ng-model="workHour.dayType"
+                               ng-options="dayType.val as dayType.description for dayType in dayTypes" ng-show="active" ng-change="rowChanged($parent.$index)"></select>
+                       <div class="font_size_18" ng-show="!active">
+                           {{dayTypes[workHour.dayType].description}}
+                       </div>
 
-                <input class="form-control clockpicker time_tuesday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6 col-xs-12"><input type="text" class="form-control time_tuesday_rest positive-integer" type="text" placeholder="Rest min" number-mask="" maxlength="3"></div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4">
-         <select class="form-control time_tuesday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_tuesday col-xs-12"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_tuesday"></span></div>
-       </div>
-        <hr class="col-xs-12">
-   </div>
-   <div class="row col-xs-12 time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Wednesday</div>
-        <div class="col-md-4 form-group col-xs-12">
-        <input class="form-control clockpicker time_wednesday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6">
-        <input class="form-control clockpicker time_wednesday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6"><input type="text" class="form-control time_wednesday_rest positive-integer"  placeholder="Rest min" number-mask="" maxlength="3"></div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4">
-         <select class="form-control time_wednesday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_wednesday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_wednesday"></span></div>
-       </div>
-        <hr class="col-xs-12">
-   </div>
-   <div class="row col-xs-12 time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Thursday</div>
-        <div class="col-md-4 form-group col-xs-12">
-              <input class="form-control clockpicker time_thursday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6">
-        <input class="form-control clockpicker time_thursday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6"><input type="text" class="form-control time_thursday_rest positive-integer"  placeholder="Rest min" number-mask="" maxlength="3"></div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4">
-         <select class="form-control time_thursday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_thursday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_thursday"></span></div>
-       </div>
-        <hr class="col-xs-12">
-   </div>
-   <div class="row col-xs-12 time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Friday</div>
-        <div class="col-md-4 form-group col-xs-12">
-            <input class="form-control clockpicker time_friday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6">
-             <input class="form-control clockpicker time_friday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6"><input type="text" class="form-control time_friday_rest positive-integer"  placeholder="Rest min" number-mask="" maxlength="3"></div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4">
-         <select class="form-control time_friday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_friday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_friday"></span></div>
-       </div>
-        <hr class="col-xs-12">
-   </div>
-   <div class="row col-xs-12 time_tab time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Saturday</div>
-        <div class="col-md-4 form-group col-xs-12">
-            <input class="form-control clockpicker time_saturday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6">
-           <input class="form-control clockpicker time_saturday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6 "><input type="text" class="form-control time_saturday_rest positive-integer"  placeholder="Rest min" number-mask="" maxlength="3"></div>
-       </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4 ">
-         <select class="form-control time_saturday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-        </div>  
-        <div class="col-md-4 add_row_saturday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-           <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_saturday"></span></div>
-       </div>
-        <hr class="col-xs-12">
-   </div>   
-      <div class="row col-xs-12 time_tab time_tab">
-       <div class="col-md-4 col-xs-12 ">
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"></div>
-       <div class="col-md-4 col-xs-12 text-center font_size_18 time_day">Sunday</div>
-        <div class="col-md-4 form-group col-xs-12">
-            <input class="form-control clockpicker time_sunday_start" maxlength="5" placeholder="Start">
-       </div>
-       </div>
-       <div class="col-md-3 form-group col-xs-12">
-      <div class="col-md-6">
-            <input class="form-control clockpicker time_sunday_end" maxlength="5" placeholder="End">
-      </div>
-        <div class="col-md-6 "><input type="text" class="form-control time_sunday_rest positive-integer"  placeholder="Rest min" number-mask="" maxlength="3"></div>
+                   </div>
+                   <div class="col-md-4 add_row_monday" ng-show="$index == 0 && active">
+                       <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Another trip</button>
+                   </div>
+                   <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">
+                       <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >Delete</button>
+                   </div>
 
+                   <div class="col-md-4 font_size_18 text-center" ng-show="$index == 0">
+                       Total worked <span id="total_time_monday">
+                       {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
+                   </span>
+                   </div>
+               </div>
+           </div>
        </div>
-       <div class="col-md-5 form-group col-xs-12">
-         <div class="col-md-4 ">
-         <select class="form-control time_sunday_type_day">
-          <option value="{{option.val}}" ng-repeat="option in options">{{option.deskription}}</option>
-        </select>
-
-        </div>  
-        <div class="col-md-4 add_row_sunday"><button type="button" class="btn btn-warning btn-block ">Another trip</button></div>
-        <div class="col-md-4 font_size_18 text-center">Total worked <span id="total_time_sunday"></span></div>
-       </div>
-        <hr class="col-xs-12">
+       <hr class="col-xs-12 margin_top_10">
    </div>
-     </div>
       <div class="row col-xs-12 row">
       <div class="col-md-6">
-      <p class="font_size_18">Total worked mon-fri: <span id="total_mon_fri"></span></p>
+      <p class="font_size_18">Total worked mon-fri: <span id="total_mon_fri">{{totalMonFri.h}}h {{totalMonFri.m}}m</span></p>
         </div>
           <div class="col-md-6">             
-      <p class="font_size_18">Total over hours: <span id="total_over_hours"></span></p>
+      <p class="font_size_18">Total over hours: <span id="total_over_hours">{{overTime.h}}h {{overTime.m}}m</span></p>
 
                      </div>
                  <div class="col-md-12">   
-      <p class="font_size_18">Total worked Saturday: <span id="total_saturday"></span></p>
+      <p class="font_size_18">Total worked Saturday: <span id="total_saturday">{{daysTotalTime[5].h}}h {{daysTotalTime[5].m}}m</span></p>
 
              </div> 
                  <div class="col-md-12">   
-      <p class="font_size_18">Total worked Sunday: <span id="total_sunday"></span></p>
+      <p class="font_size_18">Total worked Sunday: <span id="total_sunday">{{daysTotalTime[6].h}}h {{daysTotalTime[6].m}}m</span></p>
 
              </div> 
       </div>
@@ -395,9 +271,9 @@
           </div>
           <hr class="col-xs-12">
       </div>
-      <div class="col-md-4 col-md-offset-4 margin_top_15">
-          <p class="font_size_18 ">Total: {{total}}</p>
-      </div>
+      <!--<div class="col-md-4 col-md-offset-4 margin_top_15">-->
+          <!--<p class="font_size_18 ">Total: {{total}}</p>-->
+      <!--</div>-->
       <!--<div class="col-md-12">-->
           <!--<div class="col-md-3">-->
               <!--<button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">Save</button>-->

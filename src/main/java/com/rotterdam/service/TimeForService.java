@@ -154,7 +154,8 @@ public class TimeForService {
 
     @Transactional
     public Date getPromisedTimeByDate(Date date, WeekDto weekDto, long userId){
-        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+//        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get("Monday").date, userId);
+        Week week = weekDao.selectByDateBetweenAndUser(weekDto.days.get(0).date, userId);
         String weekDayTitle = DateTools.getWeekDayTitle(date);
         switch (weekDayTitle){
             case "Monday" : return week.getPromiseMondayTime();

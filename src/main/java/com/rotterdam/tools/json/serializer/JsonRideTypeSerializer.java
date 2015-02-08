@@ -21,7 +21,7 @@ public class JsonRideTypeSerializer extends JsonSerializer<RideType> {
     public void serialize(RideType rideType, JsonGenerator gen, SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
-        String formattedRideType = (rideType.ordinal()+1) + "";
+        String formattedRideType = (rideType.ordinal()) + "";
 
         gen.writeString(formattedRideType);
     }
