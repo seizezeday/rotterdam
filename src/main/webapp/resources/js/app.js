@@ -96,6 +96,12 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 case 200 :
                 {
                     $scope.days = res.data.days;
+                    for(var dayI in $scope.days) {
+                        var day = $scope.days[dayI];
+                        if (day.workHours.length == 0) {
+                            $scope.addRow(dayI);
+                        }
+                    }
                     $scope.active = res.data.active;
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
@@ -131,7 +137,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 startWorkingTime: "",
                 endWorkingTime: "",
                 restTime: "",
-                dayType : '1'
+                dayType : '0'
             }
         );
     };
@@ -186,7 +192,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         for (var i = 0; i < 5; i++) {
             totalFull += $scope.calculateRowTotal(i);
         }
-        if (totalFull > 0) {
+        if (totalFull >= 0) {
             var times = DateConverter.convertIntMinutesToTimeArray(totalFull);
             $scope.totalMonFri.h = times[0];
             $scope.totalMonFri.m = times[1];

@@ -182,4 +182,28 @@ public class WeekService {
             return promises;
         } else return null;
     }
+
+    @Transactional
+    public List<DayDto> getFakeDays(Date monday) {
+        List<DayDto> days = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            DayDto dayDto = new DayDto();
+            dayDto.date = DateTools.getDatePlusDays(monday, i);
+            dayDto.total = new Date(0,0,0,0,0,0);
+            days.add(dayDto);
+        }
+        return days;
+    }
+
+    @Transactional
+    public TotalTimeDto getFakeTotalTime() {
+        TotalTimeDto totalTimeDto = new TotalTimeDto();
+        totalTimeDto.totalTime = 0.0;
+        totalTimeDto.overTime = 0.0;
+        totalTimeDto.days = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            totalTimeDto.days.add(new TimeDto(0,0));
+        }
+        return totalTimeDto;
+    }
 }

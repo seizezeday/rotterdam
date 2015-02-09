@@ -91,6 +91,16 @@ public class WeekController {
 
         weekDto.promisedTime = weekService.getPromisedWeekTime(monday, user.getId());
 
+        if(weekDto.days == null || weekDto.days.size() == 0){
+            //we need to make fake days
+            weekDto.days = weekService.getFakeDays(monday);
+        }
+
+        if(weekDto.totalTime == null || weekDto.totalTime.days.size() == 0){
+            //we need to make fake days
+            weekDto.totalTime = weekService.getFakeTotalTime();
+        }
+
         return Response.ok(weekDto).build();
     }
 }
