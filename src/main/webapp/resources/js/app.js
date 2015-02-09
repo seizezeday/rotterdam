@@ -222,6 +222,13 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             $scope.days[dayIndex].workHours[index].startWorkingTime = "00:00";
             $scope.days[dayIndex].workHours[index].endWorkingTime = "00:00";
             $scope.days[dayIndex].workHours[index].restTime = "0";
+        } else {
+            var wh =  $scope.days[dayIndex].workHours[index];
+            if(wh.startWorkingTime == "00:00" && wh.startWorkingTime == "00:00" && wh.restTime == "0"){
+                $scope.days[dayIndex].workHours[index].startWorkingTime = "";
+                $scope.days[dayIndex].workHours[index].endWorkingTime = "";
+                $scope.days[dayIndex].workHours[index].restTime = "";
+            }
         }
         return  rez;
     };
