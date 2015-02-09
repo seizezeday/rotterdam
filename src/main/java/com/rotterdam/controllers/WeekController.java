@@ -97,7 +97,7 @@ public class WeekController {
         }
 
         if(weekDto.totalTime == null || weekDto.totalTime.days.size() == 0){
-            //we need to make fake days
+            //we need to make fake total-time
             weekDto.totalTime = weekService.getFakeTotalTime();
         }
 

@@ -22,19 +22,19 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             if(day.date == $scope.overNight.start.date)
                 startDayI = dayI;
         }
-        endDayI = startDayI + 1;
+        endDayI = (parseInt(startDayI) + 1) + "";
         $scope.days[startDayI].workHours.push({
                 startWorkingTime: $scope.overNight.start.time,
                 endWorkingTime: "24:00",
                 restTime: "",
-                dayType : '1'
+                dayType : '0'
             }
         );
         $scope.days[endDayI].workHours.push({
                 startWorkingTime: "00:00",
                 endWorkingTime: $scope.overNight.end.time,
                 restTime: "",
-                dayType : '1'
+                dayType : '0'
             }
         );
         console.log($scope.days);
