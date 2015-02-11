@@ -31,12 +31,12 @@
        <div class="panel panel-default">
        <div class="panel-heading">
 <ul class="nav nav-tabs" role="tablist" id="myTab">
-  <li class="active"><a href="#home" role="tab" data-toggle="tab">Hoofdpagina</a></li>
-  <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Tijd</a></li>
+  <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
+  <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Time</a></li>
   <li class="hide_tabs"><a href="#sheet_overview" role="tab" data-toggle="tab">Overview</a></li>
-  <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaraties</a></li>
-  <li><a href="#settings" role="tab" data-toggle="tab">instellingen  </a></li>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >Uitloggen</a>
+  <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaration</a></li>
+  <li><a href="#settings" role="tab" data-toggle="tab">Settings </a></li>
+      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >Logout</a>
 </ul>
      
  </div>
@@ -46,7 +46,7 @@
   <div class="tab-pane active" id="home">
         <div class="well well-sm">
             <dl class="dl-horizontal margin_fix">
-              <dt>Naam :</dt>
+              <dt>Name:</dt>
               <dd class="username"></dd>
             </dl>
         </div>
@@ -58,7 +58,7 @@
         </div>
         <div class="well well-sm">
             <dl class="dl-horizontal margin_fix">
-              <dt>Datum :</dt>
+              <dt>Date:</dt>
               <dd id="userdate"></dd>
             </dl>
         </div>
@@ -69,11 +69,11 @@
         <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date"  bs-datepicker>
       </div>
         <div class="col-md-1 col-xs-6 margin_bottom_10">
-    <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Brengen</button>
+    <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Apply</button>
        </div>
     <div class="col-md-2 col-xs-6 margin_bottom_10">
 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
-    Nachtelijke reis
+    Overnight trip
         </button>
          </div> 
              <div class="col-md-2 col-xs-6 margin_bottom_10">
@@ -83,7 +83,7 @@
             </dl>
          </div>  
     <div class="col-md-1 col-xs-12 col-md-offset-2">
-        <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">Opslaan</button>
+        <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">Save</button>
     </div>
         <hr class="col-xs-12">
    </div>
