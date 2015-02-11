@@ -73,7 +73,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         {val: '12', description: 'Geen werkdag'}
     ];
 
-    $scope.weekTitles = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    $scope.weekTitles = ["Maandag", "Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag","Zondag"];
 
     $scope.selectedDate = DateConverter.convertDateToString(new Date());
 //    $scope.selectedDate = "01.02.2015";
