@@ -10,6 +10,9 @@
 .margin_top_50{
     margin-top: 50px;
 }
+.dl-horizontal dt {
+    min-width: 200px;
+}
 /*
 .margin_top_350{
     margin-top: 350px;

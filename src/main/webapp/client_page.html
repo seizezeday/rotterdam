@@ -76,13 +76,13 @@
     Nachtelijke reis
         </button>
          </div> 
-             <div class="col-md-2 col-xs-6 margin_bottom_10">
+             <div class="col-md-4 col-xs-6 margin_bottom_10">
             <dl class="dl-horizontal margin_fix">
-              <dt>Avaliable time-for-time:</dt>
+              <dt>Beschikbare  tijd - voor - tijd:</dt>
                <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
             </dl>
          </div>  
-    <div class="col-md-1 col-xs-12 col-md-offset-2">
+    <div class="col-md-1 col-xs-12">
         <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">Opslaan</button>
     </div>
         <hr class="col-xs-12">
@@ -134,7 +134,7 @@
 
                    </div>
                    <div class="col-md-4 add_row_monday" ng-show="($index == 0 && active)">
-                       <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Another trip</button>
+                       <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Toevoegen rit</button>
                    </div>
                    <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">
                        <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >Verwijderen</button>
