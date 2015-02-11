@@ -47,6 +47,13 @@ public class DeclarationController {
 
         DeclarationsDto declarationsDto = declarationService.selectByWeekIdAndUserId(monday, user.getId());
 
+        if(declarationsDto == null) {
+            declarationsDto = new DeclarationsDto();
+            if (declarationsDto.daysDeclaration == null || declarationsDto.daysDeclaration.size() == 0) {
+                declarationsDto.daysDeclaration = declarationService.getFakeDeclarations(monday);
+            }
+        }
+
         if(declarationsDto !=null)
             return Response.ok(declarationsDto).build();
         else return Response.status(Response.Status.NO_CONTENT).build();//204

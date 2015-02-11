@@ -90,7 +90,7 @@
    </div>
    <div ng-repeat="day in days">
        <div ng-repeat="workHour in day.workHours">
-           <div class="row col-xs-12 time_tab">
+           <div class="row col-xs-12 time_tab" ng-hide="isActiveWorkHourHide($parent.$index, $index)">
                <div class="col-md-4 col-xs-12 ">
                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
@@ -134,7 +134,7 @@
                        </div>
 
                    </div>
-                   <div class="col-md-4 add_row_monday" ng-show="$index == 0 && active">
+                   <div class="col-md-4 add_row_monday" ng-show="($index == 0 && active)">
                        <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Another trip</button>
                    </div>
                    <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">

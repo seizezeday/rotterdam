@@ -162,6 +162,19 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 dayType : '0'
             }
         );
+
+        var indexLast = $scope.days[index].workHours.length - 1;
+
+        $scope.$watch('days[' + index + '].workHours[0]', function (newValue, oldValue) {
+//            console.log(newValue.dayType + ":::" + oldValue.dayType);
+            if(newValue.dayType != oldValue.dayType) {
+                if (newValue.dayType == '8') {
+                    $scope.timeForTime -= 11;
+                } else if (oldValue.dayType == '8' && newValue.dayType != '8') {
+                    $scope.timeForTime += 11;
+                }
+            }
+        }, true);
     };
 
     $scope.removeRow = function(dayIndex, index){
@@ -190,6 +203,11 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
         $scope.calculateOverTime();
+
+        //now we need to change time-for-time
+        if(day.dayType == '8'){
+
+        }
     };
 
     $scope.calculateRowTotal = function(index){
@@ -254,6 +272,12 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         }
         return  rez;
     };
+
+    $scope.isActiveWorkHourHide = function(dayIndex, index){
+        var wh = $scope.days[dayIndex].workHours[0];
+        var b = wh.dayType != '0' && index != 0;
+        return  b;
+    }
 
     $scope.applyDate();
 });
@@ -398,6 +422,8 @@ app.controller("declaration_controller", function($scope, $http, $filter){
                 {
                     $scope.days = res.data.daysDeclaration;
                     for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+                        if($scope.days[dayI].declarations == undefined)
+                            $scope.days[dayI].declarations = [];
                         for(var decI = 0; decI<$scope.days[dayI].declarations.length; decI++){
                             $scope.days[dayI].declarations[decI].active = false;
                         }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -84,5 +85,15 @@ public class DeclarationService {
 //                return false;
         }
         return true;
+    }
+
+    public List<DayDeclarationDto> getFakeDeclarations(Date monday) {
+        List<DayDeclarationDto> days = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            DayDeclarationDto day = new DayDeclarationDto();
+            day.date = DateTools.getDatePlusDays(monday, i);
+            days.add(day);
+        }
+        return days;
     }
 }
