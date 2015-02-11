@@ -25,7 +25,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         endDayI = (parseInt(startDayI) + 1) + "";
         $scope.days[startDayI].workHours.push({
                 startWorkingTime: $scope.overNight.start.time,
-                endWorkingTime: "24:00",
+                endWorkingTime: "23:59",
                 restTime: "",
                 dayType : '0'
             }
@@ -128,8 +128,30 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             days : $scope.days
         };
         $http.post('api/timeTab', daysToTransfer).then(function(){
+            $scope.calculateRest();
             addAlert();
         });
+    };
+
+    $scope.calculateRest = function(){
+        for (var i = 0; i < 7; i++) {
+            var day = $scope.days[i];
+            for(var whI = 0; whI < day.workHours.length; whI++){
+                var workHour = day.workHours[whI];
+                var start = DateConverter.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+                var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+                var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
+                var time = end - start - rest;
+
+                time = time/60;
+
+                if (time >=  4.5 && time <   7.5) workHour.restTime = 30;
+                else if (time >=  7.5 && time <  10.5) workHour.restTime = 60;
+                else if (time >= 10.5 && time <  13.5) workHour.restTime = 90;
+                else if (time >= 13.5 && time <  16.5) workHour.restTime = 120;
+                else if (time >= 16.5) workHour.restTime = 150;
+            }
+        }
     };
 
     $scope.addRow = function(index){

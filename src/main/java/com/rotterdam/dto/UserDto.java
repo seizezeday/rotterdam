@@ -17,4 +17,6 @@ public class UserDto {
         this.regNum = regNum;
     }
 
+    public UserDto() {
+    }
 }

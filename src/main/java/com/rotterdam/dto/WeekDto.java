@@ -104,7 +104,7 @@ public class WeekDto {
                     else if (time >=  7.5 && time <  10.5) workHourDto.restTime = 60;
                     else if (time >= 10.5 && time <  13.5) workHourDto.restTime = 90;
                     else if (time >= 13.5 && time <  16.5) workHourDto.restTime = 120;
-                    else if (time >= 16.5 && time <= 13.5) workHourDto.restTime = 150;
+                    else if (time >= 16.5) workHourDto.restTime = 150;
 
                 }
             }
