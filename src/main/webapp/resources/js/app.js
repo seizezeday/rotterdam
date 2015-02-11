@@ -73,7 +73,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         {val: '12', description: 'Geen werkdag'}
     ];
 
-    $scope.weekTitles = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    $scope.weekTitles = ["Maandag", "Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag","Zondag"];
 
     $scope.selectedDate = DateConverter.convertDateToString(new Date());
 //    $scope.selectedDate = "01.02.2015";
@@ -379,7 +379,7 @@ app.directive('numberMask', function() {
 });
 app.controller("settings_controller", ['$scope', function($scope){
 $scope.days = [
-    {day: 'Maandag', settingsDay: 'maandag'},{day: 'Dinsdag',settingsDay: 'dinsdag'},{day: 'Woensdag',settingsDay: 'woensdag'},{day: 'Donderdag',settingsDay: 'donderdag'},{day: 'Vrijdag',settingsDay: 'vrijdag'}
+    {day: 'Maandag', settingsDay: 'monday'},{day: 'Dinsdag',settingsDay: 'tuesday'},{day: 'Woensdag',settingsDay: 'wednesday'},{day: 'Donderdag',settingsDay: 'thursday'},{day: 'Vrijdag',settingsDay: 'friday'}
 ];
     
 
