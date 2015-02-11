@@ -79,7 +79,7 @@
              <div class="col-md-2 col-xs-6 margin_bottom_10">
             <dl class="dl-horizontal margin_fix">
               <dt>Avaliable time-for-time:</dt>
-              <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
+              <dd id='compensationverwijderen _time_avaliable'>{{timeForTime}}</dd>
             </dl>
          </div>  
     <div class="col-md-1 col-xs-12 col-md-offset-2">
@@ -137,7 +137,7 @@
                        <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Another trip</button>
                    </div>
                    <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">
-                       <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >Delete</button>
+                       <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >Verwijderen</button>
                    </div>
 
                    <div class="col-md-4 font_size_18 text-center" ng-show="$index == 0">
@@ -171,7 +171,7 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <button id="modal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <button id="modal_Dicht" type="button" class="close" data-dismiss="modal" aria-label="Dicht"><span aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title" id="myModalLabel">Overnight trip</h4>
                   </div>
                   <div id="multitripform" class="modal-body">
@@ -192,7 +192,7 @@
                       <!--</div>-->
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Dicht</button>
                       <button id="multitrip_save" type="button" class="btn btn-primary" ng-click="overNightSave()">Save changes</button>
                   </div>
               </div>
@@ -272,7 +272,7 @@
                           ng-show="$index == 0" ng-click="addRow($parent.$index)">Add
                   </button>
                   <button class="btn btn-block btn-danger declaration_del_row" ng-show="declaration.active && $index > 0"
-                          ng-click="removeRow($parent.$index, $index)">Delete
+                          ng-click="removeRow($parent.$index, $index)">Verwijderen
                   </button>
               </div>
           </div>
