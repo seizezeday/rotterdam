@@ -165,8 +165,6 @@ public class WeekService {
         Period currentPeriod = periodDao.selectByDateBetweenAndUser(new Date(), userId);
         if(weekPeriod == null || currentPeriod == null) return false;
         return weekPeriod.getStartDate().equals(currentPeriod.getStartDate());
-
-
     }
 
     @Transactional

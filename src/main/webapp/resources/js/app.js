@@ -101,6 +101,16 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                         if (day.workHours.length == 0) {
                             $scope.addRow(dayI);
                         }
+                        $scope.$watch('days[' + dayI + '].workHours[0]', function (newValue, oldValue) {
+//                          console.log(newValue.dayType + ":::" + oldValue.dayType);
+                            if(newValue.dayType != oldValue.dayType) {
+                                if (newValue.dayType == '8') {
+                                    $scope.timeForTime -= 11;
+                                } else if (oldValue.dayType == '8' && newValue.dayType != '8') {
+                                    $scope.timeForTime += 11;
+                                }
+                            }
+                        }, true);
                     }
                     $scope.active = res.data.active;
                     $scope.daysTotalTime = res.data.totalTime.days;
@@ -163,18 +173,6 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             }
         );
 
-        var indexLast = $scope.days[index].workHours.length - 1;
-
-        $scope.$watch('days[' + index + '].workHours[0]', function (newValue, oldValue) {
-//            console.log(newValue.dayType + ":::" + oldValue.dayType);
-            if(newValue.dayType != oldValue.dayType) {
-                if (newValue.dayType == '8') {
-                    $scope.timeForTime -= 11;
-                } else if (oldValue.dayType == '8' && newValue.dayType != '8') {
-                    $scope.timeForTime += 11;
-                }
-            }
-        }, true);
     };
 
     $scope.removeRow = function(dayIndex, index){
@@ -392,6 +390,8 @@ app.controller("declaration_controller", function($scope, $http, $filter){
 
     $scope.total = 0;
 
+    $scope.activeV = true;
+
     $scope.costTypes = [
         { id: "0", name: 'Eendaagse netto' },
         { id: "1", name: 'Eendaagse bruto' },
@@ -431,6 +431,7 @@ app.controller("declaration_controller", function($scope, $http, $filter){
                             $scope.addRow(dayI);
 
                     }
+                    $scope.activeV = res.data.active;
                     $scope.calculateTotal();
                     break;
                 }

@@ -19,6 +19,7 @@ public class DeclarationsDto {
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date date;
+    public boolean active;
 
     public DeclarationsDto() {
     }

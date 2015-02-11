@@ -3,9 +3,11 @@ package com.rotterdam.service;
 import com.rotterdam.dto.DayDeclarationDto;
 import com.rotterdam.dto.DeclarationsDto;
 import com.rotterdam.model.dao.DeclarationDao;
+import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.WeekDao;
 import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.Declaration;
+import com.rotterdam.model.entity.Period;
 import com.rotterdam.model.entity.Week;
 import com.rotterdam.tools.DateTools;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,9 @@ public class DeclarationService {
 
     @Inject
     private WeekDao weekDao;
+
+    @Inject
+    private PeriodDao periodDao;
 
     @Transactional
     public DeclarationsDto selectByWeekIdAndUserId(Date date, long userId){
@@ -95,5 +100,13 @@ public class DeclarationService {
             days.add(day);
         }
         return days;
+    }
+
+    @Transactional
+    public boolean isActive(Date weekDate, long userId){
+        Period weekPeriod = periodDao.selectByDateBetweenAndUser(weekDate, userId);
+        Period currentPeriod = periodDao.selectByDateBetweenAndUser(new Date(), userId);
+        if(weekPeriod == null || currentPeriod == null) return false;
+        return weekPeriod.getStartDate().equals(currentPeriod.getStartDate());
     }
 }

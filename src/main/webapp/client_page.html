@@ -283,15 +283,15 @@
               <div class="col-md-4 " ng-class="{'col-md-offset-2': $index != 0}">
                   <select class="form-control type_food"
                           ng-model="declaration.costType"
-                          ng-options="costType.id as costType.name for costType in costTypes" ng-show="declaration.active"></select>
-                  <div class="font_size_18" ng-show="!declaration.active">
+                          ng-options="costType.id as costType.name for costType in costTypes" ng-show="declaration.active && activeV"></select>
+                  <div class="font_size_18" ng-show="!declaration.active || !activeV">
                         {{costTypes[declaration.costType].name}}
                   </div>
               </div>
               <div class="col-md-2 declaration_price">
                   <input type="text" class="form-control" placeholder="Cost" ng-change="calculateTotal()"
-                                                             ng-model="declaration.price" ng-show="declaration.active">
-                  <div class="font_size_18" ng-show="!declaration.active">
+                                                             ng-model="declaration.price" ng-show="declaration.active && activeV">
+                  <div class="font_size_18" ng-show="!declaration.active || !activeV">
                       {{declaration.price}}
                   </div>
               </div>

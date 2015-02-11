@@ -53,10 +53,8 @@ public class DeclarationController {
                 declarationsDto.daysDeclaration = declarationService.getFakeDeclarations(monday);
             }
         }
-
-        if(declarationsDto !=null)
-            return Response.ok(declarationsDto).build();
-        else return Response.status(Response.Status.NO_CONTENT).build();//204
+        declarationsDto.active = declarationService.isActive(monday, user.getId());
+        return Response.ok(declarationsDto).build();
     }
 
     //{"date":"29.01.2015", "declarations":[ {"costType":"SomeType","price":"5"}, {"costType":"SomeType2","price":"50"} ]}
