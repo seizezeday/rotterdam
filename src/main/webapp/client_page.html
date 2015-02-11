@@ -33,7 +33,6 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
   <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Time</a></li>
-  <li class="hide_tabs"><a href="#payment_time" role="tab" data-toggle="tab">Payment time</a></li>
   <li class="hide_tabs"><a href="#sheet_overview" role="tab" data-toggle="tab">Overview</a></li>
   <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaration</a></li>
   <li><a href="#settings" role="tab" data-toggle="tab">Settings </a></li>
@@ -200,33 +199,6 @@
           </div>
       </div>
   </div>
-    <div class="tab-pane" id="payment_time">
-              <div class="well well-sm">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Name:</dt>
-              <dd class="username"></dd>
-            </dl>
-        </div>
-        <div class="well well-sm">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Avaliable time-to-pay:</dt>
-              <dd id="payment_time_avaliable"></dd>
-            </dl>
-        </div>
-             <div class="col-md-12 padding_fix">
-             <div class="col-md-4 padding_fix">
-               <div class="input-group">
-                <span class="input-group-addon">$</span>
-                <input id="payment_time_field" type="text" class="form-control" placeholder="Hour to pay" number-mask="">
-              </div>
-             </div>
-                <div class="col-md-4 col-md-offset-3">
-                  <p class="font_size_18">Avaliable time-to-pay: <span>23</span></p>
-                </div>
-            </div>
-             
-      <button id="payment_time_btn" class="btn btn-success margin_top_15 col-md-1" disabled="disabled">Save</button>
-  </div>
     <div class="tab-pane" id="sheet_overview">
     <div class="col-md-12">
     <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">   
@@ -234,9 +206,9 @@
         </div>   
         <div class="col-md-4"><button id="overview_submit" class="btn btn-warning btn-block">Apply</button></div>
     </div> 
-          <div class="col-md-6 col-md-offset-1">            
-        <p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>
-    </div>
+          <!--<div class="col-md-6 col-md-offset-1">            -->
+        <!--<p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>-->
+    <!--</div>-->
     </div>
     <div class="col-md-12">
     <div class="col-md-4">
@@ -306,14 +278,6 @@
           </div>
           <hr class="col-xs-12">
       </div>
-      <!--<div class="col-md-4 col-md-offset-4 margin_top_15">-->
-          <!--<p class="font_size_18 ">Total: {{total}}</p>-->
-      <!--</div>-->
-      <!--<div class="col-md-12">-->
-          <!--<div class="col-md-3">-->
-              <!--<button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">Save</button>-->
-          <!--</div>-->
-      <!--</div>-->
   </div>
 <div class="tab-pane font_size_18" id="settings">
          <div class="col-md-4 col-md-offset-8"><h3>Scheduled work hours</h3></div>
@@ -347,7 +311,7 @@
   </div>
    </div>  
    </div>
-             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled">Save</button>
+             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled" >Save</button>
          
           </div>
         </div>
