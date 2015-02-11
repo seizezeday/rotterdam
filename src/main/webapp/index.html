@@ -21,8 +21,8 @@
          <div class="row">
              <div class="col-lg-8 col-lg-offset-2 margin_top_10_proc">
                             <ul class="nav nav-tabs autorization_tabs" role="tablist">
-                              <li class="active "><a href="#myModalLabel"  role="tab" data-toggle="tab">Login</a></li>
-                              <li><a href="#myModalLabel2"  role="tab" data-toggle="tab">Registration</a></li>
+                              <li class="active "><a href="#myModalLabel"  role="tab" data-toggle="tab">Log In</a></li>
+                              <li><a href="#myModalLabel2"  role="tab" data-toggle="tab">Registratie</a></li>
                             </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="myModalLabel">
@@ -31,21 +31,21 @@
                                 <!-- Text input-->
                                 <div class="form-group margin-vertical-fix">
                                    <div class="col-sm-12 ">
-                                    <input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Enter Email address" required> 
+                                    <input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Geef e-mail adres" required>
                                     <div class="help-block with-errors"></div>
                                     </div>
                                   </div>
                                 <div class="form-group">
                                 <div class="col-sm-12">
-                <input id="login_password" type="password" class="form-control margin_top_10"   placeholder="Password" data-error="Password empty" required>
+                <input id="login_password" type="password" class="form-control margin_top_10"   placeholder="Wachtwoord" data-error="Password leeg" required>
                                 <div class="help-block with-errors"></div>
                                     <div class="center-block">
-                                        <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">Forgot password</a>
+                                        <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">Wachtwoord vergeten</a>
                                     </div>
                                 </div>
                                 </div>
                                 </form>
-                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button>
+                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Log In</button>
                                 </div>    
   </div>
   <div class="tab-pane" id="myModalLabel2">
@@ -53,7 +53,7 @@
                                 <form class="form-horizontal" data-toggle="validator" role="form">
                                 <div class="form-group margin-vertical-fix">
                                    <div class="col-sm-12">
-                                    <input pattern="^[A-z][A-z0-9_\-\.]{2,}[A-z0-9]$" maxlength="20"  type="text" class="form-control" id="inputName" placeholder="Name" data-error="Enter username" required> 
+                                    <input pattern="^[A-z][A-z0-9_\-\.]{2,}[A-z0-9]$" maxlength="20"  type="text" class="form-control" id="inputName" placeholder="Naam" data-error="Voer gebruikersnaam" required>
                                 <div class="help-block with-errors"></div>
 <!--                               pattern="^([_A-z]){4,}$" maxlength="20"
                                    pattern="^([_A-z])+@[a-z]{4,}$"
@@ -63,30 +63,30 @@
                                   </div>
                                   <div class="form-group margin_fix">
                                    <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Lastname" data-error="Enter lastname" required> 
+                                    <input type="text" class="form-control" id="inputLastName" placeholder="Achternaam" data-error="Voer achternaam" required>
                                     <div class="help-block with-errors"></div>
                                     </div>
                                   </div>
                                    <div class="form-group margin_fix">
                                    <div class="col-sm-12">
-                                    <input type="email"  pattern="^[A-z0-9_\-]+@[a-z0-9_\-]+\.([a-z]+\.)*[a-z]{2,}$" maxlength="30" class="form-control" id="inputEmail" placeholder="Email" data-error="Invalid Email" required>
+                                    <input type="email"  pattern="^[A-z0-9_\-]+@[a-z0-9_\-]+\.([a-z]+\.)*[a-z]{2,}$" maxlength="30" class="form-control" id="inputEmail" placeholder="Email" data-error="Ongeldig Email" required>
                                     <div class="help-block with-errors"></div>
                                     </div>
                                   </div>
                                     <div class="form-group margin_fix">
                                         <div class="col-sm-12">
-                                            <input type="text"  pattern="[0-9\-]+" maxlength="30" class="form-control" id="regNum" placeholder="Registration number" data-error="Invalid Registration number" required>
+                                            <input type="text"  pattern="[0-9\-]+" maxlength="30" class="form-control" id="regNum" placeholder="Registratie nummer" data-error="Ongeldig Registration number" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
                                <!-- Password input-->
                                <div class="form-group">
                                 <div class="col-sm-12">
-                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" >
+                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Wachtwoord" >
                                 </div>
                                 <div class="col-sm-12">
-                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" class="form-control margin_top_10" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Passwords do not match
- " placeholder="Repeat password" data-error="Insufficiently complex password" required>
+                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" class="form-control margin_top_10" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Wachtwoorden komen niet overeen
+ " placeholder="Herhaal wachtwoord" data-error="Onvoldoende complex wachtwoord" required>
                                   <div class="help-block with-errors"></div>
                                 </div>
 <!--
@@ -141,7 +141,7 @@
                                 </div>
                                 </form>
                                 
-                    <button id="reg-btn" type="button" class="btn btn-success btn-block font_size_18 ">Registration</button> 
+                    <button id="reg-btn" type="button" class="btn btn-success btn-block font_size_18 ">Registratie</button>
                     </div>
                   </div>
                 </div>
