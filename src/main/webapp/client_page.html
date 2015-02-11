@@ -78,7 +78,7 @@
          </div> 
              <div class="col-md-4 col-xs-6 margin_bottom_10">
             <dl class="dl-horizontal margin_fix">
-              <dt>Beschikbare  tijd - voor - tijd:</dt>
+              <dt>Beschikbare  tijd-voor-tijd:</dt>
                <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
             </dl>
          </div>  
@@ -220,7 +220,7 @@
         </select>
     </div>
          <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
-        <p class="font_size_18" ng-repeat="totalTime in totalTimes">Total hours {{totalTime.tolalProc}} worked: <span id="overview_total{{totalTime.overviewId}}"></span></p>
+        <p class="font_size_18" ng-repeat="totalTime in totalTimes">Totaal aantal uren {{totalTime.tolalProc}} gewerkt: <span id="overview_total{{totalTime.overviewId}}"></span></p>
     </div>
          <div class="col-md-12">
           <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1" disabled>Download PDF</button>
@@ -233,8 +233,7 @@
       </div>
       <div class="margin_bottom_20">
           <div class="form-group col-md-3" ng-class="{'has-error': datepickerForm.date.$invalid}">
-              <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"
-                     bs-datepicker >
+              <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker >
           </div>
           <div class="col-md-1">
               <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Apply</button>
