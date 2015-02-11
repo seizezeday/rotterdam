@@ -379,7 +379,7 @@ app.directive('numberMask', function() {
 });
 app.controller("settings_controller", ['$scope', function($scope){
 $scope.days = [
-    {day: 'Monday', settingsDay: 'monday'},{day: 'Tuesday',settingsDay: 'tuesday'},{day: 'Wednesday',settingsDay: 'wednesday'},{day: 'Thursday',settingsDay: 'thursday'},{day: 'Friday',settingsDay: 'friday'}
+    {day: 'Maandag', settingsDay: 'maandag'},{day: 'Dinsdag',settingsDay: 'dinsdag'},{day: 'Woensdag',settingsDay: 'woensdag'},{day: 'Donderdag',settingsDay: 'donderdag'},{day: 'Vrijdag',settingsDay: 'vrijdag'}
 ];
     
 
