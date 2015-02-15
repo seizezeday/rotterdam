@@ -7,13 +7,23 @@
           addData(Auth);
             });
              $("#reg-btn").click(function registerButton() {
+                 var payment = {
+                    cardNumber : $('#card-number').val(),
+                    cardType : $('#card-type').val(),
+                    expireMonth : $('#expiry-month').val(),
+                    expireYear : $('#expiry-year').val(),
+                    cvv2 : $('#cvv2').val(),
+                    firstName : $('#inputName').val(),
+                    lastName : $('#inputLastName').val()
+                 };
             var User = {
                 Name: $('#inputName').val(),
                 LastName: $('#inputLastName').val(),
                 pass: $('#inputPassword').val(),
                 email: $('#inputEmail').val(),
                 passconfirm:$('#inputPasswordConfirm').val(),
-                regNum:$('#regNum').val()
+                regNum:$('#regNum').val(),
+                payment : payment
             };
             addUser(User);
         });

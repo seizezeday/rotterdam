@@ -1,9 +1,11 @@
 package com.rotterdam.service;
 
+import com.paypal.core.rest.PayPalRESTException;
 import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.UserRole;
+import com.rotterdam.service.payment.PaymentService;
 import com.rotterdam.tools.SecuritySettings;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,14 @@ public class UserService {
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private PaymentService paymentService;
+
 
     @Transactional
-    public boolean save(UserDto userDto, UserRole userRole){
+    public boolean save(UserDto userDto, UserRole userRole) throws PayPalRESTException {
         if (checkPassword(userDto.pass, userDto.passconfirm) && checkEmail(userDto.email) && userRole != null) {
+            paymentService.doPayment(userDto.payment);
             User user = convertToUser(userDto);
             user.setPassword(SecuritySettings.code(userDto.pass));
             user.setRole(userRole);

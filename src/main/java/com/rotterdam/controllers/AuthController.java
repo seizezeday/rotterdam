@@ -1,5 +1,6 @@
 package com.rotterdam.controllers;
 
+import com.paypal.core.rest.PayPalRESTException;
 import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.UserRole;
@@ -76,7 +77,7 @@ public class AuthController {
     @POST
     @Path("/registration")
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response registerNewUser(UserDto userDto) {
+    public Response registerNewUser(UserDto userDto) throws PayPalRESTException {
         if (userService.save(userDto, UserRole.Driver))
             return Response.ok().build();
         else
