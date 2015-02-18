@@ -67,6 +67,9 @@
                     },
                     401: function () {
                         alert("Invalid login or password");
+                    },
+                    405: function () {
+                        alert("Payment error");
                     }
                 }
             });

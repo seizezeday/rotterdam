@@ -78,10 +78,16 @@ public class AuthController {
     @Path("/registration")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response registerNewUser(UserDto userDto) throws PayPalRESTException {
-        if (userService.save(userDto, UserRole.Driver))
-            return Response.ok().build();
-        else
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        try{
+            if(userService.save(userDto, UserRole.Driver))
+                return Response.ok().build();
+            else return Response.status(401).build();
+        } catch (PayPalRESTException e){
+            return Response.status(405).build();
+        } catch (Exception e){
+            return Response.status(401).build();
+        }
+
     }
 
     @POST
