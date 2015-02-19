@@ -24,11 +24,23 @@
                               <li class="active "><a href="#myModalLabel"  role="tab" data-toggle="tab">Login</a></li>
                               <li><a href="#myModalLabel2"  role="tab" data-toggle="tab">Registration</a></li>
                             </ul>
+                            
 <div class="tab-content">
   <div class="tab-pane active" id="myModalLabel">
                                 <div class="modal-body">
+                    <div id="my-tab-content">
+                        <div class="tab-pane active" id="login">
+               			<form class="form-signin" action="" method="">
+               				<input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Enter Email address" required autofocus>	
+               				<input id="login_password" type="password" class="form-control"   placeholder="Password" data-error="Password empty" required>
+            <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">Forgot password</a>    
+                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button> 
+               			</form>
+                    </div>
+                    </div>
+<!--
                                 <form class="form-horizontal" data-toggle="validator" role="form">
-                                <!-- Text input-->
+                                 Text input
                                 <div class="form-group margin-vertical-fix">
                                    <div class="col-sm-12 ">
                                     <input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Enter Email address" required> 
@@ -45,9 +57,11 @@
                                 </div>
                                 </div>
                                 </form>
-                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button>
+-->
+<!--                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button>-->                         
+                </div>    
                                 </div>    
-  </div>
+<!--  </div>-->
   <div class="tab-pane" id="myModalLabel2">
                                 <div class="modal-body">
                                 <form class="form-horizontal" data-toggle="validator" role="form">
