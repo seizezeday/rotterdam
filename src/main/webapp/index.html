@@ -82,11 +82,12 @@
                                <!-- Password input-->
                                <div class="form-group">
                                 <div class="col-sm-12">
-                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Wachtwoord" >
+                                  <input pattern="^([_A-z0-9]){4,}$" maxlength="30" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Wachtwoord" >
                                 </div>
                                 <div class="col-sm-12">
-                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" class="form-control margin_top_10" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Wachtwoorden komen niet overeen
+                                  <input pattern="^([_A-z0-9]){4,}$" maxlength="30" type="password" class="form-control margin_top_10" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Wachtwoorden komen niet overeen
  " placeholder="Herhaal wachtwoord" data-error="Onvoldoende complex wachtwoord" required>
+                                    <!--(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$-->
                                   <div class="help-block with-errors"></div>
                                 </div>
                                    <div class="col-sm-4">
