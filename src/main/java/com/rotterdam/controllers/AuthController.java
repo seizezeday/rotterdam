@@ -5,6 +5,7 @@ import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.UserRole;
 import com.rotterdam.service.UserService;
+import com.rotterdam.service.payment.PaymentService;
 import com.rotterdam.tools.CookieUtil;
 import com.rotterdam.tools.EmailSender;
 import com.rotterdam.tools.SecuritySettings;
@@ -18,13 +19,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Path("/")
 @PermitAll
@@ -40,17 +40,34 @@ public class AuthController {
     @Inject
     private JsonCommands jsonCommands;
 
+    @Inject
+    private PaymentService paymentService;
+
 	@POST
 	@Path("/login")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public Response loginAuth(@Context HttpServletRequest hsr,
-			@Context HttpServletResponse rspn, String data)
-			throws JSONException {
+			@Context HttpServletResponse rspn, String data, @HeaderParam("Origin") String domain)
+            throws JSONException, PayPalRESTException {
 		JSONObject loginData = new JSONObject(data);
 		User user = userService
 				.getByEmailAndPass(loginData.getString("login"), loginData.getString("password"));
-		if (user != null && cookieUtil.insertSessionUID(rspn, user))
-			return Response.ok().build();
+		if (user != null) {
+            final boolean userPayed = userService.isUserPayed(user);
+            final String approvalLink;
+            if(userPayed) {
+                cookieUtil.insertSessionUID(rspn, user);
+                approvalLink = null;
+            }
+            else {
+                approvalLink = userService.doPaymentLogin(user, domain);
+            }
+            return Response.ok(
+                    new Object(){
+                        public boolean payed = userPayed;
+                        public String link = approvalLink;
+                    }).build();
+        }
 		else
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 	}
@@ -77,10 +94,12 @@ public class AuthController {
     @POST
     @Path("/registration")
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response registerNewUser(UserDto userDto) throws PayPalRESTException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registerNewUser(UserDto userDto, @HeaderParam("Origin") String domain) throws PayPalRESTException {
         try{
-            if(userService.save(userDto, UserRole.Driver))
-                return Response.ok().build();
+            final String approvalUrl = userService.save(userDto, UserRole.Driver, domain);
+            if(approvalUrl != null)
+                return Response.ok(new Object(){public String link = approvalUrl;}).build();
             else return Response.status(401).build();
         } catch (PayPalRESTException e){
             return Response.status(405).build();
@@ -102,6 +121,21 @@ public class AuthController {
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+    @GET
+    @Consumes({ MediaType.TEXT_PLAIN })
+    @Path("/finishPayment")
+    public Response finishPayment(
+            @QueryParam("paymentId")String paymentId,
+            @QueryParam("token")String token,
+            @QueryParam("PayerID")String PayerID) throws PayPalRESTException, URISyntaxException {
+
+        paymentService.finishPayment(paymentId, PayerID);
+
+        URI location = new URI("/");
+
+        return Response.temporaryRedirect(location).build();
     }
 
 }

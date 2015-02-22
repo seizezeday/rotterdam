@@ -1,16 +1,19 @@
 package com.rotterdam.service;
 
 import com.paypal.core.rest.PayPalRESTException;
+import com.rotterdam.dto.PaymentResultDto;
 import com.rotterdam.dto.UserDto;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.User;
 import com.rotterdam.model.entity.UserRole;
 import com.rotterdam.service.payment.PaymentService;
+import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.SecuritySettings;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,17 +31,18 @@ public class UserService {
 
 
     @Transactional
-    public boolean save(UserDto userDto, UserRole userRole) throws PayPalRESTException {
+    public String save(UserDto userDto, UserRole userRole, String domain) throws PayPalRESTException {
         if (checkPassword(userDto.pass, userDto.passconfirm) && checkEmail(userDto.email) && userRole != null) {
-            paymentService.doPayment(userDto.payment);
+            PaymentResultDto paymentResultDto = paymentService.doPayment(domain);
             User user = convertToUser(userDto);
             user.setPassword(SecuritySettings.code(userDto.pass));
             user.setRole(userRole);
             user.setRegNum(userDto.regNum);
+            user.setPaymentId(paymentResultDto.paymentId);
             userDao.insert(user);
-            return true;
+            return paymentResultDto.approvalUrl;
         } else {
-            return false;
+            return null;
         }
     }
 
@@ -78,5 +82,20 @@ public class UserService {
         return userDao
                 .selectByEmailAndPass(login,
                         SecuritySettings.code(pass));
+    }
+
+    public boolean isUserPayed(User user){
+        Date lastPaymentDate = user.getLastPaymentDate();
+        if(lastPaymentDate == null)
+            return false;
+        return DateTools.isAfter(DateTools.getDatePlusMonth(lastPaymentDate, 1), new Date());
+    }
+
+    @Transactional
+    public String doPaymentLogin(User user, String domain) throws PayPalRESTException {
+        PaymentResultDto paymentResultDto = paymentService.doPayment(domain);
+        user.setPaymentId(paymentResultDto.paymentId);
+        userDao.update(user);
+        return paymentResultDto.approvalUrl;
     }
 }

@@ -1,10 +1,9 @@
 package rotterdam;
 
 import com.paypal.core.rest.PayPalRESTException;
-import com.rotterdam.dto.CardType;
 import com.rotterdam.dto.PaymentDto;
+import com.rotterdam.dto.PaymentResultDto;
 import com.rotterdam.service.payment.PaymentService;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -23,17 +22,19 @@ public class PaymentTest {
 
 
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.cardNumber = "4032038157997366";
-        paymentDto.cardType = CardType.visa;
-        paymentDto.expireMonth = 2;
-        paymentDto.expireYear = 2020;
-        paymentDto.cvv2 = 123;
-        paymentDto.firstName = "Joe";
-        paymentDto.lastName = "Shopper";
+//        paymentDto.cardNumber = "4032038157997366";
+//        paymentDto.cardType = CardType.visa;
+//        paymentDto.expireMonth = 2;
+//        paymentDto.expireYear = 2020;
+//        paymentDto.cvv2 = 123;
+//        paymentDto.firstName = "Joe";
+//        paymentDto.lastName = "Shopper";
 
-        String paymentId = paymentService.doPayment(paymentDto);
+        PaymentResultDto paymentResult = paymentService.doPayment("localhost:8080");
 
-        Assert.assertTrue(paymentService.isApproved(paymentId));
+        System.out.println(paymentResult);
+
+        //Assert.assertTrue(paymentService.isApproved(paymentId));
 
     }
 }

@@ -7,23 +7,23 @@
           addData(Auth);
             });
              $("#reg-btn").click(function registerButton() {
-                 var payment = {
-                    cardNumber : $('#card-number').val(),
-                    cardType : $('#card-type').val(),
-                    expireMonth : $('#expiry-month').val(),
-                    expireYear : $('#expiry-year').val(),
-                    cvv2 : $('#cvv2').val(),
-                    firstName : $('#inputName').val(),
-                    lastName : $('#inputLastName').val()
-                 };
+//                 var payment = {
+//                    cardNumber : $('#card-number').val(),
+//                    cardType : $('#card-type').val(),
+//                    expireMonth : $('#expiry-month').val(),
+//                    expireYear : $('#expiry-year').val(),
+//                    cvv2 : $('#cvv2').val(),
+//                    firstName : $('#inputName').val(),
+//                    lastName : $('#inputLastName').val()
+//                 };
             var User = {
                 Name: $('#inputName').val(),
                 LastName: $('#inputLastName').val(),
                 pass: $('#inputPassword').val(),
                 email: $('#inputEmail').val(),
                 passconfirm:$('#inputPasswordConfirm').val(),
-                regNum:$('#regNum').val(),
-                payment : payment
+                regNum:$('#regNum').val()//,
+                //payment : payment
             };
             addUser(User);
         });
@@ -62,7 +62,13 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 statusCode: {
-                    200: function () {
+                    200: function (data) {
+                        $("#reg-btn").html("Pay");
+                        //data is payment url
+                        $("#reg-btn").unbind('click');
+                        $("#reg-btn").click( function submitButton() {
+                            location.href = data.link;
+                        });
                         alert("Success...");
                     },
                     401: function () {
@@ -84,89 +90,19 @@
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               statusCode: {
-                  200: function () {
-//                        userInfo();
-                      location.href='client_page.html';
-//                     document.location = "client_page.html";
-//                  function userInfo(data){
-//                    var userinfo = $.ajax({
-//                        //data: str,
-//                        type: "POST",
-//                        url: "api/home",
-//                        datatype: "json",
-//                        contentType: "application/json",
-////                      success: function(data) {
-//                        statusCode: {
-//                        200: function () {
-//                        alert("ok");
-//                        console.log(data);
-//                        alert(userinfo);
-//            }
-//                        }
-//                    });
-       
-//                      alert("Login success");
-//                      $.ajax({
-//                          //data: str,
-//                          type: "POST",
-//                          url: "com.rotterdam.rest/userInfo",
-//                          datatype: "json",
-//                          contentType: "application/json",
-//                          success: function(data) {
-//                              document.getElementById("user-info").innerHTML = data.login;
-//                              var str = (String)(window.location);
-//                              if(str.indexOf("index.html") <= -1) window.location.reload(true);
-//                          },
-//                          statusCode: {
-//                              403: function() {
-//                                  alert("Internal error");
-//                              }
-//                          }
-//                      });
-//                      window.location.href = "client_page.html";
-//                      var url = "client_page.html";
-//                      $(location).attr('href',url);
-//                      if(window.location.hash == 'client_page.html') {
-//                      function userInfo(data){
-//                       $.ajax({
-//                        //data: str,
-//                        type: "POST",
-//                        url: "api/home",
-//                        datatype: "json",
-//                        contentType: "application/json",
-////                      success: function(data) {
-//                        statusCode: {
-//                        200: function () {
-//                        alert("ok");
-////                        console.log(data);
-//                        alert(userinfo);
-//            }
-//                        }
-//                    });
-//        }                        
-//                      $(document).ready(function(){
-//                      userInfo(data);   
-//                      });
+                  200: function (data) {
+                      if(data.payed)
+                            location.href = "client_page.html";
+                      else{
+                          alert("Not payed");
+                          $("#login-btn").html("Pay");
+                          //data is payment url
+                          $("#login-btn").unbind('click');
+                          $("#login-btn").click( function submitButton() {
+                              location.href = data.link;
+                          });
+                      }
 
-//                      $(window).load(function() {
-//                        function userInfo(){
-//                        var userinfo = $.ajax({
-//                        //data: str,
-//                        type: "POST",
-//                        url: "api/home",
-//                        datatype: "json",
-//                        contentType: "application/json",
-////                      success: function(data) {
-//                        statusCode: {
-//                        200: function () {
-//                        alert("ok");
-//                        console.log(data);
-//                        alert(userinfo);
-//            }
-//                        }
-//                    });
-//        }
-//                        });
                   },
                   401: function () {
                       alert("Invalid login or password");

@@ -13,7 +13,7 @@ public class UserDto {
     public String pass;
     public String passconfirm;
     public String regNum;
-    public PaymentDto payment;
+    //public PaymentDto payment;
 
     public UserDto(String name, String lastName, String regNum) {
         this.Name = name;

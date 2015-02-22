@@ -6,6 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import javax.persistence.*;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,11 @@ public class User implements Principal, HibernateL2Cache {
 	private String password;
     private double timeForTime;
     private String regNum;
+
+    //for payment
+    private String paymentId;
+    @Temporal(TemporalType.DATE)
+    private Date lastPaymentDate;
 
     @Enumerated(EnumType.STRING)
 	private UserRole role;
@@ -142,6 +148,22 @@ public class User implements Principal, HibernateL2Cache {
 
     public void setRegNum(String regNum) {
         this.regNum = regNum;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Date getLastPaymentDate() {
+        return lastPaymentDate;
+    }
+
+    public void setLastPaymentDate(Date lastPaymentDate) {
+        this.lastPaymentDate = lastPaymentDate;
     }
 
     @Override

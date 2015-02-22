@@ -34,4 +34,14 @@ public class UserDao extends AbstractGenericDao<User> {
             return null;
         }
     }
+
+    public User selectByPaymentId(String paymentId) {
+        Query query = entityManager.createQuery("select user from User user where user.paymentId = :paymentId");
+        query.setParameter("paymentId", paymentId);
+        try {
+            return (User) query.getSingleResult();
+        } catch (NonUniqueResultException | NoResultException e){
+            return null;
+        }
+    }
 }
