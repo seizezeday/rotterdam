@@ -49,9 +49,9 @@ public class DeclarationController {
 
         if(declarationsDto == null) {
             declarationsDto = new DeclarationsDto();
-            if (declarationsDto.daysDeclaration == null || declarationsDto.daysDeclaration.size() == 0) {
-                declarationsDto.daysDeclaration = declarationService.getFakeDeclarations(monday);
-            }
+        }
+        if (declarationsDto.daysDeclaration == null || declarationsDto.daysDeclaration.size() == 0) {
+            declarationsDto.daysDeclaration = declarationService.getFakeDeclarations(monday);
         }
         declarationsDto.active = declarationService.isActive(monday, user.getId());
         return Response.ok(declarationsDto).build();

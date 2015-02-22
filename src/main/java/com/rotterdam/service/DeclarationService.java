@@ -2,6 +2,7 @@ package com.rotterdam.service;
 
 import com.rotterdam.dto.DayDeclarationDto;
 import com.rotterdam.dto.DeclarationsDto;
+import com.rotterdam.model.dao.DayDao;
 import com.rotterdam.model.dao.DeclarationDao;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.WeekDao;
@@ -33,6 +34,9 @@ public class DeclarationService {
     @Inject
     private PeriodDao periodDao;
 
+    @Inject
+    private DayDao dayDao;
+
     @Transactional
     public DeclarationsDto selectByWeekIdAndUserId(Date date, long userId){
         Date monday = DateTools.getDateOfPrevMonday(date);
@@ -59,13 +63,19 @@ public class DeclarationService {
         Week week = weekDao.selectByStartDateAndUser(monday, userId);
 
         for (int i = 0; i < 7; i++) {
-            Day day = week.getDays().get(i);
+            Date dateByDay = DateTools.getDatePlusDays(week.getStartDate(), i);
+            Day day = findDayByDate(week.getDays(), dateByDay);
+            if(day == null){
+                day  = new Day(dateByDay, week);
+                dayDao.insert(day);
+            }
             List<Declaration> declarations = day.getDeclarations();
             DayDeclarationDto dayDeclarationDto = declarationsDto.daysDeclaration.get(i);
             if (!declarationEquals(declarations, dayDeclarationDto.declarations)) {
                 //lazy version
-                for (Declaration declaration : declarations)
-                    declarationDao.delete(declaration);
+                if(declarations != null)
+                    for (Declaration declaration : declarations)
+                        declarationDao.delete(declaration);
 
                 for (Declaration declaration : dayDeclarationDto.declarations) {
                     if(declaration.getPrice() != 0) {
@@ -77,7 +87,15 @@ public class DeclarationService {
         }
     }
 
+    private Day findDayByDate(List<Day> days, Date date){
+        for(Day day : days)
+            if(day.getDate().equals(date))
+                return day;
+        return null;
+    }
+
     private boolean declarationEquals(List<Declaration> first, List<Declaration> second){
+        if(first == null || second == null) return false;
         if(first.size() != second.size()) return false;
         for (int i = 0; i < first.size(); i++){
             Declaration firstDeclaration  =first.get(i);

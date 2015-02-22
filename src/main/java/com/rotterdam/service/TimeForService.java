@@ -202,27 +202,27 @@ public class TimeForService {
         double time = 0;
 
         Day day = weekService.determineDayByDate(week.getDays(), startDate);
-        if(day != null && day.getWorkHours() != null)
+        if(day != null && day.getWorkHours() != null && day.getWorkHours().size() != 0)
             if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
                 time += DateTools.getDoubleFormatHours(week.getPromiseMondayTime());
 
         day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 1));
-        if(day != null && day.getWorkHours() != null)
+        if(day != null && day.getWorkHours() != null && day.getWorkHours().size() != 0)
             if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
                 time += DateTools.getDoubleFormatHours(week.getPromiseTuesdayTime());
 
         day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 2));
-        if(day != null && day.getWorkHours() != null)
+        if(day != null && day.getWorkHours() != null && day.getWorkHours().size() != 0)
             if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
                 time += DateTools.getDoubleFormatHours(week.getPromiseWednesdayTime());
 
         day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 3));
-        if(day != null && day.getWorkHours() != null)
+        if(day != null && day.getWorkHours() != null && day.getWorkHours().size() != 0)
             if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
                 time += DateTools.getDoubleFormatHours(week.getPromiseThursdayTime());
 
         day = weekService.determineDayByDate(week.getDays(),DateTools.getDatePlusDays(startDate, 4));
-        if(day != null && day.getWorkHours() != null)
+        if(day != null && day.getWorkHours() != null && day.getWorkHours().size() != 0)
             if(day.getWorkHours().get(0) != null && day.getWorkHours().get(0).getRideType().equals(RideType.Werkdag))
                 time += DateTools.getDoubleFormatHours(week.getPromiseFridayTime());
 
