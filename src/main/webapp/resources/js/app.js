@@ -132,15 +132,34 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         });
     };
 
-    $scope.save = function(){
-        var daysToTransfer = {
-            date : $scope.selectedDate,
-            days : $scope.days
-        };
-        $http.post('api/timeTab', daysToTransfer).then(function(){
-            $scope.calculateRest();
-            addAlert();
-        });
+    $scope.checkTimeValidness = function(){
+        for(var i = 0; i < $scope.days.length; i++){
+            var day = $scope.days[i];
+            for(var whI = 0; whI < day.workHours.length; whI++){
+                var workHour = day.workHours[whI];
+                var start = DateConverter.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+                var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+                var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
+                if(start > end || rest > (end - start)) {
+                    addAlertWarning($scope.weekTitles[whI] + " data is not valid. Saving process will be canceled.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    $scope.save = function() {
+        if ($scope.checkTimeValidness()) {
+            var daysToTransfer = {
+                date: $scope.selectedDate,
+                days: $scope.days
+            };
+            $http.post('api/timeTab', daysToTransfer).then(function () {
+                $scope.calculateRest();
+                addAlert();
+            });
+        }
     };
 
     $scope.calculateRest = function(){
@@ -277,7 +296,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         var wh = $scope.days[dayIndex].workHours[0];
         var b = wh.dayType != '0' && index != 0;
         return  b;
-    }
+    };
 
     $scope.applyDate();
 });

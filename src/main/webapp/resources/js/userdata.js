@@ -14,6 +14,23 @@ function addAlert() {
 
 
 };
+
+function addAlertWarning(message) {
+    $(".append_alert").append(
+            '<div class="alert alert-danger alert-dismissable">'+
+            '<button type="button" class="close" ' +
+            'data-dismiss="alert" aria-hidden="true">' +
+            '&times;' +
+            '</button>' +
+            message +
+            '</div>');
+    $(".alert").show();
+    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").alert('close');
+    });
+
+
+};
 function preloadFunc()
 {
     $.ajax({
