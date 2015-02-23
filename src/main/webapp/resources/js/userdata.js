@@ -49,6 +49,7 @@ function preloadFunc()
 
 window.onload = preloadFunc();
 $(document).ready(function(){
+//    angular.element(document.getElementById('AlertCTRL1')).scope().alert.show();
 //        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"];

@@ -105,7 +105,10 @@
 
                   },
                   401: function () {
-                      alert("Invalid login or password");
+                      //alert("Invalid login or password");
+                      var scope = angular.element($('#login-tab')).scope();
+                      scope.alertInvalidLoginOrPassWord.show();
+
                   }
               }
           });

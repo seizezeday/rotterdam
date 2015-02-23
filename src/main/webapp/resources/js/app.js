@@ -2,6 +2,17 @@ var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcr
 
 angular.module('mgcrea.ngStrapDocs');
 
+app.controller('AlertCtrl', function($scope, $alert) {
+    $scope.alertInvalidLoginOrPassWord = $alert({
+        title: "Invalid login or password",
+        //container: '#alerts-container',
+        container: 'body',
+        placement: 'top-right',
+        type: 'info',
+        show : false, duration : 2
+    });
+});
+
 app.controller('time_tab_controller', function($scope, $http, $timeout) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
@@ -23,20 +34,50 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 startDayI = dayI;
         }
         endDayI = (parseInt(startDayI) + 1) + "";
-        $scope.days[startDayI].workHours.push({
-                startWorkingTime: $scope.overNight.start.time,
-                endWorkingTime: "23:59",
-                restTime: "",
-                dayType : '0'
+        //before hard push we need to try find and replace existing overnight
+        var needToPush = true;
+
+        //first we need to check startDayI
+        var startDay = days[startDayI];
+        var whStart;
+        for(var whI = 0; whI < startDay.workHours.length; whI++){
+            var wh = day.workHours[whI];
+            if(wh.endWorkingTime == "23:59" ){
+                needToPush = false;
+                whStart = whI;
+                break;
+                //here we find variant for replacement
             }
-        );
-        $scope.days[endDayI].workHours.push({
-                startWorkingTime: "00:00",
-                endWorkingTime: $scope.overNight.end.time,
-                restTime: "",
-                dayType : '0'
+        }
+
+        if(!needToPush){
+            //if previous search find something
+            var endDay = days[endDay];
+            for(var whI = 0; whI < endDay.workHours.length; whI++){
+                var wh = day.workHours[whI];
+                if(wh.startWorkingTime == "00:00" ){
+                    needToPush = false;
+                    //here we find variant for replacement
+                }
             }
-        );
+        }
+
+        if(needToPush) {
+            $scope.days[startDayI].workHours.push({
+                    startWorkingTime: $scope.overNight.start.time,
+                    endWorkingTime: "23:59",
+                    restTime: "",
+                    dayType: '0'
+                }
+            );
+            $scope.days[endDayI].workHours.push({
+                    startWorkingTime: "00:00",
+                    endWorkingTime: $scope.overNight.end.time,
+                    restTime: "",
+                    dayType: '0'
+                }
+            );
+        }
         console.log($scope.days);
         $scope.clearWorkHours(startDayI);
         $scope.rowChanged(startDayI);
@@ -47,12 +88,13 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
 
     $scope.clearWorkHours = function(dayIndex){
           var day = $scope.days[dayIndex];
-        for(var whI in day.workHours){
+        for(var whI = 0; whI < day.workHours.length; whI++){
             var wh = day.workHours[whI];
             if((wh.startWorkingTime == "00:00" || wh.startWorkingTime == "" )
                 && (wh.endWorkingTime == "00:00" || wh.endWorkingTime == "" )
                 && (wh.restTime == "0" || wh.restTime == "" )){
                 day.workHours.splice(whI, 1);
+                whI--;
             }
         }
     };
