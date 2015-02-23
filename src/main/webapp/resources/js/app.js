@@ -5,8 +5,7 @@ angular.module('mgcrea.ngStrapDocs');
 app.controller('AlertCtrl', function($scope, $alert) {
     $scope.alertInvalidLoginOrPassWord = $alert({
         title: "Invalid login or password",
-        //container: '#alerts-container',
-        container: 'body',
+        container: '#alerts-container',
         placement: 'top-right',
         type: 'info',
         show : false, duration : 2
