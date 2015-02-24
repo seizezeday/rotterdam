@@ -24,6 +24,11 @@
   <body>
 		<div class="container-fluid margin_top_5_proc">
 		    <div class="row ">
+                <div ui-view></div>
+                <div>
+                    <span><a ui-sref="en">EN</a></span>
+                    <span><a ui-sref="nl">NL</a></span>
+                </div>
 			<div class="col-md-12 ">
 			<div class="append_alert">			    
 			</div>
@@ -31,218 +36,219 @@
        <div class="panel panel-default">
        <div class="panel-heading">
 <ul class="nav nav-tabs" role="tablist" id="myTab">
-  <li class="active"><a href="#home" role="tab" data-toggle="tab">Hoofdpagina</a></li>
-  <li class="hide_tabs"><a href="#Time" role="tab" data-toggle="tab" >Tijd</a></li>
-  <li class="hide_tabs"><a href="#sheet_overview" role="tab" data-toggle="tab">Overzicht</a></li>
-  <li class="hide_tabs"><a href="#declaretion" role="tab" data-toggle="tab">Declaraties</a></li>
-  <li><a href="#settings" role="tab" data-toggle="tab">instellingen  </a></li>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >Uitloggen</a>
+  <li class="active"><a data-target="#home" role="tab" data-toggle="tab">{{'Home' | translate}}</a></li>
+  <li class="hide_tabs"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
+  <li class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
+  <li class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
+  <li><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
+      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >{{'Logout' | translate}}</a>
 </ul>
      
  </div>
   <div class="panel-body">
 
 <div class="tab-content">
-  <div class="tab-pane active" id="home">
-        <div class="well well-sm">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Naam :</dt>
-              <dd class="username"></dd>
-            </dl>
-        </div>
-        <div class="well well-sm">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Personeels nummer:</dt>
-              <dd id="registrationNumber"></dd>
-            </dl>
-        </div>
-        <div class="well well-sm">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Datum :</dt>
-              <dd id="userdate"></dd>
-            </dl>
-        </div>
-  </div>
-  <div class="tab-pane" id="Time" ng-controller="time_tab_controller">
-   <div class="row col-xs-12" >
-         <div class="form-group col-md-4" ng-class="">
-        <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date"  bs-datepicker>
-      </div>
-        <div class="col-md-1 col-xs-6 margin_bottom_10">
-    <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Brengen</button>
-       </div>
-    <div class="col-md-2 col-xs-6 margin_bottom_10">
-<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
-    Nachtelijke reis
-        </button>
-         </div> 
-             <div class="col-md-4 col-xs-6 margin_bottom_10">
-            <dl class="dl-horizontal margin_fix">
-              <dt>Beschikbare  tijd-voor-tijd:</dt>
-               <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
-            </dl>
-         </div>  
-    <div class="col-md-1 col-xs-12">
-        <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">Opslaan</button>
+<div class="tab-pane active" id="home">
+    <div class="well well-sm">
+        <dl class="dl-horizontal margin_fix">
+            <dt>{{ 'Name' | translate }}:</dt>
+            <dd class="username"></dd>
+        </dl>
     </div>
+    <div class="well well-sm">
+        <dl class="dl-horizontal margin_fix">
+            <dt>{{ 'RegNum' | translate }}:</dt>
+            <dd id="registrationNumber"></dd>
+        </dl>
+    </div>
+    <div class="well well-sm">
+        <dl class="dl-horizontal margin_fix">
+            <dt>{{ 'Date' | translate }}:</dt>
+            <dd id="userdate"></dd>
+        </dl>
+    </div>
+</div>
+<div class="tab-pane" id="Time" ng-controller="time_tab_controller">
+    <div class="row col-xs-12" >
+        <div class="form-group col-md-4" ng-class="">
+            <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date"  bs-datepicker>
+        </div>
+        <div class="col-md-1 col-xs-6 margin_bottom_10">
+            <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>
+        </div>
+        <div class="col-md-2 col-xs-6 margin_bottom_10">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+                {{ 'OverTrip' | translate }}
+            </button>
+        </div>
+        <div class="col-md-2 col-xs-6 margin_bottom_10">
+            <dl class="dl-horizontal margin_fix">
+                <dt>{{ 'AvailableTFT' | translate }}:</dt>
+                <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
+            </dl>
+        </div>
+        <div class="col-md-1 col-xs-12 col-md-offset-2">
+            <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">{{ 'Save' | translate }}</button>
+        </div>
         <hr class="col-xs-12">
-   </div>
-   <div ng-repeat="day in days">
-       <div ng-repeat="workHour in day.workHours">
-           <div class="row col-xs-12 time_tab" ng-hide="isActiveWorkHourHide($parent.$index, $index)">
-               <div class="col-md-4 col-xs-12 ">
-                   <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
-                   <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
-                       {{weekTitles[$parent.$index]}}
-                   </div>
-                   <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
-                       <input class="form-control time_monday_start" maxlength="5" number-mask
-                              placeholder="Start" ng-model="workHour.startWorkingTime" timepicker
-                              ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
-                       <div class="font_size_18" ng-show="!active">
-                           {{workHour.startWorkingTime}}
-                       </div>
-                   </div>
-               </div>
-               <div class="col-md-3 form-group col-xs-12">
-                   <div class="col-md-6 col-xs-12 padding_bottom_10">
-                       <input class="form-control clockpicker time_monday_end" maxlength="5" number-mask
-                              placeholder="End" ng-model="workHour.endWorkingTime" timepicker
-                              ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
-                       <div class="font_size_18" ng-show="!active">
-                           {{workHour.endWorkingTime}}
-                       </div>
-                   </div>
-                   <div class="col-md-6 col-xs-12">
-                       <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3"
-                              number-mask="" placeholder="Rest min" maxlength="3" number-mask
-                              ng-model="workHour.restTime" ng-show="active" ng-change="rowChanged($parent.$index)"
-                              data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
-                       <div class="font_size_18" ng-show="!active">
-                           {{workHour.restTime}}
-                       </div>
-                   </div>
-               </div>
-               <div class="col-md-5 form-group col-xs-12">
-                   <div class="col-md-4" ng-show="$index == 0">
-                       <select class="form-control type_food"
-                               ng-model="workHour.dayType"
-                               ng-options="dayType.val as dayType.description for dayType in dayTypes" ng-show="active" ng-change="rowChanged($parent.$index)"></select>
-                       <div class="font_size_18" ng-show="!active">
-                           {{dayTypes[workHour.dayType].description}}
-                       </div>
+    </div>
+    <div ng-repeat="day in days">
+        <div ng-repeat="workHour in day.workHours">
+            <div class="row col-xs-12 time_tab" ng-hide="isActiveWorkHourHide($parent.$index, $index)">
+                <div class="col-md-4 col-xs-12 ">
+                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
+                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
+                        {{weekTitles[$parent.$index]}}
+                    </div>
+                    <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
+                        <input class="form-control time_monday_start" maxlength="5" number-mask
+                               placeholder="{{ 'Start' | translate }}" ng-model="workHour.startWorkingTime" timepicker
+                               ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.startWorkingTime}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group col-xs-12">
+                    <div class="col-md-6 col-xs-12 padding_bottom_10">
+                        <input class="form-control clockpicker time_monday_end" maxlength="5" number-mask
+                               placeholder="{{ 'End' | translate }}" ng-model="workHour.endWorkingTime" timepicker
+                               ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.endWorkingTime}}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <input type="text" class="form-control time_monday_rest positive-integer" min="0" max="3"
+                               number-mask="" placeholder="{{ 'RestMin' | translate }}" maxlength="3" number-mask
+                               ng-model="workHour.restTime" ng-show="active" ng-change="rowChanged($parent.$index)"
+                               data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.restTime}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 form-group col-xs-12">
+                    <div class="col-md-4" ng-show="$index == 0">
+                        <select class="form-control type_food"
+                                ng-model="workHour.dayType"
+                                ng-options="dayType.val as dayType.description for dayType in dayTypes" ng-show="active" ng-change="rowChanged($parent.$index)"></select>
+                        <div class="font_size_18" ng-show="!active">
+                            {{dayTypes[workHour.dayType].description}}
+                        </div>
 
-                   </div>
-                   <div class="col-md-4 add_row_monday" ng-show="($index == 0 && active)">
-                       <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">Toevoegen rit</button>
-                   </div>
-                   <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">
-                       <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >Verwijderen</button>
-                   </div>
+                    </div>
+                    <div class="col-md-4 add_row_monday" ng-show="($index == 0 && active)">
+                        <button type="button" class="btn btn-warning btn-block "  ng-click="addRow($parent.$index)">{{ 'AnotherTrip' | translate }}</button>
+                    </div>
+                    <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active" ng-class="{'col-md-offset-4': $index != 0}">
+                        <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >{{ 'Delete' | translate }}</button>
+                    </div>
 
-                   <div class="col-md-4 font_size_18 text-center" ng-show="$index == 0">
-                       Totaal aantal <span id="total_time_monday">
+                    <div class="col-md-4 font_size_18 text-center" ng-show="$index == 0">
+                        {{ 'TotalWorked' | translate }} <span id="total_time_monday">
                        {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
                    </span>
-                   </div>
-               </div>
-           </div>
-       </div>
-       <hr class="col-xs-12 margin_top_10">
-   </div>
-      <div class="row col-xs-12 row">
-      <div class="col-md-6">
-      <p class="font_size_18">Taantal maan-vrij: <span id="total_mon_fri">{{totalMonFri.h}}h {{totalMonFri.m}}m</span></p>
+                    </div>
+                </div>
+            </div>
         </div>
-          <div class="col-md-6">             
-      <p class="font_size_18">Totaal meer dan uur: <span id="total_over_hours">{{overTime.h}}h {{overTime.m}}m</span></p>
+        <hr class="col-xs-12 margin_top_10">
+    </div>
+    <div class="row col-xs-12 row">
+        <div class="col-md-6">
+            <p class="font_size_18">{{ 'TotalWorkedMonFri' | translate }}: <span id="total_mon_fri">{{totalMonFri.h}}h {{totalMonFri.m}}m</span></p>
+        </div>
+        <div class="col-md-6">
+            <p class="font_size_18">{{ 'TotalOverHours' | translate }}: <span id="total_over_hours">{{overTime.h}}h {{overTime.m}}m</span></p>
 
-                     </div>
-                 <div class="col-md-12">   
-      <p class="font_size_18">Totaal werkte Zaterdag : <span id="total_saturday">{{daysTotalTime[5].h}}h {{daysTotalTime[5].m}}m</span></p>
+        </div>
+        <div class="col-md-12">
+            <p class="font_size_18">{{ 'TotalWorkedSaturday' | translate }}: <span id="total_saturday">{{daysTotalTime[5].h}}h {{daysTotalTime[5].m}}m</span></p>
 
-             </div> 
-                 <div class="col-md-12">   
-      <p class="font_size_18">Totaal werkte Zondag : <span id="total_sunday">{{daysTotalTime[6].h}}h {{daysTotalTime[6].m}}m</span></p>
+        </div>
+        <div class="col-md-12">
+            <p class="font_size_18">{{ 'TotalWorkedSunday' | translate }}: <span id="total_sunday">{{daysTotalTime[6].h}}h {{daysTotalTime[6].m}}m</span></p>
 
-             </div> 
-      </div>
-      <div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
--                      <button id="modal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">Overnight trip</h4>
-                  </div>
-                  <div id="multitripform" class="modal-body">
-                      <div class="col-md-12">
-                          <div class="form-group col-md-4">
-                              <input id="time_week_date_modal1" type="text" class="form-control" ng-model="overNight.start.date" name="date" bs-datepicker placeholder="start date">
+        </div>
+    </div>
+    <div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="modal_close" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'OverTrip' | translate }}</h4>
+                </div>
+                <div id="multitripform" class="modal-body">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-4">
+                            <input id="time_week_date_modal1" type="text" class="form-control" ng-model="overNight.start.date" name="date" bs-datepicker placeholder="{{ 'StartDate' | translate }}">
 
-                          </div>
-                          <div class="form-group col-md-4">
-                              <input id="time_start_modal" class="form-control" maxlength="5" placeholder="Start" ng-model="overNight.start.time" timepicker-modal>
-                          </div>
-                          <div class="form-group col-md-4 ">
-                              <input id="time_end_modal" class="form-control" maxlength="5" placeholder="End" ng-model="overNight.end.time" timepicker-modal>
-                          </div>
-                      </div>
-                      <!--<div class="col-md-12">-->
-                          <!---->
-                      <!--</div>-->
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Dicht</button>
-                      <button id="multitrip_save" type="button" class="btn btn-primary" ng-click="overNightSave()">Save changes</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input id="time_start_modal" class="form-control" maxlength="5" placeholder="{{ 'Start' | translate }}" ng-model="overNight.start.time" timepicker-modal>
+                        </div>
+                        <div class="form-group col-md-4 ">
+                            <input id="time_end_modal" class="form-control" maxlength="5" placeholder="{{ 'End' | translate }}" ng-model="overNight.end.time" timepicker-modal>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-12">-->
+                    <!---->
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' | translate }}</button>
+                    <button id="multitrip_save" type="button" class="btn btn-primary" ng-click="overNightSave()">{{ 'SaveChanges' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="tab-pane" id="sheet_overview">
-    <div class="col-md-12">
-    <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">   
-        <div class="col-md-8"><input id="overview_calendar" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker>
-        </div>   
-        <div class="col-md-4"><button id="overview_submit" class="btn btn-warning btn-block">Brengen</button></div>
-    </div> 
-          <!--<div class="col-md-6 col-md-offset-1">            -->
-        <!--<p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>-->
-    <!--</div>-->
+        <div class="col-md-12">
+            <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">
+                <div class="col-md-8"><input id="overview_calendar" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker>
+                </div>
+                <div class="col-md-4"><button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button></div>
+            </div>
+            <!--<div class="col-md-6 col-md-offset-1">            -->
+            <!--<p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>-->
+            <!--</div>-->
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <select id="overview_week_select" multiple class="form-control">
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                    <option value="4"></option>
+                </select>
+            </div>
+            <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
+                <p class="font_size_18" ng-repeat="totalTime in totalTimes">{{ 'TotalHours' | translate }} {{totalTime.tolalProc}} {{ 'worked' | translate }}: <span id="overview_total{{totalTime.overviewId}}"></span></p>
+            </div>
+            <div class="col-md-12">
+                <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1" disabled>{{ 'DownloadPDF' | translate }}</button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-12">
-    <div class="col-md-4">
-        <select id="overview_week_select" multiple class="form-control">
-          <option value="1"></option>
-          <option value="2"></option>
-          <option value="3"></option>
-          <option value="4"></option>
-        </select>
-    </div>
-         <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
-        <p class="font_size_18" ng-repeat="totalTime in totalTimes">Totaal aantal uren {{totalTime.tolalProc}} gewerkt: <span id="overview_total{{totalTime.overviewId}}"></span></p>
-    </div>
-         <div class="col-md-12">
-          <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-2" disabled>Download as PDF</button>
-         </div>
-    </div>
-  </div>
-  <div class="tab-pane" id="declaretion" ng-controller="declaration_controller">
+      <div class="tab-pane" id="declaretion" ng-controller="declaration_controller">
       <div class="col-md-12">
-          <p class="font_size_18">Korten declaration</p>
+          <p class="font_size_18">{{ 'KortenDeclaration' | translate }}</p>
       </div>
       <div class="margin_bottom_20">
           <div class="form-group col-md-3" ng-class="{'has-error': datepickerForm.date.$invalid}">
-              <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker >
+              <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"
+                     bs-datepicker >
           </div>
           <div class="col-md-1">
-              <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">Brengen</button>
+              <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>
           </div>
           <div class="col-md-1">
-              <button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">Opslaan</button>
+              <button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">{{ 'Save' | translate }}</button>
           </div>
           <div class="col-md-2">
-              <p class="font_size_18 text-right">Totaal: {{total}}</p>
+              <p class="font_size_18 text-right">{{ 'Total' | translate }}: {{total}}</p>
           </div>
       </div>
       <hr class="col-xs-12">
@@ -266,12 +272,12 @@
                       {{declaration.price}}
                   </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-1">
                   <button class="btn btn-block btn-warning declaration_add_row"
-                          ng-show="$index == 0" ng-click="addRow($parent.$index)">Toevoegen 
+                          ng-show="$index == 0" ng-click="addRow($parent.$index)">Add
                   </button>
                   <button class="btn btn-block btn-danger declaration_del_row" ng-show="declaration.active && $index > 0"
-                          ng-click="removeRow($parent.$index, $index)">Verwijderen
+                          ng-click="removeRow($parent.$index, $index)">Delete
                   </button>
               </div>
           </div>
@@ -279,16 +285,16 @@
       </div>
   </div>
 <div class="tab-pane font_size_18" id="settings">
-         <div class="col-md-4 col-md-offset-8"><h3>Geplande werkzaamheden uur</h3></div>
+         <div class="col-md-4 col-md-offset-8"><h3>{{'ScheduledWorkours' | translate}}</h3></div>
    <div class="col-md-4">
        <div class="margin_bottom_10">
-    <input id="allow_saturday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">Gebruik zaterdag uren als tijd-voor-tijd</span>
+    <input id="allow_saturday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">{{'UseSaturdayHoursAsTFT' | translate}}</span>
 
 </div>
 
-   </div>  
+   </div>
        <div class="col-md-4">
-    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="Start tijd-voor-tijd regeling">
+    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="{{'StartTFTRegulation' | translate}}">
 
       </div>
        <div class="col-md-4" ng-controller="settings_controller">
@@ -298,7 +304,7 @@
         <div class="col-md-4">
         </div>
             <div class="col-md-4">
-              <div class="col-xs-12 text-center"><label>Periode</label></div>
+              <div class="col-xs-12 text-center"><label>{{'Period' | translate}}</label></div>
               <div class="form-group">
     <div class="form-group col-xs-6">
 
@@ -308,10 +314,10 @@
    <p class="text-center" id="end_period">end_period</p>
     </div>
   </div>
-   </div>  
    </div>
-             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled" >Opslaan</button>
-         
+   </div>
+             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled" >{{'Save' | translate}}</button>
+
           </div>
         </div>
       </div>
@@ -333,7 +339,10 @@
      <script src="resources/js/angular-sanitize.min.js"></script>
      <script src="resources/js/angular-strap.min.js"></script>
      <script src="resources/js/angular-strap.tpl.min.js"></script>
-    <script src="resources/js/app.js"></script>
+        <script src="resources/js/angular-ui-router.js"></script>
+        <script src="resources/js/angular-translate.js"></script>
+        <script src="resources/js/app.js"></script>
+        <script src="resources/js/i18n.js"></script>
     <script src="resources/js/dateConvertor.js"></script>
      <script src="resources/js/jquery-2.1.1.min.js"></script>
      <script src="resources/js/bootstrap.min.js"></script>

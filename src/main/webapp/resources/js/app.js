@@ -1,4 +1,4 @@
-var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap']);
+var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap', 'ui.router', 'pascalprecht.translate']);
 
 angular.module('mgcrea.ngStrapDocs');
 
