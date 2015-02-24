@@ -40,7 +40,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         var startDay = days[startDayI];
         var whStart;
         for(var whI = 0; whI < startDay.workHours.length; whI++){
-            var wh = day.workHours[whI];
+            var wh = startDay.workHours[whI];
             if(wh.endWorkingTime == "23:59" ){
                 needToPush = false;
                 whStart = whI;
@@ -49,19 +49,25 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             }
         }
 
+        var whEnd;
         if(!needToPush){
             //if previous search find something
-            var endDay = days[endDay];
+            var endDay = days[endDayI];
             for(var whI = 0; whI < endDay.workHours.length; whI++){
-                var wh = day.workHours[whI];
+                var wh = endDay.workHours[whI];
                 if(wh.startWorkingTime == "00:00" ){
                     needToPush = false;
+                    whEnd = whI;
                     //here we find variant for replacement
                 }
             }
         }
 
-        if(needToPush) {
+        if (!needToPush) {
+            //here we need to replace data of existing overhight
+            days[startDayI].workHours[whStart].startWorkingTime = $scope.overNight.start.time;
+            days[endDayI].workHours[whEnd].endWorkingTime = $scope.overNight.end.time;
+        } else {
             $scope.days[startDayI].workHours.push({
                     startWorkingTime: $scope.overNight.start.time,
                     endWorkingTime: "23:59",
@@ -77,7 +83,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 }
             );
         }
-        console.log($scope.days);
+        //console.log($scope.days);
         $scope.clearWorkHours(startDayI);
         $scope.rowChanged(startDayI);
         $scope.clearWorkHours(endDayI);
