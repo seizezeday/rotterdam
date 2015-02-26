@@ -23,6 +23,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 app.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.translations('en', {
+        //for client-page
         'Name': 'Name',
         'RegNum': 'Registration number',
         'Date': 'Date',
@@ -57,10 +58,29 @@ app.config(['$translateProvider', function ($translateProvider) {
         'Overview': 'Overview',
         'Declaration': 'Declaration',
         'Settings': 'Settings',
-        'Logout': 'Logout'
+        'Logout': 'Logout',
+        //for login page
+        'Login': 'Login',
+        'Registration': 'Registration',
+        'ForgotPassword': 'Forgot password',
+        'EnterUsername': 'EnterUsername',
+        'LastName': 'Lastname',
+        'EnterLastName': 'Enter lastname',
+        'Email': 'Email',
+        'InvalidEmail': 'Invalid Email',
+        'InvalidRegNum': 'Invalid Registration number ',
+        'Password': 'Password ',
+        'PasswordsNotMatch': 'Passwords do not match ',
+        'RepeatPassword': 'Repeat password ',
+        'InsufficientlyComplexPassword': 'Insufficiently complex password ',
+        'EnterYourEmail': 'Enter your Email ',
+        'SendPassword': 'Send password ',
+        'EnterEmailAddress': 'Enter Email address ',
+        'PasswordEmpty': 'Password empty'
     });
 
     $translateProvider.translations('nl', {
+        //for client-page
         'Name': 'Naam',
         'RegNum': 'Personeels nummer',
         'Date': 'Datum',
@@ -95,7 +115,25 @@ app.config(['$translateProvider', function ($translateProvider) {
         'Overview': 'Overzicht',
         'Declaration': 'Declaraties',
         'Settings': 'Instellingen',
-        'Logout': 'Uitloggen'
+        'Logout': 'Uitloggen',
+        //for login page
+        'Login': 'Log In',
+        'Registration': 'Registratie',
+        'ForgotPassword': 'Wachtwoord vergeten',
+        'EnterUsername': 'Voer gebruikersnaam',
+        'LastName': 'Achternaam',
+        'EnterLastName': 'Voer achternaam',
+        'Email': 'Email',
+        'InvalidEmail': 'Ongeldig',
+        'InvalidRegNum': 'Ongeldig Registration number',
+        'Password': 'Wachtwoord',
+        'PasswordsNotMatch': 'Wachtwoorden komen niet overeen',
+        'RepeatPassword': 'Herhaal wachtwoord',
+        'InsufficientlyComplexPassword': 'Onvoldoende complex wachtwoord',
+        'EnterYourEmail': 'Vul uw e-mail',
+        'SendPassword': 'Stuur wachtwoord',
+        'EnterEmailAddress': 'Geef e-mail adres',
+        'PasswordEmpty': 'Password leeg'
     });
 
     $translateProvider.preferredLanguage(defaultLang);

@@ -91,8 +91,12 @@
               dataType: "json",
               statusCode: {
                   200: function (data) {
-                      if(data.payed)
+                      if(data.payed) {
+                          if(endsWith("en", document.URL)){
+                              location.href = "client_page.html#/en";
+                          } else
                             location.href = "client_page.html";
+                      }
                       else{
                           alert("Not payed");
                           $("#login-btn").html("Pay");
@@ -113,6 +117,10 @@
               }
           });
       }
+
+       function endsWith(suffix, string) {
+           return string.indexOf(suffix, this.length - suffix.length) !== -1;
+       };
 //        function userInfo(data){
 //                        var userinfo = $.ajax({
 //                        //data: str,

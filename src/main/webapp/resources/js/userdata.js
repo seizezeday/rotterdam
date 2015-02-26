@@ -82,7 +82,10 @@ $(document).ready(function(){
               dataType: "json",
               statusCode: {
                   200: function () {
-                      location.href='index.html';
+                      if(endsWith("en", document.URL)){
+                          location.href = "index.html#/en";
+                      } else
+                        location.href='index.html';
                   }
               }
           });
