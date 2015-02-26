@@ -1,7 +1,7 @@
        $(document).ready(function(){
            $("#login-btn").click(function submitButton() {
             var Auth = {
-            login: $('#inputLoginEmail').val(),
+            login: $('#inputLoginEmail').val(), // this is fours line
             password: $('#login_password').val()
         };
           addData(Auth);
