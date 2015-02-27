@@ -17,8 +17,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: function($scope, $translate) {
                 $translate.use('nl');
             }
-        })
-    ;
+        });
 });
 
 app.config(['$translateProvider', function ($translateProvider) {
