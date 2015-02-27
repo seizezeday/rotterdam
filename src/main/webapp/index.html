@@ -22,9 +22,11 @@
      <div class="container">
          <div class="row" >
              <div ui-view></div>
-             <div>
-                 <span><a ui-sref="en">EN</a></span>
-                 <span><a ui-sref="nl">NL</a></span>
+             <div class="pull-right" ng-controller="LanguageCtrl">
+      <div class="btn-group" ng-model="button.radio" bs-radio-group>
+        <label class="btn btn-default" ui-sref="nl"><input type="radio" class="btn btn-default" value="0">NL</label>
+        <label class="btn btn-default" ui-sref="en"><input type="radio" class="btn btn-default" value="1">EN</label>
+      </div>
              </div>
 
 
