@@ -230,6 +230,7 @@
                 </select>
             </div>
             <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
+                <span class="font_size_18">Period: </span>
                 <p class="font_size_18" ng-repeat="totalTime in totalTimes">{{ 'TotalHours' | translate }} {{totalTime.tolalProc}} {{ 'worked' | translate }}: <span id="overview_total{{totalTime.overviewId}}"></span></p>
             </div>
             <div class="col-md-12">

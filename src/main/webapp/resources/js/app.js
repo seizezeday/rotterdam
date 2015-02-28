@@ -166,6 +166,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
                     $scope.overTimeMinDate = DateConverter.revertDayAndMonth(res.data.startEnd.start);
+                    $scope.overNight.start.date = res.data.startEnd.start;
                     var date = DateConverter.plusDays(res.data.startEnd.end, -1);
                     $scope.overTimeMaxDate = DateConverter.revertDayAndMonth(date);
                     break;
