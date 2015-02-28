@@ -124,9 +124,8 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
 
     $scope.selectedDate = DateConverter.convertDateToString(new Date());
 
-//    $scope.minDate = DateConverter.convertDateToString(new Date("01.02.2015"));
-    $scope.minDate = ""; //DateConverter.revertDayAndMonth("08.02.2015");
-    $scope.maxDate = ""; //DateConverter.convertDateToString(new Date());
+    $scope.overTimeMinDate = "";
+    $scope.overTimeMaxDate = "";
 //    $scope.selectedDate = "01.02.2015";
 
     $scope.active = true;
@@ -166,8 +165,9 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                     $scope.active = res.data.active;
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
-//                    $scope.minDate = DateConverter.revertDayAndMonth(res.data.availableDates.start);
-//                    $scope.maxDate = DateConverter.revertDayAndMonth(res.data.availableDates.end);
+                    $scope.overTimeMinDate = DateConverter.revertDayAndMonth(res.data.startEnd.start);
+                    var date = DateConverter.plusDays(res.data.startEnd.end, -1);
+                    $scope.overTimeMaxDate = DateConverter.revertDayAndMonth(date);
                     break;
                 }
                 case 204 : {

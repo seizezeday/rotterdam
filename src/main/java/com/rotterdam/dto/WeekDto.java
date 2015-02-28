@@ -28,6 +28,8 @@ public class WeekDto {
     public boolean active = false;
     @JsonDeserialize(using = JsonDateDeserializer.class)
     public Date date;
+    //just start and end dates of the week
+    public StartEndDto startEnd;
 
     @Override
     public String toString() {

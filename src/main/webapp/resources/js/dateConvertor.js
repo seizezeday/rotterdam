@@ -13,6 +13,17 @@ var DateConverter = new function(){
         return dateAr[1] + "." + dateAr[0] + "." + dateAr[2];
     };
 
+    this.convertDateStringToDate = function (date) {
+        var parts = date.split(".");
+        return new Date(parts[2], parts[1] - 1, parts[0])
+    };
+
+    this.plusDays = function (date, days){
+        var dateObj = this.convertDateStringToDate(date);
+        dateObj.setDate(dateObj.getDate() + parseInt(days));
+        return this.convertDateToString(dateObj);
+    };
+
     this.convertTimeToString = function (date){
         var curr_hours = this.prefixZeros(date.getHours(), 2);
         var curr_minutes = this.prefixZeros(date.getMinutes(), 2);

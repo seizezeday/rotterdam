@@ -150,8 +150,11 @@ public class WeekService {
     @Transactional
     public WeekDto getWeekByStartDateAndUserId(Date startDate, long userId){
         Week week = weekDao.selectByStartDateAndUser(startDate, userId);
-        if(week != null)
-            return WeekDto.convertDaysToWorkHourDto(week.getDays());
+        if(week != null) {
+            WeekDto weekDto = WeekDto.convertDaysToWorkHourDto(week.getDays());
+            weekDto.startEnd = new StartEndDto(week.getStartDate(), week.getEndDate());
+            return weekDto;
+        }
         else return new WeekDto();
     }
 

@@ -184,7 +184,8 @@
                     <div class="col-md-12">
                         <div class="form-group col-md-4">
                             <input id="time_week_date_modal1" type="text" class="form-control" ng-model="overNight.start.date"
-                                   name="date" bs-datepicker placeholder="{{ 'StartDate' | translate }}">
+                                   name="date" bs-datepicker placeholder="{{ 'StartDate' | translate }}"
+                                   data-min-date="{{overTimeMinDate}}" data-max-date="{{overTimeMaxDate}}">
 
                         </div>
                         <div class="form-group col-md-4">
