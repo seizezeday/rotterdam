@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns="http://java.sun.com/jsf/html" ng-app="mgcrea.ngStrapDocs">
+<html lang="ru" ng-app="mgcrea.ngStrapDocs">
   <head>
     <meta charset="utf-8"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -24,11 +24,15 @@
   <body>
 		<div class="container-fluid margin_top_5_proc">
 		    <div class="row ">
-                <div ui-view></div>
-                <div>
-                    <span><a ui-sref="en">EN</a></span>
-                    <span><a ui-sref="nl">NL</a></span>
-                </div>
+		  <div ui-view></div>
+<!--
+             <div class="pull-right" ng-controller="LanguageCtrl">
+      <div class="btn-group" ng-model="button.radio" bs-radio-group>
+        <label class="btn btn-default" ui-sref="nl"><input type="radio" class="btn btn-default" value="0">NL</label>
+        <label class="btn btn-default" ui-sref="en"><input type="radio" class="btn btn-default" value="1">EN</label>
+      </div>
+             </div>
+-->
 			<div class="col-md-12 ">
 			<div class="append_alert">			    
 			</div>
@@ -41,6 +45,10 @@
   <li class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
   <li class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
   <li><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
+    <div class="btn-group pull-right padding_left_10" ng-model="button.radio" bs-radio-group>
+        <label class="btn btn-default" ui-sref="nl"><input type="radio" class="btn btn-default" value="0">NL</label>
+        <label class="btn btn-default" ui-sref="en"><input type="radio" class="btn btn-default" value="1">EN</label>
+      </div>
       <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >{{'Logout' | translate}}</a>
 </ul>
      

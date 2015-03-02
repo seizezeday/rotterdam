@@ -603,12 +603,8 @@ $scope.totalTimes = [
 app.controller('LanguageCtrl', function($scope) {
   $scope.button = {
     radio: 0
-  };
+  };  
+//  $scope.button = {
+//    radioClient: 0
+//  };
 });
-
-
-//app.controller("time_select", ['$scope', function($scope){
-//$scope.options = [
-//    {val: '1', deskription: 'Werkdag'},{val: '2', deskription: 'Weekenddag'},{val: '3', deskription: 'Wachtdag'},{val: '4', deskription: 'Ziektedag'},{val: '5', deskription: 'Vakantiedag'},{val: '6', deskription: 'ATV-dag'},{val: '7', deskription: 'Betaald verlof'},{val: '8', deskription: 'Ontbetaald verlof'},{val: '9', deskription: 'Tijd-voor-tijd'},{val: '10', deskription: 'Overstaandag'},{val: '11', deskription: 'Zwangerschapsverlof'},{val: '12', deskription: 'Feestdag'},{val: '13', deskription: 'Geen werkdag'}
-//];
-//  }]);
