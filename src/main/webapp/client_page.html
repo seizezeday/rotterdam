@@ -210,11 +210,13 @@
     <div class="tab-pane" id="sheet_overview">
         <div class="col-md-12">
             <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">
-                <div class="col-md-8"><input id="overview_calendar" type="text" class="form-control"
+                <div class="col-md-2"><span class="font_size_18">Period: </span></div>
+                <div class="col-md-7">
+                    <input id="overview_calendar" type="text" class="form-control"
                                              ng-model="selectedDate" name="date" bs-datepicker
                                              data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
                 </div>
-                <div class="col-md-4"><button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button></div>
+                <div class="col-md-3"><button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button></div>
             </div>
             <!--<div class="col-md-6 col-md-offset-1">            -->
             <!--<p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>-->
@@ -230,7 +232,6 @@
                 </select>
             </div>
             <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
-                <span class="font_size_18">Period: </span>
                 <p class="font_size_18" ng-repeat="totalTime in totalTimes">{{ 'TotalHours' | translate }} {{totalTime.tolalProc}} {{ 'worked' | translate }}: <span id="overview_total{{totalTime.overviewId}}"></span></p>
             </div>
             <div class="col-md-12">

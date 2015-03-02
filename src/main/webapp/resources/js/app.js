@@ -420,10 +420,18 @@ app.controller('DatepickerDemoController', function($scope, $http) {
 });
 
 app.run(function($rootScope, $http) {
-    $http.get('api/timeTab/getAvailableDates').then(function(res) {
-        $rootScope.minDate = DateConverter.revertDayAndMonth(res.data.start);
-        $rootScope.maxDate = DateConverter.revertDayAndMonth(res.data.end);
-    });
+    if(document.URL.indexOf("client_page") > -1) {
+        $http.get('api/timeTab/getAvailableDates').then(function (res) {
+            switch (res.status) {
+                case 200 :
+                {
+                    $rootScope.minDate = DateConverter.revertDayAndMonth(res.data.start);
+                    $rootScope.maxDate = DateConverter.revertDayAndMonth(res.data.end);
+                    break;
+                }
+            }
+        });
+    }
 });
 
 //app.controller('DatepickerModalController', function($scope, $http) {
