@@ -49,9 +49,9 @@
   <li class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
   <li class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
   <li><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
-    <div class="btn-group pull-right padding_left_10" ng-model="button.radio" bs-radio-group>
-        <label class="btn btn-default" ui-sref="nl"><input type="radio" class="btn btn-default" value="0">NL</label>
-        <label class="btn btn-default" ui-sref="en"><input type="radio" class="btn btn-default" value="1">EN</label>
+    <div class="btn-group pull-right padding_left_10">
+        <a class="btn btn-default" ui-sref="nl">NL</a>
+        <a class="btn btn-default" ui-sref="en">EN</a>
       </div>
       <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >{{'Logout' | translate}}</a>
 </ul>
