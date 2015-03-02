@@ -10,6 +10,14 @@ app.controller('AlertCtrl', function($scope, $alert) {
         type: 'info',
         show : false, duration : 2
     });
+
+    $scope.alertNotPayed = $alert({
+        title: "Not payed",
+        container: '#alerts-container',
+        placement: 'top-right',
+        type: 'info',
+        show : false, duration : 2
+    });
 });
 
 app.controller('time_tab_controller', function($scope, $http, $timeout) {

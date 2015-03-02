@@ -98,7 +98,9 @@
                             location.href = "client_page.html";
                       }
                       else{
-                          alert("Not payed");
+                          //alert("Not payed");
+                          var scope = angular.element($('#login-tab')).scope();
+                          scope.alertNotPayed.show();
                           $("#login-btn").html("Pay");
                           //data is payment url
                           $("#login-btn").unbind('click');

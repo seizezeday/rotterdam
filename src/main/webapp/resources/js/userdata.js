@@ -1,11 +1,16 @@
 function addAlert() {
+    var message;
+    if(endsWith("nl", document.URL)){
+        message = "Gered";
+    } else
+        message = "Saved";
     $(".append_alert").append(
             '<div class="alert alert-success alert-dismissable">'+
             '<button type="button" class="close" ' +
             'data-dismiss="alert" aria-hidden="true">' +
             '&times;' +
             '</button>' +
-            'Saved' +
+                message +
             '</div>');
     $(".alert").show();
     $(".alert").fadeTo(2000, 500).slideUp(500, function(){
