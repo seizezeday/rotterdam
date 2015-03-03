@@ -279,6 +279,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             $scope.daysTotalTime[index].h = 0;
             $scope.daysTotalTime[index].m = 0;
         }
+        //we need to calculate overTime
+        $scope.calculateOverTime();
         //now we need to calculate total mon-fri
         var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
         currentTotalTime -= oldTotalDayTime;
@@ -289,7 +291,6 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         var totalMonSun = currentTotalTime
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
-        $scope.calculateOverTime();
 
         //now we need to change time-for-time
         if(day.dayType == '8'){
@@ -332,16 +333,21 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         var totalMonSun = currentTotalTime
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
-        var promised = 0;
-        for (var i = 0; i < 5; i++) {
-            promised += parseInt($scope.promisedTime[i]);
-        }
-        promised *= 60;
+        var promised = $scope.calculatePromisedTimeInMinutes();
         if (totalMonSun > promised) {
             var times = DateConverter.convertIntMinutesToTimeArray(totalMonSun - promised);
             $scope.overTime.h = times[0];
             $scope.overTime.m = times[1];
         }
+    };
+
+    $scope.calculatePromisedTimeInMinutes = function(){
+        var promised = 0;
+        for (var i = 0; i < 5; i++) {
+            promised += parseInt($scope.promisedTime[i]);
+        }
+        promised *= 60;
+        return promised;
     };
 
     $scope.dayTypeIsDisabled = function(dayIndex, index){
