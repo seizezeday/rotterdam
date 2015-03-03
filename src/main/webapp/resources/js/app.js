@@ -280,14 +280,15 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             $scope.daysTotalTime[index].m = 0;
         }
         //we need to calculate overTime
-        $scope.calculateOverTime();
-        //now we need to calculate total mon-fri
-        var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
-        currentTotalTime -= oldTotalDayTime;
-        currentTotalTime += total;
-        var totalMonFri = DateConverter.convertIntMinutesToTimePair(currentTotalTime);
+        var overTime = $scope.calculateOverTime();
+        ////now we need to calculate total mon-fri
+        //var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
+        //currentTotalTime -= oldTotalDayTime;
+        //currentTotalTime += total;
+        var totalMonFri = DateConverter.convertIntMinutesToTimePair($scope.calculateTotalMonFri() - overTime);
+        //DateConverter.convertIntMinutesToTimePair(currentTotalTime); // -overTime
+        //var totalMonFri = DateConverter.convertIntMinutesToTimePair(currentTotalTime); // -overTime
         $scope.totalMonFri = totalMonFri;
-        //we need to calculate overTime
         var totalMonSun = currentTotalTime
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
@@ -316,29 +317,40 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.calculateTableTotal = function(){
         //fully calculate
-        var totalFull = 0;
-        for (var i = 0; i < 5; i++) {
-            totalFull += $scope.calculateRowTotal(i);
-            $scope.rowChanged(i);
-        }
+        var totalFull = $scope.calculateTotalMonFri();
+        var overTime = $scope.calculateOverTime();
         if (totalFull >= 0) {
+            totalFull -=overTime;
             var times = DateConverter.convertIntMinutesToTimeArray(totalFull);
             $scope.totalMonFri.h = times[0];
             $scope.totalMonFri.m = times[1];
         }
     };
 
+    $scope.calculateTotalMonFri = function(){
+        var totalFull = 0;
+        for (var i = 0; i < 5; i++) {
+            totalFull += $scope.calculateRowTotal(i);
+            //$scope.rowChanged(i);
+        }
+        return totalFull;
+    };
+
     $scope.calculateOverTime = function(){
-        var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
+        var currentTotalTime = $scope.calculateTotalMonFri();
+        //var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
         var totalMonSun = currentTotalTime
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
             + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
         var promised = $scope.calculatePromisedTimeInMinutes();
+        var time = 0;
         if (totalMonSun > promised) {
-            var times = DateConverter.convertIntMinutesToTimeArray(totalMonSun - promised);
+            time = totalMonSun - promised;
+            var times = DateConverter.convertIntMinutesToTimeArray(time);
             $scope.overTime.h = times[0];
             $scope.overTime.m = times[1];
         }
+        return time;
     };
 
     $scope.calculatePromisedTimeInMinutes = function(){
