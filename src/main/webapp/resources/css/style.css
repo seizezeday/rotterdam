@@ -44,6 +44,10 @@
 .padding_fix{
     padding: 0px;
 }
+.padding_gorizontal_fix{
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .padding_left_30{
     padding-left: 30px;
 }

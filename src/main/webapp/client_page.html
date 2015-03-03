@@ -97,12 +97,12 @@
     <div ng-repeat="day in days">
         <div ng-repeat="workHour in day.workHours">
             <div class="row col-xs-12 time_tab" ng-hide="isActiveWorkHourHide($parent.$index, $index)">
-                <div class="col-md-4 col-xs-12 ">
+                <div class="col-md-4 col-xs-12 padding_gorizontal_fix">
                     <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
                     <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
                         {{ 'WeekDays.' + $parent.$index | translate }}
                     </div>
-                    <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
+                    <div class="col-md-4 col-xs-12 padding_gorizontal_fix padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
                         <input class="form-control time_monday_start" maxlength="5" number-mask
                                placeholder="{{ 'Start' | translate }}" ng-model="workHour.startWorkingTime" timepicker
                                ng-show="active" ng-change="rowChanged($parent.$index)" data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 form-group col-xs-12">
+                <div class="col-md-3 form-group col-xs-12 padding_gorizontal_fix">
                     <div class="col-md-6 col-xs-12 padding_bottom_10">
                         <input class="form-control clockpicker time_monday_end" maxlength="5" number-mask
                                placeholder="{{ 'End' | translate }}" ng-model="workHour.endWorkingTime" timepicker
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 form-group col-xs-12">
+                <div class="col-md-5 form-group col-xs-12 padding_gorizontal_fix">
                     <div class="col-md-4" ng-show="$index == 0">
                         <select class="form-control type_food"
                                 ng-model="workHour.dayType"
@@ -147,7 +147,7 @@
                         <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >{{ 'Delete' | translate }}</button>
                     </div>
 
-                    <div class="col-md-4 font_size_18 text-center padding_right_fix" ng-show="$index == 0">
+                    <div class="col-md-4 font_size_18 text-center padding_fix" ng-show="$index == 0">
                         {{ 'TotalWorked' | translate }} <span id="total_time_monday">
                        {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
                    </span>
