@@ -42,7 +42,7 @@
         <a class="btn btn-default" ui-sref="nl">NL</a>
         <a class="btn btn-default" ui-sref="en">EN</a>
       </div>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >{{'Logout' | translate}}</a>
+      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 padding_fix margin_top_10" >{{'Logout' | translate}}</a>
 </ul>
      
  </div>
@@ -92,7 +92,7 @@
         <div class="col-md-1 col-xs-12 col-md-offset-2">
             <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">{{ 'Save' | translate }}</button>
         </div>
-        <hr class="col-xs-12">
+        <hr class="col-xs-12 padding_fix">
     </div>
     <div ng-repeat="day in days">
         <div ng-repeat="workHour in day.workHours">
@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <hr class="col-xs-12 margin_top_10">
+        <hr class="col-xs-12 margin_top_10 padding_fix">
     </div>
     <div class="row col-xs-12">
         <div class="col-md-6">
@@ -253,7 +253,7 @@
               <p class="font_size_18 text-right">{{ 'Total' | translate }}: {{total}}</p>
           </div>
       </div>
-      <hr class="col-xs-12">
+      <hr class="col-xs-12 padding_fix">
       <div class="col-md-12 declaration_row" ng-repeat="day in days">
           <div class="col-md-2 text-center font_size_18">
               {{day.date}}
@@ -283,7 +283,7 @@
                   </button>
               </div>
           </div>
-          <hr class="col-xs-12">
+          <hr class="col-xs-12 padding_fix">
       </div>
   </div>
 <div class="tab-pane font_size_18" id="settings">
@@ -306,7 +306,7 @@
         <div class="col-md-4">
         </div>
             <div class="col-md-4">
-              <div class="col-xs-12 text-center"><label>{{'Period' | translate}}</label></div>
+              <div class="col-xs-12 padding_fix text-center"><label>{{'Period' | translate}}</label></div>
               <div class="form-group">
     <div class="form-group col-xs-6">
 
