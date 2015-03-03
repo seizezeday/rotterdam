@@ -92,7 +92,7 @@
         <div class="col-md-1 col-xs-12 col-md-offset-1">
             <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">{{ 'Save' | translate }}</button>
         </div>
-        <hr class="col-xs-12 padding_fix">
+        <hr class="col-xs-12 padding_fix margin_top_fix">
     </div>
     <div ng-repeat="day in days">
         <div ng-repeat="workHour in day.workHours">
@@ -147,7 +147,7 @@
                         <button type="button" class="btn btn-danger btn-block time_tab_del" ng-click="removeRow($parent.$index, $index)" >{{ 'Delete' | translate }}</button>
                     </div>
 
-                    <div class="col-md-4 font_size_18 text-center" ng-show="$index == 0">
+                    <div class="col-md-4 font_size_18 text-center padding_right_fix" ng-show="$index == 0">
                         {{ 'TotalWorked' | translate }} <span id="total_time_monday">
                        {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
                    </span>
@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <hr class="col-xs-12 margin_top_10 padding_fix">
+        <hr class="col-xs-12 margin_top_fix padding_fix">
     </div>
     <div class="row col-xs-12">
         <div class="col-md-6">
