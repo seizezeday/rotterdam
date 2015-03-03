@@ -42,7 +42,7 @@
         <a class="btn btn-default" ui-sref="nl">NL</a>
         <a class="btn btn-default" ui-sref="en">EN</a>
       </div>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 padding_fix margin_top_10" >{{'Logout' | translate}}</a>
+      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_10" >{{'Logout' | translate}}</a>
 </ul>
      
  </div>
@@ -83,13 +83,13 @@
                 {{ 'OverTrip' | translate }}
             </button>
         </div>
-        <div class="col-md-2 col-xs-6 margin_bottom_10">
-            <dl class="dl-horizontal margin_fix">
+        <div class="col-md-3 col-xs-6 margin_bottom_10">
+            <dl class="dl-horizontal margin_fix padding_top_5 font_size_16">
                 <dt>{{ 'AvailableTFT' | translate }}:</dt>
                 <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
             </dl>
         </div>
-        <div class="col-md-1 col-xs-12 col-md-offset-2">
+        <div class="col-md-1 col-xs-12 col-md-offset-1">
             <button id="date_save" type="button" class="btn btn-success btn-block" ng-click="save()">{{ 'Save' | translate }}</button>
         </div>
         <hr class="col-xs-12 padding_fix">
