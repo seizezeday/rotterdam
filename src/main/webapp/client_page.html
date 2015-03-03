@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Drive Tracking</title>
-
-    <!-- Bootstrap -->
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="resources/css/librares.min.css" rel="stylesheet">
     <link href="resources/css/angular-motion.css" rel="stylesheet">
@@ -29,27 +27,19 @@
 		<div class="container-fluid padding_fix">
 		    <div class="row row_fix">
 		  <div ui-view></div>
-<!--
-             <div class="pull-right" ng-controller="LanguageCtrl">
-      <div class="btn-group" ng-model="button.radio" bs-radio-group>
-        <label class="btn btn-default" ui-sref="nl"><input type="radio" class="btn btn-default" value="0">NL</label>
-        <label class="btn btn-default" ui-sref="en"><input type="radio" class="btn btn-default" value="1">EN</label>
-      </div>
-             </div>
--->
 			<div class="col-md-12 ">
 			<div class="append_alert">			    
 			</div>
        <div class="col-md-12 padding_5">
        <div class="panel panel-default">
        <div class="panel-heading">
-<ul class="nav nav-tabs" role="tablist" id="myTab">
-  <li class="active"><a data-target="#home" role="tab" data-toggle="tab">{{'Home' | translate}}</a></li>
-  <li class="hide_tabs"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
-  <li class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
-  <li class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
-  <li><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
-    <div class="btn-group pull-right padding_left_10">
+<ul class="nav nav-tabs nav-pills" role="tablist" id="myTab">
+  <li role="presentation" class="active"><a data-target="#home" role="tab" data-toggle="tab">{{'Home' | translate}}</a></li>
+  <li role="presentation" class="hide_tabs"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
+  <li role="presentation" class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
+  <li role="presentation" class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
+  <li role="presentation"><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
+    <div class="btn-group pull-right padding_left_10 padding_top_10">
         <a class="btn btn-default" ui-sref="nl">NL</a>
         <a class="btn btn-default" ui-sref="en">EN</a>
       </div>
@@ -207,9 +197,6 @@
                             <input id="time_end_modal" class="form-control" maxlength="5" placeholder="{{ 'End' | translate }}" ng-model="overNight.end.time" timepicker-modal>
                         </div>
                     </div>
-                    <!--<div class="col-md-12">-->
-                    <!---->
-                    <!--</div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' | translate }}</button>
@@ -230,9 +217,6 @@
                 </div>
                 <div class="col-md-3"><button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button></div>
             </div>
-            <!--<div class="col-md-6 col-md-offset-1">            -->
-            <!--<p class="font_size_18">Avaliable time-to-pay: <span id="overview_time_to_pay"></span></p>-->
-            <!--</div>-->
         </div>
         <div class="col-md-12">
             <div class="col-md-4">
@@ -336,7 +320,6 @@
    </div>
    </div>
              <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled" >{{'Save' | translate}}</button>
-
           </div>
         </div>
       </div>
@@ -350,15 +333,12 @@
 			<div class="social-bl">
 			</div>
 			</div>
-		</div>
-    
-
-     
+		</div>  
      <script src="resources/js/angular-animate.js"></script>
      <script src="resources/js/angular-sanitize.min.js"></script>
      <script src="resources/js/angular-strap.min.js"></script>
      <script src="resources/js/angular-strap.tpl.min.js"></script>
-    <script src="resources/js/dateConvertor.js"></script>
+     <script src="resources/js/dateConvertor.js"></script>
      <script src="resources/js/jquery-2.1.1.min.js"></script>
      <script src="resources/js/bootstrap.min.js"></script>
      <script src="resources/js/validator.js"></script>
@@ -376,6 +356,5 @@
 
     $(".decimal-2-places").numeric({ decimalPlaces: 2 });
       </script>
-
   </body>
 </html>
