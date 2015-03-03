@@ -70,7 +70,7 @@
     </div>
 </div>
 <div class="tab-pane" id="Time" ng-controller="time_tab_controller">
-    <div class="row col-xs-12" >
+    <div class="row col-xs-12 padding_fix">
         <div class="form-group col-md-4" ng-class="">
             <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker
                    data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
@@ -157,7 +157,7 @@
         </div>
         <hr class="col-xs-12 margin_top_10">
     </div>
-    <div class="row col-xs-12 row">
+    <div class="row col-xs-12">
         <div class="col-md-6">
             <p class="font_size_18">{{ 'TotalWorkedMonFri' | translate }}: <span id="total_mon_fri">{{totalMonFri.h}}h {{totalMonFri.m}}m</span></p>
         </div>
@@ -235,7 +235,7 @@
         </div>
     </div>
       <div class="tab-pane" id="declaretion" ng-controller="declaration_controller">
-      <div class="col-md-12">
+      <div class="col-md-12 padding_fix">
           <p class="font_size_18">{{ 'KortenDeclaration' | translate }}</p>
       </div>
       <div class="margin_bottom_20">
