@@ -44,9 +44,18 @@
 .padding_fix{
     padding: 0px;
 }
+
 .padding_gorizontal_fix{
     padding-left: 0px;
     padding-right: 0px;
+}
+.padding_vertical_fix{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.padding_panel{
+    padding-top: 2px;
+    padding-bottom: 5px;
 }
 .padding_left_30{
     padding-left: 30px;
@@ -74,6 +83,9 @@
 }
 .margin_top_5_proc{
     margin-top: 5%;   
+}
+.margin_top_5{
+    margin-top: 5px;   
 }
 .margin_top_fix{
     margin-top: 0;   
