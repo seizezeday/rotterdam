@@ -31,7 +31,7 @@
 			</div>
        <div class="col-md-12 padding_fix">
        <div class="panel panel-default">
-       <div class="panel-heading">
+       <div class="panel-heading padding_fix">
 <ul class="nav nav-tabs nav-pills" role="tablist" id="myTab">
   <li role="presentation" class="active"><a data-target="#home" role="tab" data-toggle="tab">{{'Home' | translate}}</a></li>
   <li role="presentation" class="hide_tabs"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
@@ -246,14 +246,15 @@
           <div class="col-md-1">
               <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>
           </div>
-          <div class="col-md-1">
+
+          <div class="col-md-2 col-md-offset-2">
+              <p class="font_size_18 text-center">{{ 'Total' | translate }}: {{total}}</p>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
               <button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">{{ 'Save' | translate }}</button>
           </div>
-          <div class="col-md-2">
-              <p class="font_size_18 text-right">{{ 'Total' | translate }}: {{total}}</p>
-          </div>
       </div>
-      <hr class="col-xs-12 padding_fix">
+      <hr class="col-xs-12 padding_fix margin_top_fix">
       <div class="col-md-12 declaration_row" ng-repeat="day in days">
           <div class="col-md-2 text-center font_size_18">
               {{day.date}}
@@ -283,7 +284,7 @@
                   </button>
               </div>
           </div>
-          <hr class="col-xs-12 padding_fix">
+          <hr class="col-xs-12 padding_fix margin_top_fix">
       </div>
   </div>
 <div class="tab-pane font_size_18" id="settings">

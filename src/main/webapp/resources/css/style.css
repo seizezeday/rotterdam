@@ -75,6 +75,9 @@
 .margin_top_5_proc{
     margin-top: 5%;   
 }
+.margin_top_fix{
+    margin-top: 0;   
+}
 .border_fix {
     border: none;
 }
