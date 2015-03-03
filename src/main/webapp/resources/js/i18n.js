@@ -75,7 +75,17 @@ app.config(['$translateProvider', function ($translateProvider) {
         'EnterYourEmail': 'Enter your Email ',
         'SendPassword': 'Send password ',
         'EnterEmailAddress': 'Enter Email address ',
-        'PasswordEmpty': 'Password empty'
+        'PasswordEmpty': 'Password empty',
+        'WeekDays' : {
+            '0' : 'Monday',
+            "1" : "Tuesday",
+            "2" : "Wednesday",
+            "3" : "Thursday",
+            "4" : "Friday",
+            "5" : "Saturday",
+            "6" : "Sunday"
+        },
+        "dataNotValidSaving" : "data is not valid. Saving process will be canceled"
     });
 
     $translateProvider.translations('nl', {
@@ -132,7 +142,17 @@ app.config(['$translateProvider', function ($translateProvider) {
         'EnterYourEmail': 'Vul uw e-mail',
         'SendPassword': 'Stuur wachtwoord',
         'EnterEmailAddress': 'Geef e-mail adres',
-        'PasswordEmpty': 'Password leeg'
+        'PasswordEmpty': 'Password leeg',
+        'WeekDays' : {
+            '0' : 'Maandag',
+            "1" : "Dinsdag",
+            "2" : "Woensdag",
+            "3" : "Donderdag",
+            "4" : "Vrijdag",
+            "5" : "Zaterdag",
+            "6" : "Zondag"
+        },
+        "dataNotValidSaving" : "gegevens is niet geldig. Het opslaan proces zal worden geannuleerd"
     });
 
     $translateProvider.preferredLanguage(defaultLang);

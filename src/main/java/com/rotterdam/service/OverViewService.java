@@ -153,7 +153,12 @@ public class OverViewService {
             }
         }
 
-        overViewDetailDto.total100 += weekTime;
+        double promisedWeekTime = timeForService.getPromisedWeekTime(week);
+
+        if(weekTime > promisedWeekTime)
+            overViewDetailDto.total100 += promisedWeekTime;
+        else
+            overViewDetailDto.total100 += weekTime;
     }
 
     private void calculate130(OverViewDetailDto overViewDetailDto, Period period){

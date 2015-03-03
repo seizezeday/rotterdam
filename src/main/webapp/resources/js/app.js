@@ -20,7 +20,7 @@ app.controller('AlertCtrl', function($scope, $alert) {
     });
 });
 
-app.controller('time_tab_controller', function($scope, $http, $timeout) {
+app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
 
@@ -203,7 +203,9 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                 var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
                 var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
                 if(start > end || rest > (end - start)) {
-                    addAlertWarning($scope.weekTitles[whI] + " data is not valid. Saving process will be canceled.");
+                    var weekTitle = $filter('translate')('WeekDays.' + i);
+                    var message = $filter('translate')('dataNotValidSaving');
+                    addAlertWarning(weekTitle + " " + message + ".");
                     return false;
                 }
             }

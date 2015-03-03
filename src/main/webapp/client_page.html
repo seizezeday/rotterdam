@@ -111,7 +111,7 @@
                 <div class="col-md-4 col-xs-12 ">
                     <div class="col-md-4 col-xs-12 text-center font_size_18 time_date" ng-show="$index == 0">{{day.date}}</div>
                     <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10" ng-show="$index == 0">
-                        {{weekTitles[$parent.$index]}}
+                        {{ 'WeekDays.' + $parent.$index | translate }}
                     </div>
                     <div class="col-md-4 col-xs-12 padding_bottom_10" ng-class="{'col-md-offset-8': $index != 0}">
                         <input class="form-control time_monday_start" maxlength="5" number-mask
