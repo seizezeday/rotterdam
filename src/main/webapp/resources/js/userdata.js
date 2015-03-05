@@ -169,6 +169,7 @@ $(document).ready(function(){
             statusCode: {
                 200: function () {
                     $(".hide_tabs").css("display","block");
+                    location.reload();
                     addAlert();
                 }
             }

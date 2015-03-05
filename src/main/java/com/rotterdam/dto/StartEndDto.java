@@ -21,4 +21,12 @@ public class StartEndDto {
 
     public StartEndDto() {
     }
+
+    @Override
+    public String toString() {
+        return "StartEndDto{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }

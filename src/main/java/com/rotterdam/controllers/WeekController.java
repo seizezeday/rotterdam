@@ -1,8 +1,10 @@
 package com.rotterdam.controllers;
 
+import com.rotterdam.dto.StartEndDto;
 import com.rotterdam.dto.TotalTimeDto;
 import com.rotterdam.dto.WeekDto;
 import com.rotterdam.model.entity.User;
+import com.rotterdam.service.PeriodService;
 import com.rotterdam.service.WeekService;
 import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.DateParameter;
@@ -36,6 +38,9 @@ public class WeekController {
     @Inject
     private WeekService weekService;
 
+    @Inject
+    private PeriodService periodService;
+
     //save timeTab and return totalTime
     @RolesAllowed({ "Driver" })
     @POST
@@ -53,29 +58,9 @@ public class WeekController {
 
     }
 
-    //return week dates from monday to sunday
-//    @RolesAllowed({ "Driver" })
-//    @POST
-//    @Path("/week")
-//    @Consumes({ MediaType.APPLICATION_JSON })
-//    public Response getCurrentWeek(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
-//        Date date = jsonCommands.getDateFromJson(data);
-//
-//        if (date != null){
-//            final List<Date> datesOfWeek = DateTools.getDatesOfWeekWithDate(date);
-//            Object obj = new Object(){
-//                public List<String> weekList = DateTools.formatDates(datesOfWeek);
-//            };
-//            return Response.ok(obj).build();
-//        } else {
-//            return Response.status(Response.Status.UNAUTHORIZED).build();
-//        }
-//    }
-
     //return data for timeTab by passed date
     @RolesAllowed({ "Driver" })
     @GET
-    //@Path("/timeTab")
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response getTimeTabData(@Context HttpServletRequest hsr, @QueryParam("date") DateParameter date) throws JsonException, IOException, ParseException {
 
@@ -84,6 +69,9 @@ public class WeekController {
         User user = jsonCommands.getUserFromRequest(hsr);
 
         WeekDto weekDto = weekService.getWeekByStartDateAndUserId(monday, user.getId());
+
+        if(weekDto == null)
+            weekDto = new WeekDto();
 
         weekDto.totalTime = weekService.calculateTotalTime(weekDto, user.getId());
 
@@ -101,6 +89,20 @@ public class WeekController {
             weekDto.totalTime = weekService.getFakeTotalTime();
         }
 
+        if(weekDto.promisedTime == null){
+            weekDto.promisedTime = weekService.getFakePromisedTime();
+        }
+
         return Response.ok(weekDto).build();
+    }
+
+    @RolesAllowed({"Driver"})
+    @GET
+    @Path("/getAvailableDates")
+    public Response getAvailableDates(@Context HttpServletRequest hsr){
+        User user = jsonCommands.getUserFromRequest(hsr);
+
+        StartEndDto availableDates = periodService.getAvailableDates(user.getId());
+        return Response.ok(availableDates).build();
     }
 }

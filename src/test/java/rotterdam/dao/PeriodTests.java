@@ -1,5 +1,6 @@
 package rotterdam.dao;
 
+import com.rotterdam.dto.StartEndDto;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.dao.UserDao;
 import com.rotterdam.model.entity.Period;
@@ -38,5 +39,12 @@ public class PeriodTests {
     public void nativeQueryTest(){
         Period period = periodDao.selectPrevPeriodByUser(5L);
         System.out.println(period);
+    }
+
+    @Test
+    @Transactional
+    public void minMaxTest(){
+        StartEndDto startEnd = periodDao.selectMinMaxDatesByUser(27L);
+        System.out.println(startEnd);
     }
 }

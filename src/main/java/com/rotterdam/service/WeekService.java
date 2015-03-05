@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by vasax32 on 20.01.15.
@@ -203,5 +200,9 @@ public class WeekService {
             totalTimeDto.days.add(new TimeDto(0,0));
         }
         return totalTimeDto;
+    }
+
+    public List<Integer> getFakePromisedTime() {
+        return Arrays.asList(0, 0, 0, 0, 0);
     }
 }

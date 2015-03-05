@@ -123,6 +123,10 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
     $scope.weekTitles = ["Maandag", "Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag","Zondag"];
 
     $scope.selectedDate = DateConverter.convertDateToString(new Date());
+
+//    $scope.minDate = DateConverter.convertDateToString(new Date("01.02.2015"));
+    $scope.minDate = ""; //DateConverter.revertDayAndMonth("08.02.2015");
+    $scope.maxDate = ""; //DateConverter.convertDateToString(new Date());
 //    $scope.selectedDate = "01.02.2015";
 
     $scope.active = true;
@@ -162,6 +166,8 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
                     $scope.active = res.data.active;
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
+//                    $scope.minDate = DateConverter.revertDayAndMonth(res.data.availableDates.start);
+//                    $scope.maxDate = DateConverter.revertDayAndMonth(res.data.availableDates.end);
                     break;
                 }
                 case 204 : {
@@ -204,6 +210,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             };
             $http.post('api/timeTab', daysToTransfer).then(function () {
                 $scope.calculateRest();
+                $scope.calculateTableTotal();
                 addAlert();
             });
         }
@@ -257,6 +264,9 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
             var times = DateConverter.convertIntMinutesToTimeArray(total);
             $scope.daysTotalTime[index].h = times[0];
             $scope.daysTotalTime[index].m = times[1];
+        } else {
+            $scope.daysTotalTime[index].h = 0;
+            $scope.daysTotalTime[index].m = 0;
         }
         //now we need to calculate total mon-fri
         var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
@@ -297,6 +307,7 @@ app.controller('time_tab_controller', function($scope, $http, $timeout) {
         var totalFull = 0;
         for (var i = 0; i < 5; i++) {
             totalFull += $scope.calculateRowTotal(i);
+            $scope.rowChanged(i);
         }
         if (totalFull >= 0) {
             var times = DateConverter.convertIntMinutesToTimeArray(totalFull);
@@ -405,6 +416,13 @@ app.controller('DatepickerDemoController', function($scope, $http) {
     $scope.selectedDate = null;
   };
 
+});
+
+app.run(function($rootScope, $http) {
+    $http.get('api/timeTab/getAvailableDates').then(function(res) {
+        $rootScope.minDate = DateConverter.revertDayAndMonth(res.data.start);
+        $rootScope.maxDate = DateConverter.revertDayAndMonth(res.data.end);
+    });
 });
 
 //app.controller('DatepickerModalController', function($scope, $http) {

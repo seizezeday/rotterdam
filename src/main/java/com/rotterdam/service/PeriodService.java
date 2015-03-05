@@ -1,5 +1,6 @@
 package com.rotterdam.service;
 
+import com.rotterdam.dto.StartEndDto;
 import com.rotterdam.model.dao.PeriodDao;
 import com.rotterdam.model.entity.Period;
 import com.rotterdam.model.entity.PeriodType;
@@ -59,5 +60,9 @@ public class PeriodService {
                 DateTools.getDateOf7DayAfter(
                                 startingDays.get(weekCount - 1)));
 
+    }
+
+    public StartEndDto getAvailableDates(long id) {
+        return periodDao.selectMinMaxDatesByUser(id);
     }
 }

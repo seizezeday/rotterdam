@@ -1,5 +1,6 @@
 package com.rotterdam.model.dao;
 
+import com.rotterdam.dto.StartEndDto;
 import com.rotterdam.model.entity.Week;
 import org.hibernate.NonUniqueResultException;
 import org.springframework.context.annotation.Scope;
@@ -37,5 +38,7 @@ public class WeekDao extends AbstractGenericDao<Week> {
             return null;
         }
     }
+
+
 
 }

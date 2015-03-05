@@ -1,9 +1,12 @@
 package com.rotterdam.model.dao;
 
+import com.rotterdam.dto.StartEndDto;
 import com.rotterdam.model.entity.Period;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 
@@ -75,5 +78,15 @@ public class PeriodDao extends AbstractGenericDao<Period> {
         nativeQuery.setParameter(2, userId);
         nativeQuery.setParameter(3, userId);
         return (Period)nativeQuery.getSingleResult();
+    }
+
+    public StartEndDto selectMinMaxDatesByUser(long userId){
+        Query query = entityManager.createQuery("SELECT NEW com.rotterdam.dto.StartEndDto(min(w.startDate), max(w.endDate)) FROM Week w where w.period.user.id =:userId");
+        query.setParameter("userId", userId);
+        try{
+            return (StartEndDto)query.getSingleResult();
+        } catch(NoResultException | NonUniqueResultException e){
+            return null;
+        }
     }
 }

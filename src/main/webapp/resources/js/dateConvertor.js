@@ -8,6 +8,11 @@ var DateConverter = new function(){
         return formattedDate;
     };
 
+    this.revertDayAndMonth = function (date){
+        var dateAr = date.split(".");
+        return dateAr[1] + "." + dateAr[0] + "." + dateAr[2];
+    };
+
     this.convertTimeToString = function (date){
         var curr_hours = this.prefixZeros(date.getHours(), 2);
         var curr_minutes = this.prefixZeros(date.getMinutes(), 2);
