@@ -81,6 +81,7 @@ public class PeriodDao extends AbstractGenericDao<Period> {
     }
 
     public StartEndDto selectMinMaxDatesByUser(long userId){
+//        Query query = entityManager.createQuery("SELECT NEW com.rotterdam.dto.StartEndDto(min(p.startDate), max(p.endDate)) FROM Period p where p.user.id =:userId");
         Query query = entityManager.createQuery("SELECT NEW com.rotterdam.dto.StartEndDto(min(w.startDate), max(w.endDate)) FROM Week w where w.period.user.id =:userId");
         query.setParameter("userId", userId);
         try{

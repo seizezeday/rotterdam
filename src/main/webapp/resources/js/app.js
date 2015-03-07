@@ -70,6 +70,7 @@ app.directive('workHourValidator', function() {
             var dayI = scope.$parent.$index;
             var whI = scope.$index;
 
+            //get scope of original controller
             scope.$parent.$parent.$watch('days[' + dayI + '].workHours[' + whI + '].startWorkingTime', function() {
                 validate();
             });
@@ -83,15 +84,19 @@ app.directive('workHourValidator', function() {
             });
 
             var validate = function(e){
-                //here we need to validate
-                var day = scope.days[dayI];
-                var workHour = day.workHours[whI];
-                var isValid = scope.isCurrentWorkHourValid(workHour);
-                scope.$parent.$parent.saveEnabled = !isValid;
-                scope.timeTableForm["d" + dayI + "w" + whI + "start"].$setValidity('workHourValidator', isValid);
-                scope.timeTableForm["d" + dayI + "w" + whI + "end"].$setValidity('workHourValidator', isValid);
-                scope.timeTableForm["d" + dayI + "w" + whI + "rest"].$setValidity('workHourValidator', isValid);
-                //console.log(isValid);
+                //check if user want to see history
+                if(scope.$parent.$parent != null && scope.$parent.$parent.active) {
+                    //here we need to validate
+                    var day = scope.days[dayI];
+                    var workHour = day.workHours[whI];
+                    var isValid = scope.isCurrentWorkHourValid(workHour);
+
+                    scope.$parent.$parent.saveEnabled = !isValid;
+                    scope.timeTableForm["d" + dayI + "w" + whI + "start"].$setValidity('workHourValidator', isValid);
+                    scope.timeTableForm["d" + dayI + "w" + whI + "end"].$setValidity('workHourValidator', isValid);
+                    scope.timeTableForm["d" + dayI + "w" + whI + "rest"].$setValidity('workHourValidator', isValid);
+                    //console.log(isValid);
+                }
             };
 
             //console.log("Validated");
@@ -255,6 +260,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
                         }, true);
                     }
                     $scope.active = res.data.active;
+                    $scope.saveEnabled = true;
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
                     $scope.overTimeMinDate = DateTools.revertDayAndMonth(res.data.startEnd.start);
@@ -488,6 +494,9 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             var times = DateTools.convertIntMinutesToTimeArray(totalFull);
             $scope.totalMonFri.h = times[0];
             $scope.totalMonFri.m = times[1];
+        } else {
+            $scope.totalMonFri.h = 0;
+            $scope.totalMonFri.m = 0;
         }
     };
 

@@ -93,6 +93,10 @@ public class WeekController {
             weekDto.promisedTime = weekService.getFakePromisedTime();
         }
 
+        if(weekDto.startEnd == null){
+            weekDto.startEnd = new StartEndDto(monday, DateTools.getDateOf7DayAfter(monday));
+        }
+
         return Response.ok(weekDto).build();
     }
 

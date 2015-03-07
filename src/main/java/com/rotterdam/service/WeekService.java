@@ -41,52 +41,50 @@ public class WeekService {
         //we need to find corresponding week
 //        Week week = weekDao.selectByStartDateAndUser(weekDto.days.get("Monday").date, userId);
         Week week = weekDao.selectByStartDateAndUser(weekDto.days.get(0).date, userId);
-        if (week != null) {
-            //we need to determine what was changed or we can override
-            for(DayDto dayDto :weekDto.days ){
-                Day day = determineDayByDate(week.getDays(), dayDto.date);
-                if(day == null){
-                    //we need to create new day entry
-                    day = new Day(dayDto.date, week);
-                    dayDao.insert(day);
-
-                } else{
-                    //day is existing
-                }
-
-                //auto-rest enabled
-                weekDto.checkRestTime();
-
-                //we need to sort to ensure order
-                if(dayDto.workHours != null)
-                    Collections.sort(dayDto.workHours, WorkHourDto.workHourDtoComparatorByStartWorkingTime);
-                if(day.getWorkHours() != null)
-                Collections.sort(day.getWorkHours(), WorkHour.workHourComparatorByStartWorkingTime);
-
-                if(WorkHourDto.isDayChanged(dayDto.workHours, day.getWorkHours())){
-                    //day changed, we need to override all workHours
-                    //first remove from db
-                    if(day.getWorkHours() != null)
-                        for(WorkHour workHour : day.getWorkHours())
-                            workHoursDao.remove(workHour);
-                    //now insert new changed workHours
-                    List<WorkHour> workHours = WorkHourDto.convertDayToWorkHour(dayDto.workHours, day);
-                    for (WorkHour workHour : workHours)
-                        workHoursDao.insert(workHour);
-                    //save day to db
-                    day.setWorkHours(workHours);
-                    dayDao.update(day);
-                } else{
-                    //nothing changed
-                }
-
-            }
-            //we need to calculate totalTime
-            totalTime = calculateTotalTime(weekDto, userId);
-        } else {
-            //it's possible if user not save setting tab
-            return null;
+        if(week == null){
+            //we need to create week
         }
+        //we need to determine what was changed or we can override
+        for(DayDto dayDto :weekDto.days ){
+            Day day = determineDayByDate(week.getDays(), dayDto.date);
+            if(day == null){
+                //we need to create new day entry
+                day = new Day(dayDto.date, week);
+                dayDao.insert(day);
+
+            } else{
+                //day is existing
+            }
+
+            //auto-rest enabled
+            weekDto.checkRestTime();
+
+            //we need to sort to ensure order
+            if(dayDto.workHours != null)
+                Collections.sort(dayDto.workHours, WorkHourDto.workHourDtoComparatorByStartWorkingTime);
+            if(day.getWorkHours() != null)
+            Collections.sort(day.getWorkHours(), WorkHour.workHourComparatorByStartWorkingTime);
+
+            if(WorkHourDto.isDayChanged(dayDto.workHours, day.getWorkHours())){
+                //day changed, we need to override all workHours
+                //first remove from db
+                if(day.getWorkHours() != null)
+                    for(WorkHour workHour : day.getWorkHours())
+                        workHoursDao.remove(workHour);
+                //now insert new changed workHours
+                List<WorkHour> workHours = WorkHourDto.convertDayToWorkHour(dayDto.workHours, day);
+                for (WorkHour workHour : workHours)
+                    workHoursDao.insert(workHour);
+                //save day to db
+                day.setWorkHours(workHours);
+                dayDao.update(day);
+            } else{
+                //nothing changed
+            }
+
+        }
+        //we need to calculate totalTime
+        totalTime = calculateTotalTime(weekDto, userId);
         return totalTime;
     }
 
