@@ -20,6 +20,38 @@ app.controller('AlertCtrl', function($scope, $alert) {
     });
 });
 
+app.directive('overNightValidator', function() {
+    return {
+        restrict: 'A', // only activate on element attribute
+        require: '?ngModel', // get a hold of NgModelController
+        link: function(scope, elem, attrs, ngModel) {
+            if(!ngModel) return; // do nothing if no ng-model
+
+
+
+            // watch own value and re-validate on change
+            scope.$watch(attrs.ngModel, function() {
+                validate();
+            });
+
+            // observe the other value and re-validate on change
+            attrs.$observe('equals', function (val) {
+                validate();
+            });
+
+            var validate = function() {
+                // values
+                var val1 = ngModel.$viewValue;
+                var val2 = attrs.overNightValidator;
+
+                // set validity
+                ngModel.$setValidity('is', val1 == val2);
+                console.log("Validated: val1: " + val1 + " val2: " + val2 + " | " + (val1 == val2));
+            };
+        }
+    }
+});
+
 app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
@@ -33,70 +65,73 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 //    $scope.overNight.end.time = "20:33";
 
     $scope.overNightSave = function(){
-        var days = $scope.days;
-        var startDayI, endDayI;
-        for(var dayI in days){
-            var day = days[dayI];
-            if(day.date == $scope.overNight.start.date)
-                startDayI = dayI;
-        }
-        endDayI = (parseInt(startDayI) + 1) + "";
-        //before hard push we need to try find and replace existing overnight
-        var needToPush = true;
 
-        //first we need to check startDayI
-        var startDay = days[startDayI];
-        var whStart;
-        for(var whI = 0; whI < startDay.workHours.length; whI++){
-            var wh = startDay.workHours[whI];
-            if(wh.endWorkingTime == "23:59" ){
-                needToPush = false;
-                whStart = whI;
-                break;
-                //here we find variant for replacement
-            }
-        }
+        //console.log($scope.overNight.start.time.$valid);
 
-        var whEnd;
-        if(!needToPush){
-            //if previous search find something
-            var endDay = days[endDayI];
-            for(var whI = 0; whI < endDay.workHours.length; whI++){
-                var wh = endDay.workHours[whI];
-                if(wh.startWorkingTime == "00:00" ){
-                    needToPush = false;
-                    whEnd = whI;
-                    //here we find variant for replacement
-                }
-            }
-        }
-
-        if (!needToPush) {
-            //here we need to replace data of existing overhight
-            days[startDayI].workHours[whStart].startWorkingTime = $scope.overNight.start.time;
-            days[endDayI].workHours[whEnd].endWorkingTime = $scope.overNight.end.time;
-        } else {
-            $scope.days[startDayI].workHours.push({
-                    startWorkingTime: $scope.overNight.start.time,
-                    endWorkingTime: "23:59",
-                    restTime: "",
-                    dayType: '0'
-                }
-            );
-            $scope.days[endDayI].workHours.push({
-                    startWorkingTime: "00:00",
-                    endWorkingTime: $scope.overNight.end.time,
-                    restTime: "",
-                    dayType: '0'
-                }
-            );
-        }
-        //console.log($scope.days);
-        $scope.clearWorkHours(startDayI);
-        $scope.rowChanged(startDayI);
-        $scope.clearWorkHours(endDayI);
-        $scope.rowChanged(endDayI);
-        $('#modal_close').click();
+        //var days = $scope.days;
+        //var startDayI, endDayI;
+        //for(var dayI in days){
+        //    var day = days[dayI];
+        //    if(day.date == $scope.overNight.start.date)
+        //        startDayI = dayI;
+        //}
+        //endDayI = (parseInt(startDayI) + 1) + "";
+        ////before hard push we need to try find and replace existing overnight
+        //var needToPush = true;
+        //
+        ////first we need to check startDayI
+        //var startDay = days[startDayI];
+        //var whStart;
+        //for(var whI = 0; whI < startDay.workHours.length; whI++){
+        //    var wh = startDay.workHours[whI];
+        //    if(wh.endWorkingTime == "23:59" ){
+        //        needToPush = false;
+        //        whStart = whI;
+        //        break;
+        //        //here we find variant for replacement
+        //    }
+        //}
+        //
+        //var whEnd;
+        //if(!needToPush){
+        //    //if previous search find something
+        //    var endDay = days[endDayI];
+        //    for(var whI = 0; whI < endDay.workHours.length; whI++){
+        //        var wh = endDay.workHours[whI];
+        //        if(wh.startWorkingTime == "00:00" ){
+        //            needToPush = false;
+        //            whEnd = whI;
+        //            //here we find variant for replacement
+        //        }
+        //    }
+        //}
+        //
+        //if (!needToPush) {
+        //    //here we need to replace data of existing overhight
+        //    days[startDayI].workHours[whStart].startWorkingTime = $scope.overNight.start.time;
+        //    days[endDayI].workHours[whEnd].endWorkingTime = $scope.overNight.end.time;
+        //} else {
+        //    $scope.days[startDayI].workHours.push({
+        //            startWorkingTime: $scope.overNight.start.time,
+        //            endWorkingTime: "23:59",
+        //            restTime: "",
+        //            dayType: '0'
+        //        }
+        //    );
+        //    $scope.days[endDayI].workHours.push({
+        //            startWorkingTime: "00:00",
+        //            endWorkingTime: $scope.overNight.end.time,
+        //            restTime: "",
+        //            dayType: '0'
+        //        }
+        //    );
+        //}
+        ////console.log($scope.days);
+        //$scope.clearWorkHours(startDayI);
+        //$scope.rowChanged(startDayI);
+        //$scope.clearWorkHours(endDayI);
+        //$scope.rowChanged(endDayI);
+        //$('#modal_close').click();
     };
 
     $scope.clearWorkHours = function(dayIndex){
