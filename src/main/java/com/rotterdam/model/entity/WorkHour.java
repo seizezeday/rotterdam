@@ -39,7 +39,7 @@ public class WorkHour implements HibernateL2Cache, Serializable {
         double endTime = DateTools.getDoubleFormatHours(endWorkingTime);
         double startTime = DateTools.getDoubleFormatHours(startWorkingTime);
         int rT = restTime / 60;
-        return endTime - startTime - restTime;
+        return endTime - startTime - rT;
     }
 
 

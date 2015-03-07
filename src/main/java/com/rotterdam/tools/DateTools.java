@@ -236,7 +236,7 @@ public class DateTools {
     public static Date getDateFromDouble(Double num){
         int h = num.intValue();
 
-        int m = (int)((num -h) * 60);
+        int m = (int) Math.round((num -h) * 60);
 
         Calendar calendar = Calendar.getInstance();;
         calendar.set(0,0,0,h,m);

@@ -387,14 +387,14 @@ $(document).ready(function(){
 
                 var declaration = jsonData.declarations[weekI];
 
-                height = drawDeclarationsTable(doc, data, declaration, height, xOffset);
+                height = drawDeclarationsTable(doc, data, declaration.daysDeclaration, height, xOffset);
 
                 if (height >= pageHeight) {
                     doc.addPage();
                     height = heightDefault;
                 }
             }
-            if(jsonData.weekOverViews.length > 1){
+            if(jsonData.weekOverViews.length > 0){
                 var totalData = [];
                 totalData.detail = jsonData.totalPeriodDetail;
                 height = drawTotalTable(doc, data, totalData, height, xOffset, true);
@@ -482,13 +482,18 @@ $(document).ready(function(){
 
     function drawDeclarationsTable(doc, data, declaraion, height, xOff){
         data = [];
-        var decs = declaraion.declarations;
-        for (var dec in declaraion.declarations) {
-               data.push({
-                    "Type": decs[dec].costType,
-                    "Date": "Will be date",
-                    "Price": decs[dec].price
-                });
+        var days = declaraion;
+        for (var dayI in days){
+            var day = days[dayI];
+            var date = day.date;
+            var decs = day.declarations;
+            for (var dec in decs) {
+                   data.push({
+                       "Date": date,
+                       "Type": findCostTypeById(decs[dec].costType),
+                       "Price": decs[dec].price
+                    });
+            }
         }
 
         if(data.length != 0){

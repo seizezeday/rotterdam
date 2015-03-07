@@ -42,10 +42,7 @@ public class WeekDto {
         for(DayDto dayDto : days){
             double total = 0;
             for (WorkHourDto workHourDto : dayDto.workHours){
-                double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
-                double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
-                int restTime = workHourDto.restTime / 60;
-                total += endTime - startTime - restTime;
+                total += workHourDto.calculateTotal();
             }
             dayDto.total =  DateTools.getDateFromDouble(total);
         }

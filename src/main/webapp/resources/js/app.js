@@ -508,6 +508,25 @@ $scope.days = [
     
 
   }]);
+
+var costTypes = [
+    { id: "0", name: 'Eendaagse netto' },
+    { id: "1", name: 'Eendaagse bruto' },
+    { id: "2", name: 'Meerdaagse netto' },
+    { id: "3", name: 'Overstaan netto' },
+    { id: "4", name: 'Overstaan bruto' }
+];
+
+function findCostTypeById(id){
+    var name;
+    for(var key in costTypes){
+        var value = costTypes[key];
+        if(value.id == id)
+            name = value.name;
+    }
+    return name;
+}
+
 app.controller("declaration_controller", function($scope, $http, $filter){
 
     $scope.selectedDate = DateConverter.convertDateToString(new Date());
@@ -516,13 +535,7 @@ app.controller("declaration_controller", function($scope, $http, $filter){
 
     $scope.activeV = true;
 
-    $scope.costTypes = [
-        { id: "0", name: 'Eendaagse netto' },
-        { id: "1", name: 'Eendaagse bruto' },
-        { id: "2", name: 'Meerdaagse netto' },
-        { id: "3", name: 'Overstaan netto' },
-        { id: "4", name: 'Overstaan bruto' }
-    ];
+    $scope.costTypes = costTypes;
 
     $scope.removeRow = function(dayIndex, index){
         $scope.days[dayIndex].declarations.splice(index, 1);

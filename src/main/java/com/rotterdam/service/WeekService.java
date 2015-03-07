@@ -118,7 +118,7 @@ public class WeekService {
             }
             int h = totalTimeDay.intValue();
 
-            int m = (int) ((totalTimeDay - h) * 60);
+            int m = (int) Math.round(((totalTimeDay - h) * 60));
 
             totalTimeDto.days.add(new TimeDto(h, m));
 
