@@ -629,11 +629,23 @@ app.config(function ($datepickerProvider) {
 });
 
 
-app.controller("overview_controller", ['$scope', function($scope){
-$scope.totalTimes = [
-    {tolalProc: '', overviewId: ''},{tolalProc: '100%', overviewId: '_100'},{tolalProc: '130%', overviewId: '_130'},{tolalProc: '150%', overviewId: '_150'},{tolalProc: '200%', overviewId: '_200'}
-];
-  }]);
+app.controller("overview_controller", ['$scope', function ($scope) {
+
+    //$scope.isDownloadDisabled = function(){
+    //    //alert("Boom");
+    //    console.log("Ok");
+    //    var val = $('#overview_week_select').val();
+    //    return val == null;
+    //};
+
+
+    $scope.totalTimes = [
+        {tolalProc: '', overviewId: ''}, {tolalProc: '100%', overviewId: '_100'}, {
+            tolalProc: '130%',
+            overviewId: '_130'
+        }, {tolalProc: '150%', overviewId: '_150'}, {tolalProc: '200%', overviewId: '_200'}
+    ];
+}]);
 app.controller('LanguageCtrl', function($scope) {
   $scope.button = {
     radio: 0

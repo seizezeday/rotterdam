@@ -337,26 +337,40 @@ $(document).ready(function(){
 //    $("#download_pdf_btn").removeAttr("disabled","disabled");
     $('#download_pdf_btn').click(function download_pdf(){
 //        var testData = '{"date":"26.01.2015","usedWeeks":["1", "2", "3", "4"]}';
+        if(canDownloadPdf()){
             $.ajax({
-            type: "POST",
-            url: "api/overView/getPdf",
-            data: JSON.stringify({
-                date: $("#overview_calendar").val(),
-                usedWeeks: $('#overview_week_select').val()
-            }),
-//                data : testData,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            statusCode: {
-                200: function (data) {
-//                    alert("Success...");
-//                    data.weekOverViews.push(data.weekOverViews[1]);
-//                    data.weeks.push(data.weeks[1]);
-                    generatefromjson(pdf_report, data);
+                type: "POST",
+                url: "api/overView/getPdf",
+                data: JSON.stringify({
+                    date: $("#overview_calendar").val(),
+                    usedWeeks: $('#overview_week_select').val()
+                }),
+                //                data : testData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                statusCode: {
+                    200: function (data) {
+                        //                    alert("Success...");
+                        //                    data.weekOverViews.push(data.weekOverViews[1]);
+                        //                    data.weeks.push(data.weeks[1]);
+                        generatefromjson(pdf_report, data);
+                    }
                 }
-            }
-        });  
+            });
+        }
         });
+
+    //button download disabled
+    function canDownloadPdf(){
+        return $('#overview_week_select').val().length != 0;
+    }
+
+    $('#overview_week_select').bind('change', function(){
+        if(canDownloadPdf()){
+            $("#download_pdf_btn").removeClass('disabled');
+        }
+    });
+
     function generatefromjson(data, jsonData) {
         var fontSize = 12;
         var xOffset = 50;

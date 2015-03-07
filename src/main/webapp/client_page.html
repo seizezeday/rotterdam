@@ -205,7 +205,7 @@
         </div>
     </div>
 </div>
-    <div class="tab-pane" id="sheet_overview">
+    <div class="tab-pane" id="sheet_overview"  ng-controller="overview_controller">
         <div class="col-md-12">
             <div class="col-md-4 margin_bottom_20" ng-controller="DatepickerDemoController">
                 <div class="col-md-2"><h4>Period: </h4></div>
@@ -227,11 +227,11 @@
                     <option value="4"></option>
                 </select>
             </div>
-            <div class="col-md-6 col-md-offset-1" ng-controller="overview_controller">
+            <div class="col-md-6 col-md-offset-1">
                 <p class="font_size_18" ng-repeat="totalTime in totalTimes">{{ 'TotalHours' | translate }} {{totalTime.tolalProc}} {{ 'worked' | translate }}: <span id="overview_total{{totalTime.overviewId}}"></span></p>
             </div>
             <div class="col-md-12">
-                <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1" disabled>{{ 'DownloadPDF' | translate }}</button>
+                <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1 disabled">{{ 'DownloadPDF' | translate }}</button>
             </div>
         </div>
     </div>
