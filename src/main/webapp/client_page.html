@@ -138,7 +138,9 @@
                     <div class="col-md-4" ng-show="$index == 0">
                         <select class="form-control type_food"
                                 ng-model="workHour.dayType"
-                                ng-options="dayType.val as dayType.description for dayType in dayTypes" ng-show="active" ng-change="rowChanged($parent.$index)"></select>
+                                ng-options="dayType.val as dayType.description for dayType in dayTypes"
+                                options-disabled="dayType.description for dayType in dayTypes"
+                                ng-show="active" ng-change="rowChanged($parent.$index)"></select>
                         <div class="font_size_18" ng-show="!active">
                             {{dayTypes[workHour.dayType].description}}
                         </div>
