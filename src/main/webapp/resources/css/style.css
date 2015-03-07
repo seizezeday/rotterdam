@@ -234,3 +234,9 @@ hr {
     /*border-color: green;*/
     /*outline-color: green;*/
 /*}*/
+
+/*TimeTab validations*/
+.ng-invalid-work-hour-validator .validation{
+    border-color: red;
+    outline-color: red;
+}

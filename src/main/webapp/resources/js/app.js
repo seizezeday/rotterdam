@@ -53,8 +53,48 @@ app.directive('overNightValidator', function() {
                 ngModel.$setValidity('overNightValidator', scope.checkDayValidness());
                 //ngModel.$setValidity('overNightValidator', val1 == val2);
                 //console.log("Validated: val1: " + val1 + " val2: " + val2 + " | " + (val1 == val2));
-                console.log("Validated");
+                //console.log("Validated");
             };
+        }
+    }
+});
+
+app.directive('workHourValidator', function() {
+    return {
+        restrict: 'A', // only activate on element attribute
+        require: '?ngModel', // get a hold of NgModelController
+        link: function(scope, elem, attrs, ngModel) {
+            //if(!ngModel) return; // do nothing if no ng-model
+
+            //console.log("Changed: Index: " + scope.$index + " Parent index: " + scope.$parent.$index);
+            var dayI = scope.$parent.$index;
+            var whI = scope.$index;
+
+            scope.$parent.$parent.$watch('days[' + dayI + '].workHours[' + whI + '].startWorkingTime', function() {
+                validate();
+            });
+
+            scope.$parent.$parent.$watch('days[' + dayI + '].workHours[' + whI + '].endWorkingTime', function() {
+                validate();
+            });
+            //
+            scope.$parent.$parent.$watch('days[' + dayI + '].workHours[' + whI + '].restTime', function() {
+                validate();
+            });
+
+            var validate = function(e){
+                //here we need to validate
+                var day = scope.days[dayI];
+                var workHour = day.workHours[whI];
+                var isValid = scope.isCurrentWorkHourValid(workHour);
+                //e.$setValidity("workHourValidator", isValid);
+                scope.timeTableForm["d" + dayI + "w" + whI + "start"].$setValidity('workHourValidator', isValid);
+                scope.timeTableForm["d" + dayI + "w" + whI + "end"].$setValidity('workHourValidator', isValid);
+                scope.timeTableForm["d" + dayI + "w" + whI + "rest"].$setValidity('workHourValidator', isValid);
+                //console.log(isValid);
+            };
+
+            //console.log("Validated");
         }
     }
 });
@@ -188,6 +228,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overTime =  {h : 0, m : 0};
 
+    $scope.saveEnabled = true;
+
     $scope.applyDate = function(){
         var formattedDate = $scope.selectedDate;
 
@@ -256,7 +298,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             }
 
             //now we can validate
-            if(!(isCurrentWorkHourValid(workHour))) {
+            if(!($scope.isCurrentWorkHourValid(workHour))) {
                 return false;
             }
 
@@ -273,7 +315,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         return true;
     };
 
-    var isCurrentWorkHourValid = function(workHour){
+    $scope.isCurrentWorkHourValid = function(workHour){
         var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
         var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
         var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
@@ -313,7 +355,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
                 var workHour = day.workHours[whI];
 
 
-                if(!(isCurrentWorkHourValid(workHour))) {
+                if(!($scope.isCurrentWorkHourValid(workHour))) {
                     displayWarningMessage(i);
                     return false;
                 }
