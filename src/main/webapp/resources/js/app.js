@@ -87,7 +87,7 @@ app.directive('workHourValidator', function() {
                 var day = scope.days[dayI];
                 var workHour = day.workHours[whI];
                 var isValid = scope.isCurrentWorkHourValid(workHour);
-                //e.$setValidity("workHourValidator", isValid);
+                scope.$parent.$parent.saveEnabled = !isValid;
                 scope.timeTableForm["d" + dayI + "w" + whI + "start"].$setValidity('workHourValidator', isValid);
                 scope.timeTableForm["d" + dayI + "w" + whI + "end"].$setValidity('workHourValidator', isValid);
                 scope.timeTableForm["d" + dayI + "w" + whI + "rest"].$setValidity('workHourValidator', isValid);
@@ -228,7 +228,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overTime =  {h : 0, m : 0};
 
-    $scope.saveEnabled = true;
+    $scope.saveEnabled = false;
 
     $scope.applyDate = function(){
         var formattedDate = $scope.selectedDate;
