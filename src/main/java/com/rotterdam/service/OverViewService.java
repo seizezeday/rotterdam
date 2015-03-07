@@ -139,10 +139,7 @@ public class OverViewService {
                 RideType rideType = day.getWorkHours().get(0).getRideType();
                 if(rideType.equals(RideType.Werkdag)) {
                     for (WorkHour workHour : day.getWorkHours()) {
-                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                        int restTime = workHour.getRestTime() / 60;
-                        weekTime += endTime - startTime - restTime;
+                        weekTime += workHour.calculateTotal();
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
@@ -178,10 +175,7 @@ public class OverViewService {
                 RideType rideType = day.getWorkHours().get(0).getRideType();
                 if(rideType.equals(RideType.Werkdag)) {
                     for (WorkHour workHour : day.getWorkHours()) {
-                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                        int restTime = workHour.getRestTime() / 60;
-                        weekTime += endTime - startTime - restTime;
+                        weekTime += workHour.calculateTotal();
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
@@ -211,10 +205,7 @@ public class OverViewService {
                     RideType rideType = day.getWorkHours().get(0).getRideType();
                     if(rideType.equals(RideType.Werkdag)) {
                         for (WorkHour workHour : day.getWorkHours()) {
-                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                            int restTime = workHour.getRestTime() / 60;
-                            worked = endTime - startTime - restTime;
+                            worked += workHour.calculateTotal();
                         }
                     } else {
                         if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
@@ -243,10 +234,7 @@ public class OverViewService {
                     RideType rideType = day.getWorkHours().get(0).getRideType();
                     if(rideType.equals(RideType.Werkdag)) {
                         for (WorkHour workHour : day.getWorkHours()) {
-                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                            int restTime = workHour.getRestTime() / 60;
-                            worked = endTime - startTime - restTime;
+                            worked += workHour.calculateTotal();
                         }
                     } else {
                         if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
@@ -272,10 +260,7 @@ public class OverViewService {
                 RideType rideType = day.getWorkHours().get(0).getRideType();
                 if(rideType.equals(RideType.Werkdag)) {
                     for (WorkHour workHour : day.getWorkHours()) {
-                        double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                        double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                        int restTime = workHour.getRestTime() / 60;
-                        weekTime += endTime - startTime - restTime;
+                        weekTime += workHour.calculateTotal();
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){

@@ -1,6 +1,7 @@
 package com.rotterdam.model.entity;
 
 import com.rotterdam.model.dao.HibernateL2Cache;
+import com.rotterdam.tools.DateTools;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
@@ -33,6 +34,14 @@ public class WorkHour implements HibernateL2Cache, Serializable {
     @ManyToOne
     @JoinColumn(name = "idDay")
     private Day day;
+
+    public double calculateTotal(){
+        double endTime = DateTools.getDoubleFormatHours(endWorkingTime);
+        double startTime = DateTools.getDoubleFormatHours(startWorkingTime);
+        int rT = restTime / 60;
+        return endTime - startTime - restTime;
+    }
+
 
     public WorkHour() {
     }

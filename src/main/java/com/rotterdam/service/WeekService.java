@@ -107,11 +107,7 @@ public class WeekService {
                 RideType rideType = dayDto.workHours.get(0).rideType;
                 if(rideType.equals(RideType.Werkdag)) {
                     for (WorkHourDto workHourDto : dayDto.workHours) {
-                        double startTime = DateTools.getDoubleFormatHours(workHourDto.startWorkingTime);
-                        double endTime = DateTools.getDoubleFormatHours(workHourDto.endWorkingTime);
-                        double rest = ((double) workHourDto.restTime) / (double) 60;
-
-                        totalTimeDay += (endTime - startTime - rest);
+                        totalTimeDay += workHourDto.calculateTotal();
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){

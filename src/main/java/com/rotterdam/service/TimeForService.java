@@ -88,10 +88,7 @@ public class TimeForService {
                     RideType rideType = day.getWorkHours().get(0).getRideType();
                     if(rideType.equals(RideType.Werkdag)) {
                         for (WorkHour workHour : day.getWorkHours()) {
-                            double endTime = DateTools.getDoubleFormatHours(workHour.getEndWorkingTime());
-                            double startTime = DateTools.getDoubleFormatHours(workHour.getStartWorkingTime());
-                            int restTime = workHour.getRestTime() / 60;
-                            timeDays += endTime - startTime - restTime;
+                            timeDays += workHour.calculateTotal();
                         }
                     } else {
                         if(isNormalCalculationNotForWorkDay(rideType)){

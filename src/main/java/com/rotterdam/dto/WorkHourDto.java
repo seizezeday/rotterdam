@@ -3,6 +3,7 @@ package com.rotterdam.dto;
 import com.rotterdam.model.entity.Day;
 import com.rotterdam.model.entity.RideType;
 import com.rotterdam.model.entity.WorkHour;
+import com.rotterdam.tools.DateTools;
 import com.rotterdam.tools.json.deserializer.JsonRideTypeDeserializer;
 import com.rotterdam.tools.json.deserializer.JsonTimeDeserializer;
 import com.rotterdam.tools.json.serializer.JsonRideTypeSerializer;
@@ -87,5 +88,12 @@ public class WorkHourDto {
             workHours.add(workHour);
         }
         return workHours;
+    }
+
+    public double calculateTotal(){
+        double startTime = DateTools.getDoubleFormatHours(startWorkingTime);
+        double endTime = DateTools.getDoubleFormatHours(endWorkingTime);
+        double rest = ((double) restTime) / (double) 60;
+        return endTime - startTime - rest;
     }
 }
