@@ -190,22 +190,23 @@
 
                         </div>
                         <div class="form-group col-md-4">
-                            <input id="time_start_modal" name="startTime" class="form-control" maxlength="5" placeholder="{{ 'Start' | translate }}"
+                            <input id="time_start_modal" name="startTime" class="form-control validation" maxlength="5" placeholder="{{ 'Start' | translate }}"
                                    ng-model="overNight.start.time" over-night-validator="{{overNight.end.time}}"
                                     timepicker-modal>
                         </div>
                         <div class="form-group col-md-4 ">
-                            <input id="time_end_modal" name="endTime" class="form-control" maxlength="5" placeholder="{{ 'End' | translate }}"
+                            <input id="time_end_modal" name="endTime" class="form-control validation" maxlength="5" placeholder="{{ 'End' | translate }}"
                                    ng-model="overNight.end.time" over-night-validator="{{overNight.start.time}}" timepicker-modal>
                         </div>
-                        <div class="form-group col-md-4 ">
-                            <div ng-show="overNightForm.startTime.$invalid || overNightForm.endTime.$invalid">Some error</div>
-                        </div>
+                        <!--<div class="form-group col-md-4 ">-->
+                            <!--<div ng-show="overNightForm.startTime.$invalid || overNightForm.endTime.$invalid">Some error</div>-->
+                        <!--</div>-->
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' | translate }}</button>
-                    <button id="multitrip_save" type="button" class="btn btn-primary" ng-click="overNightSave()">{{ 'SaveChanges' | translate }}</button>
+                    <button id="multitrip_save" type="button" class="btn btn-primary"
+                            ng-disabled="overNightForm.startTime.$invalid || overNightForm.endTime.$invalid" ng-click="overNightSave()">{{ 'SaveChanges' | translate }}</button>
                 </div>
             </form>
         </div>

@@ -224,3 +224,13 @@ hr {
 .font_size_16{
     font-size: 16px;
 }
+
+/*OverNight validations*/
+.ng-invalid-over-night-validator .validation{
+    border-color: red;
+    outline-color: red;
+}
+/*.ng-valid-over-night{*/
+    /*border-color: green;*/
+    /*outline-color: green;*/
+/*}*/

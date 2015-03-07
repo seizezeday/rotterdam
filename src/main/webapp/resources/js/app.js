@@ -34,8 +34,13 @@ app.directive('overNightValidator', function() {
                 validate();
             });
 
+            // watch date change
+            scope.$watch("overNight.start.date", function() {
+                validate();
+            });
+
             // observe the other value and re-validate on change
-            attrs.$observe('equals', function (val) {
+            attrs.$observe('overNightValidator', function (val) {
                 validate();
             });
 
@@ -45,8 +50,10 @@ app.directive('overNightValidator', function() {
                 var val2 = attrs.overNightValidator;
 
                 // set validity
-                ngModel.$setValidity('is', val1 == val2);
-                console.log("Validated: val1: " + val1 + " val2: " + val2 + " | " + (val1 == val2));
+                ngModel.$setValidity('overNightValidator', scope.checkDayValidness());
+                //ngModel.$setValidity('overNightValidator', val1 == val2);
+                //console.log("Validated: val1: " + val1 + " val2: " + val2 + " | " + (val1 == val2));
+                console.log("Validated");
             };
         }
     }
@@ -66,7 +73,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overNightSave = function(){
 
-        //console.log($scope.overNight.start.time.$valid);
+        console.log($scope.overNight.start.time.$valid);
 
         //var days = $scope.days;
         //var startDayI, endDayI;
@@ -229,6 +236,69 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         });
     };
 
+
+    $scope.checkDayValidness = function(){
+        //first we need to construct workHour
+        var workHour = {
+            startWorkingTime : $scope.overNight.start.time,
+            endWorkingTime : $scope.overNight.end.time,
+            restTime : 0
+        };
+
+        //second we need to determine day by date
+        var days = $scope.days;
+        if(days != undefined){
+            var day;
+            for(var dayI in days){
+                var dayS = days[dayI];
+                if(dayS.date == $scope.overNight.start.date)
+                    day = dayS;
+            }
+
+            //now we can validate
+            if(!(isCurrentWorkHourValid(workHour))) {
+                return false;
+            }
+
+            //check if start time doesn't belong to another time periods
+            if(!isTimeNotInPeriod(workHour.startWorkingTime, -1, day)) {
+                return false;
+            }
+
+            //check if end time doesn't belong to another time periods
+            if(!isTimeNotInPeriod(workHour.endWorkingTime, -1, day)) {
+                return false;
+            }
+        } else return false;
+        return true;
+    };
+
+    var isCurrentWorkHourValid = function(workHour){
+        var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+        var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+        var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
+        //checking if end less than start and rest not greater than all time of trip
+        if(start > end || rest > (end - start)) {
+            return false;
+        }
+        return true;
+    };
+
+//return true if passed time isn't in presented day period
+    var isTimeNotInPeriod = function(time, whI, day){
+        for(var whJ = 0; whJ < day.workHours.length; whJ++){
+            if(whI != whJ){
+                var workHourPeriod = day.workHours[whJ];
+                if(DateTools.isTimeStringInPeriodString(time,
+                        workHourPeriod.startWorkingTime, workHourPeriod.endWorkingTime)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+
     $scope.checkTimeValidness = function(){
 
         var displayWarningMessage = function(i){
@@ -241,38 +311,23 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             var day = $scope.days[i];
             for(var whI = 0; whI < day.workHours.length; whI++){
                 var workHour = day.workHours[whI];
-                var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
-                var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
-                var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
-                //checking if end less than start and rest not greater than all time of trip
-                if(start > end || rest > (end - start)) {
+
+
+                if(!(isCurrentWorkHourValid(workHour))) {
                     displayWarningMessage(i);
                     return false;
                 }
 
-                {
-                    //return true if passed time isn't in presented day period
-                    var isTimeNotInPeriod = function(time){
-                        for(var whJ = 0; whJ < day.workHours.length; whJ++){
-                            if(whI != whJ){
-                                var workHourPeriod = day.workHours[whJ];
-                                if(DateTools.isTimeStringInPeriodString(time,
-                                        workHourPeriod.startWorkingTime, workHourPeriod.endWorkingTime)){
-                                    displayWarningMessage(i);
-                                    return false;
-                                }
-                            }
-                        }
-                        return true;
-                    };
+                //check if start time doesn't belong to another time periods
+                if(!isTimeNotInPeriod(workHour.startWorkingTime, whI, day)) {
+                    displayWarningMessage(i);
+                    return false;
+                }
 
-                    //check if start time doesn't belong to another time periods
-                    if(!isTimeNotInPeriod(workHour.startWorkingTime))
-                        return false;
-
-                    //check if end time doesn't belong to another time periods
-                    if(!isTimeNotInPeriod(workHour.endWorkingTime))
-                        return false;
+                //check if end time doesn't belong to another time periods
+                if(!isTimeNotInPeriod(workHour.endWorkingTime, whI, day)) {
+                    displayWarningMessage(i);
+                    return false;
                 }
             }
         }
@@ -693,7 +748,8 @@ app.config(function ($datepickerProvider) {
         dateFormat: 'dd.MM.yyyy',
         modelDateFormat: "dd.MM.yyyy",
         dateType: "string",
-        startWeek: 1
+        startWeek: 1,
+        autoclose: true
     });
 });
 
