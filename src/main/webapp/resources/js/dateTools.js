@@ -1,4 +1,4 @@
-var DateConverter = new function(){
+var DateTools = new function(){
     this.convertDateToString = function (date){
         var curr_date = this.prefixZeros(date.getDate(), 2);
         var curr_month = this.prefixZeros(date.getMonth() + 1, 2);
@@ -16,6 +16,11 @@ var DateConverter = new function(){
     this.convertDateStringToDate = function (date) {
         var parts = date.split(".");
         return new Date(parts[2], parts[1] - 1, parts[0])
+    };
+
+    this.convertTimeStringToDate = function (time) {
+        var parts = time.split(":");
+        return new Date(0, 0, 0, parts[0], parts[1])
     };
 
     this.plusDays = function (date, days){
@@ -70,7 +75,7 @@ var DateConverter = new function(){
             }
 
         }
-    }
+    };
 
     this.convertDateStringsToDates = function (input) {
         // Ignore things that aren't objects.
@@ -102,24 +107,32 @@ var DateConverter = new function(){
         var h = parseInt(times[0]);
         var m = parseInt(times[1]);
         return h * 60 + m;
-    }
+    };
 
     this.convertIntMinutesToTimeArray = function(time){
         var times = [];
         var h = parseInt(time /60, 0); times[0] = h;
         var m = time - h * 60; times[1] = m;
         return times;
-    }
+    };
 
     this.convertTimePairToIntMinutes = function(times){
         return times.h * 60 + times.m;
-    }
+    };
 
     this.convertIntMinutesToTimePair = function(time){
         var h = parseInt(time /60, 0);
         var m = time - h * 60;
         return {h : h, m : m};
-    }
-}
+    };
+
+    this.isTimeStringInPeriodString = function(time, periodStart, periodEnd){
+        var timeDate = this.convertTimeStringToDate(time);
+        var periodStartDate = this.convertTimeStringToDate(periodStart);
+        var periodEndDate = this.convertTimeStringToDate(periodEnd);
+
+        return periodStartDate <= timeDate && timeDate <= periodEndDate;
+    };
+};
 
 

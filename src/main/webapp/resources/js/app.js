@@ -24,12 +24,12 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
 
-    $scope.overNight.start.date = DateConverter.convertDateToString(new Date());
+    $scope.overNight.start.date = DateTools.convertDateToString(new Date());
 //    $scope.overNight.start.date = "03.02.2015";
-    $scope.overNight.start.time = DateConverter.convertTimeToString(new Date());
+    $scope.overNight.start.time = DateTools.convertTimeToString(new Date());
 //    $scope.overNight.start.time = "14:20";
 
-    $scope.overNight.end.time = DateConverter.convertTimeToString(new Date());
+    $scope.overNight.end.time = DateTools.convertTimeToString(new Date());
 //    $scope.overNight.end.time = "20:33";
 
     $scope.overNightSave = function(){
@@ -130,7 +130,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.weekTitles = ["Maandag", "Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag","Zondag"];
 
-    $scope.selectedDate = DateConverter.convertDateToString(new Date());
+    $scope.selectedDate = DateTools.convertDateToString(new Date());
 
     $scope.overTimeMinDate = "";
     $scope.overTimeMaxDate = "";
@@ -173,10 +173,10 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
                     $scope.active = res.data.active;
                     $scope.daysTotalTime = res.data.totalTime.days;
                     $scope.promisedTime = res.data.promisedTime;
-                    $scope.overTimeMinDate = DateConverter.revertDayAndMonth(res.data.startEnd.start);
+                    $scope.overTimeMinDate = DateTools.revertDayAndMonth(res.data.startEnd.start);
                     $scope.overNight.start.date = res.data.startEnd.start;
-                    var date = DateConverter.plusDays(res.data.startEnd.end, -1);
-                    $scope.overTimeMaxDate = DateConverter.revertDayAndMonth(date);
+                    var date = DateTools.plusDays(res.data.startEnd.end, -1);
+                    $scope.overTimeMaxDate = DateTools.revertDayAndMonth(date);
                     break;
                 }
                 case 204 : {
@@ -195,18 +195,49 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
     };
 
     $scope.checkTimeValidness = function(){
+
+        var displayWarningMessage = function(i){
+            var weekTitle = $filter('translate')('WeekDays.' + i);
+            var message = $filter('translate')('dataNotValidSaving');
+            addAlertWarning(weekTitle + " " + message + ".");
+        };
+
         for(var i = 0; i < $scope.days.length; i++){
             var day = $scope.days[i];
             for(var whI = 0; whI < day.workHours.length; whI++){
                 var workHour = day.workHours[whI];
-                var start = DateConverter.convertTimeStringToIntMinutes(workHour.startWorkingTime);
-                var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+                var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+                var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
                 var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
+                //checking if end less than start and rest not greater than all time of trip
                 if(start > end || rest > (end - start)) {
-                    var weekTitle = $filter('translate')('WeekDays.' + i);
-                    var message = $filter('translate')('dataNotValidSaving');
-                    addAlertWarning(weekTitle + " " + message + ".");
+                    displayWarningMessage(i);
                     return false;
+                }
+
+                {
+                    //return true if passed time isn't in presented day period
+                    var isTimeNotInPeriod = function(time){
+                        for(var whJ = 0; whJ < day.workHours.length; whJ++){
+                            if(whI != whJ){
+                                var workHourPeriod = day.workHours[whJ];
+                                if(DateTools.isTimeStringInPeriodString(time,
+                                        workHourPeriod.startWorkingTime, workHourPeriod.endWorkingTime)){
+                                    displayWarningMessage(i);
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
+                    };
+
+                    //check if start time doesn't belong to another time periods
+                    if(!isTimeNotInPeriod(workHour.startWorkingTime))
+                        return false;
+
+                    //check if end time doesn't belong to another time periods
+                    if(!isTimeNotInPeriod(workHour.endWorkingTime))
+                        return false;
                 }
             }
         }
@@ -232,8 +263,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
             var day = $scope.days[i];
             for(var whI = 0; whI < day.workHours.length; whI++) {
                 var workHour = day.workHours[whI];
-                var start = DateConverter.convertTimeStringToIntMinutes(workHour.startWorkingTime);
-                var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+                var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+                var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
                 var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
                 if (rest === 0) {
                     var time = end - start - rest;
@@ -268,11 +299,11 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
     $scope.rowChanged = function(index) {
         //changing day total
         var oldDayTotal = $scope.daysTotalTime[index];
-        var oldTotalDayTime = DateConverter.convertTimePairToIntMinutes(oldDayTotal);
+        var oldTotalDayTime = DateTools.convertTimePairToIntMinutes(oldDayTotal);
         var day = $scope.days[index];
         var total = $scope.calculateRowTotal(index);
         if (total > 0) {
-            var times = DateConverter.convertIntMinutesToTimeArray(total);
+            var times = DateTools.convertIntMinutesToTimeArray(total);
             $scope.daysTotalTime[index].h = times[0];
             $scope.daysTotalTime[index].m = times[1];
         } else {
@@ -282,17 +313,17 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         //we need to calculate overTime
         var overTime = $scope.calculateOverTime();
         ////now we need to calculate total mon-fri
-        //var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
+        //var currentTotalTime = DateTools.convertTimePairToIntMinutes($scope.totalMonFri);
         //currentTotalTime -= oldTotalDayTime;
         //currentTotalTime += total;
         var currentTotalTime = $scope.calculateTotalMonFri();
-        var totalMonFri = DateConverter.convertIntMinutesToTimePair(currentTotalTime - overTime);
-        //DateConverter.convertIntMinutesToTimePair(currentTotalTime); // -overTime
-        //var totalMonFri = DateConverter.convertIntMinutesToTimePair(currentTotalTime); // -overTime
+        var totalMonFri = DateTools.convertIntMinutesToTimePair(currentTotalTime - overTime);
+        //DateTools.convertIntMinutesToTimePair(currentTotalTime); // -overTime
+        //var totalMonFri = DateTools.convertIntMinutesToTimePair(currentTotalTime); // -overTime
         $scope.totalMonFri = totalMonFri;
         var totalMonSun = currentTotalTime
-            + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
-            + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
+            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[5])
+            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
 
         //now we need to change time-for-time
         if(day.dayType == '8'){
@@ -306,8 +337,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         var total = 0;
         for(var whI = 0; whI < day.workHours.length; whI++){
             var workHour = day.workHours[whI];
-            var start = DateConverter.convertTimeStringToIntMinutes(workHour.startWorkingTime);
-            var end = DateConverter.convertTimeStringToIntMinutes(workHour.endWorkingTime);
+            var start = DateTools.convertTimeStringToIntMinutes(workHour.startWorkingTime);
+            var end = DateTools.convertTimeStringToIntMinutes(workHour.endWorkingTime);
             var rest = workHour.restTime != "" ? parseInt(workHour.restTime) : 0;
             var workHourTotal = end - start - rest;
             if(workHourTotal > 0)
@@ -322,7 +353,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
         var overTime = $scope.calculateOverTime();
         if (totalFull >= 0) {
             totalFull -=overTime;
-            var times = DateConverter.convertIntMinutesToTimeArray(totalFull);
+            var times = DateTools.convertIntMinutesToTimeArray(totalFull);
             $scope.totalMonFri.h = times[0];
             $scope.totalMonFri.m = times[1];
         }
@@ -339,17 +370,20 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.calculateOverTime = function(){
         var currentTotalTime = $scope.calculateTotalMonFri();
-        //var currentTotalTime = DateConverter.convertTimePairToIntMinutes($scope.totalMonFri);
+        //var currentTotalTime = DateTools.convertTimePairToIntMinutes($scope.totalMonFri);
         var totalMonSun = currentTotalTime
-            + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[5])
-            + DateConverter.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
+            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[5])
+            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
         var promised = $scope.calculatePromisedTimeInMinutes();
         var time = 0;
         if (totalMonSun > promised) {
             time = totalMonSun - promised;
-            var times = DateConverter.convertIntMinutesToTimeArray(time);
+            var times = DateTools.convertIntMinutesToTimeArray(time);
             $scope.overTime.h = times[0];
             $scope.overTime.m = times[1];
+        } else {
+            $scope.overTime.h = 0;
+            $scope.overTime.m = 0;
         }
         return time;
     };
@@ -454,8 +488,8 @@ app.run(function($rootScope, $http) {
             switch (res.status) {
                 case 200 :
                 {
-                    $rootScope.minDate = DateConverter.revertDayAndMonth(res.data.start);
-                    $rootScope.maxDate = DateConverter.revertDayAndMonth(res.data.end);
+                    $rootScope.minDate = DateTools.revertDayAndMonth(res.data.start);
+                    $rootScope.maxDate = DateTools.revertDayAndMonth(res.data.end);
                     break;
                 }
             }
@@ -529,7 +563,7 @@ function findCostTypeById(id){
 
 app.controller("declaration_controller", function($scope, $http, $filter){
 
-    $scope.selectedDate = DateConverter.convertDateToString(new Date());
+    $scope.selectedDate = DateTools.convertDateToString(new Date());
 
     $scope.total = 0;
 
