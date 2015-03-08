@@ -695,13 +695,25 @@ app.directive('numberMask', function() {
         }
     }
 });
-app.controller("settings_controller", ['$scope', function($scope){
-$scope.days = [
-    {day: 'Maandag', settingsDay: 'monday'},{day: 'Dinsdag',settingsDay: 'tuesday'},{day: 'Woensdag',settingsDay: 'wednesday'},{day: 'Donderdag',settingsDay: 'thursday'},{day: 'Vrijdag',settingsDay: 'friday'}
-];
-    
 
-  }]);
+app.directive('maxLengthP', function() {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            var maxlength = Number(attrs.maxLengthP);
+            function fromUser(text) {
+                if (text.length > maxlength) {
+                    var transformedInput = text.substring(0, maxlength);
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    ngModelCtrl.$render();
+                    return transformedInput;
+                }
+                return text;
+            }
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
 
 var costTypes = [
     { id: "0", name: 'Eendaagse netto' },
@@ -891,4 +903,56 @@ app.directive('optionsDisabled', function($parse) {
             });
         }
     };
+});
+
+app.controller('SettingsCtrl', function($scope, $http, $rootScope){
+
+    $scope.promisedHours = [];
+    $scope.start = "";
+    $scope.end = "";
+
+    $scope.loadSettings = function () {
+        var curDate = DateTools.convertDateToString(new Date());
+        $http.get('api/settings', {params : {date: curDate}}).then(function(res){
+            $scope.promisedHours = res.data.promisedHours;
+            $scope.start = res.data.startDate;
+            $scope.end = res.data.endDate;
+            $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
+            $scope.toggleTabs();
+        });
+    };
+
+    $scope.save = function(){
+        var curDate = DateTools.convertDateToString(new Date());
+        var daysToTransfer = {
+            promisedHours: $scope.promisedHours,
+            currentDate: curDate,
+            show_compensation : $("#show_compensation").is(':checked')
+            //days: $scope.days
+        };
+        $http.post('api/settings', daysToTransfer).then(function () {
+            addAlert();
+            $scope.toggleTabs();
+        });
+    };
+
+    $scope.isDisabled = function () {
+        var ret = false;
+        for(var h in $scope.promisedHours){
+            if(!ret){
+                var hText = $scope.promisedHours[h].date;
+                if(hText == "") {
+                    ret = true;
+                }
+            }
+        }
+        $rootScope.tabsActive = !ret;
+        return ret;
+    };
+
+    $scope.toggleTabs = function () {
+        $scope.isDisabled();
+    };
+
+    $scope.loadSettings();
 });

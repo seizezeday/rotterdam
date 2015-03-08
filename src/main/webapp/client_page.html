@@ -34,9 +34,9 @@
        <div class="panel-heading padding_panel">
 <ul class="nav nav-tabs nav-pills" role="tablist" id="myTab">
   <li role="presentation" class="active"><a data-target="#home" role="tab" data-toggle="tab">{{'Home' | translate}}</a></li>
-  <li role="presentation" class="hide_tabs"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
-  <li role="presentation" class="hide_tabs"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
-  <li role="presentation" class="hide_tabs"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
+  <li role="presentation" ng-show="tabsActive"><a role="tab" data-target="#Time" data-toggle="tab" >{{'Time' | translate}}</a></li>
+  <li role="presentation" ng-show="tabsActive"><a data-target="#sheet_overview" role="tab" data-toggle="tab">{{'Overview' | translate}}</a></li>
+  <li role="presentation" ng-show="tabsActive"><a data-target="#declaretion" role="tab" data-toggle="tab">{{'Declaration' | translate}}</a></li>
   <li role="presentation"><a data-target="#settings" role="tab" data-toggle="tab">{{'Settings' | translate}} </a></li>
     <div class="btn-group pull-right padding_left_10 padding_top_5">
         <a class="btn btn-default" ui-sref="nl">NL</a>
@@ -296,41 +296,49 @@
           </div>
           <hr class="col-xs-12 padding_fix margin_top_fix">
       </div>
-  </div>
-<div class="tab-pane font_size_18" id="settings">
-         <div class="col-md-4 col-md-offset-8"><h3>{{'ScheduledWorkours' | translate}}</h3></div>
-   <div class="col-md-4">
-       <div class="margin_bottom_10">
-    <input id="allow_saturday_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">{{'UseSaturdayHoursAsTFT' | translate}}</span>
-
-</div>
-
-   </div>
-       <div class="col-md-4">
-    <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker placeholder="{{'StartTFTRegulation' | translate}}">
-
       </div>
-       <div class="col-md-4" ng-controller="settings_controller">
-      	 <input ng-repeat="day in days" id="settings_{{day.settingsDay}}" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="{{day.day}}">
-      </div>
-   <div class="col-md-12">
+    <div class="tab-pane font_size_18" id="settings" ng-controller="SettingsCtrl">
+        <div class="col-md-4 col-md-offset-8"><h3>{{'ScheduledWorkours' | translate}}</h3></div>
         <div class="col-md-4">
-        </div>
-            <div class="col-md-4">
-              <div class="col-xs-12 padding_fix text-center"><label>{{'Period' | translate}}</label></div>
-              <div class="form-group">
-    <div class="form-group col-xs-6">
+            <div class="margin_bottom_10">
+                <input id="show_compensation" type="checkbox" name="my-checkbox"><span class="padding_left_5">{{'UseSaturdayHoursAsTFT' | translate}}</span>
 
-   <p class="text-center" id="start_period">start_period</p>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker
+                   placeholder="{{'StartTFTRegulation' | translate}}">
+
+        </div>
+        <div class="col-md-4" >
+            <div ng-repeat="promisedHour in promisedHours">
+            <!--<input ng-repeat="day in days" id="settings_{{day.settingsDay}}" type="text" class="form-control margin_bottom_10 positive-integer"  placeholder="{{day.day}}">-->
+                <input ng-model="promisedHour.date"
+                       ng-show="promisedHour.date != null"
+                       id="" type="text" class="form-control margin_bottom_10 positive-integer"
+                       placeholder="{{'WeekDays.' + $index | translate}}" max-length-p="1">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="col-xs-12 padding_fix text-center"><label>{{'Period' | translate}}</label></div>
+                <div class="form-group">
+                    <div class="form-group col-xs-6">
+                        <p class="text-center" id="start_period">{{start}}</p>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <p class="text-center" id="end_period">{{end}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right"
+                ng-click="save()" ng-disabled="isDisabled()">{{'Save' | translate}}
+        </button>
     </div>
-    <div class="form-group col-xs-6">
-   <p class="text-center" id="end_period">end_period</p>
-    </div>
-  </div>
-   </div>
-   </div>
-             <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right" disabled = "disabled" >{{'Save' | translate}}</button>
-          </div>
         </div>
       </div>
                           </div>

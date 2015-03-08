@@ -335,12 +335,21 @@ public class JsonCommands {
         return result;
     }
 
-    public Date getDateFromJson(String data) {
+    public Date getCurrentDateFromJson(String data) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(data);
             DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             return format.parse(node.get("currentDate").asText());
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public Date getDateFromJson(String date) {
+        try {
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            return format.parse(date);
         } catch (Exception e){
             return null;
         }

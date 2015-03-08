@@ -71,7 +71,7 @@ public class OverViewController {
     @Consumes({ MediaType.APPLICATION_JSON })
     public Response getOverViewDetail(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
 
-        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
+        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getCurrentDateFromJson(data));
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
