@@ -232,6 +232,10 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.selectedDate = DateTools.convertDateToString(new Date());
 
+    $scope.$watch('selectedDate', function(date){
+        $scope.applyDate();
+    });
+
     $scope.overTimeMinDate = "";
     $scope.overTimeMaxDate = "";
 //    $scope.selectedDate = "01.02.2015";
@@ -736,6 +740,10 @@ function findCostTypeById(id){
 app.controller("declaration_controller", function($scope, $http, $filter){
 
     $scope.selectedDate = DateTools.convertDateToString(new Date());
+
+    $scope.$watch('selectedDate', function(date){
+        $scope.applyDate();
+    });
 
     $scope.total = 0;
 

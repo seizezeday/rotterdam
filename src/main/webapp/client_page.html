@@ -76,7 +76,7 @@
                    data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
         </div>
         <div class="col-md-1 col-xs-6 margin_bottom_10">
-            <button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>
+            <!--<button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->
         </div>
         <div class="col-md-2 col-xs-6 margin_bottom_10">
             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal" ng-disabled="saveEnabled">
@@ -225,7 +225,9 @@
                                              ng-model="selectedDate" name="date" bs-datepicker
                                              data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
                 </div>
-                <div class="col-md-3"><button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button></div>
+                <div class="col-md-3">
+                    <button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button>
+                </div>
             </div>
         </div>
         <div class="col-md-12">
@@ -255,7 +257,7 @@
                      bs-datepicker data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}" >
           </div>
           <div class="col-md-1">
-              <button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>
+              <!--<button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->
           </div>
 
           <div class="col-md-2 col-md-offset-1">
