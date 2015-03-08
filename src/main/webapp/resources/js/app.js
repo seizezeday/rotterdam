@@ -104,6 +104,14 @@ app.directive('workHourValidator', function() {
     }
 });
 
+app.controller('HomeCtrl', function ($scope, $http) {
+    $http.get("/api/home").then(function (res) {
+        $scope.userName = res.data.firstname;
+        $scope.regNum = res.data.regNum;
+        $scope.date = res.data.date;
+    })
+});
+
 app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};

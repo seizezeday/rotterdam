@@ -40,7 +40,7 @@ public class UserInfoDto {
 
         userInfoDto.firstname = userName;
         userInfoDto.regNum = regNum;
-        userInfoDto.date = new SimpleDateFormat(JsonCommands.PARAM_DATE_FULL_PATTERN).format(currentDate);
+        userInfoDto.date = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN).format(currentDate);
         userInfoDto.currentYear = new SimpleDateFormat(JsonCommands.PARAM_YEAR_PATTERN).format(currentDate);
         userInfoDto.currentMonth = new SimpleDateFormat(JsonCommands.PARAM_MONTH_PATTERN).format(currentDate);
 

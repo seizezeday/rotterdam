@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,7 +33,7 @@ public class UserController {
 
 
     @RolesAllowed({ "Driver" })
-    @POST
+    @GET
     @Path("/home")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getInfo(@Context HttpServletRequest hsr ) throws JsonException, ParseException {

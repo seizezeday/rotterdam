@@ -36,6 +36,7 @@ function addAlertWarning(message) {
 
 
 };
+
 function preloadFunc()
 {
     $.ajax({
@@ -54,28 +55,27 @@ function preloadFunc()
 
 window.onload = preloadFunc();
 $(document).ready(function(){
-//    angular.element(document.getElementById('AlertCTRL1')).scope().alert.show();
-//        $(".hide_tabs").hide();  // Спрятать все табы пока водитель не введет настройки
         //Получение значений текущего дня недели и запись на таб время
         var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"];
     var week_days_upercase = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
         var pdf_report = [];
 
-                        $.ajax({
-                        type: "POST",
-                        url: "api/home",
-                        datatype: "json",
-                        contentType: "application/json; charset=utf-8",
-                        statusCode: {
-                        200: function (data) {
-                        $(".username").append(data.firstname);
-                        $("#userdate").append(data.date);
-                        $("#registrationNumber").append(data.regNum);
-                        //compensation_json();
-                        overview_date();
-                        }
-                        }
-                    });
+    //$.ajax({
+    //    type: "POST",
+    //    url: "api/home",
+    //    datatype: "json",
+    //    contentType: "application/json; charset=utf-8",
+    //    statusCode: {
+    //        200: function (data) {
+    //            $(".username").append(data.firstname);
+    //            $("#userdate").append(data.date);
+    //            $("#registrationNumber").append(data.regNum);
+    //            //compensation_json();
+    //            overview_date();
+    //        }
+    //    }
+    //});
+    overview_date();
 
 //
         // Редирект на index.html после нажатия кнопки logout
