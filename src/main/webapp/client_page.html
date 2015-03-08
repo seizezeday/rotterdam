@@ -41,8 +41,15 @@
     <div class="btn-group pull-right padding_left_10 padding_top_5">
         <a class="btn btn-default" ui-sref="nl">NL</a>
         <a class="btn btn-default" ui-sref="en">EN</a>
-      </div>
-      <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_5" >{{'Logout' | translate}}</a>
+    </div>
+    <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_5" >{{'Logout' | translate}}</a>
+
+    <div class="col-md-1  pull-right padding_top_5">
+        <input id="123" type="text" class="form-control"
+               name="date" bs-datepicker ng-model="selectedDate"
+               data-min-date="{{minDate}}" data-max-date="{{maxDate}}">
+    </div>
+
 </ul>
      
  </div>
@@ -72,8 +79,8 @@
 <div class="tab-pane" id="Time" ng-controller="time_tab_controller">
     <div class="row col-xs-12 padding_fix">
         <div class="form-group col-md-4" ng-class="">
-            <input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker
-                   data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
+            <!--<input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker-->
+                   <!--data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">-->
         </div>
         <div class="col-md-1 col-xs-6 margin_bottom_10">
             <!--<button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->
@@ -217,19 +224,19 @@
     </div>
 </div>
     <div class="tab-pane" id="sheet_overview"  ng-controller="OverViewCtrl">
-        <div class="col-md-12">
-            <div class="col-md-4 margin_bottom_20">
-                <div class="col-md-2"><h4>Period: </h4></div>
-                <div class="col-md-7">
-                    <input id="overview_calendar" type="text" class="form-control"
-                                             ng-model="selectedDate" name="date" bs-datepicker
-                                             data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">
-                </div>
-                <div class="col-md-3">
-                    <!--<button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button>-->
-                </div>
-            </div>
-        </div>
+        <!--<div class="col-md-12">-->
+            <!--<div class="col-md-4 margin_bottom_20">-->
+                <!--<div class="col-md-2"><h4>Period: </h4></div>-->
+                <!--<div class="col-md-7">-->
+                    <!--<input id="overview_calendar" type="text" class="form-control"-->
+                                             <!--ng-model="selectedDate" name="date" bs-datepicker-->
+                                             <!--data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">-->
+                <!--</div>-->
+                <!--<div class="col-md-3">-->
+                    <!--&lt;!&ndash;<button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="col-md-12">
             <div class="col-md-4">
                <h4>Select weeks:</h4>
@@ -257,11 +264,11 @@
     </div>
       <div class="tab-pane" id="declaretion" ng-controller="declaration_controller">
       <div class="col-md-2 padding_fix">
-          <h4 class="text-right">{{ 'KortenDeclaration' | translate }}:</h4>
+          <!--<h4 class="text-right">{{ 'KortenDeclaration' | translate }}:</h4>-->
       </div>
           <div class="form-group col-md-3" ng-class="{'has-error': datepickerForm.date.$invalid}">
-              <input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"
-                     bs-datepicker data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}" >
+              <!--<input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"-->
+                     <!--bs-datepicker data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}" >-->
           </div>
           <div class="col-md-1">
               <!--<button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->

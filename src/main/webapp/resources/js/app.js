@@ -20,6 +20,10 @@ app.controller('AlertCtrl', function($scope, $alert) {
     });
 });
 
+app.run(function($rootScope){
+    $rootScope.selectedDate = DateTools.convertDateToString(new Date());
+});
+
 app.directive('overNightValidator', function() {
     return {
         restrict: 'A', // only activate on element attribute
@@ -112,7 +116,7 @@ app.controller('HomeCtrl', function ($scope, $http) {
     })
 });
 
-app.controller('time_tab_controller', function($scope, $http, $filter) {
+app.controller('time_tab_controller', function($scope, $http, $filter, $rootScope) {
 
     $scope.overNight = {}; $scope.overNight.start = {}; $scope.overNight.end = {};
 
@@ -238,7 +242,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
 
     $scope.weekTitles = ["Maandag", "Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag","Zondag"];
 
-    $scope.selectedDate = DateTools.convertDateToString(new Date());
+    //$scope.selectedDate = DateTools.convertDateToString(new Date());
 
     $scope.$watch('selectedDate', function(date){
         $scope.applyDate();
@@ -261,7 +265,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
     $scope.saveEnabled = false;
 
     $scope.applyDate = function(){
-        var formattedDate = $scope.selectedDate;
+        var formattedDate = $rootScope.selectedDate;
 
         $http.get('api/timeTab', {params : {date : formattedDate}}).then(function(res){
             switch (res.status){
@@ -595,7 +599,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
     $scope.applyDate();
 });
 
-app.controller('OverViewCtrl', function ($scope, $http) {
+app.controller('OverViewCtrl', function ($scope, $http, $rootScope) {
     $scope.totalTimes = [
         {tolalProc: '', overviewId: ''}, {tolalProc: '100%', overviewId: '_100'}, {
             tolalProc: '130%',
@@ -603,7 +607,7 @@ app.controller('OverViewCtrl', function ($scope, $http) {
         }, {tolalProc: '150%', overviewId: '_150'}, {tolalProc: '200%', overviewId: '_200'}
     ];
 
-    $scope.selectedDate = DateTools.convertDateToString(new Date());
+    //$scope.selectedDate = DateTools.convertDateToString(new Date());
 
     $scope.$watch("selectedDate", function () {
        $scope.applyDate();
@@ -616,7 +620,7 @@ app.controller('OverViewCtrl', function ($scope, $http) {
     $scope.selectedPeriods = [];
 
     $scope.applyDate = function () {
-        $http.get("/api/overView/getDetail", {params : {date : $scope.selectedDate}}).then(function (res) {
+        $http.get("/api/overView/getDetail", {params : {date : $rootScope.selectedDate}}).then(function (res) {
             $scope.totalAll = [];
             $scope.totalAll.push(res.data.total);
             $scope.totalAll.push(res.data.total100);
@@ -648,6 +652,163 @@ app.controller('OverViewCtrl', function ($scope, $http) {
 
     $scope.applyDate();
 
+});
+
+app.controller("declaration_controller", function($scope, $http, $filter, $rootScope){
+
+    //$scope.selectedDate = DateTools.convertDateToString(new Date());
+
+    $scope.$watch('selectedDate', function(date){
+        $scope.applyDate();
+    });
+
+    $scope.total = 0;
+
+    $scope.activeV = true;
+
+    $scope.costTypes = costTypes;
+
+    $scope.removeRow = function(dayIndex, index){
+        $scope.days[dayIndex].declarations.splice(index, 1);
+    };
+
+    $scope.addRow = function(index){
+        $scope.days[index].declarations.push({
+                costType: $scope.costTypes["0"].id,
+                price: 0,
+                active: true
+            }
+        )
+    };
+
+    $scope.applyDate = function(){
+        var formattedDate = $rootScope.selectedDate;
+
+        $http.get('api/declaration', {params : {date : formattedDate}}).then(function(res){
+            switch (res.status){
+                case 200 :
+                {
+                    $scope.days = res.data.daysDeclaration;
+                    for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+                        if($scope.days[dayI].declarations == undefined)
+                            $scope.days[dayI].declarations = [];
+                        for(var decI = 0; decI<$scope.days[dayI].declarations.length; decI++){
+                            $scope.days[dayI].declarations[decI].active = false;
+                        }
+                        if($scope.days[dayI].declarations.length == 0)
+                            $scope.addRow(dayI);
+
+                    }
+                    $scope.activeV = res.data.active;
+                    $scope.calculateTotal();
+                    break;
+                }
+                case 204 : {
+                    $scope.days = [];
+                    //$scope.addRow();
+                    break;
+                }
+            }
+
+        });
+
+    };
+
+    $scope.calculateTotal = function(){
+        var total = 0;
+        for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+            for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
+                total += parseInt($scope.days[dayI].declarations[decI].price);
+            }
+        }
+        $scope.total = total;
+    };
+
+    $scope.save = function(){
+        var declarationsToTransfer = {
+            date : $scope.selectedDate,
+            daysDeclaration : $scope.days
+        };
+        $http.post('api/declaration', declarationsToTransfer).then(function(){
+            for (var dayI = 0; dayI <$scope.days.length; dayI++) {
+                for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
+                    if($scope.days[dayI].declarations[decI].price != 0)
+                        $scope.days[dayI].declarations[decI].active = false;
+                }
+            }
+            addAlert();
+        });
+    };
+
+    $scope.getDecLength = function(index){
+        var length = $scope.days[index].declarations.length;
+        if(length > 0) length--;
+        return  length;
+    };
+
+    $scope.applyDate();
+
+});
+
+app.controller('SettingsCtrl', function($scope, $http, $rootScope){
+
+    $scope.promisedHours = [];
+    $scope.start = "";
+    $scope.end = "";
+    $scope.firstTimeEnabled = false;
+
+    $scope.loadSettings = function () {
+        var curDate = DateTools.convertDateToString(new Date());
+        $http.get('api/settings', {params : {date: curDate}}).then(function(res){
+            $scope.promisedHours = res.data.promisedHours;
+            $scope.start = res.data.startDate;
+            $scope.end = res.data.endDate;
+            $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
+            $scope.firstTimeEnabled = !$scope.toggleTabs();
+        });
+    };
+
+    $scope.save = function(){
+        var curDate = DateTools.convertDateToString(new Date());
+        var daysToTransfer = {
+            promisedHours: $scope.promisedHours,
+            currentDate: curDate,
+            show_compensation : $("#show_compensation").is(':checked')
+            //days: $scope.days
+        };
+        $http.post('api/settings', daysToTransfer).then(function () {
+            addAlert();
+            $scope.firstTimeEnabled = true;
+            $scope.toggleTabs();
+        });
+    };
+
+
+
+    $scope.isDisabled = function () {
+        var ret = false;
+
+
+        for(var h in $scope.promisedHours){
+            if(!ret){
+                var hText = $scope.promisedHours[h].date;
+                if(hText == "" || hText == null) {
+                    ret = true;
+                }
+            }
+        }
+        $rootScope.tabsActive = !ret;
+        if(!$scope.firstTimeEnabled){
+            $rootScope.tabsActive = false;
+        }
+        return ret;
+    };
+
+    $scope.toggleTabs = function () {
+        return $scope.isDisabled();
+    };
+
+    $scope.loadSettings();
 });
 
 app.directive('timepicker', ['$parse', function($parse) {
@@ -800,102 +961,6 @@ function findCostTypeById(id){
     return name;
 }
 
-app.controller("declaration_controller", function($scope, $http, $filter){
-
-    $scope.selectedDate = DateTools.convertDateToString(new Date());
-
-    $scope.$watch('selectedDate', function(date){
-        $scope.applyDate();
-    });
-
-    $scope.total = 0;
-
-    $scope.activeV = true;
-
-    $scope.costTypes = costTypes;
-
-    $scope.removeRow = function(dayIndex, index){
-        $scope.days[dayIndex].declarations.splice(index, 1);
-    };
-
-    $scope.addRow = function(index){
-        $scope.days[index].declarations.push({
-                costType: $scope.costTypes["0"].id,
-                price: 0,
-                active: true
-            }
-        )
-    };
-
-    $scope.applyDate = function(){
-        var formattedDate = $scope.selectedDate;
-
-        $http.get('api/declaration', {params : {date : formattedDate}}).then(function(res){
-            switch (res.status){
-                case 200 :
-                {
-                    $scope.days = res.data.daysDeclaration;
-                    for (var dayI = 0; dayI <$scope.days.length; dayI++) {
-                        if($scope.days[dayI].declarations == undefined)
-                            $scope.days[dayI].declarations = [];
-                        for(var decI = 0; decI<$scope.days[dayI].declarations.length; decI++){
-                            $scope.days[dayI].declarations[decI].active = false;
-                        }
-                        if($scope.days[dayI].declarations.length == 0)
-                            $scope.addRow(dayI);
-
-                    }
-                    $scope.activeV = res.data.active;
-                    $scope.calculateTotal();
-                    break;
-                }
-                case 204 : {
-                    $scope.days = [];
-                    //$scope.addRow();
-                    break;
-                }
-            }
-
-        });
-
-    };
-
-    $scope.calculateTotal = function(){
-        var total = 0;
-        for (var dayI = 0; dayI <$scope.days.length; dayI++) {
-            for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
-                total += parseInt($scope.days[dayI].declarations[decI].price);
-            }
-        }
-        $scope.total = total;
-    };
-
-    $scope.save = function(){
-        var declarationsToTransfer = {
-            date : $scope.selectedDate,
-            daysDeclaration : $scope.days
-        };
-        $http.post('api/declaration', declarationsToTransfer).then(function(){
-            for (var dayI = 0; dayI <$scope.days.length; dayI++) {
-                for (var decI = 0; decI < $scope.days[dayI].declarations.length; decI++) {
-                    if($scope.days[dayI].declarations[decI].price != 0)
-                        $scope.days[dayI].declarations[decI].active = false;
-                }
-            }
-           addAlert();
-        });
-    };
-
-    $scope.getDecLength = function(index){
-        var length = $scope.days[index].declarations.length;
-        if(length > 0) length--;
-        return  length;
-    };
-
-    $scope.applyDate();
-
-});
-
 app.config(function ($datepickerProvider) {
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'dd.MM.yyyy',
@@ -956,65 +1021,4 @@ app.directive('optionsDisabled', function($parse) {
             });
         }
     };
-});
-
-app.controller('SettingsCtrl', function($scope, $http, $rootScope){
-
-    $scope.promisedHours = [];
-    $scope.start = "";
-    $scope.end = "";
-    $scope.firstTimeEnabled = false;
-
-    $scope.loadSettings = function () {
-        var curDate = DateTools.convertDateToString(new Date());
-        $http.get('api/settings', {params : {date: curDate}}).then(function(res){
-            $scope.promisedHours = res.data.promisedHours;
-            $scope.start = res.data.startDate;
-            $scope.end = res.data.endDate;
-            $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
-            $scope.firstTimeEnabled = !$scope.toggleTabs();
-        });
-    };
-
-    $scope.save = function(){
-        var curDate = DateTools.convertDateToString(new Date());
-        var daysToTransfer = {
-            promisedHours: $scope.promisedHours,
-            currentDate: curDate,
-            show_compensation : $("#show_compensation").is(':checked')
-            //days: $scope.days
-        };
-        $http.post('api/settings', daysToTransfer).then(function () {
-            addAlert();
-            $scope.firstTimeEnabled = true;
-            $scope.toggleTabs();
-        });
-    };
-
-
-
-    $scope.isDisabled = function () {
-        var ret = false;
-
-
-        for(var h in $scope.promisedHours){
-            if(!ret){
-                var hText = $scope.promisedHours[h].date;
-                if(hText == "" || hText == null) {
-                    ret = true;
-                }
-            }
-        }
-        $rootScope.tabsActive = !ret;
-        if(!$scope.firstTimeEnabled){
-            $rootScope.tabsActive = false;
-        }
-        return ret;
-    };
-
-    $scope.toggleTabs = function () {
-        return $scope.isDisabled();
-    };
-
-    $scope.loadSettings();
 });
