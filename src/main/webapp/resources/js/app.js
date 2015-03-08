@@ -757,8 +757,13 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
     $scope.end = "";
     $scope.firstTimeEnabled = false;
 
+    $scope.$watch("selectedDate", function () {
+        $scope.loadSettings();
+    });
+
     $scope.loadSettings = function () {
-        var curDate = DateTools.convertDateToString(new Date());
+        //var curDate = DateTools.convertDateToString(new Date());
+        var curDate = $rootScope.selectedDate;
         $http.get('api/settings', {params : {date: curDate}}).then(function(res){
             $scope.promisedHours = res.data.promisedHours;
             $scope.start = res.data.startDate;
@@ -769,7 +774,8 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
     };
 
     $scope.save = function(){
-        var curDate = DateTools.convertDateToString(new Date());
+        //var curDate = DateTools.convertDateToString(new Date());
+        var curDate = $rootScope.selectedDate;
         var daysToTransfer = {
             promisedHours: $scope.promisedHours,
             currentDate: curDate,
