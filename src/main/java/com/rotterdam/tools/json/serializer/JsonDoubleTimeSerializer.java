@@ -22,7 +22,7 @@ public class JsonDoubleTimeSerializer extends JsonSerializer<Double> {
 
         int h = num.intValue();
 
-        int m = (int)((num -h) * 60);
+        int m = (int)Math.round((num -h) * 60);
 
         gen.writeString(h + "h " + m + "m");
     }

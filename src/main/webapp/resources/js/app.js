@@ -538,7 +538,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
     $scope.calculateTotalMonFri = function(){
         var totalFull = 0;
         for (var i = 0; i < 5; i++) {
-            totalFull += $scope.calculateRowTotal(i);
+            var totalF = $scope.calculateRowTotal(i);
+            totalFull += totalF;
             //$scope.rowChanged(i);
         }
         return totalFull;

@@ -245,3 +245,7 @@ hr {
     margin-bottom: 10px;
     margin-top: -7px;
 }
+
+.menu-cursor{
+    cursor: pointer;
+}

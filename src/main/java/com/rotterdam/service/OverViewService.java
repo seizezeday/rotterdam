@@ -139,7 +139,8 @@ public class OverViewService {
                 RideType rideType = day.getWorkHours().get(0).getRideType();
                 if(rideType.equals(RideType.Werkdag)) {
                     for (WorkHour workHour : day.getWorkHours()) {
-                        weekTime += workHour.calculateTotal();
+                        double v = workHour.calculateTotal();
+                        weekTime += v;
                     }
                 } else {
                     if(timeForService.isNormalCalculationNotForWorkDay(rideType)){
