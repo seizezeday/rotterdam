@@ -277,8 +277,8 @@
           <div class="col-md-2 col-md-offset-1">
               <p class="font_size_18 text-center">{{ 'Total' | translate }}: {{total}}</p>
           </div>
-          <div class="col-md-2 col-md-offset-1">
-              <button id="declaration_save" class="btn btn-block btn-success" ng-click="save()">{{ 'Save' | translate }}</button>
+          <div class="col-md-2 col-md-offset-1 declaration-save-fix">
+              <button id="declaration_save" class="btn btn-block btn-success " ng-click="save()" ng-disabled="!activeV">{{ 'Save' | translate }}</button>
           </div>
       <hr class="col-xs-12 padding_fix margin_top_fix">
       <div class="col-md-12 declaration_row" ng-repeat="day in days">
@@ -303,7 +303,7 @@
               </div>
               <div class="col-md-1">
                   <button class="btn btn-block btn-warning declaration_add_row"
-                          ng-show="$index == 0" ng-click="addRow($parent.$index)">Add
+                          ng-show="$index == 0 && activeV" ng-click="addRow($parent.$index)">Add
                   </button>
                   <button class="btn btn-block btn-danger declaration_del_row" ng-show="declaration.active && $index > 0"
                           ng-click="removeRow($parent.$index, $index)">Delete
