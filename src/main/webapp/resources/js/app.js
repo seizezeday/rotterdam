@@ -595,6 +595,61 @@ app.controller('time_tab_controller', function($scope, $http, $filter) {
     $scope.applyDate();
 });
 
+app.controller('OverViewCtrl', function ($scope, $http) {
+    $scope.totalTimes = [
+        {tolalProc: '', overviewId: ''}, {tolalProc: '100%', overviewId: '_100'}, {
+            tolalProc: '130%',
+            overviewId: '_130'
+        }, {tolalProc: '150%', overviewId: '_150'}, {tolalProc: '200%', overviewId: '_200'}
+    ];
+
+    $scope.selectedDate = DateTools.convertDateToString(new Date());
+
+    $scope.$watch("selectedDate", function () {
+       $scope.applyDate();
+    });
+
+    $scope.weekDates = [];
+
+    $scope.totalAll = [];
+
+    $scope.selectedPeriods = [];
+
+    $scope.applyDate = function () {
+        $http.get("/api/overView/getDetail", {params : {date : $scope.selectedDate}}).then(function (res) {
+            $scope.totalAll = [];
+            $scope.totalAll.push(res.data.total);
+            $scope.totalAll.push(res.data.total100);
+            $scope.totalAll.push(res.data.total130);
+            $scope.totalAll.push(res.data.total150);
+            $scope.totalAll.push(res.data.total200);
+
+            $scope.weekDates = [];
+            res.data.weekDates.forEach(function (e, i) {
+                e.val = i + 1;
+                $scope.weekDates.push(e);
+            });
+        });
+    };
+
+    $scope.isDownloadDisabled = function(){
+        return $scope.selectedPeriods.length == 0;
+    };
+
+    $scope.downloadPDF = function () {
+        var dataToPost = {
+            date: $scope.selectedDate,
+            usedWeeks: $scope.selectedPeriods
+        };
+        $http.post("api/overView/getPdf", dataToPost).then(function (res) {
+            generatefromjson(pdf_report, res.data)
+        });
+    };
+
+    $scope.applyDate();
+
+});
+
 app.directive('timepicker', ['$parse', function($parse) {
     return {
         restrict: "A",
@@ -851,24 +906,6 @@ app.config(function ($datepickerProvider) {
     });
 });
 
-
-app.controller("overview_controller", ['$scope', function ($scope) {
-
-    //$scope.isDownloadDisabled = function(){
-    //    //alert("Boom");
-    //    console.log("Ok");
-    //    var val = $('#overview_week_select').val();
-    //    return val == null;
-    //};
-
-
-    $scope.totalTimes = [
-        {tolalProc: '', overviewId: ''}, {tolalProc: '100%', overviewId: '_100'}, {
-            tolalProc: '130%',
-            overviewId: '_130'
-        }, {tolalProc: '150%', overviewId: '_150'}, {tolalProc: '200%', overviewId: '_200'}
-    ];
-}]);
 app.controller('LanguageCtrl', function($scope) {
   $scope.button = {
     radio: 0

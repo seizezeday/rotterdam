@@ -13,9 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -66,12 +64,12 @@ public class OverViewController {
 //      ],"usedWeeks":[true,true,true,true],"date":"29.01.2015"}
 
     @RolesAllowed({ "Driver" })
-    @POST
+    @GET
     @Path("/getDetail")
     @Consumes({ MediaType.APPLICATION_JSON })
-    public Response getOverViewDetail(@Context HttpServletRequest hsr, String data) throws JsonException, IOException, ParseException {
+    public Response getOverViewDetail(@Context HttpServletRequest hsr,@QueryParam("date") String data) throws JsonException, IOException, ParseException {
 
-        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getCurrentDateFromJson(data));
+        Date monday = DateTools.getDateOfPrevMonday(jsonCommands.getDateFromJson(data));
 
         User user = jsonCommands.getUserFromRequest(hsr);
 
