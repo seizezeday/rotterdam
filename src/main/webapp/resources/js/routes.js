@@ -20,8 +20,8 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         })
         .state('client.time', {
             url : "/time",
-            templateUrl: '/pages/client/time.html',
-            controller : "time_tab_controller"
+            templateUrl: '/pages/client/time.html'//,
+            //controller : "time_tab_controller"
         })
         .state('client.overview', {
             url : "/overview",
