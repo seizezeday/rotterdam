@@ -252,7 +252,8 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
 
     //$scope.selectedDate = DateTools.convertDateToString(new Date());
 
-    $scope.$watch('selectedDate', function(date){
+    $rootScope.$watch('selectedDate', function(){
+        console.log("Boom");
         $scope.applyDate();
     });
 

@@ -16,6 +16,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 
     $urlRouterProvider.otherwise("/" + defaultLang + "/index");
+    $urlRouterProvider.when("/en/client", "/en/client/home");
+    $urlRouterProvider.when("/nl/client", "/nl/client/home");
 
     $stateProvider
         .state('locale', {

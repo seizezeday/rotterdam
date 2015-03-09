@@ -1,0 +1,191 @@
+<div class="tab-pane" id="Time">
+    <div class="row col-xs-12 padding_fix">
+        <div class="form-group col-md-4" ng-class="">
+            <!--<input id="time_week_date" type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker-->
+            <!--data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">-->
+        </div>
+        <div class="col-md-1 col-xs-6 margin_bottom_10">
+            <!--<button id="date_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->
+        </div>
+        <div class="col-md-2 col-xs-6 margin_bottom_10">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#myModal" ng-disabled="saveEnabled">
+                {{ 'OverTrip' | translate }}
+            </button>
+        </div>
+        <div class="col-md-3 col-xs-6 margin_bottom_10">
+            <dl class="dl-horizontal margin_fix padding_top_5 font_size_16">
+                <dt>{{ 'AvailableTFT' | translate }}:</dt>
+                <dd id='compensation_time_avaliable'>{{timeForTime}}</dd>
+            </dl>
+        </div>
+        <div class="col-md-1 col-xs-12 col-md-offset-1">
+            <button id="date_save" type="button" class="btn btn-success btn-block"
+                    ng-disabled="saveEnabled" ng-click="save()">{{ 'Save' | translate }}
+            </button>
+        </div>
+        <hr class="col-xs-12 padding_fix margin_top_fix">
+    </div>
+    <div ng-repeat="day in days">
+        <div ng-repeat="workHour in day.workHours">
+            <form name="timeTableForm" class="row col-xs-12 time_tab"
+                  ng-hide="isActiveWorkHourHide($parent.$index, $index)" work-hour-validator>
+                <div class="col-md-4 col-xs-12 padding_gorizontal_fix">
+                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_date"
+                         ng-show="$index == 0">{{day.date}}
+                    </div>
+                    <div class="col-md-4 col-xs-12 text-center font_size_18 time_day padding_bottom_10"
+                         ng-show="$index == 0">
+                        {{ 'WeekDays.' + $parent.$index | translate }}
+                    </div>
+                    <div class="col-md-4 col-xs-12 padding_gorizontal_fix padding_bottom_10"
+                         ng-class="{'col-md-offset-8': $index != 0}">
+                        <input name="d{{$parent.$index}}w{{$index}}start"
+                               class="form-control time_monday_start validation" maxlength="5"
+                               number-mask
+                               placeholder="{{ 'Start' | translate }}"
+                               ng-model="workHour.startWorkingTime" timepicker
+                               ng-show="active" ng-change="rowChanged($parent.$index)"
+                               data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.startWorkingTime}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group col-xs-12 padding_gorizontal_fix margin_bottom_10">
+                    <div class="col-md-6 col-xs-12 padding_bottom_10">
+                        <input name="d{{$parent.$index}}w{{$index}}end"
+                               class="form-control clockpicker time_monday_end validation"
+                               maxlength="5" number-mask
+                               placeholder="{{ 'End' | translate }}"
+                               ng-model="workHour.endWorkingTime" timepicker
+                               ng-show="active" ng-change="rowChanged($parent.$index)"
+                               data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.endWorkingTime}}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <input name="d{{$parent.$index}}w{{$index}}rest"
+                               type="text"
+                               class="form-control time_monday_rest positive-integer validation"
+                               min="0" max="3"
+                               number-mask="" placeholder="{{ 'RestMin' | translate }}" maxlength="3"
+                               number-mask
+                               ng-model="workHour.restTime" ng-show="active"
+                               ng-change="rowChanged($parent.$index)"
+                               data-ng-disabled="dayTypeIsDisabled($parent.$index, $index)">
+
+                        <div class="font_size_18" ng-show="!active">
+                            {{workHour.restTime}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 form-group col-xs-12 padding_gorizontal_fix margin_bottom_10">
+                    <div class="col-md-4" ng-show="$index == 0">
+                        <select class="form-control type_food"
+                                ng-model="workHour.dayType"
+                                ng-options="dayType.val as dayType.description for dayType in dayTypes"
+                                options-disabled="dayType.description for dayType in dayTypes"
+                                ng-show="active" ng-change="rowChanged($parent.$index)"></select>
+
+                        <div class="font_size_18" ng-show="!active">
+                            {{dayTypes[workHour.dayType].description}}
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 add_row_monday" ng-show="($index == 0 && active)">
+                        <button type="button" class="btn btn-warning btn-block "
+                                ng-click="addRow($parent.$index)">{{ 'AnotherTrip' | translate }}
+                        </button>
+                    </div>
+                    <div class="col-md-4 add_row_monday" ng-show="$index > 0 && active"
+                         ng-class="{'col-md-offset-4': $index != 0}">
+                        <button type="button" class="btn btn-danger btn-block time_tab_del"
+                                ng-click="removeRow($parent.$index, $index)">{{ 'Delete' | translate
+                            }}
+                        </button>
+                    </div>
+
+                    <div class="col-md-4 font_size_18 text-center padding_fix" ng-show="$index == 0">
+                        {{ 'TotalWorked' | translate }} <span id="total_time_monday">
+                       {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
+                   </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr class="col-xs-12 margin_top_fix padding_fix">
+    </div>
+    <div class="row col-xs-12">
+        <div class="col-md-6">
+            <p class="font_size_18">{{ 'TotalWorkedMonFri' | translate }}: <span id="total_mon_fri">{{totalMonFri.h}}h {{totalMonFri.m}}m</span>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p class="font_size_18">{{ 'TotalOverHours' | translate }}: <span id="total_over_hours">{{overTime.h}}h {{overTime.m}}m</span>
+            </p>
+
+        </div>
+        <div class="col-md-12">
+            <p class="font_size_18">{{ 'TotalWorkedSaturday' | translate }}: <span
+                    id="total_saturday">{{daysTotalTime[5].h}}h {{daysTotalTime[5].m}}m</span></p>
+
+        </div>
+        <div class="col-md-12">
+            <p class="font_size_18">{{ 'TotalWorkedSunday' | translate }}: <span id="total_sunday">{{daysTotalTime[6].h}}h {{daysTotalTime[6].m}}m</span>
+            </p>
+
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" name="overNightForm">
+                <div class="modal-header">
+                    <button id="modal_close" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'OverTrip' | translate }}</h4>
+                </div>
+                <div id="multitripform" class="modal-body">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-4">
+                            <input id="time_week_date_modal1" type="text" class="form-control"
+                                   ng-model="overNight.start.date"
+                                   name="date" bs-datepicker
+                                   placeholder="{{ 'StartDate' | translate }}"
+                                   data-min-date="{{overTimeMinDate}}"
+                                   data-max-date="{{overTimeMaxDate}}">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input id="time_start_modal" name="startTime"
+                                   class="form-control validation" maxlength="5"
+                                   placeholder="{{ 'Start' | translate }}"
+                                   ng-model="overNight.start.time"
+                                   over-night-validator="{{overNight.end.time}}"
+                                   timepicker-modal>
+                        </div>
+                        <div class="form-group col-md-4 ">
+                            <input id="time_end_modal" name="endTime" class="form-control validation"
+                                   maxlength="5" placeholder="{{ 'End' | translate }}"
+                                   ng-model="overNight.end.time"
+                                   over-night-validator="{{overNight.start.time}}" timepicker-modal>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' |
+                        translate }}
+                    </button>
+                    <button id="multitrip_save" type="button" class="btn btn-primary"
+                            ng-disabled="overNightForm.startTime.$invalid || overNightForm.endTime.$invalid"
+                            ng-click="overNightSave()">{{ 'SaveChanges' | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="tab-pane" id="sheet_overview">
+    <!--<div class="col-md-12">-->
+    <!--<div class="col-md-4 margin_bottom_20">-->
+    <!--<div class="col-md-2"><h4>Period: </h4></div>-->
+    <!--<div class="col-md-7">-->
+    <!--<input id="overview_calendar" type="text" class="form-control"-->
+    <!--ng-model="selectedDate" name="date" bs-datepicker-->
+    <!--data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}">-->
+    <!--</div>-->
+    <!--<div class="col-md-3">-->
+    <!--&lt;!&ndash;<button id="overview_submit" class="btn btn-warning btn-block">{{ 'Apply' | translate }}</button>&ndash;&gt;-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <h4>Select weeks:</h4>
+            <select multiple class="form-control type_food"
+                    ng-model="selectedPeriods"
+                    ng-options="date.val as date.start +' - ' + date.end for date in weekDates"
+                    ></select>
+
+
+            <!--<select id="overview_week_select" multiple class="form-control">-->
+            <!--<option value="{{$index + 1}}" ng-repeat="date in weekDates">{{date.start}} - {{date.end}}</option>-->
+            <!--</select>-->
+        </div>
+        <div class="col-md-6 col-md-offset-1">
+            <p class="font_size_18" ng-repeat="totalTime in totalTimes">
+                {{ 'TotalHours' | translate }} {{totalTime.tolalProc}} {{ 'worked' | translate }}:
+                <span id="overview_total{{totalTime.overviewId}}">{{totalAll[$index]}}</span>
+            </p>
+        </div>
+        <div class="col-md-12">
+            <button id="download_pdf_btn" class="btn btn-warning margin_top_15 col-md-1"
+                    ng-disabled="isDownloadDisabled()" ng-click="downloadPDF()">{{ 'DownloadPDF' |
+                translate }}
+            </button>
+        </div>
+    </div>
+</div>

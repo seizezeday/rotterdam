@@ -1,0 +1,70 @@
+<link href="../resources/css/bootstrap-switch.css" rel="stylesheet">
+<div class="container-fluid padding_fix">
+		  <!--<div ui-view></div>-->
+			<div class="col-md-12 padding_fix">
+			<div class="append_alert">			    
+			</div>
+       <div class="col-md-12 padding_fix">
+       <div class="panel panel-default">
+       <div class="panel-heading padding_panel">
+<ul class="nav nav-tabs nav-pills" role="tablist" id="myTab">
+  <li role="presentation" ui-sref-active="active"><a ui-sref="client.home" class="menu-cursor">{{'Home' | translate}}</a></li>
+    <!--ng-show="tabsActive"-->
+  <li role="presentation" ui-sref-active="active"><a ui-sref="client.time" class="menu-cursor">{{'Time' | translate}}</a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref="client.overview" class="menu-cursor">{{'Overview' | translate}}</a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref="client.declaration" class="menu-cursor">{{'Declaration' | translate}}</a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref="client.settings" class="menu-cursor">{{'Settings' | translate}} </a></li>
+    <div ng-controller="LanguageCtrl">
+        <div class="btn-group pull-right padding_left_10 padding_top_5" ng-model="button.radio" bs-radio-group>
+            <label class="btn btn-default" ng-click="changeLocale('nl')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'nl' ? 0 : 1}}">NL</label>
+            <label class="btn btn-default" ng-click="changeLocale('en')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'en' ? 0 : 1}}">EN</label>
+        </div>
+    </div>
+    <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_5" ng-click="logout()" >{{'Logout' | translate}}</a>
+
+    <div class="col-md-1  pull-right padding_top_5">
+        <input id="123" type="text" class="form-control"
+               name="date" bs-datepicker ng-model="$parent.$parent.selectedDate"
+               data-min-date="{{$parent.$parent.minDate}}" data-max-date="{{$parent.$parent.maxDate}}">
+    </div>
+
+</ul>
+     
+ </div>
+           <div class="panel-body" >
+               <div ui-view></div>
+
+               <!--<div class="tab-content">-->
+
+
+
+
+                   <!---->
+               <!--</div>-->
+           </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        <div class="footer">
+			<div class="container">
+			<div class="social-bl">
+			</div>
+			</div>
+		</div>
+
+        <script src="../resources/js/dateTools.js"></script>
+     <script src="../resources/js/validator.js"></script>
+     <script src="../resources/js/userdata.js"></script>
+     <script src="../resources/js/numeric.js"></script>
+     <script src="../resources/js/bootstrap-switch.js"></script>
+     <script src="../resources/js/bootstrap-clockpicker.min.js"></script>
+     <script src="../resources/js/jsPDF/FileSaver.js"></script>
+     <script src="../resources/js/jsPDF/jspdf.js"></script>
+     <script src="../resources/js/jsPDF/jspdf.plugin.table.js"></script>
+     	<script type="text/javascript">
+        $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });
+        $("[name='my-checkbox']").bootstrapSwitch();
+
+    $(".decimal-2-places").numeric({ decimalPlaces: 2 });
+      </script>

@@ -1,0 +1,58 @@
+<div class="tab-pane" id="declaretion" >
+    <div class="col-md-2 padding_fix">
+        <!--<h4 class="text-right">{{ 'KortenDeclaration' | translate }}:</h4>-->
+    </div>
+    <div class="form-group col-md-3" ng-class="{'has-error': datepickerForm.date.$invalid}">
+        <!--<input id="declaration_calendar" type="text" class="form-control" ng-model="selectedDate" name="date"-->
+        <!--bs-datepicker data-min-date="{{$root.minDate}}" data-max-date="{{$root.maxDate}}" >-->
+    </div>
+    <div class="col-md-1">
+        <!--<button id="declaration_submit" class="btn btn-warning btn-block" ng-click="applyDate()">{{ 'Apply' | translate }}</button>-->
+    </div>
+
+    <div class="col-md-2 col-md-offset-1">
+        <p class="font_size_18 text-center">{{ 'Total' | translate }}: {{total}}</p>
+    </div>
+    <div class="col-md-2 col-md-offset-1 declaration-save-fix">
+        <button id="declaration_save" class="btn btn-block btn-success " ng-click="save()"
+                ng-disabled="!activeV">{{ 'Save' | translate }}
+        </button>
+    </div>
+    <hr class="col-xs-12 padding_fix margin_top_fix">
+    <div class="col-md-12 declaration_row" ng-repeat="day in days">
+        <div class="col-md-2 text-center font_size_18">
+            {{day.date}}
+        </div>
+        <div class="margin_bottom_10_declaration_row" ng-repeat="declaration in day.declarations">
+            <div class="col-md-4 " ng-class="{'col-md-offset-2': $index != 0}">
+                <select class="form-control type_food"
+                        ng-model="declaration.costType"
+                        ng-options="costType.id as costType.name for costType in costTypes"
+                        ng-show="declaration.active && activeV"></select>
+
+                <div class="font_size_18" ng-show="!declaration.active || !activeV">
+                    {{costTypes[declaration.costType].name}}
+                </div>
+            </div>
+            <div class="col-md-2 declaration_price">
+                <input type="text" class="form-control" placeholder="Cost"
+                       ng-change="calculateTotal()"
+                       ng-model="declaration.price" ng-show="declaration.active && activeV">
+
+                <div class="font_size_18" ng-show="!declaration.active || !activeV">
+                    {{declaration.price}}
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-block btn-warning declaration_add_row"
+                        ng-show="$index == 0 && activeV" ng-click="addRow($parent.$index)">Add
+                </button>
+                <button class="btn btn-block btn-danger declaration_del_row"
+                        ng-show="declaration.active && $index > 0"
+                        ng-click="removeRow($parent.$index, $index)">Delete
+                </button>
+            </div>
+        </div>
+        <hr class="col-xs-12 padding_fix margin_top_fix">
+    </div>
+</div>

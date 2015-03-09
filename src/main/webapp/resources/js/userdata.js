@@ -1,6 +1,6 @@
 function addAlert() {
     var message;
-    if(endsWith("nl", document.URL)){
+    if(document.URL.indexOf("nl") >=0){
         message = "Gered";
     } else
         message = "Saved";
