@@ -10,9 +10,9 @@
 <ul class="nav nav-tabs nav-pills" role="tablist" id="myTab">
   <li role="presentation" ui-sref-active="active"><a ui-sref="client.home" class="menu-cursor">{{'Home' | translate}}</a></li>
     <!--ng-show="tabsActive"-->
-  <li role="presentation" ui-sref-active="active"><a ui-sref="client.time" class="menu-cursor">{{'Time' | translate}}</a></li>
-  <li role="presentation" ui-sref-active="active"><a ui-sref="client.overview" class="menu-cursor">{{'Overview' | translate}}</a></li>
-  <li role="presentation" ui-sref-active="active"><a ui-sref="client.declaration" class="menu-cursor">{{'Declaration' | translate}}</a></li>
+  <li role="presentation" ng-show="$parent.$parent.tabsActive" ui-sref-active="active"><a ui-sref="client.time" class="menu-cursor">{{'Time' | translate}}</a></li>
+  <li role="presentation" ng-show="$parent.$parent.tabsActive" ui-sref-active="active"><a ui-sref="client.overview" class="menu-cursor">{{'Overview' | translate}}</a></li>
+  <li role="presentation" ng-show="$parent.$parent.tabsActive" ui-sref-active="active"><a ui-sref="client.declaration" class="menu-cursor">{{'Declaration' | translate}}</a></li>
   <li role="presentation" ui-sref-active="active"><a ui-sref="client.settings" class="menu-cursor">{{'Settings' | translate}} </a></li>
     <div ng-controller="LanguageCtrl">
         <div class="btn-group pull-right padding_left_10 padding_top_5" ng-model="button.radio" bs-radio-group>

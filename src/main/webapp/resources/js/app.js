@@ -30,6 +30,33 @@ app.run(function($rootScope, $http, $state){
             }
         })
     };
+
+    //need for tabs hide - copy-paste from settings
+    $rootScope.loadSettings = function () {
+        var curDate = $rootScope.selectedDate;
+        $http.get('api/settings', {params : {date: curDate}}).then(function(res){
+            $rootScope.promisedHours = res.data.promisedHours;
+            $rootScope.isDisabled();
+        });
+    };
+
+    $rootScope.isDisabled = function () {
+        var ret = false;
+
+        for(var h in $rootScope.promisedHours){
+            if(!ret){
+                var hText = $rootScope.promisedHours[h].date;
+                if(hText == "" || hText == null) {
+                    ret = true;
+                }
+            }
+        }
+        $rootScope.tabsActive = !ret;
+        return ret;
+    };
+
+    $rootScope.loadSettings();
+
 });
 
 app.directive('overNightValidator', function() {
