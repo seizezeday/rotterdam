@@ -1,30 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru" ng-app="mgcrea.ngStrapDocs">
-  <head>
-    <meta charset="utf-8"> 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Drive Tracking</title>
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/librares.min.css" rel="stylesheet">
-    <link href="resources/css/angular-motion.css" rel="stylesheet">
-    <link href="resources/css/style.css" rel="stylesheet">
-    <link href="resources/css/bootstrap-switch.css" rel="stylesheet">
-    <link href="resources/css/bootstrap-clockpicker.min.css" rel="stylesheet">    
-    <script src="resources/js/angular.js"></script>
-    <script src="resources/js/angular-ui-router.js"></script>
-    <script src="resources/js/angular-translate.js"></script>
-    <script src="resources/js/app.js"></script>
-    <script src="resources/js/i18n.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-		<div class="container-fluid padding_fix">
+<link href="resources/css/bootstrap-switch.css" rel="stylesheet">
+<div class="container-fluid padding_fix">
 		  <div ui-view></div>
 			<div class="col-md-12 padding_fix">
 			<div class="append_alert">			    
@@ -38,11 +13,13 @@
   <li role="presentation" ng-show="tabsActive"><a data-target="#sheet_overview" role="tab" data-toggle="tab" class="menu-cursor">{{'Overview' | translate}}</a></li>
   <li role="presentation" ng-show="tabsActive"><a data-target="#declaretion" role="tab" data-toggle="tab" class="menu-cursor">{{'Declaration' | translate}}</a></li>
   <li role="presentation"><a data-target="#settings" role="tab" data-toggle="tab" class="menu-cursor">{{'Settings' | translate}} </a></li>
-    <div class="btn-group pull-right padding_left_10 padding_top_5">
-        <a class="btn btn-default" ui-sref="nl">NL</a>
-        <a class="btn btn-default" ui-sref="en">EN</a>
+    <div ng-controller="LanguageCtrl">
+        <div class="btn-group pull-right padding_left_10 padding_top_5" ng-model="button.radio" bs-radio-group>
+            <label class="btn btn-default" ng-click="changeLocale('nl')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'nl' ? 0 : 1}}">NL</label>
+            <label class="btn btn-default" ng-click="changeLocale('en')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'en' ? 0 : 1}}">EN</label>
+        </div>
     </div>
-    <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_5" >{{'Logout' | translate}}</a>
+    <a id="logout" class="btn btn-danger pull-right col-md-1 col-xs-12 margin_top_5" ng-click="logout()" >{{'Logout' | translate}}</a>
 
     <div class="col-md-1  pull-right padding_top_5">
         <input id="123" type="text" class="form-control"
@@ -366,17 +343,11 @@
 			<div class="social-bl">
 			</div>
 			</div>
-		</div>  
-     <script src="resources/js/angular-animate.js"></script>
-     <script src="resources/js/angular-sanitize.min.js"></script>
-     <script src="resources/js/angular-strap.min.js"></script>
-     <script src="resources/js/angular-strap.tpl.min.js"></script>
-     <script src="resources/js/dateTools.js"></script>
-     <script src="resources/js/jquery-2.1.1.min.js"></script>
-     <script src="resources/js/bootstrap.min.js"></script>
+		</div>
+
+        <script src="resources/js/dateTools.js"></script>
      <script src="resources/js/validator.js"></script>
      <script src="resources/js/userdata.js"></script>
-     <script src="resources/js/autorization.js"></script>
      <script src="resources/js/numeric.js"></script>
      <script src="resources/js/bootstrap-switch.js"></script>
      <script src="resources/js/bootstrap-clockpicker.min.js"></script>
@@ -384,10 +355,8 @@
      <script src="resources/js/jsPDF/jspdf.js"></script>
      <script src="resources/js/jsPDF/jspdf.plugin.table.js"></script>
      	<script type="text/javascript">
-        $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });   
+        $(".positive-integer").numeric({ decimal: false, negative: false }, function() { alert("Positive integers only"); this.value = ""; this.focus(); });
         $("[name='my-checkbox']").bootstrapSwitch();
 
     $(".decimal-2-places").numeric({ decimalPlaces: 2 });
       </script>
-  </body>
-</html>

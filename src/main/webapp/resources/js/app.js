@@ -20,8 +20,16 @@ app.controller('AlertCtrl', function($scope, $alert) {
     });
 });
 
-app.run(function($rootScope){
+app.run(function($rootScope, $http, $state){
     $rootScope.selectedDate = DateTools.convertDateToString(new Date());
+
+    $rootScope.logout = function () {
+        $http.post("api/logout", {}).then(function (res) {
+            if(res.status == 200){
+                $state.go('index');
+            }
+        })
+    };
 });
 
 app.directive('overNightValidator', function() {

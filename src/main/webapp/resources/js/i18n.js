@@ -1,23 +1,29 @@
 var defaultLang = 'nl';
 
+app.run(function ($rootScope, $translate, $state, $location, $stateParams) {
+    $rootScope.pr = $stateParams;
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        $translate.use(toParams.locale);
+    });
+
+    $rootScope.changeLocale = function(locale){
+        $stateParams.locale = locale;
+        $state.reload();
+    };
+});
+
 app.config(function($stateProvider, $urlRouterProvider) {
 
 
-    $urlRouterProvider.otherwise("/" + defaultLang);
+    $urlRouterProvider.otherwise("/" + defaultLang + "/index");
 
     $stateProvider
-        .state('en', {
-            url: "/en",
-            controller: function($scope, $translate) {
-                $translate.use('en');
-            }
+        .state('locale', {
+            url: "/{locale}",
+            template: "<ui-view/>",
+            abstract: true
         })
-        .state('nl', {
-            url: "/nl",
-            controller: function($scope, $translate) {
-                $translate.use('nl');
-            }
-        });
+    ;
 });
 
 app.config(['$translateProvider', function ($translateProvider) {

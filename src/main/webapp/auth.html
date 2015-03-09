@@ -1,0 +1,185 @@
+
+<style>
+    body {
+        background: url(resources/img/1.jpg) no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+
+  <div ng-controller="AlertCtrl">
+
+  <div class="container"  id = "alerts-container" style="position: absolute; margin: 0 25%; width: 50%"> </div>
+
+     <div class="container">
+         <div class="row" >
+             <div ui-view></div>
+             <div class="pull-right" ng-controller="LanguageCtrl">
+      <div class="btn-group" ng-model="$parent.button.radio" bs-radio-group>
+          <label class="btn btn-default" ng-click="changeLocale('nl')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'nl' ? 0 : 1}}">NL</label>
+          <label class="btn btn-default" ng-click="changeLocale('en')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'en' ? 0 : 1}}">EN</label>
+      </div>
+             </div>
+
+
+             <div class="col-lg-8 col-lg-offset-2 margin_top_10_proc">
+                            <ul class="nav nav-tabs autorization_tabs" role="tablist">
+                              <li class="active "><a href="#myModalLabel"  role="tab" data-toggle="tab">{{'Login' | translate}}</a></li>
+                              <li><a href="#myModalLabel2"  role="tab" data-toggle="tab">{{'Registration' | translate}}</a></li>
+                            </ul>
+                            
+<div class="tab-content">
+  <div class="tab-pane active" id="myModalLabel">
+                                <div class="modal-body">
+                    <div id="login-tab">
+                        <div class="tab-pane active" id="login">
+               			<form class="form-signin" action="" method="">
+               				<input type="email" class="form-control" id="inputLoginEmail" placeholder="{{'Email' | translate}}" data-error="{{'EnterEmailAddress' | translate}}" required autofocus>
+               				<input id="login_password" type="password" class="form-control"   placeholder="{{'Password' | translate}}" data-error="{{'PasswordEmpty' | translate}}" required>
+            <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">{{'ForgotPassword' | translate}}</a>
+                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">{{'Login' | translate}}</button>
+               			</form>
+                    </div>
+                    </div>
+<!--
+                                <form class="form-horizontal" data-toggle="validator" role="form">
+                                 Text input
+                                <div class="form-group margin-vertical-fix">
+                                   <div class="col-sm-12 ">
+                                    <input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Enter Email address" required> 
+                                    <div class="help-block with-errors"></div>
+                                    </div>
+                                  </div>
+                                <div class="form-group">
+                                <div class="col-sm-12">
+                <input id="login_password" type="password" class="form-control margin_top_10"   placeholder="Password" data-error="Password empty" required>
+                                <div class="help-block with-errors"></div>
+                                    <div class="center-block">
+                                        <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">Forgot password</a>
+                                    </div>
+                                </div>
+                                </div>
+                                </form>
+-->
+<!--                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button>-->                         
+                </div>    
+                                </div>    
+<!--  </div>-->
+  <div class="tab-pane" id="myModalLabel2">
+                                <div class="modal-body">
+                                <form class="form-horizontal" data-toggle="validator" role="form">
+                                <div class="form-group margin-vertical-fix">
+                                   <div class="col-sm-12">
+                                    <input pattern="^[A-z][A-z0-9_\-\.]{2,}[A-z0-9]$" maxlength="20"  type="text" class="form-control" id="inputName" placeholder="{{'Name' | translate}}" data-error="{{'EnterUsername' | translate}}" required>
+                                <div class="help-block with-errors"></div>
+<!--                               pattern="^([_A-z]){4,}$" maxlength="20"
+                                   pattern="^([_A-z])+@[a-z]{4,}$"
+                                   pattern="^[A-z0-9_\-]+@[a-z0-9_\-]+\.([a-z]+\.)*[a-z]{2,}$" maxlength="30"
+                                   -->
+                                    </div>
+                                  </div>
+                                  <div class="form-group margin_fix">
+                                   <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="inputLastName" placeholder="{{'LastName' | translate}}" data-error="{{'EnterLastName' | translate}}" required>
+                                    <div class="help-block with-errors"></div>
+                                    </div>
+                                  </div>
+                                   <div class="form-group margin_fix">
+                                   <div class="col-sm-12">
+                                    <input type="email"  pattern="^[A-z0-9_\-]+@[a-z0-9_\-]+\.([a-z]+\.)*[a-z]{2,}$" maxlength="30" class="form-control" id="inputEmail" placeholder="{{'Email' | translate}}" data-error="{{'InvalidEmail' | translate}}" required>
+                                    <div class="help-block with-errors"></div>
+                                    </div>
+                                  </div>
+                                    <div class="form-group margin_fix">
+                                        <div class="col-sm-12">
+                                            <input type="text"  pattern="[0-9\-]+" maxlength="30" class="form-control" id="regNum" placeholder="{{'RegNum' | translate}}" data-error="{{'InvalidRegNum' | translate}}" required>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                               <!-- Password input-->
+                               <div class="form-group">
+                                <div class="col-sm-12">
+                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="{{'Password' | translate}}" >
+                                </div>
+                                <div class="col-sm-12">
+                                  <input pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" maxlength="30" type="password" class="form-control margin_top_10" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="{{'PasswordsNotMatch' | translate}}
+ " placeholder="{{'RepeatPassword' | translate}}" data-error="{{'InsufficientlyComplexPassword' | translate}}" required>
+                                  <div class="help-block with-errors"></div>
+                                </div>
+                                <!--<div class="col-sm-4">-->
+                                    <!--<select class="form-control margin_top_10" name="card-type" id="card-type">-->
+                                        <!--&lt;!&ndash;<option>Card type</option>&ndash;&gt;-->
+                                        <!--<option value="0">Visa</option>-->
+                                        <!--<option value="1">Mastercard</option>-->
+                                        <!--<option value="2">Discover</option>-->
+                                        <!--<option value="3">Amex</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                                   <!--<div class="col-sm-8">-->
+                                        <!--<input  maxlength="16" type="text" class="form-control margin_top_10" placeholder="Enter card number" id="card-number">-->
+                                   <!--</div>-->
+            <!--<div class="col-xs-8 margin_top_10">-->
+            <!--<select class="form-control" name="expiry-month" id="expiry-month">-->
+                <!--<option>Month</option>-->
+                <!--<option value="01">Jan (01)</option>-->
+                <!--<option value="02">Feb (02)</option>-->
+                <!--<option value="03">Mar (03)</option>-->
+                <!--<option value="04">Apr (04)</option>-->
+                <!--<option value="05">May (05)</option>-->
+                <!--<option value="06">June (06)</option>-->
+                <!--<option value="07">July (07)</option>-->
+                <!--<option value="08">Aug (08)</option>-->
+                <!--<option value="09">Sep (09)</option>-->
+                <!--<option value="10">Oct (10)</option>-->
+                <!--<option value="11">Nov (11)</option>-->
+                <!--<option value="12">Dec (12)</option>-->
+            <!--</select>-->
+             <!--</div>-->
+             <!--<div class="col-xs-4 margin_top_10">-->
+                 <!--<select class="form-control col-sm-4" name="expiry-year" id="expiry-year">-->
+                <!--<option value="2013">2013</option>-->
+                <!--<option value="2014">2014</option>-->
+                <!--<option value="2015">2015</option>-->
+                <!--<option value="2016">2016</option>-->
+                <!--<option value="2017">2017</option>-->
+                <!--<option value="2018">2018</option>-->
+                <!--<option value="2019">2019</option>-->
+                <!--<option value="2020">2020</option>-->
+                <!--<option value="2021">2021</option>-->
+                <!--<option value="2022">2022</option>-->
+                <!--<option value="2023">2023</option>-->
+              <!--</select>-->
+            <!--</div>             -->
+            <!--<div class="col-sm-12">-->
+            <!--<input  maxlength="3" type="password" class="form-control margin_top_10" placeholder="Enter card CVV2" id="cvv2">-->
+                                <!--</div>     -->
+                                </div>
+                                </form>
+                                
+                    <button id="reg-btn" type="button" class="btn btn-success btn-block font_size_18 ">{{'Registration' | translate}}</button>
+                    </div>
+                  </div>
+                </div>
+             </div>
+         </div>
+     </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+                <form class="form-horizontal" data-toggle="validator" role="form">
+                                   <div class="form-group margin_fix">
+                                       <div class="modal-body">
+                                   <div class="col-sm-12">
+                                    <input type="email" class="form-control" id="inputForgotPassword" placeholder="{{'EnterYourEmail' | translate}}" data-error="{{'InvalidEmail' | translate}}" required>
+                                    <div class="help-block with-errors"></div>
+                                    </div>
+                                       </div>    
+                                  </div>
+                                </form>
+         <div class="modal-footer">
+                            <button id="btn-forgot-password" type="button" class="btn btn-success btn-block font_size_18">{{'SendPassword' | translate}}</button>
+        </div>
+    </div>
+  </div>
+</div>
+  </div>
+<script src="resources/js/autorization.js"></script>

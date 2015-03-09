@@ -93,9 +93,9 @@
                   200: function (data) {
                       if(data.payed) {
                           if(endsWith("en", document.URL)){
-                              location.href = "client_page.html#/en";
+                              location.href = "#/en/client";
                           } else
-                            location.href = "client_page.html";
+                            location.href = "#/nl/client";
                       }
                       else{
                           //alert("Not payed");

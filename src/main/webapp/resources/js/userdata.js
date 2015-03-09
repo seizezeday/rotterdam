@@ -46,7 +46,7 @@ function preloadFunc()
         contentType: "application/json; charset=utf-8",
         statusCode: {
             403 : function(){
-                window.location.href = "/index.html";
+                window.location.href = "#/en/index";
             }
         },
         async:   false
@@ -54,33 +54,7 @@ function preloadFunc()
 }
 
 window.onload = preloadFunc();
-$(document).ready(function(){
-        //Получение значений текущего дня недели и запись на таб время
-        var week_days = ["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"];
-    var week_days_upercase = ["Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
-
-
-//
-        // Редирект на index.html после нажатия кнопки logout
-
-    $('#logout').click(function(){
-             $.ajax({
-              type: "POST",
-              url: "api/logout",
-              contentType: "application/json; charset=utf-8",
-              dataType: "json",
-              statusCode: {
-                  200: function () {
-                      if(endsWith("en", document.URL)){
-                          location.href = "index.html#/en";
-                      } else
-                        location.href='index.html';
-                  }
-              }
-          });
-        });
-});
 var pdf_report = [];
 
 function generatefromjson(data, jsonData) {
