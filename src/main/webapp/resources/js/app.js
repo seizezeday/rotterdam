@@ -55,6 +55,10 @@ app.run(function($rootScope, $http, $state){
         return ret;
     };
 
+    $rootScope.$watch("selectedDate", function () {
+        $rootScope.loadSettings();
+    });
+
     $rootScope.loadSettings();
 
 });
@@ -280,7 +284,6 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
     //$scope.selectedDate = DateTools.convertDateToString(new Date());
 
     $rootScope.$watch('selectedDate', function(){
-        console.log("Boom");
         $scope.applyDate();
     });
 
