@@ -636,7 +636,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
         return  b;
     };
 
-    $scope.applyDate();
+    //$scope.applyDate();
 });
 
 app.controller('OverViewCtrl', function ($scope, $http, $rootScope) {
@@ -690,7 +690,7 @@ app.controller('OverViewCtrl', function ($scope, $http, $rootScope) {
         });
     };
 
-    $scope.applyDate();
+    //$scope.applyDate();
 
 });
 
@@ -786,7 +786,7 @@ app.controller("declaration_controller", function($scope, $http, $filter, $rootS
         return  length;
     };
 
-    $scope.applyDate();
+    //$scope.applyDate();
 
 });
 
@@ -854,7 +854,7 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
         return $scope.isDisabled();
     };
 
-    $scope.loadSettings();
+    //$scope.loadSettings();
 });
 
 app.directive('timepicker', ['$parse', function($parse) {
