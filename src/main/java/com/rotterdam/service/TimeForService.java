@@ -80,8 +80,11 @@ public class TimeForService {
         double periodTime = 0;
         for (Week week : lastPeriod.getWeeks()){
             double timeDays = 0;
+            boolean saturdayCompensation = week.isShowCompensation();
             for (Day day : week.getDays()){
                 String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
+                if (!saturdayCompensation && weekDayTitle.equals("Saturday"))
+                    continue;
                 if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
                     continue;
                 if(day.getWorkHours() != null && day.getWorkHours().size() != 0) {
@@ -168,27 +171,30 @@ public class TimeForService {
 
     private final int HOURS_OF_ONE_TIME_FOR_TIME = 11;
 
-    public double decreaseTimeForTime(Period period){
+    public double decreaseTimeForTime(Period period) {
         //now we need to decrease time-for-time because of workHours that marked
         //first we need to find how many timeForTime user have?
         double tFTUserHave = period.getUser().getTimeForTime();
         //need to calculate how many timeForTime  user use
         double tFtUserUsed = 0;
-        for (Week week : period.getWeeks()){
-            for (Day day : week.getDays()){
+        for (Week week : period.getWeeks()) {
+            boolean saturdayCompensation = week.isShowCompensation();
+            for (Day day : week.getDays()) {
                 String weekDayTitle = DateTools.getWeekDayTitle(day.getDate());
-                if(weekDayTitle.equals("Saturday") || weekDayTitle.equals("Sunday"))
+                if (!saturdayCompensation && weekDayTitle.equals("Saturday"))
                     continue;
-                for(WorkHour workHour : day.getWorkHours()){
-                    if(workHour.getRideType().equals(RideType.Tijd_voor_tijd))
+                if (weekDayTitle.equals("Sunday"))
+                    continue;
+                for (WorkHour workHour : day.getWorkHours()) {
+                    if (workHour.getRideType().equals(RideType.Tijd_voor_tijd))
                         tFtUserUsed += HOURS_OF_ONE_TIME_FOR_TIME;
                 }
             }
         }
-        if(tFtUserUsed > tFTUserHave){
+        if (tFtUserUsed > tFTUserHave) {
             //front-end error
             return -1;
-        } else{
+        } else {
             return tFtUserUsed;
         }
     }

@@ -78,6 +78,8 @@ public class SettingsService {
 
         settingsDto = settingsDto.copyDaysOfWeekToSettingsDto(week);
 
+        settingsDto.paymentDate = week.getPeriod().getUser().getLastPaymentDate();
+
         return settingsDto;
     }
 

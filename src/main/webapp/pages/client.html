@@ -24,8 +24,8 @@
 
     <div class="col-md-offset-4 col-md-2 padding_top_5">
         <input id="123" type="text" class="form-control"
-               name="date" bs-datepicker ng-model="$parent.$parent.selectedDate"
-               data-min-date="{{$parent.$parent.minDate}}" data-max-date="{{$parent.$parent.maxDate}}">
+               name="date" bs-datepicker ng-model="$parent.$parent.$parent.selectedDate"
+               data-min-date="{{$parent.$parent.$parent.minDate}}" data-max-date="{{$parent.$parent.$parent.maxDate}}">
     </div>
 
 </ul>

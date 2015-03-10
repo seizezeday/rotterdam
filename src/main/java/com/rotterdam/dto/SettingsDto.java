@@ -34,6 +34,9 @@ public class SettingsDto {
     @JsonSerialize(using = JsonDateSerializer.class)
     public Date endDate;
 
+    @JsonSerialize(using = JsonDateSerializer.class)
+    public Date paymentDate;
+
     @JsonProperty("show_compensation")
     public boolean showCompensation;
 

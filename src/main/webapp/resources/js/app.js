@@ -364,7 +364,6 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
         });
     };
 
-
     $scope.checkDayValidness = function(){
         //first we need to construct workHour
         var workHour = {
@@ -816,6 +815,7 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
             $scope.end = res.data.endDate;
             $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
             $scope.firstTimeEnabled = !$scope.toggleTabs();
+            $scope.timeForTimeRegulation = res.data.paymentDate;
         });
     };
 
