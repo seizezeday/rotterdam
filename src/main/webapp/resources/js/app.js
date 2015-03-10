@@ -31,8 +31,13 @@ app.run(function($rootScope, $http, $state){
         })
     };
 
+
+
+});
+
+app.controller('tabs_controller', function ($scope, $http, $state, $rootScope) {
     //need for tabs hide - copy-paste from settings
-    $rootScope.loadSettings = function () {
+    $scope.loadSettings = function () {
         var curDate = $rootScope.selectedDate;
         $http.get('api/settings', {params : {date: curDate}}).then(function(res){
             $rootScope.promisedHours = res.data.promisedHours;
@@ -55,12 +60,13 @@ app.run(function($rootScope, $http, $state){
         return ret;
     };
 
+    //console.log($state.current);
+
     $rootScope.$watch("selectedDate", function () {
-        $rootScope.loadSettings();
+        $scope.loadSettings();
     });
 
-    $rootScope.loadSettings();
-
+    //$scope.loadSettings();
 });
 
 app.directive('overNightValidator', function() {

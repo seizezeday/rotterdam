@@ -14,7 +14,7 @@
          <div class="row" >
              <div ui-view></div>
              <div class="pull-right" ng-controller="LanguageCtrl">
-      <div class="btn-group" ng-model="$parent.button.radio" bs-radio-group>
+      <div class="btn-group" ng-model="button.radio" bs-radio-group>
           <label class="btn btn-default" ng-click="changeLocale('nl')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'nl' ? 0 : 1}}">NL</label>
           <label class="btn btn-default" ng-click="changeLocale('en')"><input type="radio" class="btn btn-default" value="{{pr.locale == 'en' ? 0 : 1}}">EN</label>
       </div>
