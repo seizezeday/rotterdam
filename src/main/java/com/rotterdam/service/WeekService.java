@@ -43,6 +43,7 @@ public class WeekService {
         Week week = weekDao.selectByStartDateAndUser(weekDto.days.get(0).date, userId);
         if(week == null){
             //we need to create week
+
         }
         //we need to determine what was changed or we can override
         for(DayDto dayDto :weekDto.days ){
@@ -201,5 +202,17 @@ public class WeekService {
 
     public List<Integer> getFakePromisedTime() {
         return Arrays.asList(0, 0, 0, 0, 0);
+    }
+
+    public void ensureNullableOneWorkHour(WeekDto weekDto) {
+        for (DayDto dayDto : weekDto.days){
+            if(dayDto.workHours == null || dayDto.workHours.size() == 0) {
+                WorkHourDto e = new WorkHourDto();
+                e.startWorkingTime = new Date(0,0,0,0,0);
+                e.endWorkingTime = new Date(0,0,0,0,0);
+                e.restTime = 0;
+                dayDto.workHours.add(e);
+            }
+        }
     }
 }

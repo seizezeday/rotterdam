@@ -64,6 +64,9 @@ app.controller('tabs_controller', function ($scope, $http, $state, $rootScope) {
 
     $rootScope.$watch("selectedDate", function () {
         $scope.loadSettings();
+        if(!$rootScope.isDisabled() && $rootScope.promisedHours != undefined){
+            $state.go("client.settings");
+        }
     });
 
     //$scope.loadSettings();
@@ -320,7 +323,10 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
                     for(var dayI in $scope.days) {
                         var day = $scope.days[dayI];
                         if (day.workHours.length == 0) {
-                            $scope.addRow(dayI);
+                            if(res.data.active)
+                                $scope.addRow(dayI);
+                            else
+                                $scope.addNullableRow(dayI);
                         }
                         $scope.$watch('days[' + dayI + '].workHours[0]', function (newValue, oldValue) {
 //                          console.log(newValue.dayType + ":::" + oldValue.dayType);
@@ -496,6 +502,17 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
                 }
             }
         }
+    };
+
+    $scope.addNullableRow= function(index){
+        $scope.days[index].workHours.push({
+                startWorkingTime: "00:00",
+                endWorkingTime: "00:00",
+                restTime: "0",
+                dayType : '0'
+            }
+        );
+
     };
 
     $scope.addRow = function(index){
@@ -923,7 +940,7 @@ app.controller('DatepickerDemoController', function($scope, $http) {
 });
 
 app.run(function($rootScope, $http) {
-    if(document.URL.indexOf("client_page") > -1) {
+    if(document.URL.indexOf("client") > -1) {
         $http.get('api/timeTab/getAvailableDates').then(function (res) {
             switch (res.status) {
                 case 200 :

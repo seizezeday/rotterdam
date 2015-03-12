@@ -9,8 +9,9 @@ app.run(function ($rootScope, $translate, $state, $location, $stateParams) {
     $stateParams.locale = defaultLang;
 
     $rootScope.changeLocale = function(locale){
-        $state.transitionTo($state.current, {locale : locale}, { location: false});
-        //$state.reload();
+        $stateParams.locale = locale;
+        //$state.transitionTo($state.current, {locale : locale}, { location: false});
+        $state.reload();
     };
 });
 
