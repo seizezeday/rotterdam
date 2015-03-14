@@ -18,6 +18,22 @@ app.controller('AlertCtrl', function($scope, $alert) {
         type: 'info',
         show : false, duration : 2
     });
+
+    $scope.alertSuccess = $alert({
+        title: "Success...",
+        container: '#alerts-container',
+        placement: 'top-right',
+        type: 'info',
+        show : false, duration : 2
+    });
+
+    $scope.alertPaymentError = $alert({
+        title: "Payment error",
+        container: '#alerts-container',
+        placement: 'top-right',
+        type: 'danger',
+        show : false, duration : 2
+    });
 });
 
 app.run(function($rootScope, $http, $state){
