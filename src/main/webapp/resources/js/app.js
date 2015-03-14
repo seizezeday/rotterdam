@@ -567,7 +567,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
         //var currentTotalTime = DateTools.convertTimePairToIntMinutes($scope.totalMonFri);
         //currentTotalTime -= oldTotalDayTime;
         //currentTotalTime += total;
-        var currentTotalTime = $scope.calculateTotalMonFri();
+        var currentTotalTime = $scope.calculateTotalMonFri() +  $scope.calculateSutSun();
         var totalMonFri = DateTools.convertIntMinutesToTimePair(currentTotalTime - overTime);
         //DateTools.convertIntMinutesToTimePair(currentTotalTime); // -overTime
         //var totalMonFri = DateTools.convertIntMinutesToTimePair(currentTotalTime); // -overTime
