@@ -515,6 +515,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
                     else if (time >= 10.5 && time < 13.5) workHour.restTime = 90;
                     else if (time >= 13.5 && time < 16.5) workHour.restTime = 120;
                     else if (time >= 16.5) workHour.restTime = 150;
+                    $scope.rowChanged(i);
                 }
             }
         }
@@ -599,7 +600,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
 
     $scope.calculateTableTotal = function(){
         //fully calculate
-        var totalFull = $scope.calculateTotalMonFri();
+        var totalFull = $scope.calculateTotalMonFri() + $scope.calculateSutSun();
         var overTime = $scope.calculateOverTime();
         if (totalFull >= 0) {
             totalFull -=overTime;
@@ -625,9 +626,7 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
     $scope.calculateOverTime = function(){
         var currentTotalTime = $scope.calculateTotalMonFri();
         //var currentTotalTime = DateTools.convertTimePairToIntMinutes($scope.totalMonFri);
-        var totalMonSun = currentTotalTime
-            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[5])
-            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
+        var totalMonSun = currentTotalTime + $scope.calculateSutSun();
         var promised = $scope.calculatePromisedTimeInMinutes();
         var time = 0;
         if (totalMonSun > promised) {
@@ -640,6 +639,11 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
             $scope.overTime.m = 0;
         }
         return time;
+    };
+
+    $scope.calculateSutSun = function(){
+        return DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[5])
+            + DateTools.convertTimePairToIntMinutes($scope.daysTotalTime[6]);
     };
 
     $scope.calculatePromisedTimeInMinutes = function(){
