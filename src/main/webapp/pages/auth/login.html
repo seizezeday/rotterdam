@@ -1,0 +1,43 @@
+<div class="tab-pane active" id="myModalLabel">
+    <div class="modal-body">
+        <div id="login-tab">
+            <div class="tab-pane active" id="login">
+                <form class="form-signin" action="" method="">
+                    <input type="email" class="form-control" id="inputLoginEmail"
+                           placeholder="{{'Email' | translate}}"
+                           data-error="{{'EnterEmailAddress' | translate}}" required autofocus>
+                    <input id="login_password" type="password" class="form-control"
+                           placeholder="{{'Password' | translate}}"
+                           data-error="{{'PasswordEmpty' | translate}}" required>
+                    <a class="forgot_password" data-toggle="modal"
+                       data-target=".bs-example-modal-lg">{{'ForgotPassword' | translate}}</a>
+                    <button id="login-btn" type="button"
+                            class="btn btn-warning btn-block font_size_18">{{'Login' | translate}}
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!--
+                                        <form class="form-horizontal" data-toggle="validator" role="form">
+                                         Text input
+                                        <div class="form-group margin-vertical-fix">
+                                           <div class="col-sm-12 ">
+                                            <input type="email" class="form-control" id="inputLoginEmail" placeholder="Email" data-error="Enter Email address" required>
+                                            <div class="help-block with-errors"></div>
+                                            </div>
+                                          </div>
+                                        <div class="form-group">
+                                        <div class="col-sm-12">
+                        <input id="login_password" type="password" class="form-control margin_top_10"   placeholder="Password" data-error="Password empty" required>
+                                        <div class="help-block with-errors"></div>
+                                            <div class="center-block">
+                                                <a class="forgot_password" data-toggle="modal" data-target=".bs-example-modal-lg">Forgot password</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </form>
+        -->
+        <!--                    <button id="login-btn" type="button" class="btn btn-warning btn-block font_size_18">Login</button>-->
+    </div>
+</div>
+<script src="../../resources/js/autorization.js"></script>

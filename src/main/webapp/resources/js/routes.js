@@ -8,6 +8,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             templateUrl: '/pages/auth.html',
             parent : 'locale'
         })
+        .state('index.login', {
+            url : "/login",
+            templateUrl: '/pages/auth/login.html'
+        })
+        .state('index.reg', {
+            url : "/reg",
+            templateUrl: '/pages/auth/reg.html'
+        })
         .state('client', {
             url : "/client",
             templateUrl: '/pages/client.html',

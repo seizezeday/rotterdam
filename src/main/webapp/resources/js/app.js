@@ -26,7 +26,7 @@ app.run(function($rootScope, $http, $state){
     $rootScope.logout = function () {
         $http.post("api/logout", {}).then(function (res) {
             if(res.status == 200){
-                $state.go('index');
+                $state.go('index.login');
             }
         })
     };
