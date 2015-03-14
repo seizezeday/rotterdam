@@ -249,3 +249,11 @@ hr {
 .menu-cursor{
     cursor: pointer;
 }
+
+.not-enough-hours{
+    color: #eea236;
+}
+
+.enough-hours{
+    color: #4cae4c;
+}

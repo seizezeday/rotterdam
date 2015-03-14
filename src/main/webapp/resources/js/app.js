@@ -678,6 +678,20 @@ app.controller('time_tab_controller', function($scope, $http, $filter, $rootScop
         return  b;
     };
 
+    $scope.rowTotalTimeClass = function(dayIndex){
+        if(dayIndex == 5 || dayIndex == 6)
+            return 'enough-hours';
+        var promisedTime = $scope.promisedTime[dayIndex];
+        if(promisedTime != undefined){
+            var totalTime = $scope.daysTotalTime[dayIndex];
+            var minutes = DateTools.convertTimePairToIntMinutes(totalTime);
+            var hours = minutes / 60;
+            if(hours > promisedTime)
+                return 'enough-hours';
+        }
+        return 'not-enough-hours';
+    };
+
     //$scope.applyDate();
 });
 
@@ -1013,6 +1027,18 @@ app.directive('numberMask', function() {
     }
 });
 
+app.directive('positiveNumberMask', function() {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            console.log($(element));
+            return $(element).numeric();
+            //var val = $(element).val();
+            //return !val.match(/^[0-9]+$/);
+        }
+    };
+});
+
 app.directive('maxLengthP', function() {
     return {
         require: 'ngModel',
@@ -1028,6 +1054,35 @@ app.directive('maxLengthP', function() {
                 return text;
             }
             ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
+
+app.directive('validNumber', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                if (angular.isUndefined(val)) {
+                    var val = '';
+                }
+                var clean = val.replace( /[^0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
         }
     };
 });

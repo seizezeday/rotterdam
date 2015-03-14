@@ -109,8 +109,8 @@
                         </button>
                     </div>
 
-                    <div class="col-md-4 font_size_18 text-center padding_fix" ng-show="$index == 0">
-                        {{ 'TotalWorked' | translate }} <span id="total_time_monday">
+                    <div class="col-md-4 font_size_18 text-center padding_fix" ng-show="$index == 0" ng-class="rowTotalTimeClass($parent.$index)">
+                        {{ 'TotalWorked' | translate }} <span id="total_time_monday" >
                        {{daysTotalTime[$parent.$index].h}}h {{daysTotalTime[$parent.$index].m}}m
                    </span>
                     </div>

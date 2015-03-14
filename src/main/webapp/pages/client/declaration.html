@@ -37,7 +37,7 @@
             <div class="col-md-2 declaration_price">
                 <input type="text" class="form-control" placeholder="Cost"
                        ng-change="calculateTotal()"
-                       ng-model="declaration.price" ng-show="declaration.active && activeV">
+                       ng-model="declaration.price" ng-show="declaration.active && activeV" valid-number="">
 
                 <div class="font_size_18" ng-show="!declaration.active || !activeV">
                     {{declaration.price}}
