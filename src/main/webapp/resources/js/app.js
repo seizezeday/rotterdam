@@ -867,6 +867,7 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
             $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
             $scope.firstTimeEnabled = !$scope.toggleTabs();
             $scope.timeForTimeRegulation = res.data.paymentDate;
+            $scope.active = res.data.active;
         });
     };
 

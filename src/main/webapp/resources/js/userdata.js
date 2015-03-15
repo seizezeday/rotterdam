@@ -144,6 +144,16 @@ function drawTotalTable(doc, data, week, height, xOff, isTotal){
     return height;
 }
 
+var weekDays =  {
+        '0' : 'Monday',
+        "1" : "Tuesday",
+        "2" : "Wednesday",
+        "3" : "Thursday",
+        "4" : "Friday",
+        "5" : "Saturday",
+        "6" : "Sunday"
+};
+
 function drawWeekTable(doc, data, week, height, xOff){
     data = [];
     for (var dayI in week.days) {
@@ -155,7 +165,7 @@ function drawWeekTable(doc, data, week, height, xOff){
             var workHour = day.workHours[workHourI];
 
             data.push({
-                "Week Day": dayI,
+                "Week Day": weekDays[dayI],
                 "Date": day.date,
                 "Time start": workHour.startWorkingTime,
                 "Time end": workHour.endWorkingTime,

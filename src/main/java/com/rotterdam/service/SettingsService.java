@@ -80,7 +80,16 @@ public class SettingsService {
 
         settingsDto.paymentDate = week.getPeriod().getUser().getLastPaymentDate();
 
+        settingsDto.active = isActive(date, userId);
+
         return settingsDto;
+    }
+
+    private boolean isActive(Date date, long userId){
+        Period weekPeriod = periodDao.selectByDateBetweenAndUser(date, userId);
+        Period currentPeriod = periodDao.selectByDateBetweenAndUser(new Date(), userId);
+        if(weekPeriod == null || currentPeriod == null) return false;
+        return weekPeriod.getStartDate().equals(currentPeriod.getStartDate());
     }
 
     public List<SettingsDto.DateWrapper> generateFakeHours() {

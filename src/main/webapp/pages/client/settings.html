@@ -20,7 +20,7 @@
             <input ng-model="promisedHour.date"
 
                    id="" type="text" class="form-control margin_bottom_10 positive-integer"
-                   placeholder="{{'WeekDays.' + $index | translate}}" max-length-p="1" valid-number="">
+                   placeholder="{{'WeekDays.' + $index | translate}}" max-length-p="1" valid-number="" ng-disabled="!active">
         </div>
     </div>
     <div class="col-md-12">
@@ -40,6 +40,6 @@
         </div>
     </div>
     <button id="setting_save" class="btn btn-success margin_top_10 col-md-4 pull-right"
-            ng-click="save()" ng-disabled="isDisabled()">{{'Save' | translate}}
+            ng-click="save()" ng-disabled="isDisabled() || !active">{{'Save' | translate}}
     </button>
 </div>

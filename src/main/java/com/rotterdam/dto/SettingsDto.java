@@ -43,6 +43,8 @@ public class SettingsDto {
     @JsonProperty("allow_saturday_compensation")
     public boolean saturdayCompensation;
 
+    public boolean active;
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(JsonCommands.PARAM_DATE_PATTERN);
