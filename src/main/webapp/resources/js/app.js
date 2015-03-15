@@ -57,7 +57,9 @@ app.controller('tabs_controller', function ($scope, $http, $state, $rootScope) {
         var curDate = $rootScope.selectedDate;
         $http.get('api/settings', {params : {date: curDate}}).then(function(res){
             $rootScope.promisedHours = res.data.promisedHours;
-            $rootScope.isDisabled();
+            $scope.active = res.data.active;
+            //$rootScope.isDisabled();
+            $rootScope.tabsDis();
         });
     };
 
@@ -78,11 +80,15 @@ app.controller('tabs_controller', function ($scope, $http, $state, $rootScope) {
 
     //console.log($state.current);
 
-    $rootScope.$watch("selectedDate", function () {
-        $scope.loadSettings();
-        if(!$rootScope.isDisabled() && $rootScope.promisedHours != undefined){
+    $rootScope.tabsDis = function () {
+        if($rootScope.isDisabled()){
             $state.go("client.settings");
         }
+    };
+
+    $rootScope.$watch("selectedDate", function () {
+        $scope.loadSettings(); //&& $rootScope.promisedHours != undefined
+
     });
 
     //$scope.loadSettings();

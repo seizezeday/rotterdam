@@ -72,15 +72,16 @@ public class SettingsService {
 
         Week week = weekDao.selectByStartDateAndUser(date, userId);
 
+        settingsDto.active = isActive(date, userId);
 
-        if(week == null)
+        if(week == null) {
             return settingsDto;
+        }
 
         settingsDto = settingsDto.copyDaysOfWeekToSettingsDto(week);
 
         settingsDto.paymentDate = week.getPeriod().getUser().getLastPaymentDate();
 
-        settingsDto.active = isActive(date, userId);
 
         return settingsDto;
     }
