@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by root on 03.02.15.
@@ -77,5 +79,13 @@ public class SettingsService {
         settingsDto = settingsDto.copyDaysOfWeekToSettingsDto(week);
 
         return settingsDto;
+    }
+
+    public List<SettingsDto.DateWrapper> generateFakeHours() {
+        List<SettingsDto.DateWrapper> hours = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            hours.add(new SettingsDto.DateWrapper(null));
+        }
+        return hours;
     }
 }

@@ -910,6 +910,7 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
     $scope.promisedHours = [];
     $scope.start = "";
     $scope.end = "";
+    $scope.firstTimeEnabled = false;
 
     $scope.loadSettings = function () {
         var curDate = DateTools.convertDateToString(new Date());
@@ -918,7 +919,7 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
             $scope.start = res.data.startDate;
             $scope.end = res.data.endDate;
             $('#show_compensation').bootstrapSwitch('state',res.data.show_compensation);
-            $scope.toggleTabs();
+            $scope.firstTimeEnabled = !$scope.toggleTabs();
         });
     };
 
@@ -932,26 +933,34 @@ app.controller('SettingsCtrl', function($scope, $http, $rootScope){
         };
         $http.post('api/settings', daysToTransfer).then(function () {
             addAlert();
+            $scope.firstTimeEnabled = true;
             $scope.toggleTabs();
         });
     };
 
+
+
     $scope.isDisabled = function () {
         var ret = false;
+
+
         for(var h in $scope.promisedHours){
             if(!ret){
                 var hText = $scope.promisedHours[h].date;
-                if(hText == "") {
+                if(hText == "" || hText == null) {
                     ret = true;
                 }
             }
         }
         $rootScope.tabsActive = !ret;
+        if(!$scope.firstTimeEnabled){
+            $rootScope.tabsActive = false;
+        }
         return ret;
     };
 
     $scope.toggleTabs = function () {
-        $scope.isDisabled();
+        return $scope.isDisabled();
     };
 
     $scope.loadSettings();

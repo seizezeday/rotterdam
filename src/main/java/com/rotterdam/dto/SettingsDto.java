@@ -58,8 +58,8 @@ public class SettingsDto {
         week.setPromiseWednesdayTime(promisedHours.get(2).date);
         week.setPromiseThursdayTime(promisedHours.get(3).date);
         week.setPromiseFridayTime(promisedHours.get(4).date);
-        week.setPromiseSaturdayTime(promisedHours.get(5).date);
-        week.setPromiseSundayTime(promisedHours.get(6).date);
+//        week.setPromiseSaturdayTime(promisedHours.get(5).date);
+//        week.setPromiseSundayTime(promisedHours.get(6).date);
         week.setShowCompensation(showCompensation);
         week.setSaturdayCompensation(saturdayCompensation);
         return week;
@@ -71,8 +71,8 @@ public class SettingsDto {
         promisedHours.add(new DateWrapper(week.getPromiseWednesdayTime()));
         promisedHours.add(new DateWrapper(week.getPromiseThursdayTime()));
         promisedHours.add(new DateWrapper(week.getPromiseFridayTime()));
-        promisedHours.add(new DateWrapper(week.getPromiseSaturdayTime()));
-        promisedHours.add(new DateWrapper(week.getPromiseSundayTime()));
+//        promisedHours.add(new DateWrapper(week.getPromiseSaturdayTime()));
+//        promisedHours.add(new DateWrapper(week.getPromiseSundayTime()));
         showCompensation = week.isShowCompensation();
         saturdayCompensation = week.isSaturdayCompensation();
         return this;

@@ -57,6 +57,10 @@ public class SettingsController {
             Date date = jsonCommands.getDateFromJson(data);
 
             SettingsDto settingsDto = settingsService.getSettings(date, user.getId());
+
+            if(settingsDto.promisedHours == null || settingsDto.promisedHours.size() == 0)
+                settingsDto.promisedHours = settingsService.generateFakeHours();
+
             return Response.ok(settingsDto).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
